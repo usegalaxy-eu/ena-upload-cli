@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SUBMISSION alias="mantis_religiosa_submission" center_name="Department of Computer Science">
+   <ACTIONS>
+       <ACTION>
+         <ADD source="study.xml" schema="project"/>
+      </ACTION>
+        <ACTION>
+         <ADD source="sample.xml" schema="sample"/>
+      </ACTION>
+      <ACTION>
+         <ADD source="experiment.xml" schema="experiment"/>
+      </ACTION>
+      <ACTION>
+         <ADD source="run.xml" schema="run"/>
+      </ACTION>
+      <ACTION>
+         <HOLD HoldUntilDate="2019-01-01"/>
+      </ACTION>
+   </ACTIONS>
+</SUBMISSION>

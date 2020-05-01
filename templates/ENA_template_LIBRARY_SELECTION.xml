@@ -1,0 +1,32 @@
+<py:choose xmlns:py="http://genshi.edgewall.org/" test="">
+<LIBRARY_SELECTION py:when="row.library_selection.lower().strip() == 'random'">RANDOM</LIBRARY_SELECTION>
+<LIBRARY_SELECTION py:when="row.library_selection.lower().strip() == 'pcr'">PCR</LIBRARY_SELECTION>
+<LIBRARY_SELECTION py:when="row.library_selection.lower().strip() == 'random pcr'">RANDOM PCR</LIBRARY_SELECTION>
+<LIBRARY_SELECTION py:when="row.library_selection.lower().strip() == 'rt-pcr'">RT-PCR</LIBRARY_SELECTION>
+<LIBRARY_SELECTION py:when="row.library_selection.lower().strip() == 'hmpr'">HMPR</LIBRARY_SELECTION>
+<LIBRARY_SELECTION py:when="row.library_selection.lower().strip() == 'mf'">MF</LIBRARY_SELECTION>
+<LIBRARY_SELECTION py:when="row.library_selection.lower().strip() == 'repeat fractionation'">repeat fractionation</LIBRARY_SELECTION>
+<LIBRARY_SELECTION py:when="row.library_selection.lower().strip() == 'size fractionation'">size fractionation</LIBRARY_SELECTION>
+<LIBRARY_SELECTION py:when="row.library_selection.lower().strip() == 'msll'">MSLL</LIBRARY_SELECTION>
+<LIBRARY_SELECTION py:when="row.library_selection.lower().strip() == 'cdna'">cDNA</LIBRARY_SELECTION>
+<LIBRARY_SELECTION py:when="row.library_selection.lower().strip() == 'cdna_randompriming'">cDNA_randomPriming</LIBRARY_SELECTION>
+<LIBRARY_SELECTION py:when="row.library_selection.lower().strip() == 'cdna_oligo_dt'">cDNA_oligo_dT</LIBRARY_SELECTION>
+<LIBRARY_SELECTION py:when="row.library_selection.lower().strip() == 'polya'">PolyA</LIBRARY_SELECTION>
+<LIBRARY_SELECTION py:when="row.library_selection.lower().strip() == 'oligo-dt'">Oligo-dT</LIBRARY_SELECTION>
+<LIBRARY_SELECTION py:when="row.library_selection.lower().strip() == 'inverse rrna'">Inverse rRNA</LIBRARY_SELECTION>
+<LIBRARY_SELECTION py:when="row.library_selection.lower().strip() == 'inverse rrna selection'">Inverse rRNA selection</LIBRARY_SELECTION>
+<LIBRARY_SELECTION py:when="row.library_selection.lower().strip() == 'chip'">ChIP</LIBRARY_SELECTION>
+<LIBRARY_SELECTION py:when="row.library_selection.lower().strip() == 'mnase'">MNase</LIBRARY_SELECTION>
+<LIBRARY_SELECTION py:when="row.library_selection.lower().strip() == 'dnase'">DNase</LIBRARY_SELECTION>
+<LIBRARY_SELECTION py:when="row.library_selection.lower().strip() == 'hybrid selection'">Hybrid Selection</LIBRARY_SELECTION>
+<LIBRARY_SELECTION py:when="row.library_selection.lower().strip() == 'reduced representation'">Reduced Representation</LIBRARY_SELECTION>
+<LIBRARY_SELECTION py:when="row.library_selection.lower().strip() == 'restriction digest'">Restriction Digest</LIBRARY_SELECTION>
+<LIBRARY_SELECTION py:when="row.library_selection.lower().strip() == '5-methylcytidine antibody'">5-methylcytidine antibody</LIBRARY_SELECTION>
+<LIBRARY_SELECTION py:when="row.library_selection.lower().strip() == 'mbd2 protein methyl-cpg binding domain'">MBD2 protein methyl-CpG binding domain</LIBRARY_SELECTION>
+<LIBRARY_SELECTION py:when="row.library_selection.lower().strip() == 'cage'">CAGE</LIBRARY_SELECTION>
+<LIBRARY_SELECTION py:when="row.library_selection.lower().strip() == 'race'">RACE</LIBRARY_SELECTION>
+<LIBRARY_SELECTION py:when="row.library_selection.lower().strip() == 'mda'">MDA</LIBRARY_SELECTION>
+<LIBRARY_SELECTION py:when="row.library_selection.lower().strip() == 'padlock probes capture method'">padlock probes capture method</LIBRARY_SELECTION>
+<LIBRARY_SELECTION py:when="row.library_selection.lower().strip() == 'other'">other</LIBRARY_SELECTION>
+<LIBRARY_SELECTION py:when="row.library_selection.lower().strip() == 'unspecified'">unspecified</LIBRARY_SELECTION>
+</py:choose>

@@ -1,0 +1,122 @@
+<py:choose xmlns:py="http://genshi.edgewall.org/" test="">
+<FILE py:when="row.file_format == 'sra'"
+                filename="${row.file_name}"
+                filetype="sra"
+                checksum_method="MD5"
+                checksum="${row.file_checksum}"/>
+<FILE py:when="row.file_format == 'srf'"
+                filename="${row.file_name}"
+                filetype="srf"
+                checksum_method="MD5"
+                checksum="${row.file_checksum}"/>
+<FILE py:when="row.file_format == 'sff'"
+                filename="${row.file_name}"
+                filetype="sff"
+                checksum_method="MD5"
+                checksum="${row.file_checksum}"/>
+<FILE py:when="row.file_format == 'fastq'"
+                filename="${row.file_name}"
+                filetype="fastq"
+                checksum_method="MD5"
+                checksum="${row.file_checksum}"/>
+<FILE py:when="row.file_format == 'fasta'"
+                filename="${row.file_name}"
+                filetype="fasta"
+                checksum_method="MD5"
+                checksum="${row.file_checksum}"/>
+<FILE py:when="row.file_format == 'tab'"
+                filename="${row.file_name}"
+                filetype="tab"
+                checksum_method="MD5"
+                checksum="${row.file_checksum}"/>
+<FILE py:when="row.file_format == '454_native'"
+                filename="${row.file_name}"
+                filetype="454_native"
+                checksum_method="MD5"
+                checksum="${row.file_checksum}"/>
+<FILE py:when="row.file_format == '454_native_seq'"
+                filename="${row.file_name}"
+                filetype="454_native_seq"
+                checksum_method="MD5"
+                checksum="${row.file_checksum}"/>
+<FILE py:when="row.file_format == '454_native_qual'"
+                filename="${row.file_name}"
+                filetype="454_native_qual"
+                checksum_method="MD5"
+                checksum="${row.file_checksum}"/>
+<FILE py:when="row.file_format == 'helicos_native'"
+                filename="${row.file_name}"
+                filetype="Helicos_native"
+                checksum_method="MD5"
+                checksum="${row.file_checksum}"/>
+<FILE py:when="row.file_format == 'illumina_native'"
+                filename="${row.file_name}"
+                filetype="Illumina_native"
+                checksum_method="MD5"
+                checksum="${row.file_checksum}"/>
+<FILE py:when="row.file_format == 'illumina_native_seq'"
+                filename="${row.file_name}"
+                filetype="Illumina_native_seq"
+                checksum_method="MD5"
+                checksum="${row.file_checksum}"/>
+<FILE py:when="row.file_format == 'illumina_native_prb'"
+                filename="${row.file_name}"
+                filetype="Illumina_native_prb"
+                checksum_method="MD5"
+                checksum="${row.file_checksum}"/>
+<FILE py:when="row.file_format == 'illumina_native_int'"
+                filename="${row.file_name}"
+                filetype="Illumina_native_int"
+                checksum_method="MD5"
+                checksum="${row.file_checksum}"/>
+<FILE py:when="row.file_format == 'illumina_native_qseq'"
+                filename="${row.file_name}"
+                filetype="Illumina_native_qseq"
+                checksum_method="MD5"
+                checksum="${row.file_checksum}"/>
+<FILE py:when="row.file_format == 'illumina_native_scarf'"
+                filename="${row.file_name}"
+                filetype="Illumina_native_scarf"
+                checksum_method="MD5"
+                checksum="${row.file_checksum}"/>
+<FILE py:when="row.file_format == 'solid_native'"
+                filename="${row.file_name}"
+                filetype="SOLiD_native"
+                checksum_method="MD5"
+                checksum="${row.file_checksum}"/>
+<FILE py:when="row.file_format == 'solid_native_csfasta'"
+                filename="${row.file_name}"
+                filetype="SOLiD_native_csfasta"
+                checksum_method="MD5"
+                checksum="${row.file_checksum}"/>
+<FILE py:when="row.file_format == 'solid_native_qual'"
+                filename="${row.file_name}"
+                filetype="SOLiD_native_qual"
+                checksum_method="MD5"
+                checksum="${row.file_checksum}"/>
+<FILE py:when="row.file_format == 'pacbio_hdf5'"
+                filename="${row.file_name}"
+                filetype="PacBio_HDF5"
+                checksum_method="MD5"
+                checksum="${row.file_checksum}"/>
+<FILE py:when="row.file_format == 'bam'"
+                filename="${row.file_name}"
+                filetype="bam"
+                checksum_method="MD5"
+                checksum="${row.file_checksum}"/>
+<FILE py:when="row.file_format == 'cram'"
+                filename="${row.file_name}"
+                filetype="cram"
+                checksum_method="MD5"
+                checksum="${row.file_checksum}"/>
+<FILE py:when="row.file_format == 'completegenomics_native'"
+                filename="${row.file_name}"
+                filetype="CompleteGenomics_native"
+                checksum_method="MD5"
+                checksum="${row.file_checksum}"/>
+<FILE py:when="row.file_format == 'oxfordnanopore_native'"
+                filename="${row.file_name}"
+                filetype="OxfordNanopore_native"
+                checksum_method="MD5"
+                checksum="${row.file_checksum}"/>
+</py:choose>
