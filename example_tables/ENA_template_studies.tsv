@@ -1,0 +1,3 @@
+alias	status	accession	title	study_type	study_abstract	pubmed_id	submission_date
+study_alias_4	add	update_by_ENA	study_title_1	Transcriptome Analysis	study_abstract_1	None	update_by_ENA
+study_alias_5	add	update_by_ENA	study_title_2	RNASeq	study_abstract_2	pubmed_id_2	update_by_ENA
