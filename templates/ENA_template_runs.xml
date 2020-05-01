@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RUN_SET xmlns:py="http://genshi.edgewall.org/"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="ftp://ftp.sra.ebi.ac.uk/meta/xsd/sra_1_5/SRA.run.xsd">
+    <py:for each="alias, experiment_alias in run_groups.iteritems()">
+    <RUN alias="${alias}" center_name="${center}">
+    <!-- <RUN alias="TODO: UNIQUE NAME FOR RUN" center_name="TODO: CENTER NAME"> -->
+        <EXPERIMENT_REF refname="${experiment_alias}"/>
+        <!-- <EXPERIMENT_REF refname="TODO: EXPERIMENT ALIAS OR ACCESSION"/> -->
+         <DATA_BLOCK>
+            <FILES>
+                <py:for each="index, row in file_groups.get_group(alias).iterrows()">
+                <xi:include href="ENA_template_FILE.xml" />
+                <!-- <FILE filename="TODO: FILENAME1"
+                    filetype="TODO: CHOOSE FROM CONTROLLED VOCABULARY"
+                    checksum_method="MD5" checksum="TODO: CHECKSUM1"/> -->
+                </py:for>
+            </FILES>
+        </DATA_BLOCK>
+    </RUN>
+    <!-- If you are submitting more than one run, replicate the block <RUN> to </RUN> here,
+        as many times as necessary. -->
+    </py:for>
+</RUN_SET>

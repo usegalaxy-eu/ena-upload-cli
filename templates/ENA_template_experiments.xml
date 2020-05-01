@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EXPERIMENT_SET xmlns:py="http://genshi.edgewall.org/"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="ftp://ftp.sra.ebi.ac.uk/meta/xsd/sra_1_5/SRA.experiment.xsd">
+    <py:for each="index, row in df.iterrows()">
+        <EXPERIMENT alias="${row.alias}" center_name="${center}">
+            <!--"TODO: UNIQUE NAME FOR EXPERIMENT"
+            "TODO: CENTER NAME"-->
+            <TITLE>${row.title}</TITLE>
+            <!--TODO: TITLE OF EXPERIMENT-->
+            <STUDY_REF refname="${row.study_alias}"/>
+            <!--"TODO: STUDY ALIAS OR ACCESSION"-->
+            <DESIGN>
+                <DESIGN_DESCRIPTION>${row.design_description}</DESIGN_DESCRIPTION>
+                <!--TODO: DETAILS ABOUT THE SETUP AND GOALS OF THE
+                EXPERIMENT AS SUPPLIED BY INVESTIGATOR-->
+                <SAMPLE_DESCRIPTOR refname="${row.sample_alias}"/>
+                <!--"TODO: SAMPLE ALIAS OR ACCESSION"-->
+                <LIBRARY_DESCRIPTOR>
+                    <LIBRARY_NAME>${row.library_name}</LIBRARY_NAME>
+                    <!--TODO: NAME OF LIBRARY-->
+                    <xi:include href="ENA_template_LIBRARY_STRATEGY.xml" />
+                    <!--TODO: CHOOSE FROM CONTROLLED VOCABULARY-->
+                    <xi:include href="ENA_template_LIBRARY_SOURCE.xml" />
+                    <!--TODO: CHOOSE FROM CONTROLLED VOCABULARY-->
+                    <xi:include href="ENA_template_LIBRARY_SELECTION.xml" />
+                    <!--TODO: CHOOSE FROM CONTROLLED VOCABULARY-->
+                    <LIBRARY_LAYOUT py:choose="">
+                        <PAIRED py:when="row.library_layout == 'paired'" NOMINAL_LENGTH="${row.insert_size}" />
+                        <SINGLE py:when="row.library_layout == 'single'" />
+                        <!--TODO: CHOOSE LIBRARY LAYOUT FROM CONTROLLED VOCABULARY-->
+                    </LIBRARY_LAYOUT>
+                    <LIBRARY_CONSTRUCTION_PROTOCOL>${row.library_construction_protocol}</LIBRARY_CONSTRUCTION_PROTOCOL>
+                        <!--TODO: PROTOCOL BY WHICH THE LIBRARY WAS CONSTRUCTED-->
+                </LIBRARY_DESCRIPTOR>
+            </DESIGN>
+            <xi:include href="ENA_template_PLATFORM.xml" />
+            <!--TODO: CHOOSE PLATFORM FROM CONTROLLED VOCABULARY-->
+            <!--TODO: CHOOSE INSTRUMENT_MODEL FROM CONTROLLED VOCABULARY-->
+        </EXPERIMENT>
+    </py:for>
+</EXPERIMENT_SET>

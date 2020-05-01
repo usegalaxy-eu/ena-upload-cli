@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<STUDY_SET xmlns:py="http://genshi.edgewall.org/"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="ftp://ftp.sra.ebi.ac.uk/meta/xsd/sra_1_5/SRA.study.xsd">
+    <py:for each="index, row in df.iterrows()">
+    <STUDY alias="${row.alias}"
+        center_name="${center}">
+        <!--"TODO: UNIQUE NAME FOR SUBMISSION"-->
+        <!--"TODO: CENTER NAME"-->
+        <DESCRIPTOR>
+            <STUDY_TITLE>${row.title}</STUDY_TITLE>
+            <!--TODO: STUDY TITLE AS IT COULD APPEAR IN A PUBLICATION-->
+            <STUDY_TYPE existing_study_type="${row.study_type}"/>
+            <!--"TODO: CHOOSE FROM CONTROLLED VOCABULARY"-->
+            <STUDY_ABSTRACT>${row.study_abstract}</STUDY_ABSTRACT>
+            <!--TODO: STUDY ABSTRACT AS IT COULD APPEAR IN A
+                PUBLICATION-->
+        </DESCRIPTOR>
+        <STUDY_LINKS py:if="row.pubmed_id != 'None'">
+            <STUDY_LINK>
+                <XREF_LINK>
+                    <DB>PUBMED</DB>
+                    <ID>${row.pubmed_id}</ID>
+                    <!--TODO: PubMed ID-->
+                </XREF_LINK>
+            </STUDY_LINK>
+        </STUDY_LINKS>
+    </STUDY>
+    </py:for>
+</STUDY_SET>

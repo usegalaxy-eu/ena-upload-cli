@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SUBMISSION_SET xmlns:py="http://genshi.edgewall.org/"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="ftp://ftp.sra.ebi.ac.uk/meta/xsd/sra_1_5/SRA.submission.xsd">
+  <SUBMISSION center_name="$center">
+    <ACTIONS>
+      <py:choose test="">
+        <py:when test="action in ['ADD', 'MODIFY']">
+          <py:for each="schema, source in  input.items()">
+            <ACTION>
+              <py:choose test="">
+              <ADD py:when="action == 'ADD'" source="$source" schema="$schema"/>
+              <MODIFY py:when="action == 'MODIFY'" source="$source" schema="$schema"/>
+              </py:choose>
+            </ACTION>
+          </py:for>
+          <ACTION py:if="action == 'ADD'">
+            <HOLD/>
+          </ACTION>
+        </py:when>
+        <py:when test="action in ['CANCEL', 'RELEASE']">
+          <py:for each="schema, targets in input.items()">
+            <py:for each="accession in targets.accession">
+              <ACTION>
+                <py:choose test="">
+                  <CANCEL py:when="action == 'CANCEL'" target="$accession"/>
+                  <RELEASE py:when="action == 'RELEASE'" target="$accession"/>
+                </py:choose>
+              </ACTION>
+            </py:for>
+          </py:for>
+        </py:when>
+      </py:choose>
+    </ACTIONS>
+  </SUBMISSION>
+</SUBMISSION_SET>
