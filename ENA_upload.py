@@ -376,12 +376,12 @@ def process_receipt(reciept):
         sys.exit(errors)
 
     # define expected status based on action
-        status = {'ADD': 'added', 'MODIFY': 'modified',
+    status = {'ADD': 'added', 'MODIFY': 'modified',
               'CANCEL': 'cancelled', 'RELEASE': 'released'}
 
     def make_update(update):
         update = [(element.get('alias'), element.get('accession'),
-                       receiptDate, status[action]) for element in update]
+                   receiptDate, status[action]) for element in update]
         # used for labelling dataframe
         labels = ['alias', 'accession', 'submission_date', 'status']
         df = pd.DataFrame.from_records(update, columns=labels)
@@ -395,6 +395,7 @@ def process_receipt(reciept):
     run_update = reciept_root.findall('RUN')
 
     schema_update = {}  # schema as key, dataframe as value
+
     if study_update:
         schema_update['study'] = make_update(study_update)
 
@@ -668,7 +669,8 @@ if __name__ == "__main__":
     print 'executing: {}'.format(submit_cmd_line)
     receipt = run_cmd(submit_cmd_line)
 
-    print receipt #tmp
+    print '\nReceipt\n'
+    print receipt
 
     schema_update = process_receipt(receipt)
 
