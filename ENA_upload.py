@@ -22,6 +22,7 @@ import pandas as pd
 # e.g at df.loc[:, 'file_checksum'] = md5
 pd.options.mode.chained_assignment = None
 
+
 def create_dataframe(schema_tables):
     '''create pandas dataframe from the tables in schema_tables
        and return schema_dataframe
@@ -35,20 +36,21 @@ def create_dataframe(schema_tables):
                           dataframe -- pandas dataframe
     '''
 
-    #? would it be good to use alias to index rows?
+    # ? would it be good to use alias to index rows?
 
-    schema_dataframe={}
+    schema_dataframe = {}
 
     for schema, table in schema_tables.items():
         df = pd.read_csv(table, sep='\t', comment='#')
 
-        #status column contain action keywords
-        #for xml rendering, keywords require uppercase
-        #according to scheme definition of submission
+        # status column contain action keywords
+        # for xml rendering, keywords require uppercase
+        # according to scheme definition of submission
         df['status'] = df['status'].str.upper()
         schema_dataframe[schema] = df
 
     return schema_dataframe
+
 
 def extract_targets(action, schema_dataframe):
     ''' extract targeted rows in dataframe tagged by action and
@@ -64,10 +66,11 @@ def extract_targets(action, schema_dataframe):
 
     for schema, dataframe in schema_dataframe.items():
         filtered = dataframe.query('status=="{}"'.format(action))
-        #? add a fucntion to control empty filtered, return error
+        # ? add a fucntion to control empty filtered, return error
         schema_targets[schema] = filtered
 
     return schema_targets
+
 
 def check_filenames(file_paths, run_df):
     """Compare data filenames from command line and from RUN table.
@@ -87,6 +90,7 @@ def check_filenames(file_paths, run_df):
         msg = '{} {}'.format(msg, difference)
         sys.exit(msg)
 
+
 def validate_xml(xsd, xml):
     '''
     validate xml against xsd scheme
@@ -98,6 +102,7 @@ def validate_xml(xsd, xml):
     doc = etree.XML(xml)
 
     return xmlschema.assertValid(doc)
+
 
 def generate_stream(schema, targets, Template, center):
     ''' generate stream from Template cache
@@ -120,7 +125,7 @@ def generate_stream(schema, targets, Template, center):
         run_groups = run_groups.experiment_alias.unique()
         file_groups = targets[file_attrib].groupby(targets['alias'])
 
-        #param in generate() determined by the setup in template
+        # param in generate() determined by the setup in template
         stream = Template.generate(run_groups=run_groups,
                                    file_groups=file_groups,
                                    center='test_cneter')
@@ -128,6 +133,7 @@ def generate_stream(schema, targets, Template, center):
         stream = Template.generate(df=targets, center=center)
 
     return stream
+
 
 def construct_xml(schema, stream, xsd):
     '''construct XML for ENA submission
@@ -146,9 +152,10 @@ def construct_xml(schema, stream, xsd):
     with open(xml_file, 'w') as fw:
         fw.write(xml_string)
 
-    print 'wrote {}'.format(xml_file)
+    print ('wrote {}'.format(xml_file))
 
     return xml_file
+
 
 def actors(template_path):
     ''':return: the filenames of schema definitions and templates
@@ -175,6 +182,7 @@ def actors(template_path):
 
     return xsds, templates
 
+
 def run_construct(template_path, schema_targets,  center):
     '''construct XMLs for schema in schema_targets
 
@@ -199,6 +207,7 @@ def run_construct(template_path, schema_targets,  center):
         schema_xmls[schema] = construct_xml(schema, stream, xsds[schema])
 
     return schema_xmls
+
 
 def construct_submission(template_path, action, submission_input, center):
     '''construct XML for submission
@@ -226,6 +235,7 @@ def construct_submission(template_path, action, submission_input, center):
 
     return submission_xml
 
+
 def get_md5(filepath):
     '''calculate the MD5 hash of file
 
@@ -248,6 +258,7 @@ def get_md5(filepath):
 
     return md5sum.hexdigest()
 
+
 def run_cmd(cmd_line):
     """Execute command line.
 
@@ -260,6 +271,7 @@ def run_cmd(cmd_line):
     output = subprocess.check_output(args)
 
     return output
+
 
 def get_taxon_id(scientific_name):
     """Get taxon ID for input scientific_name.
@@ -286,6 +298,7 @@ def get_taxon_id(scientific_name):
         msg = msg + ' Is it a valid scientific name?'
         sys.exit(msg)
 
+
 def submit_data(file_paths, args):
     """Submit data to webin ftp server.
 
@@ -296,20 +309,21 @@ def submit_data(file_paths, args):
     password = args.password
 
     try:
-        print "\nconnecting to ftp.webin.ebi.ac.uk...."
+        print ("\nconnecting to ftp.webin.ebi.ac.uk....")
         ftp = ftplib.FTP("webin.ebi.ac.uk", webin_id, password)
     except IOError:
-        print ftp.lastErrorText()
-        print "ERROR: could not connect to the ftp server.\
-               Please check your login details."
+        print (ftp.lastErrorText())
+        print ("ERROR: could not connect to the ftp server.\
+               Please check your login details.")
 
     for filename, path in file_paths.items():
-        print 'uploading {}'.format(path)
+        print ('uploading {}'.format(path))
         ftp.storbinary('STOR {}'.format(filename), open(path, 'rb'))
         msg = ftp.storbinary('STOR {}'.format(filename), open(path, 'rb'))
-        print msg
+        print (msg)
 
-    print ftp.quit()
+    print (ftp.quit())
+
 
 def columns_to_update(df):
     '''
@@ -317,6 +331,7 @@ def columns_to_update(df):
         used after processing the reciept xmls
     '''
     return df[df.apply(lambda x: x == 'to_update')].dropna(axis=1, how='all').columns
+
 
 def get_cmd_line(schema_xmls, url, args):
     '''submit compiled XML files to the given ENA server
@@ -331,7 +346,7 @@ def get_cmd_line(schema_xmls, url, args):
 
     url -- ENA servers
            test:
-                https://www-test.ebi.ac.uk/ena/submit/drop-box/submit/?auth=ENA
+                https://wwwdev.ebi.ac.uk/ena/submit/drop-box/submit/?auth=ENA
            production:
                 https://www.ebi.ac.uk/ena/submit/drop-box/submit/?auth=ENA
 
@@ -343,14 +358,14 @@ def get_cmd_line(schema_xmls, url, args):
     password = args.password
 
     server = '{}%20{}%20{}'.format(url, webin_id, password)
-
-
-    sources = ['-F {}=@{}'.format(schema.upper(), source) for schema, source in schema_xmls.items()]
+    sources = ['-F {}=@{}'.format(schema.upper(), source)
+               for schema, source in schema_xmls.items()]
     sources = ' '.join(sources)
 
     cmd_line = 'curl -k {} {}'.format(sources, server)
 
     return cmd_line
+
 
 def process_receipt(reciept):
     '''Process submission reciept from ENA.
@@ -410,6 +425,7 @@ def process_receipt(reciept):
 
     return schema_update
 
+
 def update_table(schema_dataframe, schema_targets, schema_update):
     """Update schema_dataframe with info in schema_targets/update.
 
@@ -441,11 +457,13 @@ def update_table(schema_dataframe, schema_targets, schema_update):
 
         for index in update.index:
             dataframe.loc[index, 'accession'] = update.loc[index, 'accession']
-            dataframe.loc[index, 'submission_date'] = update.loc[index, 'submission_date']
+            dataframe.loc[index,
+                          'submission_date'] = update.loc[index, 'submission_date']
             dataframe.loc[index, 'status'] = update.loc[index, 'status']
 
             if schema == 'sample':
-                dataframe.loc[index, 'taxon_id'] = targets.loc[index, 'taxon_id']
+                dataframe.loc[index,
+                              'taxon_id'] = targets.loc[index, 'taxon_id']
             if schema == 'run':
                 # since index is set to alias
                 # then targets of run can have multiple rows with
@@ -455,9 +473,11 @@ def update_table(schema_dataframe, schema_targets, schema_update):
                 # the following assignment assumes 'targets' retain
                 # the orginal row order in 'dataframe'
                 # because targets was initially subset of 'datafram'.
-                dataframe.loc[index, 'file_checksum'] = targets.loc[index, 'file_checksum']
+                dataframe.loc[index,
+                              'file_checksum'] = targets.loc[index, 'file_checksum']
 
     return schema_dataframe
+
 
 def save_update(schema_tables_, schema_dataframe_):
     """Write updated dataframe to tsv file.
@@ -469,7 +489,7 @@ def save_update(schema_tables_, schema_dataframe_):
         :dataframe: a dataframe
     """
 
-    print '\nSubmission is successful:'
+    print ('\nSubmission is successful:')
     for schema in schema_tables_:
         table = schema_tables_[schema]
         dataframe = schema_dataframe_[schema]
@@ -479,7 +499,8 @@ def save_update(schema_tables_, schema_dataframe_):
         update_name = '{0}-{1}{2}'.format(file_name, time, file_extension)
 
         dataframe.to_csv(update_name, sep='\t')
-        print 'save updates in {}'.format(update_name)
+        print ('save updates in {}'.format(update_name))
+
 
 class SmartFormatter(argparse.HelpFormatter):
     '''subclass the HelpFormatter and provide a special intro
@@ -488,11 +509,13 @@ class SmartFormatter(argparse.HelpFormatter):
     :adapted from: Anthon's code at
     https://stackoverflow.com/questions/3853722/python-argparse-how-to-insert-newline-in-the-help-text
     '''
+
     def _split_lines(self, text, width):
         if text.startswith('R|'):
             return text[2:].splitlines()
         # this is the RawTextHelpFormatter._split_lines
         return argparse.HelpFormatter._split_lines(self, text, width)
+
 
 def process_args():
     '''parse command-line arguments
@@ -566,6 +589,7 @@ def process_args():
 
     return args
 
+
 def collect_tables(args):
     '''collect the schema whose table is not None
 
@@ -581,13 +605,14 @@ def collect_tables(args):
 
     return schema_tables
 
+
 if __name__ == "__main__":
 
     args = process_args()
     action = args.action.upper()
     center = args.center_name
 
-    #? a function needed to convert characters e.g. # -> %23 in password
+    # ? a function needed to convert characters e.g. # -> %23 in password
 
     # collect the schema with table input from command-line
     schema_tables = collect_tables(args)
@@ -595,9 +620,9 @@ if __name__ == "__main__":
     # create dataframe from table
     schema_dataframe = create_dataframe(schema_tables)
 
-    #? add a function to sanitiz characters
-    #? print 'validate table for sepcfic action'
-    #? print 'catch error'
+    # ? add a function to sanitiz characters
+    # ? print 'validate table for sepcfic action'
+    # ? print 'catch error'
 
     # extract rows tagged by action
     # these rows are the targets for submission
@@ -609,7 +634,7 @@ if __name__ == "__main__":
         # sbumit data
         if 'run' in schema_targets:
             # a dictionary of filename:file_path
-            #? do I have to define the absolute path
+            # ? do I have to define the absolute path
             file_paths = {os.path.basename(path): os.path.abspath(path)
                           for path in args.data}
 
@@ -636,13 +661,13 @@ if __name__ == "__main__":
             df = schema_targets['sample']
 
             # retrieve taxon id using scientific name
-            print 'retrieving taxon IDs...'
+            print ('retrieving taxon IDs...')
             taxonID = df['scientific_name'].apply(get_taxon_id).values
-            print 'taxon IDs are retrieved'
+            print ('taxon IDs are retrieved')
             df.loc[:, 'taxon_id'] = taxonID
             schema_targets['sample'] = df
 
-    #? need to add a place holder for setting up
+    # ? need to add a place holder for setting up
     template_path = './templates'
     if action in ['ADD', 'MODIFY']:
         # when ADD/MODIFY,
@@ -662,15 +687,15 @@ if __name__ == "__main__":
                                               schema_targets, center)
 
     schema_xmls['submission'] = submission_xml
-    url = 'https://www-test.ebi.ac.uk/ena/submit/drop-box/submit/?auth=ENA'
+    url = 'https://wwwdev.ebi.ac.uk/ena/submit/drop-box/submit/?auth=ENA'
     submit_cmd_line = get_cmd_line(schema_xmls, url, args)
 
-    print '\nSubmitting XMLs to ENA server: {}'.format(url)
-    print 'executing: {}'.format(submit_cmd_line)
+    print ('\nSubmitting XMLs to ENA server: {}'.format(url))
+    print ('executing: {}'.format(submit_cmd_line))
     receipt = run_cmd(submit_cmd_line)
 
-    print '\nReceipt\n'
-    print receipt
+    print ('\nReceipt\n')
+    print (receipt)
 
     schema_update = process_receipt(receipt)
 
