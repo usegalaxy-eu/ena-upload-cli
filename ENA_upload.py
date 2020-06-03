@@ -367,7 +367,7 @@ def get_cmd_line(schema_xmls, url, args):
     return cmd_line
 
 
-def process_receipt(reciept):
+def process_receipt(reciept, action):
     '''Process submission reciept from ENA.
 
     :param receipt: a string of XML
@@ -696,7 +696,7 @@ def main ():
     print ('\nReceipt\n')
     print (receipt)
 
-    schema_update = process_receipt(receipt)
+    schema_update = process_receipt(receipt, action)
 
     schema_dataframe = update_table(schema_dataframe,
                                     schema_targets,
