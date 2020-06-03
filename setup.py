@@ -17,6 +17,7 @@ setup(
     long_description=long_description,
     url="https://github.com/usegalaxy-eu/ena-upload-cli",
     packages=['.'],
+    license='LICENSE',
     install_requires=[required],
     classifiers=[
         "Operating System :: OS Independent"
