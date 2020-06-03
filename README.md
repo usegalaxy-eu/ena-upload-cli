@@ -31,6 +31,18 @@ The program to perform the following actions:
 * lxml
 * pandas
 
+## Installation
+
+**Linux/macOS:**
+```
+sudo python3 -m pip install git+git://github.com/BackofenLab/ENA-upload-tool.git
+```
+
+**Windows:**
+```
+pip install git+git://github.com/BackofenLab/ENA-upload-tool.git
+```
+
 ## Test the tool
 
 **This is still a developmental version, please run the tool in the program directory for now.**
