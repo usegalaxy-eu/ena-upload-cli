@@ -606,8 +606,7 @@ def collect_tables(args):
     return schema_tables
 
 
-if __name__ == "__main__":
-
+def main ():
     args = process_args()
     action = args.action.upper()
     center = args.center_name
@@ -719,3 +718,8 @@ if __name__ == "__main__":
     #      <ACTIONS/>
     #      <ACTIONS/>
     # </RECEIPT>
+
+
+if __name__ == "__main__":
+
+    main()
