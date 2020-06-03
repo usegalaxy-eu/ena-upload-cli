@@ -80,7 +80,7 @@ def check_filenames(file_paths, run_df):
     """
 
     cmd_input = file_paths.keys()
-    table_input = df['file_name'].values
+    table_input = run_df['file_name'].values
 
     # symmetric difference between two sets
     difference = set(cmd_input) ^ set(table_input)
@@ -150,7 +150,7 @@ def construct_xml(schema, stream, xsd):
 
     xml_file = '/tmp/{0}_{1}.xml'.format(schema, str(uuid.uuid4()))
     with open(xml_file, 'w') as fw:
-        fw.write(xml_string)
+        fw.write(xml_string.decode("utf-8") )
 
     print ('wrote {}'.format(xml_file))
 
