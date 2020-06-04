@@ -1,4 +1,6 @@
 from setuptools import setup, find_packages
+from distutils.core import setup, Extension
+
 
 with open("README.md", 'r') as f:
     long_description = f.read()
@@ -8,16 +10,16 @@ with open('requirements.txt', 'r') as f:
 
 setup(
     name='ena-upload-cli',
-    version='0.1',
-    keywords=["pip", "ena_upload_cli", "cli"],
+    version='0.1.1',
+    keywords=["pip", "ena-upload-cli", "cli", "ENA", "upload"],
     description='Command Line Interface to upload data to the European Nucleotide Archive',
     author="Dilmurat Yusuf",
     author_email="bjoern.gruening@gmail.com",
     long_description_content_type='text/markdown',
     long_description=long_description,
     url="https://github.com/usegalaxy-eu/ena-upload-cli",
-    packages=['.'],
-    license='LICENSE',
+    packages=find_packages(),
+    license='MIT',
     install_requires=[required],
     classifiers=[
         "Operating System :: OS Independent"
