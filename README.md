@@ -33,9 +33,8 @@ The program to perform the following actions:
 
 ## Installation
 
-**Linux/macOS:**
 ```
-sudo python3 -m pip install git+git://github.com/usegalaxy-eu/ena-upload-cli.git
+pip install ena-upload-cli
 ```
 
 ## Test the tool
