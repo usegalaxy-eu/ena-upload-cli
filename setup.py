@@ -10,10 +10,12 @@ with open('requirements.txt', 'r') as f:
 
 setup(
     name='ena-upload-cli',
-    version='0.1.1',
+    version='0.1.2',
     keywords=["pip", "ena-upload-cli", "cli", "ENA", "upload"],
     description='Command Line Interface to upload data to the European Nucleotide Archive',
     author="Dilmurat Yusuf",
+    py_modules=['ena_upload'],
+    include_package_data=True,
     author_email="bjoern.gruening@gmail.com",
     long_description_content_type='text/markdown',
     long_description=long_description,
