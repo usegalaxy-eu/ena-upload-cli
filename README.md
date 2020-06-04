@@ -35,7 +35,7 @@ The program to perform the following actions:
 
 **Linux/macOS:**
 ```
-sudo python3 -m pip install git+git://github.com/BackofenLab/ENA-upload-tool.git
+sudo python3 -m pip install git+git://github.com/usegalaxy-eu/ena-upload-cli.git
 ```
 
 ## Test the tool
@@ -59,8 +59,8 @@ outputs:
 
 test command: **add metadata and sequence data**
 
- `python ENA_upload.py --action add --center 'your_center_name' --webin_id your_id --password your_password --study example_tables/ENA_template_studies.tsv --sample example_tables/ENA_template_samples.tsv --experiment example_tables/ENA_template_experiments.tsv --run example_tables/ENA_template_runs.tsv --data example_data/*gz`
+ `python ena_upload.py --action add --center 'your_center_name' --webin_id your_id --password your_password --study example_tables/ENA_template_studies.tsv --sample example_tables/ENA_template_samples.tsv --experiment example_tables/ENA_template_experiments.tsv --run example_tables/ENA_template_runs.tsv --data example_data/*gz`
 
  test command: **modify a metadata**
 
- `python ENA_upload.py --action modify --center 'your_center_name' --webin_id your_id --password your_password --study example_tables/ENA_template_studies-2020-05-01T14\:21.tsv`
+ `python ena_upload.py --action modify --center 'your_center_name' --webin_id your_id --password your_password --study example_tables/ENA_template_studies-2020-05-01T14\:21.tsv`

@@ -1,15 +1,15 @@
-from setuptools import setup
+from setuptools import setup, find_packages
 
 with open("README.md", 'r') as f:
     long_description = f.read()
 
-with open('requirements.txt') as f:
+with open('requirements.txt', 'r') as f:
     required = f.read().splitlines()
 
 setup(
     name='ena-upload-cli',
     version='0.1',
-    keywords=["pip", "ena-upload", "cli"],
+    keywords=["pip", "ena_upload_cli", "cli"],
     description='Command Line Interface to upload data to the European Nucleotide Archive',
     author="Dilmurat Yusuf",
     author_email="bjoern.gruening@gmail.com",
@@ -25,7 +25,7 @@ setup(
     python_requires='>=2.7',
     entry_points={
         "console_scripts": [
-            "ena-upload = ena-upload:main"
+            "ena-upload-cli = ena_upload:main"
         ]
     },
 )
