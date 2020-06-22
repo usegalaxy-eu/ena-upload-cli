@@ -37,6 +37,17 @@ The program to perform the following actions:
 pip install ena-upload-cli
 ```
 
+## Usage
+```
+ENA_upload [-h] --action {add,modify} [--study STUDY]
+                  --center CENTER_NAME --webin_id
+                  WEBIN_ID --password PASSWORD
+                  [--sample SAMPLE] [--experiment EXPERIMENT] [--run RUN]
+                  [--data [FILE [FILE ...]]] 
+```
+
+Mandatory arguments: --action, --center, --webin_id, --password.
+
 ## Test the tool
 
 **This is still a developmental version, please run the tool in the program directory for now.**

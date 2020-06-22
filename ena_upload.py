@@ -66,7 +66,7 @@ def extract_targets(action, schema_dataframe):
 
     for schema, dataframe in schema_dataframe.items():
         filtered = dataframe.query('status=="{}"'.format(action))
-        # ? add a fucntion to control empty filtered, return error
+        # ? add a function to control empty filtered, return error
         schema_targets[schema] = filtered
 
     return schema_targets
@@ -299,14 +299,12 @@ def get_taxon_id(scientific_name):
         sys.exit(msg)
 
 
-def submit_data(file_paths, args):
+def submit_data(file_paths, password, webin_id):
     """Submit data to webin ftp server.
 
     :param file_paths: a dictionary of filename string and file_path string
     :param args: the command-line arguments parsed by ArgumentParser
     """
-    webin_id = args.webin_id
-    password = args.password
 
     try:
         print ("\nconnecting to ftp.webin.ebi.ac.uk....")
@@ -333,7 +331,7 @@ def columns_to_update(df):
     return df[df.apply(lambda x: x == 'to_update')].dropna(axis=1, how='all').columns
 
 
-def get_cmd_line(schema_xmls, url, args):
+def get_cmd_line(schema_xmls, url, webin_id, password):
     '''submit compiled XML files to the given ENA server
     return the reciept object after the submission.
 
@@ -354,8 +352,6 @@ def get_cmd_line(schema_xmls, url, args):
     password -- ENA password of user
     '''
 
-    webin_id = args.webin_id
-    password = args.password
 
     server = '{}%20{}%20{}'.format(url, webin_id, password)
     sources = ['-F {}=@{}'.format(schema.upper(), source)
@@ -525,7 +521,7 @@ def process_args():
                                      description='''The program makes submission
                                      of data and respective metadata to European
                                      Nucleotide Archive (ENA). The metadate
-                                     should be provided in seperate tables
+                                     should be provided in separate tables
                                      corresponding the ENA objects -- STUDY,
                                      SAMPLE, EXPERIMENT and RUN.''',
                                      formatter_class=SmartFormatter)
@@ -564,16 +560,30 @@ def process_args():
                         required=True,
                         help='the usermane of your Webin account')
 
-    parser.add_argument('--password',
-                        required=True,
+    password_group = parser.add_mutually_exclusive_group(required=True)
+
+    password_group.add_argument('--password',
                         help='the password of your Webin account')
+
+    password_group.add_argument('--secret',
+                        help='.secret file containing the password of your Webin account')
+
+    parser.add_argument('-d', '--dev', help="Flag to use the dev/sandbox endpoint of ENA.", action="store_true")
 
     args = parser.parse_args()
 
     # check if any table is given
     tables = set([args.study, args.sample, args.experiment, args.run])
     if tables == {None}:
-        parser.error('requires at leasr one table for submission')
+        parser.error('requires at least one table for submission')
+
+    # check if .secret file exists
+
+    if args.secret:
+        if not os.path.isfile(args.secret):
+            msg = "Oops, the file {} does not exist".format(args.secret)
+            parser.error(msg)
+
 
     # check if data is given when adding a 'run' table
     if args.action == 'add' and args.run is not None:
@@ -610,6 +620,17 @@ def main ():
     args = process_args()
     action = args.action.upper()
     center = args.center_name
+    dev = args.dev
+    webin_id = args.webin_id
+    password = ""
+
+    if args.password:
+        password = args.password
+    else:
+        secret_file = open(args.secret, "r")
+        password = secret_file.readline()
+        if not password:
+            print( "Oops, file {} does not contain a password on the first line.".format(args.secret))
 
     # ? a function needed to convert characters e.g. # -> %23 in password
 
@@ -619,8 +640,8 @@ def main ():
     # create dataframe from table
     schema_dataframe = create_dataframe(schema_tables)
 
-    # ? add a function to sanitiz characters
-    # ? print 'validate table for sepcfic action'
+    # ? add a function to sanitize characters
+    # ? print 'validate table for specific action'
     # ? print 'catch error'
 
     # extract rows tagged by action
@@ -630,7 +651,7 @@ def main ():
     if action == 'ADD':
         # when adding run object
         # update schema_targets wit md5 hash
-        # sbumit data
+        # submit data
         if 'run' in schema_targets:
             # a dictionary of filename:file_path
             # ? do I have to define the absolute path
@@ -652,7 +673,7 @@ def main ():
             schema_targets['run'] = df
 
             # submit data to webin ftp server
-            submit_data(file_paths, args)
+            submit_data(file_paths, password, webin_id)
 
         # when adding sample
         # update schema_targets with taxon ids
@@ -686,8 +707,13 @@ def main ():
                                               schema_targets, center)
 
     schema_xmls['submission'] = submission_xml
-    url = 'https://wwwdev.ebi.ac.uk/ena/submit/drop-box/submit/?auth=ENA'
-    submit_cmd_line = get_cmd_line(schema_xmls, url, args)
+
+    if dev:
+        url = 'https://wwwdev.ebi.ac.uk/ena/submit/drop-box/submit/?auth=ENA'
+    else:
+        url = 'https://www.ebi.ac.uk/ena/submit/drop-box/submit/?auth=ENA'
+
+    submit_cmd_line = get_cmd_line(schema_xmls, url, webin_id, password)
 
     print ('\nSubmitting XMLs to ENA server: {}'.format(url))
     print ('executing: {}'.format(submit_cmd_line))
