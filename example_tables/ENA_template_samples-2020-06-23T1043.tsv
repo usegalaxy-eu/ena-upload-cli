@@ -1,0 +1,3 @@
+alias	status	accession	title	scientific_name	taxon_id	sample_description	submission_date
+sample_alias_4	added	ERS4778182	sample_title_1	homo sapiens	9606	sample_description_1	2020-06-23T09:43:51.215+01:00
+sample_alias_5	added	ERS4778183	sample_title_2	human metagenome	646099	sample_description_2	2020-06-23T09:43:51.215+01:00

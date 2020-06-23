@@ -491,7 +491,7 @@ def save_update(schema_tables_, schema_dataframe_):
         dataframe = schema_dataframe_[schema]
 
         file_name, file_extension = os.path.splitext(table)
-        time = '{:%Y-%m-%dT%H:%M}'.format(datetime.datetime.now())
+        time = '{:%Y-%m-%dT%H%M}'.format(datetime.datetime.now())
         update_name = '{0}-{1}{2}'.format(file_name, time, file_extension)
 
         dataframe.to_csv(update_name, sep='\t')
@@ -631,6 +631,7 @@ def main ():
         password = secret_file.readline()
         if not password:
             print( "Oops, file {} does not contain a password on the first line.".format(args.secret))
+        secret_file.close()
 
     # ? a function needed to convert characters e.g. # -> %23 in password
 
