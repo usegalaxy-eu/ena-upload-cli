@@ -150,7 +150,7 @@ def construct_xml(schema, stream, xsd):
 
     validate_xml(xsd, xml_string)
 
-    xml_file = '{0}/{1}_{2}.xml'.format(tempfile.gettempdir(), schema, str(uuid.uuid4()))
+    xml_file = os.path.join(tempfile.gettempdir(), schema + '_' + str(uuid.uuid4()) + '.xml')
     with open(xml_file, 'w') as fw:
         fw.write(xml_string.decode("utf-8") )
 
