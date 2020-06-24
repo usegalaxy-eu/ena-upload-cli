@@ -17,6 +17,8 @@ import datetime
 from genshi.template import TemplateLoader
 from lxml import etree
 import pandas as pd
+import tempfile
+
 
 # SettingWithCopyWarning causes false positive
 # e.g at df.loc[:, 'file_checksum'] = md5
@@ -148,7 +150,7 @@ def construct_xml(schema, stream, xsd):
 
     validate_xml(xsd, xml_string)
 
-    xml_file = '/tmp/{0}_{1}.xml'.format(schema, str(uuid.uuid4()))
+    xml_file = '{0}/{1}_{2}.xml'.format(tempfile.gettempdir(), schema, str(uuid.uuid4()))
     with open(xml_file, 'w') as fw:
         fw.write(xml_string.decode("utf-8") )
 
