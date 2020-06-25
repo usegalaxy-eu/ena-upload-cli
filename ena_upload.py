@@ -719,7 +719,6 @@ def main ():
     submit_cmd_line = get_cmd_line(schema_xmls, url, webin_id, password)
 
     print ('\nSubmitting XMLs to ENA server: {}'.format(url))
-    print ('executing: {}'.format(submit_cmd_line))
     receipt = run_cmd(submit_cmd_line)
 
     print ('\nReceipt\n')
