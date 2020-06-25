@@ -107,4 +107,4 @@ test command: **add metadata and sequence data**
 
 test command **.secret file**
 
-`ena-upload-cli --action add --center "VIB - UGENT" --webin_id Webin-56059 --study example_tables/ENA_template_studies.tsv --sample example_tables/ENA_template_samples.tsv --experiment example_tables/ENA_template_experiments.tsv --run example_tables/ENA_template_runs.tsv --data example_data/*gz --dev --secret .secret`
+`ena-upload-cli --action add --center 'your_center_name' --webin_id your_id --study example_tables/ENA_template_studies.tsv --sample example_tables/ENA_template_samples.tsv --experiment example_tables/ENA_template_experiments.tsv --run example_tables/ENA_template_runs.tsv --data example_data/*gz --dev --secret .secret`
