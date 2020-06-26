@@ -76,7 +76,22 @@ To avoid exposing you password through the terminal history, it is recommended t
 
 By default the submission will be done using following url to ENA: https://www.ebi.ac.uk/ena/submit/drop-box/submit/?auth=ENA
 
-Use the *--dev* flag if you want to do a test submission using the tool by the sandbox dev instance of ENA: https://wwwdev.ebi.ac.uk/ena/submit/drop-box/submit/?auth=ENA. A TEST submission will be discarded within 24 hours
+Use the *--dev* flag if you want to do a test submission using the tool by the sandbox dev instance of ENA: https://wwwdev.ebi.ac.uk/ena/submit/drop-box/submit/?auth=ENA. A TEST submission will be discarded within 24 hours.
+
+### The data files
+
+**Supported data**
+
+- [x] Read data
+- [ ] Genome Assembly
+- [ ] Transcriptome Assembly
+- [x] Template Sequence
+- [x] Other Analyses
+
+
+Most files uploaded to the ENA FTP server need to be compressed.
+
+More information on how ENA wants to receive the files can be found [here](https://ena-docs.readthedocs.io/en/latest/submit/fileprep/preparation.html).
 
 ## Test the tool
 
