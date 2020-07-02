@@ -1,3 +1,6 @@
+![](https://anaconda.org/bioconda/ena-upload-cli/badges/version.svg)
+![](https://badge.fury.io/py/ena-upload-cli.svg)
+
 # ENA upload tool
 
 ## About
