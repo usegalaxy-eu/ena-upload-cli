@@ -1,5 +1,6 @@
-![](https://anaconda.org/bioconda/ena-upload-cli/badges/version.svg)
-![](https://badge.fury.io/py/ena-upload-cli.svg)
+![Python application](https://github.com/usegalaxy-eu/ena-upload-cli/workflows/Python%20application/badge.svg)
+![BioConda version](https://anaconda.org/bioconda/ena-upload-cli/badges/version.svg)
+![Pipy version](https://badge.fury.io/py/ena-upload-cli.svg)
 
 # ENA upload tool
 
