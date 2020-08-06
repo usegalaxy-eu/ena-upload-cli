@@ -15,7 +15,6 @@ import ftplib
 import uuid
 import datetime
 from genshi.template import TemplateLoader
-import pkg_resources
 from lxml import etree
 import pandas as pd
 import tempfile
