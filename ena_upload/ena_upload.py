@@ -15,6 +15,7 @@ import ftplib
 import uuid
 import datetime
 from genshi.template import TemplateLoader
+import pkg_resources
 from lxml import etree
 import pandas as pd
 import tempfile
@@ -270,8 +271,10 @@ def run_cmd(cmd_line):
     """
 
     args = shlex.split(cmd_line)
-    output = subprocess.check_output(args)
-
+    process = subprocess.Popen(args,
+                     stdout=subprocess.PIPE, 
+                     stderr=subprocess.PIPE)
+    output, stderr = process.communicate()
     return output
 
 
@@ -283,21 +286,18 @@ def get_taxon_id(scientific_name):
     :return taxon_id: NCBI taxonomy identifier
     """
     # endpoint for taxonomy id
-    url = 'https://www.ebi.ac.uk/ena/data/taxonomy/v1/taxon/scientific-name'
+    url = 'https://www.ebi.ac.uk/ena/taxonomy/rest/scientific-name'
 
     # url encoding: space -> %20
     scientific_name_ = '%20'.join(scientific_name.strip().split())
 
     cmd_line = 'curl {}/{}'.format(url, scientific_name_)
-
-    output = run_cmd(cmd_line)
-
+    output = run_cmd(cmd_line).decode("utf-8") 
     try:
         taxon_id = json.loads(output)[0]['taxId']
         return taxon_id
     except ValueError:
-        msg = 'Oops, no taxon ID avaible for {}.'.format(scientific_name)
-        msg = msg + ' Is it a valid scientific name?'
+        msg = 'Oops, no taxon ID avaible for {}. Is it a valid scientific name?'.format(scientific_name)
         sys.exit(msg)
 
 
@@ -323,7 +323,6 @@ def submit_data(file_paths, password, webin_id):
         print (msg)
 
     print (ftp.quit())
-
 
 def columns_to_update(df):
     '''
@@ -691,7 +690,8 @@ def main ():
             schema_targets['sample'] = df
 
     # ? need to add a place holder for setting up
-    template_path = './templates'
+    base_path = os.path.abspath(os.path.dirname(__file__))
+    template_path = os.path.join(base_path,'templates')
     if action in ['ADD', 'MODIFY']:
         # when ADD/MODIFY,
         # requires source XMLs for 'run', 'experiment', 'sample', 'experiment'
