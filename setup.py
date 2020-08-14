@@ -12,7 +12,6 @@ setup(
     keywords=["pip", "ena-upload-cli", "cli", "ENA", "upload"],
     description='Command Line Interface to upload data to the European Nucleotide Archive',
     author="Dilmurat Yusuf",
-    include_package_data=True,
     author_email="bjoern.gruening@gmail.com",
     long_description_content_type='text/markdown',
     packages=['ena_upload'],
