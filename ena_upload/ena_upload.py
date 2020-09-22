@@ -159,7 +159,7 @@ def construct_xml(schema, stream, xsd):
     return xml_file
 
 
-def actors(template_path):
+def actors(template_path, vir):
     ''':return: the filenames of schema definitions and templates
     '''
 
@@ -173,19 +173,25 @@ def actors(template_path):
             'submission': 'SRA.submission.xsd',
             'sample': 'SRA.sample.xsd',
             'study': 'SRA.study.xsd'}
-
-    templates = {'run': 'ENA_template_runs.xml',
-                 'experiment': 'ENA_template_experiments.xml',
-                 'submission': 'ENA_template_submission.xml',
-                 'sample': 'ENA_template_samples.xml',
-                 'study': 'ENA_template_studies.xml'}
+    if vir:
+        templates = {'run': 'ENA_template_runs.xml',
+                    'experiment': 'ENA_template_experiments.xml',
+                    'submission': 'ENA_template_submission.xml',
+                    'sample': 'ENA_template_vir_sample.xml',
+                    'study': 'ENA_template_studies.xml'}
+    else:
+        templates = {'run': 'ENA_template_runs.xml',
+                    'experiment': 'ENA_template_experiments.xml',
+                    'submission': 'ENA_template_submission.xml',
+                    'sample': 'ENA_template_samples.xml',
+                    'study': 'ENA_template_studies.xml'}
 
     xsds = add_path(xsds, template_path)
 
     return xsds, templates
 
 
-def run_construct(template_path, schema_targets,  center):
+def run_construct(template_path, schema_targets,  center, vir):
     '''construct XMLs for schema in schema_targets
 
     :param schema_targets: dictionary of 'schema:targets' generated
@@ -196,7 +202,7 @@ def run_construct(template_path, schema_targets,  center):
     :return schema_xmls: dictionary of 'schema:filename'
     '''
 
-    xsds, templates = actors(template_path)
+    xsds, templates = actors(template_path, vir)
 
     schema_xmls = {}
 
@@ -211,7 +217,7 @@ def run_construct(template_path, schema_targets,  center):
     return schema_xmls
 
 
-def construct_submission(template_path, action, submission_input, center):
+def construct_submission(template_path, action, submission_input, center, vir):
     '''construct XML for submission
 
     :param action: action for submission -
@@ -224,7 +230,7 @@ def construct_submission(template_path, action, submission_input, center):
     :return submission_xml: filename of submission XML
     '''
 
-    xsds, templates = actors(template_path)
+    xsds, templates = actors(template_path, vir)
 
     template = templates['submission']
     loader = TemplateLoader(search_path=template_path)
@@ -569,6 +575,8 @@ def process_args():
                         help='.secret file containing the password of your Webin account')
 
     parser.add_argument('-d', '--dev', help="Flag to use the dev/sandbox endpoint of ENA.", action="store_true")
+    
+    parser.add_argument('--vir', help="Flag to use the viral sample template.", action="store_true")
 
     args = parser.parse_args()
 
@@ -621,6 +629,7 @@ def main ():
     action = args.action.upper()
     center = args.center_name
     dev = args.dev
+    vir = args.vir
     webin_id = args.webin_id
     password = ""
 
@@ -695,10 +704,10 @@ def main ():
         # when ADD/MODIFY,
         # requires source XMLs for 'run', 'experiment', 'sample', 'experiment'
         # schema_xmls record XMLs for all these schema and following 'submission'
-        schema_xmls = run_construct(template_path, schema_targets, center)
+        schema_xmls = run_construct(template_path, schema_targets, center, vir)
 
         submission_xml = construct_submission(template_path, action,
-                                              schema_xmls, center)
+                                              schema_xmls, center, vir)
 
     elif action in ['CANCEL', 'RELEASE']:
         # when CANCEL/RELEASE, only accessions needed
@@ -706,7 +715,7 @@ def main ():
         schema_xmls = {}
 
         submission_xml = construct_submission(template_path, action,
-                                              schema_targets, center)
+                                              schema_targets, center, vir)
 
     schema_xmls['submission'] = submission_xml
 
