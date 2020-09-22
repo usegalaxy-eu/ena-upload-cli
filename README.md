@@ -62,6 +62,7 @@ optional arguments:
   --password PASSWORD   the password of your Webin account
   --secret SECRET       .secret file containing the password  of your Webin account
   -d, --dev             Flag to use the dev/sandbox endpoint of ENA.
+  --vir                 Flag to use the viral sample template.
 ```
 
 Mandatory arguments: --action, --center, --webin_id, --password or --secret.
@@ -127,3 +128,7 @@ test command: **add metadata and sequence data**
 test command **.secret file**
 
 `ena-upload-cli --action add --center 'your_center_name' --webin_id your_id --study example_tables/ENA_template_studies.tsv --sample example_tables/ENA_template_samples.tsv --experiment example_tables/ENA_template_experiments.tsv --run example_tables/ENA_template_runs.tsv --data example_data/*gz --dev --secret .secret`
+
+test command for **viral data**
+
+ `ena_upload --action add --center 'your_center_name' --webin_id your_id --password your_password --study example_tables/ENA_template_studies.tsv --sample example_tables/ENA_template_samples_vir.tsv --experiment example_tables/ENA_template_experiments.tsv --run example_tables/ENA_template_runs.tsv --data example_data/*gz --dev --vir`
