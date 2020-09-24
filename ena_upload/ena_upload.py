@@ -359,12 +359,11 @@ def get_cmd_line(schema_xmls, url, webin_id, password):
     '''
 
 
-    server = '{}%20{}%20{}'.format(url, webin_id, password)
     sources = ['-F {}=@{}'.format(schema.upper(), source)
                for schema, source in schema_xmls.items()]
     sources = ' '.join(sources)
 
-    cmd_line = 'curl -k {} {}'.format(sources, server)
+    cmd_line = 'curl -u {}:{} {} {}'.format(webin_id, password, sources, url)
 
     return cmd_line
 
