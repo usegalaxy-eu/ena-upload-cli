@@ -130,7 +130,7 @@ def generate_stream(schema, targets, Template, center):
         # param in generate() determined by the setup in template
         stream = Template.generate(run_groups=run_groups,
                                    file_groups=file_groups,
-                                   center='test_cneter')
+                                   center=center)
     else:
         stream = Template.generate(df=targets, center=center)
 
