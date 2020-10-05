@@ -20,6 +20,12 @@
         <DESCRIPTION>${row.sample_description}</DESCRIPTION>
         <!--TODO: A LONGER DESCRIPTION OF SAMPLE AND HOW IT DIFFERS FROM
             OTHER SAMPLES-->
+        <SAMPLE_ATTRIBUTES>
+            <SAMPLE_ATTRIBUTE>
+                <TAG>SUBMISSION_TOOL</TAG>
+                <VALUE>${tool}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+        </SAMPLE_ATTRIBUTES>
     </SAMPLE>
     </py:for>
 </SAMPLE_SET>

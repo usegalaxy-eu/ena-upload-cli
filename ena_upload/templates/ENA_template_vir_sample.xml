@@ -69,6 +69,10 @@
                 <TAG>ENA-CHECKLIST</TAG>
                 <VALUE>ERC000033</VALUE>
             </SAMPLE_ATTRIBUTE>
+            <SAMPLE_ATTRIBUTE>
+                <TAG>SUBMISSION_TOOL</TAG>
+                <VALUE>${tool}</VALUE>
+            </SAMPLE_ATTRIBUTE>
         </SAMPLE_ATTRIBUTES>
     </SAMPLE>
     </py:for>

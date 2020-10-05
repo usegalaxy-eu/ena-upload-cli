@@ -18,6 +18,12 @@
                 </py:for>
             </FILES>
         </DATA_BLOCK>
+        <RUN_ATTRIBUTES>
+            <RUN_ATTRIBUTE>
+                <TAG>SUBMISSION_TOOL</TAG>
+                <VALUE>${tool}</VALUE>
+            </RUN_ATTRIBUTE>
+        </RUN_ATTRIBUTES>
     </RUN>
     <!-- If you are submitting more than one run, replicate the block <RUN> to </RUN> here,
         as many times as necessary. -->

@@ -35,6 +35,12 @@
                         <!--TODO: PROTOCOL BY WHICH THE LIBRARY WAS CONSTRUCTED-->
                 </LIBRARY_DESCRIPTOR>
             </DESIGN>
+            <EXPERIMENT_ATTRIBUTES>
+                <EXPERIMENT_ATTRIBUTE>
+                    <TAG>SUBMISSION_TOOL</TAG>
+                    <VALUE>${tool}</VALUE>
+                </EXPERIMENT_ATTRIBUTE>
+            </EXPERIMENT_ATTRIBUTES>
             <xi:include href="ENA_template_PLATFORM.xml" />
             <!--TODO: CHOOSE PLATFORM FROM CONTROLLED VOCABULARY-->
             <!--TODO: CHOOSE INSTRUMENT_MODEL FROM CONTROLLED VOCABULARY-->

@@ -106,7 +106,7 @@ def validate_xml(xsd, xml):
     return xmlschema.assertValid(doc)
 
 
-def generate_stream(schema, targets, Template, center):
+def generate_stream(schema, targets, Template, center, tool):
     ''' generate stream from Template cache
 
     :param schema: ENA objects -- run, experiment, sample, study
@@ -114,6 +114,7 @@ def generate_stream(schema, targets, Template, center):
     :param Template: Template cache genrated by TemplateLoader
                      in genshi
     :param center: center name used to register ENA Webin
+    :param tool: tool name, by default ena-upload-cli
 
     :return: stream
     '''
@@ -130,9 +131,10 @@ def generate_stream(schema, targets, Template, center):
         # param in generate() determined by the setup in template
         stream = Template.generate(run_groups=run_groups,
                                    file_groups=file_groups,
-                                   center=center)
+                                   center=center,
+                                   tool=tool)
     else:
-        stream = Template.generate(df=targets, center=center)
+        stream = Template.generate(df=targets, center=center, tool=tool)
 
     return stream
 
@@ -191,13 +193,15 @@ def actors(template_path, vir):
     return xsds, templates
 
 
-def run_construct(template_path, schema_targets,  center, vir):
+def run_construct(template_path, schema_targets,  center, vir, tool):
     '''construct XMLs for schema in schema_targets
 
     :param schema_targets: dictionary of 'schema:targets' generated
                            by extract_targets()
     :param loader: object of TemplateLoader in genshi
     :param center: center name used to register ENA Webin
+    :param tool: tool name, by default ena-upload-cli
+    :param vir: flag to enable viral sample submission
 
     :return schema_xmls: dictionary of 'schema:filename'
     '''
@@ -210,14 +214,14 @@ def run_construct(template_path, schema_targets,  center, vir):
     for schema, targets in schema_targets.items():
         template = templates[schema]
         Template = loader.load(template)
-        stream = generate_stream(schema, targets, Template, center)
+        stream = generate_stream(schema, targets, Template, center, tool)
 
         schema_xmls[schema] = construct_xml(schema, stream, xsds[schema])
 
     return schema_xmls
 
 
-def construct_submission(template_path, action, submission_input, center, vir):
+def construct_submission(template_path, action, submission_input, center, vir, tool):
     '''construct XML for submission
 
     :param action: action for submission -
@@ -226,6 +230,8 @@ def construct_submission(template_path, action, submission_input, center, vir):
                              CANCEL/RELEASE: schema_targets
     :param loader: object of TemplateLoader in genshi
     :param center: center name used to register ENA Webin
+    :param tool: tool name, by default ena-upload-cli
+    :param vir: flag to enable viral sample submission
 
     :return submission_xml: filename of submission XML
     '''
@@ -237,7 +243,7 @@ def construct_submission(template_path, action, submission_input, center, vir):
     Template = loader.load(template)
 
     stream = Template.generate(action=action, input=submission_input,
-                               center=center)
+                               center=center, tool=tool)
 
     submission_xml = construct_xml('submission', stream, xsds['submission'])
 
@@ -560,6 +566,10 @@ def process_args():
                         dest='center_name',
                         required=True,
                         help='specific to your Webin account')
+    parser.add_argument('--tool',
+                        dest='tool_name',
+                        default='ena-upload-cli',
+                        help='Specify the name of the tool this submission is done with.')
 
     parser.add_argument('--webin_id',
                         required=True,
@@ -627,6 +637,7 @@ def main ():
     args = process_args()
     action = args.action.upper()
     center = args.center_name
+    tool = args.tool_name
     dev = args.dev
     vir = args.vir
     webin_id = args.webin_id
@@ -703,10 +714,10 @@ def main ():
         # when ADD/MODIFY,
         # requires source XMLs for 'run', 'experiment', 'sample', 'experiment'
         # schema_xmls record XMLs for all these schema and following 'submission'
-        schema_xmls = run_construct(template_path, schema_targets, center, vir)
+        schema_xmls = run_construct(template_path, schema_targets, center, vir, tool)
 
         submission_xml = construct_submission(template_path, action,
-                                              schema_xmls, center, vir)
+                                              schema_xmls, center, vir, tool)
 
     elif action in ['CANCEL', 'RELEASE']:
         # when CANCEL/RELEASE, only accessions needed
@@ -714,7 +725,7 @@ def main ():
         schema_xmls = {}
 
         submission_xml = construct_submission(template_path, action,
-                                              schema_targets, center, vir)
+                                              schema_targets, center, vir, tool)
 
     schema_xmls['submission'] = submission_xml
 

@@ -25,6 +25,12 @@
                 </XREF_LINK>
             </STUDY_LINK>
         </STUDY_LINKS>
+        <STUDY_ATTRIBUTES>
+            <STUDY_ATTRIBUTE>
+                <TAG>SUBMISSION_TOOL</TAG>
+                <VALUE>${tool}</VALUE>
+            </STUDY_ATTRIBUTE>
+        </STUDY_ATTRIBUTES>
     </STUDY>
     </py:for>
 </STUDY_SET>
