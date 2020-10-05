@@ -49,7 +49,9 @@ optional arguments:
   -h, --help            show this help message and exit
   --action {add,modify,cancel,release}
                          add: add an object to the archive
-                         modify: modify an object in the 
+                         modify: modify an object in the archive
+                         cancel: cancel a private object and its dependent objects
+                         release: release a private object immediately to public
   --study STUDY         table of STUDY object
   --sample SAMPLE       table of SAMPLE object
   --experiment EXPERIMENT
@@ -58,9 +60,10 @@ optional arguments:
   --data [FILE [FILE ...]]
                         data for submission
   --center CENTER_NAME  specific to your Webin account
+  --tool TOOL_NAME      Specify the name of the tool this submission is done with.
   --webin_id WEBIN_ID   the usermane of your Webin account
   --password PASSWORD   the password of your Webin account
-  --secret SECRET       .secret file containing the password  of your Webin account
+  --secret SECRET       .secret file containing the password of your Webin account
   -d, --dev             Flag to use the dev/sandbox endpoint of ENA.
   --vir                 Flag to use the viral sample template.
 ```
