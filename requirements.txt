@@ -1,3 +1,4 @@
 genshi
 lxml
 pandas
+pyyaml

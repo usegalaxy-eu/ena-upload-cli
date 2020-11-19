@@ -61,22 +61,20 @@ optional arguments:
                         data for submission
   --center CENTER_NAME  specific to your Webin account
   --tool TOOL_NAME      Specify the name of the tool this submission is done with.
-  --webin_id WEBIN_ID   the usermane of your Webin account
-  --password PASSWORD   the password of your Webin account
   --secret SECRET       .secret file containing the password of your Webin account
   -d, --dev             Flag to use the dev/sandbox endpoint of ENA.
   --vir                 Flag to use the viral sample template.
 ```
 
-Mandatory arguments: --action, --center, --webin_id, --password or --secret.
+Mandatory arguments: --action, --center, --tool and --secret.
 
 ### ENA Webin
 
 A Webin can be made [here](https://www.ebi.ac.uk/ena/submit/sra/#home) if you don't have one already. The *--webin_id* parameter makes use of the full username looking like: `Webin-XXXXX`. Visit [Webin online](https://www.ebi.ac.uk/ena/submit/webin) to check on your submissions or [dev Webin](https://wwwdev.ebi.ac.uk/ena/submit/webin) to check on test submissions.
 
-### The password parameter
+### The .secret.yml file
 
-To avoid exposing you password through the terminal history, it is recommended to make use of a `.secret` file, containing your password on the first line. Use instead of the *--password* parameter in the ena-upload-cli tool the *--secret* parameter to specify the location of the .secret file.
+To avoid exposing your credentials through the terminal history, it is recommended to make use of a `.secret.yml` file, containing your password and username keywords. 
 
 
 ### dev instance
@@ -122,16 +120,12 @@ outputs:
 
 test command: **add metadata and sequence data**
 
- `ena_upload --action add --center 'your_center_name' --webin_id your_id --password your_password --study example_tables/ENA_template_studies.tsv --sample example_tables/ENA_template_samples.tsv --experiment example_tables/ENA_template_experiments.tsv --run example_tables/ENA_template_runs.tsv --data example_data/*gz --dev`
+ `ena_upload --action add --center 'your_center_name' --study example_tables/ENA_template_studies.tsv --sample example_tables/ENA_template_samples.tsv --experiment example_tables/ENA_template_experiments.tsv --run example_tables/ENA_template_runs.tsv --data example_data/*gz --dev --secret .secret.yml --tool "ENA upload cli"`
 
  test command: **modify a metadata**
 
- `ena_upload --action modify --center 'your_center_name' --webin_id your_id --password your_password --study example_tables/ENA_template_studies-2020-05-01T1421.tsv --dev`
-
-test command **.secret file**
-
-`ena-upload-cli --action add --center 'your_center_name' --webin_id your_id --study example_tables/ENA_template_studies.tsv --sample example_tables/ENA_template_samples.tsv --experiment example_tables/ENA_template_experiments.tsv --run example_tables/ENA_template_runs.tsv --data example_data/*gz --dev --secret .secret`
+ `ena_upload --action modify --center 'your_center_name' --study example_tables/ENA_template_studies-2020-05-01T1421.tsv --dev --tool "ENA upload cli"`
 
 test command for **viral data**
 
- `ena_upload --action add --center 'your_center_name' --webin_id your_id --password your_password --study example_tables/ENA_template_studies.tsv --sample example_tables/ENA_template_samples_vir.tsv --experiment example_tables/ENA_template_experiments.tsv --run example_tables/ENA_template_runs.tsv --data example_data/*gz --dev --vir`
+ `ena_upload --action add --center 'your_center_name' --study example_tables/ENA_template_studies.tsv --sample example_tables/ENA_template_samples_vir.tsv --experiment example_tables/ENA_template_experiments.tsv --run example_tables/ENA_template_runs.tsv --data example_data/*gz --dev --vir --tool "ENA upload cli"`

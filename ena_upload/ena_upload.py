@@ -10,6 +10,7 @@ import subprocess
 import shlex
 import json
 import argparse
+import yaml
 import hashlib
 import ftplib
 import uuid
@@ -569,18 +570,11 @@ def process_args():
     parser.add_argument('--tool',
                         dest='tool_name',
                         default='ena-upload-cli',
+                        required=True,
                         help='Specify the name of the tool this submission is done with.')
 
-    parser.add_argument('--webin_id',
+    parser.add_argument('--secret',
                         required=True,
-                        help='the usermane of your Webin account')
-
-    password_group = parser.add_mutually_exclusive_group(required=True)
-
-    password_group.add_argument('--password',
-                        help='the password of your Webin account')
-
-    password_group.add_argument('--secret',
                         help='.secret file containing the password of your Webin account')
 
     parser.add_argument('-d', '--dev', help="Flag to use the dev/sandbox endpoint of ENA.", action="store_true")
@@ -595,7 +589,6 @@ def process_args():
         parser.error('requires at least one table for submission')
 
     # check if .secret file exists
-
     if args.secret:
         if not os.path.isfile(args.secret):
             msg = "Oops, the file {} does not exist".format(args.secret)
@@ -640,17 +633,17 @@ def main ():
     tool = args.tool_name
     dev = args.dev
     vir = args.vir
-    webin_id = args.webin_id
-    password = ""
+    secret = args.secret
 
-    if args.password:
-        password = args.password
-    else:
-        secret_file = open(".secret", "r")
-        password = secret_file.readline().strip()
-        if not password:
-            print( "Oops, file {} does not contain a password on the first line.".format(args.secret))
-        secret_file.close()
+    secret_file = open(secret, "r")
+    credentials = yaml.load(secret_file, Loader=yaml.FullLoader)
+
+    password = credentials['password'].strip()
+    webin_id = credentials['username'].strip()
+
+    if not password:
+        print( "Oops, file {} does not contain a password on the first line.".format(args.secret))
+    secret_file.close()
 
     # ? a function needed to convert characters e.g. # -> %23 in password
 
