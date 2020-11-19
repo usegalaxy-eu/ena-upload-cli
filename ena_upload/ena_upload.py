@@ -646,8 +646,8 @@ def main ():
     if args.password:
         password = args.password
     else:
-        secret_file = open(args.secret, "r")
-        password = secret_file.readline()
+        secret_file = open(".secret", "r")
+        password = secret_file.readline().strip()
         if not password:
             print( "Oops, file {} does not contain a password on the first line.".format(args.secret))
         secret_file.close()
