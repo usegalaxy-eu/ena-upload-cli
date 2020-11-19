@@ -641,8 +641,8 @@ def main ():
     password = credentials['password'].strip()
     webin_id = credentials['username'].strip()
 
-    if not password:
-        print( "Oops, file {} does not contain a password on the first line.".format(args.secret))
+    if not password or not webin_id:
+        print( "Oops, file {} does not contain a password or username".format(args.secret))
     secret_file.close()
 
     # ? a function needed to convert characters e.g. # -> %23 in password
