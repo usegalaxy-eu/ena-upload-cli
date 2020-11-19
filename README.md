@@ -99,9 +99,8 @@ Most files uploaded to the ENA FTP server need to be compressed.
 
 More information on how ENA wants to receive the files can be found [here](https://ena-docs.readthedocs.io/en/latest/submit/fileprep/preparation.html).
 
-## Test the tool
 
-**This is still a developmental version, please run the tool in the program directory for now.**
+## Tool overview
 
 inputs:
 * metadata tables
@@ -118,13 +117,15 @@ outputs:
   * accession ids
   * submission date
 
+## Test the tool
+
 test command: **add metadata and sequence data**
 
  ```
  ena_upload --action add --center 'your_center_name' --study example_tables/ENA_template_studies.tsv --sample example_tables/ENA_template_samples.tsv --experiment example_tables/ENA_template_experiments.tsv --run example_tables/ENA_template_runs.tsv --data example_data/*gz --dev --secret .secret.yml --tool "ENA upload cli"
  ```
 
- test command: **modify a metadata**
+ test command: **modify metadata**
 
  ```
  ena_upload --action modify --center 'your_center_name' --study example_tables/ENA_template_studies-2020-05-01T1421.tsv --dev --tool "ENA upload cli"
