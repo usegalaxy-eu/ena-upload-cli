@@ -21,7 +21,11 @@
         <RUN_ATTRIBUTES>
             <RUN_ATTRIBUTE>
                 <TAG>SUBMISSION_TOOL</TAG>
-                <VALUE>${tool}</VALUE>
+                <VALUE>${tool_name}</VALUE>
+            </RUN_ATTRIBUTE>
+            <RUN_ATTRIBUTE>
+                <TAG>SUBMISSION_TOOL_VERSION</TAG>
+                <VALUE>${tool_version}</VALUE>
             </RUN_ATTRIBUTE>
         </RUN_ATTRIBUTES>
     </RUN>

@@ -28,7 +28,11 @@
         <STUDY_ATTRIBUTES>
             <STUDY_ATTRIBUTE>
                 <TAG>SUBMISSION_TOOL</TAG>
-                <VALUE>${tool}</VALUE>
+                <VALUE>${tool_name}</VALUE>
+            </STUDY_ATTRIBUTE>
+            <STUDY_ATTRIBUTE>
+                <TAG>SUBMISSION_TOOL_VERSION</TAG>
+                <VALUE>${tool_version}</VALUE>
             </STUDY_ATTRIBUTE>
         </STUDY_ATTRIBUTES>
     </STUDY>

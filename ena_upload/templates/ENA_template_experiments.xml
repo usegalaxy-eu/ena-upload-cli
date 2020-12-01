@@ -41,7 +41,11 @@
             <EXPERIMENT_ATTRIBUTES>
                 <EXPERIMENT_ATTRIBUTE>
                     <TAG>SUBMISSION_TOOL</TAG>
-                    <VALUE>${tool}</VALUE>
+                    <VALUE>${tool_name}</VALUE>
+                </EXPERIMENT_ATTRIBUTE>
+                <EXPERIMENT_ATTRIBUTE>
+                    <TAG>SUBMISSION_TOOL_VERSION</TAG>
+                    <VALUE>${tool_version}</VALUE>
                 </EXPERIMENT_ATTRIBUTE>
             </EXPERIMENT_ATTRIBUTES>
         </EXPERIMENT>

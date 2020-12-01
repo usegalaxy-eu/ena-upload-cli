@@ -115,7 +115,7 @@ def generate_stream(schema, targets, Template, center, tool):
     :param Template: Template cache genrated by TemplateLoader
                      in genshi
     :param center: center name used to register ENA Webin
-    :param tool: tool name, by default ena-upload-cli
+    :param tool: dict of tool_name and tool_version , by default ena-upload-cli
 
     :return: stream
     '''
@@ -133,9 +133,10 @@ def generate_stream(schema, targets, Template, center, tool):
         stream = Template.generate(run_groups=run_groups,
                                    file_groups=file_groups,
                                    center=center,
-                                   tool=tool)
+                                   tool_name=tool['tool_name'],
+                                   tool_version=tool['tool_version'])
     else:
-        stream = Template.generate(df=targets, center=center, tool=tool)
+        stream = Template.generate(df=targets, center=center, tool_name=tool['tool_name'],tool_version=tool['tool_version'])
 
     return stream
 
@@ -201,7 +202,7 @@ def run_construct(template_path, schema_targets,  center, vir, tool):
                            by extract_targets()
     :param loader: object of TemplateLoader in genshi
     :param center: center name used to register ENA Webin
-    :param tool: tool name, by default ena-upload-cli
+    :param tool: dict of tool_name and tool_version , by default ena-upload-cli
     :param vir: flag to enable viral sample submission
 
     :return schema_xmls: dictionary of 'schema:filename'
@@ -244,7 +245,7 @@ def construct_submission(template_path, action, submission_input, center, vir, t
     Template = loader.load(template)
 
     stream = Template.generate(action=action, input=submission_input,
-                               center=center, tool=tool)
+                               center=center, tool_name=tool['tool_name'],tool_version=tool['tool_version'])
 
     submission_xml = construct_xml('submission', stream, xsds['submission'])
 
@@ -529,7 +530,7 @@ def process_args():
     '''parse command-line arguments
     '''
 
-    parser = argparse.ArgumentParser(prog='ENA_upload',
+    parser = argparse.ArgumentParser(prog='ena-upoad-cli',
                                      description='''The program makes submission
                                      of data and respective metadata to European
                                      Nucleotide Archive (ENA). The metadate
@@ -560,7 +561,7 @@ def process_args():
 
     parser.add_argument('--data',
                         nargs='*',
-                        help='data for submission',
+                        help='Data for submission',
                         metavar='FILE')
 
     parser.add_argument('--center',
@@ -570,12 +571,16 @@ def process_args():
     parser.add_argument('--tool',
                         dest='tool_name',
                         default='ena-upload-cli',
-                        required=True,
-                        help='Specify the name of the tool this submission is done with.')
+                        help='Specify the name of the tool this submission is done with. Default: ena-upload-cli')
+
+    parser.add_argument('--tool_version',
+                        dest='tool_version',
+                        default='0.2.5',
+                        help='Specify the version of the tool this submission is done with.')
 
     parser.add_argument('--secret',
                         required=True,
-                        help='.secret file containing the password of your Webin account')
+                        help='.secret.yml file containing the password and Webin ID of your ENA account')
 
     parser.add_argument('-d', '--dev', help="Flag to use the dev/sandbox endpoint of ENA.", action="store_true")
     
@@ -630,7 +635,7 @@ def main ():
     args = process_args()
     action = args.action.upper()
     center = args.center_name
-    tool = args.tool_name
+    tool = {'tool_name':args.tool_name, 'tool_version':args.tool_version}
     dev = args.dev
     vir = args.vir
     secret = args.secret
