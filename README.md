@@ -63,7 +63,7 @@ All supported arguments:
   --center CENTER_NAME  specific to your Webin account
   --tool TOOL_NAME      Specify the name of the tool this submission is done with. Default: ena-upload-cli
   --tool_version TOOL_VERSION
-                        Specify the version of the tool this submission is done with.
+                        Specify the version of the tool this submission is done with. Default: current version of tool
   --secret SECRET       .secret file containing the password of your Webin account
   -d, --dev             Flag to use the dev/sandbox endpoint of ENA.
   --vir                 Flag to use the viral sample template.
