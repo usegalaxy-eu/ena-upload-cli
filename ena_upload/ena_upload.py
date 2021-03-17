@@ -68,7 +68,7 @@ def extract_targets(action, schema_dataframe):
     schema_targets = {}
 
     for schema, dataframe in schema_dataframe.items():
-        filtered = dataframe.query('status=="{}"'.format(action))
+        filtered = dataframe.query(f'status=="{action}"')
         # ? add a function to control empty filtered, return error
         schema_targets[schema] = filtered
 
@@ -89,8 +89,7 @@ def check_filenames(file_paths, run_df):
     difference = set(cmd_input) ^ set(table_input)
 
     if difference:
-        msg = 'different file names between command line and RUN table:'
-        msg = '{} {}'.format(msg, difference)
+        msg = f"different file names between command line and RUN table: {difference}"
         sys.exit(msg)
 
 
@@ -158,7 +157,7 @@ def construct_xml(schema, stream, xsd):
     with open(xml_file, 'w') as fw:
         fw.write(xml_string.decode("utf-8") )
 
-    print ('wrote {}'.format(xml_file))
+    print (f'wrote {xml_file}')
 
     return xml_file
 
@@ -169,7 +168,7 @@ def actors(template_path, vir):
 
     def add_path(dic, path):
         for schema, filename in dic.items():
-            dic[schema] = '{}/{}'.format(path, filename)
+            dic[schema] = f'{path}/{filename}'
         return dic
 
     xsds = {'run': 'SRA.run.xsd',
@@ -302,15 +301,15 @@ def get_taxon_id(scientific_name):
     url = 'https://www.ebi.ac.uk/ena/taxonomy/rest/scientific-name'
 
     # url encoding: space -> %20
-    scientific_name_ = '%20'.join(scientific_name.strip().split())
+    scientific_name = '%20'.join(scientific_name.strip().split())
 
-    cmd_line = 'curl {}/{}'.format(url, scientific_name_)
+    cmd_line = f'curl {url}/{scientific_name}'
     output = run_cmd(cmd_line).decode("utf-8") 
     try:
         taxon_id = json.loads(output)[0]['taxId']
         return taxon_id
     except ValueError:
-        msg = 'Oops, no taxon ID avaible for {}. Is it a valid scientific name?'.format(scientific_name)
+        msg = f'Oops, no taxon ID avaible for {scientific_name}. Is it a valid scientific name?'
         sys.exit(msg)
 
 
@@ -330,9 +329,9 @@ def submit_data(file_paths, password, webin_id):
                Please check your login details.")
 
     for filename, path in file_paths.items():
-        print ('uploading {}'.format(path))
-        ftp.storbinary('STOR {}'.format(filename), open(path, 'rb'))
-        msg = ftp.storbinary('STOR {}'.format(filename), open(path, 'rb'))
+        print (f'uploading {path}')
+        ftp.storbinary(f'STOR {filename}', open(path, 'rb'))
+        msg = ftp.storbinary(f'STOR {filename}', open(path, 'rb'))
         print (msg)
 
     print (ftp.quit())
@@ -367,11 +366,11 @@ def get_cmd_line(schema_xmls, url, webin_id, password):
     '''
 
 
-    sources = ['-F {}=@{}'.format(schema.upper(), source)
+    sources = [f'-F {schema.upper()}=@{source}'
                for schema, source in schema_xmls.items()]
     sources = ' '.join(sources)
 
-    cmd_line = 'curl -u {}:{} {} {}'.format(webin_id, password, sources, url)
+    cmd_line = f'curl -u {webin_id}:{password} {sources} {url}'
 
     return cmd_line
 
@@ -388,10 +387,12 @@ def process_receipt(reciept, action):
                                    'accession', 'submission_date'
     '''
     reciept_root = etree.fromstring(reciept)
-
+    
     success = reciept_root.get('success')
 
-    if success != 'true':
+    if success == 'true':
+        print('\nSubmission was done successfully')
+    else:
         errors = []
         for element in reciept_root.findall('MESSAGES/ERROR'):
             error = element.text
@@ -403,12 +404,16 @@ def process_receipt(reciept, action):
     status = {'ADD': 'added', 'MODIFY': 'modified',
               'CANCEL': 'cancelled', 'RELEASE': 'released'}
 
-    def make_update(update):
-        update = [(element.get('alias'), element.get('accession'),
-                   receiptDate, status[action]) for element in update]
+    def make_update(update, ena_type):
+        update_list = []
+        print(f"\n{ena_type.capitalize()} accession details:")
+        for element in update:
+            extract = (element.get('alias'), element.get('accession'), receiptDate, status[action])
+            print("\t".join(extract))
+            update_list.append(extract)
         # used for labelling dataframe
         labels = ['alias', 'accession', 'submission_date', 'status']
-        df = pd.DataFrame.from_records(update, columns=labels)
+        df = pd.DataFrame.from_records(update_list, columns=labels)
         return df
 
     receiptDate = reciept_root.get('receiptDate')
@@ -421,16 +426,16 @@ def process_receipt(reciept, action):
     schema_update = {}  # schema as key, dataframe as value
 
     if study_update:
-        schema_update['study'] = make_update(study_update)
+        schema_update['study'] = make_update(study_update, 'study')
 
     if sample_update:
-        schema_update['sample'] = make_update(sample_update)
+        schema_update['sample'] = make_update(sample_update, 'sample')
 
     if experiment_update:
-        schema_update['experiment'] = make_update(experiment_update)
+        schema_update['experiment'] = make_update(experiment_update, 'experiment')
 
     if run_update:
-        schema_update['run'] = make_update(run_update)
+        schema_update['run'] = make_update(run_update, 'run')
 
     return schema_update
 
@@ -498,17 +503,15 @@ def save_update(schema_tables_, schema_dataframe_):
         :dataframe: a dataframe
     """
 
-    print ('\nSubmission is successful:')
+    print ('\nSaving updates in new tsv tables::')
     for schema in schema_tables_:
         table = schema_tables_[schema]
         dataframe = schema_dataframe_[schema]
 
         file_name, file_extension = os.path.splitext(table)
-        time = '{:%Y-%m-%dT%H%M}'.format(datetime.datetime.now())
-        update_name = '{0}-{1}{2}'.format(file_name, time, file_extension)
-
+        update_name = f'{file_name}_updated{file_extension}'
         dataframe.to_csv(update_name, sep='\t')
-        print ('save updates in {}'.format(update_name))
+        print (f'save updates in {update_name}')
 
 
 class SmartFormatter(argparse.HelpFormatter):
@@ -596,7 +599,7 @@ def process_args():
     # check if .secret file exists
     if args.secret:
         if not os.path.isfile(args.secret):
-            msg = "Oops, the file {} does not exist".format(args.secret)
+            msg = f"Oops, the file {args.secret} does not exist"
             parser.error(msg)
 
 
@@ -609,7 +612,7 @@ def process_args():
             # validate if given data is file
             for path in args.data:
                 if not os.path.isfile(path):
-                    msg = "Oops, the file {} does not exist".format(path)
+                    msg = f"Oops, the file {path} does not exist"
                     parser.error(msg)
 
     return args
@@ -647,7 +650,7 @@ def main ():
     webin_id = credentials['username'].strip()
 
     if not password or not webin_id:
-        print( "Oops, file {} does not contain a password or username".format(args.secret))
+        print( f"Oops, file {args.secret} does not contain a password or username")
     secret_file.close()
 
     # ? a function needed to convert characters e.g. # -> %23 in password
@@ -734,13 +737,16 @@ def main ():
 
     submit_cmd_line = get_cmd_line(schema_xmls, url, webin_id, password)
 
-    print ('\nSubmitting XMLs to ENA server: {}'.format(url))
+    print (f'\nSubmitting XMLs to ENA server: {url}')
     receipt = run_cmd(submit_cmd_line)
-
-    print ('\nReceipt\n')
-    print (receipt)
-
-    schema_update = process_receipt(receipt, action)
+    print ("Printing receipt to ./receipt.xml")
+    with open('receipt.txt', 'w') as fw:
+        fw.write(receipt.decode("utf-8") )
+    try:
+        schema_update = process_receipt(receipt, action)
+    except ValueError:
+        print("There was an ERROR during submission:")
+        sys.exit(receipt)
 
     schema_dataframe = update_table(schema_dataframe,
                                     schema_targets,
