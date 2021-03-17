@@ -23,10 +23,12 @@ The program to perform the following actions:
 * cancel: cancel a private object and its dependent objects (**under development**)
 * release: release a private object immediately to the public (**under development**)
 
+After a successful submission, new tsv tables will be generated with the ENA accession numbers filled in along with a submission receipt.
+
 ## Tool dependencies
 
 * curl
-* python 2.7+ including following packages:
+* python 3.5+ including following packages:
   * Genshi
   * lxml
   * pandas

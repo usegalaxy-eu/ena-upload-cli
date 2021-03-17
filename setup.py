@@ -8,7 +8,7 @@ with open('requirements.txt', 'r') as f:
 
 setup(
     name='ena-upload-cli',
-    version='0.2.5',
+    version='0.2.6',
     keywords=["pip", "ena-upload-cli", "cli", "ENA", "upload"],
     description='Command Line Interface to upload data to the European Nucleotide Archive',
     author="Dilmurat Yusuf",
@@ -26,7 +26,7 @@ setup(
     classifiers=[
         "Operating System :: OS Independent"
     ],
-    python_requires='>=2.7',
+    python_requires='>=3.5',
     entry_points={
       'console_scripts': ["ena-upload-cli=ena_upload.ena_upload:main"]
   },
