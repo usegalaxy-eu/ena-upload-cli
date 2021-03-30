@@ -578,7 +578,7 @@ def process_args():
 
     parser.add_argument('--tool_version',
                         dest='tool_version',
-                        default='0.2.6',
+                        default='0.2.7',
                         help='Specify the version of the tool this submission is done with.')
 
     parser.add_argument('--secret',
