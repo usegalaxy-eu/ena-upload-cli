@@ -29,20 +29,20 @@
                 <TAG>geographic location (country and/or sea)</TAG>
                 <VALUE>${row.geographic_location}</VALUE>
             </SAMPLE_ATTRIBUTE>
-            <py:if test="row.geographic_location_region">
+            <py:if test="hasattr(row, 'geographic_location_region')">
                 <SAMPLE_ATTRIBUTE>
                     <TAG>geographic location (region and locality)</TAG>
                     <VALUE>${row.geographic_location_region}</VALUE>
                 </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="row.geographic_location_latitude">
+            <py:if test="hasattr(row, 'geographic_location_latitude')">
                 <SAMPLE_ATTRIBUTE>
                     <TAG>geographic location (latitude)</TAG>
                     <VALUE>${row.geographic_location_latitude}</VALUE>
                     <UNITS>DD</UNITS>
                 </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="row.geographic_location_longitude">
+            <py:if test="hasattr(row, 'geographic_location_longitude')">
                 <SAMPLE_ATTRIBUTE>
                     <TAG>geographic location (longitude)</TAG>
                     <VALUE>${row.geographic_location_longitude}</VALUE>
@@ -69,7 +69,7 @@
                 <TAG>host sex</TAG>
                 <VALUE>${row.host_sex}</VALUE>
             </SAMPLE_ATTRIBUTE>
-            <py:if test="row.host_age">
+            <py:if test="hasattr(row, 'host_age')">
                 <SAMPLE_ATTRIBUTE>
                     <TAG>host age</TAG>
                     <VALUE>${row.host_age}</VALUE>
