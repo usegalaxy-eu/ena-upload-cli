@@ -386,7 +386,7 @@ def process_receipt(reciept, action):
                            update: a dataframe with columns - 'alias',
                                    'accession', 'submission_date'
     '''
-    reciept_root = etree.parse(reciept)
+    reciept_root = etree.fromstring(reciept)
     
     success = reciept_root.get('success')
 
