@@ -88,7 +88,7 @@ Use the *--dev* flag if you want to do a test submission using the tool by the s
 
 ### Supported columns for viral sample submissions
 
-Viral samples are validated by ENA using the [ENA virus pathogen](https://www.ebi.ac.uk/ena/browser/view/ERC000033) checklist. The columns supported in the sample tsv tables used by this tool are:
+Viral samples are validated by ENA using the [ENA virus pathogen](https://www.ebi.ac.uk/ena/browser/view/ERC000033) checklist. The columns supported in the sample tsv table used by this tool are:
 
 | Column name                | Cardinality |
 |-------------------------------|-------------|
