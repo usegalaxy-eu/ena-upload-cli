@@ -80,12 +80,43 @@ A Webin can be made [here](https://www.ebi.ac.uk/ena/submit/sra/#home) if you do
 To avoid exposing your credentials through the terminal history, it is recommended to make use of a `.secret.yml` file, containing your password and username keywords. An example is given in the root of this directory.
 
 
-### dev instance
-
+### Dev instance
 
 By default the submission will be done using following url to ENA: https://www.ebi.ac.uk/ena/submit/drop-box/submit/?auth=ENA
 
 Use the *--dev* flag if you want to do a test submission using the tool by the sandbox dev instance of ENA: https://wwwdev.ebi.ac.uk/ena/submit/drop-box/submit/?auth=ENA. A TEST submission will be discarded within 24 hours.
+
+### Supported columns for viral sample submissions
+
+Viral samples are validated by ENA using the [ENA virus pathogen](https://www.ebi.ac.uk/ena/browser/view/ERC000033) checklist. The columns supported in the sample tsv tables used by this tool are:
+
+| Column name                | Cardinality |
+|-------------------------------|-------------|
+| alias                         | mandatory   |
+| status                        | auto_filled |
+| accession                     | auto_filled |
+| title                         | mandatory   |
+| scientific_name               | mandatory   |
+| taxon_id                      | auto_filled |
+| sample_description            | mandatory   |
+| collection_date               | mandatory   |
+| geographic_location           | mandatory   |
+| host_common_name              | mandatory   |
+| host_subject_id               | mandatory   |
+| host_health_state             | mandatory   |
+| host_sex                      | mandatory   |
+| host_scientific_name          | mandatory   |
+| collector_name                | mandatory   |
+| collecting_institution        | mandatory   |
+| isolate                       | mandatory   |
+| submission_date               | auto_filled |
+| geographic_location_region    | recommended |
+| geographic_location_latitude  | recommended |
+| geographic_location_longitude | recommended |
+| host_age                      | recommended |
+
+
+Columns That are mandatory and auto_filled have to be present in the table. Recommended ones can be added, but should not be present if not being used.
 
 ### The data files
 
@@ -97,11 +128,9 @@ Use the *--dev* flag if you want to do a test submission using the tool by the s
 - [x] Template Sequence
 - [x] Other Analyses
 
-
 Most files uploaded to the ENA FTP server need to be compressed.
 
 More information on how ENA wants to receive the files can be found [here](https://ena-docs.readthedocs.io/en/latest/submit/fileprep/preparation.html).
-
 
 ## Tool overview
 
