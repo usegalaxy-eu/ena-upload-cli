@@ -116,7 +116,7 @@ Viral samples are validated by ENA using the [ENA virus pathogen](https://www.eb
 | host_age                      | recommended |
 
 
-Columns That are mandatory and auto_filled have to be present in the table. Recommended ones can be added, but should not be present if not being used.
+IMPORTANT: Columns That are mandatory and auto_filled have to be present in the table. Recommended ones can be added, but should not be present if not being used.
 
 ### The data files
 
