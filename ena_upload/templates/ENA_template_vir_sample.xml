@@ -29,6 +29,26 @@
                 <TAG>geographic location (country and/or sea)</TAG>
                 <VALUE>${row.geographic_location}</VALUE>
             </SAMPLE_ATTRIBUTE>
+            <py:if test="hasattr(row, 'geographic_location_region')">
+                <SAMPLE_ATTRIBUTE>
+                    <TAG>geographic location (region and locality)</TAG>
+                    <VALUE>${row.geographic_location_region}</VALUE>
+                </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="hasattr(row, 'geographic_location_latitude')">
+                <SAMPLE_ATTRIBUTE>
+                    <TAG>geographic location (latitude)</TAG>
+                    <VALUE>${row.geographic_location_latitude}</VALUE>
+                    <UNITS>DD</UNITS>
+                </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="hasattr(row, 'geographic_location_longitude')">
+                <SAMPLE_ATTRIBUTE>
+                    <TAG>geographic location (longitude)</TAG>
+                    <VALUE>${row.geographic_location_longitude}</VALUE>
+                    <UNITS>DD</UNITS>
+                </SAMPLE_ATTRIBUTE>
+            </py:if>          
             <SAMPLE_ATTRIBUTE>
                 <TAG>sample capture status</TAG>
                 <VALUE>active surveillance in response to outbreak</VALUE>
@@ -49,6 +69,13 @@
                 <TAG>host sex</TAG>
                 <VALUE>${row.host_sex}</VALUE>
             </SAMPLE_ATTRIBUTE>
+            <py:if test="hasattr(row, 'host_age')">
+                <SAMPLE_ATTRIBUTE>
+                    <TAG>host age</TAG>
+                    <VALUE>${row.host_age}</VALUE>
+                    <UNITS>years</UNITS>
+                </SAMPLE_ATTRIBUTE>
+            </py:if>
             <SAMPLE_ATTRIBUTE>
                 <TAG>host scientific name</TAG>
                 <VALUE>${row.host_scientific_name}</VALUE>
