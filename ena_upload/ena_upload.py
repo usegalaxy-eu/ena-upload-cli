@@ -298,13 +298,14 @@ def get_taxon_id(scientific_name):
     :return taxon_id: NCBI taxonomy identifier
     """
     # endpoint for taxonomy id
-    url = 'https://www.ebi.ac.uk/ena/taxonomy/rest/scientific-name'
+    url = 'http://www.ebi.ac.uk/ena/taxonomy/rest/scientific-name'
 
     # url encoding: space -> %20
     scientific_name = '%20'.join(scientific_name.strip().split())
 
-    cmd_line = f'curl {url}/{scientific_name}'
-    output = run_cmd(cmd_line).decode("utf-8") 
+    cmd_line = f'curl -L {url}/{scientific_name}'
+    output = run_cmd(cmd_line).decode("utf-8")
+    #print(output)
     try:
         taxon_id = json.loads(output)[0]['taxId']
         return taxon_id
