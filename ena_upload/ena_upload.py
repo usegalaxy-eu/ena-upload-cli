@@ -378,7 +378,7 @@ def send_schemas(schema_xmls, url, webin_id, password):
     return r
 
 
-def process_receipt(reciept, action):
+def process_receipt(receipt, action):
     '''Process submission reciept from ENA.
 
     :param receipt: a string of XML
