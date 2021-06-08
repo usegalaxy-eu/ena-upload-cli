@@ -343,39 +343,11 @@ def columns_to_update(df):
     '''
     return df[df.apply(lambda x: x == 'to_update')].dropna(axis=1, how='all').columns
 
-def get_cmd_line(schema_xmls, url, webin_id, password):
-    '''submit compiled XML files to the given ENA server
-    return the reciept object after the submission.
 
-    schema_xmls -- dictionary of schema and the corresponding XML file name
-               e.g.  {'submission':'submission.xml',
-                      'study':'study.xml',
-                      'run':'run.xml',
-                      'sample':'sample.xml',
-                      'experiment':'experiment.xml'}
-
-    url -- ENA servers
-           test:
-                https://wwwdev.ebi.ac.uk/ena/submit/drop-box/submit/?auth=ENA
-           production:
-                https://www.ebi.ac.uk/ena/submit/drop-box/submit/?auth=ENA
-
-    webin_id -- ENA webin ID of user
-    password -- ENA password of user
-    '''
-
-
-    sources = [f'-F {schema.upper()}=@{source}'
-               for schema, source in schema_xmls.items()]
-    sources = ' '.join(sources)
-
-    cmd_line = f'curl -u {webin_id}:{password} {sources} {url}'
-
-    return cmd_line
 
 def send_schemas(schema_xmls, url, webin_id, password):
     '''submit compiled XML files to the given ENA server
-    return the reciept object after the submission.
+    return the reeipt object after the submission.
 
     schema_xmls -- dictionary of schema and the corresponding XML file name
                e.g.  {'submission':'submission.xml',
@@ -395,8 +367,7 @@ def send_schemas(schema_xmls, url, webin_id, password):
     '''
 
 
-    sources = {schema.upper(): source for schema, source in schema_xmls.items()}
-
+    sources = [(schema.upper(), (source, open(source, 'rb'))) for schema, source in schema_xmls.items()]
     session = requests.Session()
     session.trust_env = False
     r = session.post(f"{url}",
@@ -418,15 +389,15 @@ def process_receipt(reciept, action):
                            update: a dataframe with columns - 'alias',
                                    'accession', 'submission_date'
     '''
-    reciept_root = etree.fromstring(reciept)
+    receipt_root = etree.fromstring(receipt)
     
-    success = reciept_root.get('success')
+    success = receipt_root.get('success')
 
     if success == 'true':
         print('\nSubmission was done successfully')
     else:
         errors = []
-        for element in reciept_root.findall('MESSAGES/ERROR'):
+        for element in receipt_root.findall('MESSAGES/ERROR'):
             error = element.text
             errors.append(error)
         errors = '\nOops:\n' + '\n'.join(errors)
@@ -448,12 +419,12 @@ def process_receipt(reciept, action):
         df = pd.DataFrame.from_records(update_list, columns=labels)
         return df
 
-    receiptDate = reciept_root.get('receiptDate')
+    receiptDate = receipt_root.get('receiptDate')
 
-    study_update = reciept_root.findall('STUDY')
-    sample_update = reciept_root.findall('SAMPLE')
-    experiment_update = reciept_root.findall('EXPERIMENT')
-    run_update = reciept_root.findall('RUN')
+    study_update = receipt_root.findall('STUDY')
+    sample_update = receipt_root.findall('SAMPLE')
+    experiment_update = receipt_root.findall('EXPERIMENT')
+    run_update = receipt_root.findall('RUN')
 
     schema_update = {}  # schema as key, dataframe as value
 
@@ -767,17 +738,13 @@ def main ():
     else:
         url = 'https://www.ebi.ac.uk/ena/submit/drop-box/submit/?auth=ENA'
 
-    submit_cmd_line = get_cmd_line(schema_xmls, url, webin_id, password)
-
-    print (f'\nSubmitting XMLs to ENA server: {url}')
-    # receipt = send_schemas(schema_xmls, url, webin_id, password).text
-    receipt = run_cmd(submit_cmd_line)
-    print ("Printing receipt to ./receipt.xml")
-    with open('receipt.txt', 'w') as fw:
-        fw.write(receipt.decode("utf-8") )
-        #fw.write(receipt) #.decode("utf-8")
+    print(f'\nSubmitting XMLs to ENA server: {url}')
+    receipt = send_schemas(schema_xmls, url, webin_id, password).text
+    print("Printing receipt to ./receipt.xml")
+    with open('receipt.xml', 'w') as fw:
+        fw.write(receipt)
     try:
-        schema_update = process_receipt(receipt, action)
+        schema_update = process_receipt(receipt.encode("utf-8"), action)
     except ValueError:
         print("There was an ERROR during submission:")
         sys.exit(receipt)
