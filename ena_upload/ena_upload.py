@@ -8,14 +8,12 @@ import os
 import sys
 import subprocess
 import shlex
-import json
 import argparse
 import yaml
 import hashlib
 import ftplib
 import requests
 import uuid
-import datetime
 from genshi.template import TemplateLoader
 from lxml import etree
 import pandas as pd
