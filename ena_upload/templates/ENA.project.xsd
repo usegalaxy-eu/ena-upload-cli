@@ -1,5 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- version:1.5.38 -->
+<!--
+  ~ Copyright 2018 EMBL - European Bioinformatics Institute
+  ~ Licensed under the Apache License, Version 2.0 (the "License"); you may not use this
+  ~ file except in compliance with the License. You may obtain a copy of the License at
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~ Unless required by applicable law or agreed to in writing, software distributed under the
+  ~ License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
+  ~ CONDITIONS OF ANY KIND, either express or implied. See the License for the
+  ~ specific language governing permissions and limitations under the License.
+  -->
+
+<!-- version:1.6.1-SNAPSHOT -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:com="SRA.common">
     <xs:import schemaLocation="SRA.common.xsd" namespace="SRA.common"/>
     <xs:complexType name="OrganismType">
@@ -25,58 +36,6 @@
             <xs:element minOccurs="0" name="ISOLATE" type="xs:string"/>
         </xs:all>
     </xs:complexType>
-    <xs:complexType name="PublicationType">
-        <xs:sequence>
-            <xs:element minOccurs="0" name="UNSTRUCTURED_CITATION" type="xs:string">
-                <xs:annotation>
-                    <xs:documentation/>
-                </xs:annotation>
-            </xs:element>
-            <xs:element minOccurs="0" name="STRUCTURED_CITATION">
-                <xs:complexType>
-                    <xs:sequence>
-                        <xs:element name="TITLE" type="xs:string"> </xs:element>
-                        <xs:element name="JOURNAL" type="xs:string">
-                            <xs:annotation>
-                                <xs:documentation/>
-                            </xs:annotation>
-                        </xs:element>
-                        <xs:element minOccurs="0" name="YEAR" type="xs:string"/>
-                        <xs:element minOccurs="0" name="VOLUME" type="xs:string"/>
-                        <xs:element minOccurs="0" name="ISSUE" type="xs:string"/>
-                        <xs:element minOccurs="0" name="FIRST_PAGE" type="xs:string"/>
-                        <xs:element minOccurs="0" name="LAST_PAGE" type="xs:string"/>
-                        <xs:element minOccurs="0" name="AUTHORS">
-                            <xs:complexType>
-                                <xs:sequence maxOccurs="1">
-                                    <xs:element maxOccurs="unbounded" minOccurs="0" name="AUTHOR"
-                                        type="xs:string"> </xs:element>
-                                    <xs:element maxOccurs="unbounded" minOccurs="0"
-                                        name="CONSORTIUM" type="xs:string"> </xs:element>
-                                </xs:sequence>
-                            </xs:complexType>
-                        </xs:element>
-                    </xs:sequence>
-                </xs:complexType>
-            </xs:element>
-            <xs:element maxOccurs="1" minOccurs="0" name="PUBLICATION_LINKS">
-                <xs:annotation>
-                    <xs:documentation/>
-                </xs:annotation>
-                <xs:complexType>
-                    <xs:sequence maxOccurs="unbounded" minOccurs="1">
-                        <xs:element name="PUBLICATION_LINK">
-                            <xs:complexType>
-                                <xs:choice>
-                                    <xs:element name="XREF_LINK" type="com:XRefType"/>
-                                </xs:choice>
-                            </xs:complexType>
-                        </xs:element>
-                    </xs:sequence>
-                </xs:complexType>
-            </xs:element>
-        </xs:sequence>
-    </xs:complexType>
     <xs:complexType name="ProjectType">
         <xs:annotation>
             <xs:documentation/>
@@ -100,14 +59,6 @@
                             <xs:documentation> A long description of the scope of the project.
                     </xs:documentation>
                         </xs:annotation>
-                    </xs:element>
-                    <xs:element minOccurs="0" name="PUBLICATIONS">
-                        <xs:complexType>
-                            <xs:sequence>
-                                <xs:element maxOccurs="unbounded" name="PUBLICATION"
-                                    type="PublicationType"/>
-                            </xs:sequence>
-                        </xs:complexType>
                     </xs:element>
                     <xs:element minOccurs="0" name="COLLABORATORS">
                         <xs:complexType>

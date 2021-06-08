@@ -16,6 +16,7 @@
 <LIBRARY_SELECTION py:when="row.library_selection.lower().strip() == 'inverse rrna'">Inverse rRNA</LIBRARY_SELECTION>
 <LIBRARY_SELECTION py:when="row.library_selection.lower().strip() == 'inverse rrna selection'">Inverse rRNA selection</LIBRARY_SELECTION>
 <LIBRARY_SELECTION py:when="row.library_selection.lower().strip() == 'chip'">ChIP</LIBRARY_SELECTION>
+<LIBRARY_SELECTION py:when="row.library_selection.lower().strip() == 'chip-seq'">ChIP-Seq</LIBRARY_SELECTION>
 <LIBRARY_SELECTION py:when="row.library_selection.lower().strip() == 'mnase'">MNase</LIBRARY_SELECTION>
 <LIBRARY_SELECTION py:when="row.library_selection.lower().strip() == 'dnase'">DNase</LIBRARY_SELECTION>
 <LIBRARY_SELECTION py:when="row.library_selection.lower().strip() == 'hybrid selection'">Hybrid Selection</LIBRARY_SELECTION>
