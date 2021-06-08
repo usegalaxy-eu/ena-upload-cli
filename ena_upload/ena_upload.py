@@ -343,6 +343,7 @@ def columns_to_update(df):
     '''
     return df[df.apply(lambda x: x == 'to_update')].dropna(axis=1, how='all').columns
 
+
 def get_cmd_line(schema_xmls, url, webin_id, password):
     '''submit compiled XML files to the given ENA server
     return the reciept object after the submission.
@@ -372,39 +373,6 @@ def get_cmd_line(schema_xmls, url, webin_id, password):
     cmd_line = f'curl -u {webin_id}:{password} {sources} {url}'
 
     return cmd_line
-
-def send_schemas(schema_xmls, url, webin_id, password):
-    '''submit compiled XML files to the given ENA server
-    return the reciept object after the submission.
-
-    schema_xmls -- dictionary of schema and the corresponding XML file name
-               e.g.  {'submission':'submission.xml',
-                      'study':'study.xml',
-                      'run':'run.xml',
-                      'sample':'sample.xml',
-                      'experiment':'experiment.xml'}
-
-    url -- ENA servers
-           test:
-                https://wwwdev.ebi.ac.uk/ena/submit/drop-box/submit/?auth=ENA
-           production:
-                https://www.ebi.ac.uk/ena/submit/drop-box/submit/?auth=ENA
-
-    webin_id -- ENA webin ID of user
-    password -- ENA password of user
-    '''
-
-
-    sources = {schema.upper(): source for schema, source in schema_xmls.items()}
-
-    session = requests.Session()
-    session.trust_env = False
-    r = session.post(f"{url}",
-                    auth=(webin_id,password),
-                    files=sources)
-
-    print(r.text)
-    return r
 
 
 def process_receipt(reciept, action):
@@ -769,13 +737,11 @@ def main ():
 
     submit_cmd_line = get_cmd_line(schema_xmls, url, webin_id, password)
 
-    print (f'\nSubmitting XMLs to ENA server: {url}')
-    # receipt = send_schemas(schema_xmls, url, webin_id, password).text
+    print(f'\nSubmitting XMLs to ENA server: {url}')
     receipt = run_cmd(submit_cmd_line)
-    print ("Printing receipt to ./receipt.xml")
+    print("Printing receipt to ./receipt.xml")
     with open('receipt.txt', 'w') as fw:
         fw.write(receipt.decode("utf-8") )
-        #fw.write(receipt) #.decode("utf-8")
     try:
         schema_update = process_receipt(receipt, action)
     except ValueError:
