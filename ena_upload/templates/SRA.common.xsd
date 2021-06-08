@@ -908,8 +908,7 @@
             <xs:enumeration value="HiSeq X Five"/>
             <xs:enumeration value="Illumina HiSeq 3000"/>
             <xs:enumeration value="Illumina HiSeq 4000"/>
-            <xs:enumeration value="Illumina NovaSeq 6000"/>
-            <xs:enumeration value="Illumina NextSeq 550"/>
+            <xs:enumeration value="NextSeq 550"/>
             <xs:enumeration value="unspecified"/>
         </xs:restriction>
     </xs:simpleType>
