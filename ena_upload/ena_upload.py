@@ -337,14 +337,14 @@ def submit_data(file_paths, password, webin_id):
 def columns_to_update(df):
     '''
     returns the column names where contains the cells to update
-        used after processing the reciept xmls
+        used after processing the receipt xmls
     '''
     return df[df.apply(lambda x: x == 'to_update')].dropna(axis=1, how='all').columns
 
 
 def send_schemas(schema_xmls, url, webin_id, password):
     '''submit compiled XML files to the given ENA server
-    return the reeipt object after the submission.
+    return the receipt object after the submission.
 
     schema_xmls -- dictionary of schema and the corresponding XML file name
                e.g.  {'submission':'submission.xml',
@@ -376,7 +376,7 @@ def send_schemas(schema_xmls, url, webin_id, password):
 
 
 def process_receipt(receipt, action):
-    '''Process submission reciept from ENA.
+    '''Process submission receipt from ENA.
 
     :param receipt: a string of XML
 
