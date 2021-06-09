@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <SAMPLE_SET xmlns:py="http://genshi.edgewall.org/"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:noNamespaceSchemaLocation="ftp://ftp.sra.ebi.ac.uk/meta/xsd/sra_1_5/SRA.sample.xsd">
+    xsi:noNamespaceSchemaLocation="ftp://ftp.sra.ebi.ac.uk/meta/xsd/sra_1_6/SRA.sample.xsd">
     <py:for each="index, row in df.iterrows()">
     <SAMPLE alias="${row.alias}" center_name="${center}">
         <!--TODO: UNIQUE NAME FOR SAMPLE-->

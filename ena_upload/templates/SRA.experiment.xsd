@@ -1,5 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- version:1.5.36 -->
+<!--
+  ~ Copyright 2018 EMBL - European Bioinformatics Institute
+  ~ Licensed under the Apache License, Version 2.0 (the "License"); you may not use this
+  ~ file except in compliance with the License. You may obtain a copy of the License at
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~ Unless required by applicable law or agreed to in writing, software distributed under the
+  ~ License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
+  ~ CONDITIONS OF ANY KIND, either express or implied. See the License for the
+  ~ specific language governing permissions and limitations under the License.
+  -->
+
+<!-- version:1.6.1-SNAPSHOT -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:com="SRA.common">
   <xs:import schemaLocation="SRA.common.xsd" namespace="SRA.common"/>
 
@@ -188,6 +199,21 @@
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="Tethered Chromatin Conformation Capture"/>
+      <xs:enumeration value="NOMe-Seq">
+        <xs:annotation>
+          <xs:documentation>Nucleosome Occupancy and Methylome sequencing.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ChM-Seq">
+        <xs:annotation>
+          <xs:documentation>ChIPmentation combines chromatin immunoprecipitation with sequencing library preparation by Tn5 transposase (see pubmed 26280331 for details)</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="GBS">
+        <xs:annotation>
+          <xs:documentation>Genotyping by sequencing is a method to discover single nucleotide polymorphisms for genotyping studies.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
       <xs:enumeration value="OTHER">
         <xs:annotation>
           <xs:documentation> Library strategy not listed. </xs:documentation>
@@ -324,6 +350,11 @@
           <xs:documentation>Chromatin immunoprecipitation</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
+      <xs:enumeration value="ChIP-Seq">
+        <xs:annotation>
+        <xs:documentation>Chromatin immunoPrecipitation, reveals binding sites of specific proteins, typically transcription factors (TFs) using antibodies to extract DNA fragments bound to the target protein.</xs:documentation>
+      </xs:annotation>
+    </xs:enumeration>
       <xs:enumeration value="MNase">
         <xs:annotation>
           <xs:documentation>Identifies well-positioned nucleosomes. uses Micrococcal Nuclease (MNase) is an endo-exonuclease that processively digests DNA until an obstruction, such as a nucleosome, is reached.</xs:documentation>
@@ -437,10 +468,10 @@
             <xs:annotation>
               <xs:documentation>
             Identifies a list of group/pool/multiplex sample members.  This implies that
-            this sample record is a group, pool, or multiplex, but is continues to receive
+            this sample record is a group, pool, or multiplex, but it continues to receive
             its own accession and can be referenced by an experiment.  By default if
             no match to any of the listed members can be determined, then the default
-            sampel reference is used.
+            sample reference is used.
           </xs:documentation>
             </xs:annotation>
             <xs:complexType>
@@ -543,6 +574,12 @@
                           <xs:documentation> Eukaryotic small subunit ribosomal RNA, a locus used for
                             phylogenetic studies of eukaryotes and as a target for random target PCR in
                             environmental biodiversity screening. </xs:documentation>
+                        </xs:annotation>
+                      </xs:enumeration>
+                      <xs:enumeration value="28S rRNA">
+                        <xs:annotation>
+                          <xs:documentation>Structural ribosomal RNA for the large component, or large
+                            subunit (LSU) of eukaryotic cytoplasmic ribosomes.. </xs:documentation>
                         </xs:annotation>
                       </xs:enumeration>
                       <xs:enumeration value="RBCL">

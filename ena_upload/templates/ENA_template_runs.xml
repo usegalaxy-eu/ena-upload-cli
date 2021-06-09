@@ -2,7 +2,7 @@
 <RUN_SET xmlns:py="http://genshi.edgewall.org/"
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:noNamespaceSchemaLocation="ftp://ftp.sra.ebi.ac.uk/meta/xsd/sra_1_5/SRA.run.xsd">
+    xsi:noNamespaceSchemaLocation="ftp://ftp.sra.ebi.ac.uk/meta/xsd/sra_1_6/SRA.run.xsd">
     <py:for each="alias, experiment_alias in run_groups.iteritems()">
     <RUN alias="${alias}" center_name="${center}">
     <!-- <RUN alias="TODO: UNIQUE NAME FOR RUN" center_name="TODO: CENTER NAME"> -->

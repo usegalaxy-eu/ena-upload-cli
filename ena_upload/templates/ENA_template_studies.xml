@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <STUDY_SET xmlns:py="http://genshi.edgewall.org/"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:noNamespaceSchemaLocation="ftp://ftp.sra.ebi.ac.uk/meta/xsd/sra_1_5/SRA.study.xsd">
+    xsi:noNamespaceSchemaLocation="ftp://ftp.sra.ebi.ac.uk/meta/xsd/sra_1_6/SRA.study.xsd">
     <py:for each="index, row in df.iterrows()">
     <STUDY alias="${row.alias}"
         center_name="${center}">
