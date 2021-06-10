@@ -541,7 +541,7 @@ def process_args():
                                      corresponding the ENA objects -- STUDY,
                                      SAMPLE, EXPERIMENT and RUN.''',
                                      formatter_class=SmartFormatter)
-
+    parser.add_argument('--version', action='version', version='%(prog)s 0.3.0')
     parser.add_argument('--action',
                         choices=['add', 'modify', 'cancel', 'release'],
                         required=True,
