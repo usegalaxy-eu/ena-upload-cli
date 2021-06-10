@@ -27,19 +27,17 @@ After a successful submission, new tsv tables will be generated with the ENA acc
 
 ## Tool dependencies
 
-* curl
 * python 3.5+ including following packages:
   * Genshi
   * lxml
   * pandas
+  * requests
 
 ## Installation
 
 ```
 pip install ena-upload-cli
 ```
-
-> Be aware that Windows can give problems with the `curl` commands executed by the script. Check that curl is available in your PATH.
 
 ## Usage
 
