@@ -541,7 +541,7 @@ def process_args():
                                      corresponding the ENA objects -- STUDY,
                                      SAMPLE, EXPERIMENT and RUN.''',
                                      formatter_class=SmartFormatter)
-    parser.add_argument('--version', action='version', version='%(prog)s 0.3.0')
+    parser.add_argument('--version', action='version', version='%(prog)s 0.3.1')
     parser.add_argument('--action',
                         choices=['add', 'modify', 'cancel', 'release'],
                         required=True,
@@ -578,7 +578,7 @@ def process_args():
 
     parser.add_argument('--tool_version',
                         dest='tool_version',
-                        default='0.3.0',
+                        default='0.3.1',
                         help='Specify the version of the tool this submission is done with.')
 
     parser.add_argument('--secret',
