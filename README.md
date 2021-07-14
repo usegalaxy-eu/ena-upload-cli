@@ -89,33 +89,55 @@ Use the *--dev* flag if you want to do a test submission using the tool by the s
 
 Viral samples are validated by ENA using the [ENA virus pathogen](https://www.ebi.ac.uk/ena/browser/view/ERC000033) checklist. The columns supported in the sample tsv table used by this tool are:
 
-| Column name                | Cardinality |
-|-------------------------------|-------------|
-| alias                         | mandatory   |
-| status                        | auto_filled |
-| accession                     | auto_filled |
-| title                         | mandatory   |
-| scientific_name               | mandatory   |
-| taxon_id                      | auto_filled |
-| sample_description            | mandatory   |
-| collection_date               | mandatory   |
-| geographic_location           | mandatory   |
-| host_common_name              | mandatory   |
-| host_subject_id               | mandatory   |
-| host_health_state             | mandatory   |
-| host_sex                      | mandatory   |
-| host_scientific_name          | mandatory   |
-| collector_name                | mandatory   |
-| collecting_institution        | mandatory   |
-| isolate                       | mandatory   |
-| submission_date               | auto_filled |
-| geographic_location_region    | recommended |
-| geographic_location_latitude  | recommended |
-| geographic_location_longitude | recommended |
-| host_age                      | recommended |
+| Column name                          | ENA field name	                               | Field format    | Cardinality |
+|--------------------------------------|-----------------------------------------------|-----------------|-------------|
+| alias                                | alias                                         | free text       | mandatory   |
+| status                               |                                               |                 | auto_filled |
+| accession                            | accession                                     |                 | auto_filled |
+| title                                | TITLE                                         | free text       | mandatory   |
+| scientific_name                      | SCIENTIFIC_NAME                               | free text       | mandatory   |
+| taxon_id                             | TAXON_ID                                      |                 | auto_filled |
+| sample_description                   | DESCRIPTION                                   | free text       | mandatory   |
+| submission_date                      |                                               |                 | auto_filled |
+| geographic_location                  | geographic location (country and/or sea)      | text choice     | mandatory   |
+| host_common_name                     | host common name                              | free text       | mandatory   |
+| host_subject_id                      | host subject id                               | free text       | mandatory   |
+| host_health_state                    | host health state                             | text choice     | mandatory   |
+| host_sex                             | host sex                                      | text choice     | mandatory   |
+| host_scientific_name                 | host scientific name                          | free text       | mandatory   |
+| collector_name                       | collector name                                | free text       | mandatory   |
+| collecting_institution               | collecting institution                        | free text       | mandatory   |
+| isolate                              | isolate                                       | free text       | mandatory   |
+| collection_date                      | collection date                               | restricted text | recommended |
+| geographic_location_latitude         | geographic location (latitude)                | restricted text | recommended |
+| geographic_location_longitude        | geographic location (longitude)               | restricted text | recommended |
+| geographic_location_region           | geographic location (region and locality)     | free text       | recommended |
+| sample_capture_status                | sample capture status                         | text choice     | recommended |
+| host_disease_outcome                 | host disease outcome                          | text choice     | recommended |
+| host_age                             | host age                                      | restricted text | recommended |
+| virus_identifier                     | virus identifier                              | free text       | recommended |
+| receipt_date                         | receipt date                                  | restricted text | recommended |
+| definition_for_seropositive_sample   | definition for seropositive sample            | free text       | recommended |
+| serotype                             | serotype (required for a seropositive sample) | free text       | recommended |
+| host_habitat                         | host habitat                                  | text choice     | recommended |
+| isolation_source_host_associated     | isolation source host-associated              | free text       | recommended |
+| host_behaviour                       | host behaviour                                | text choice     | recommended |
+| isolation_source_non_host_associated | isolation source non-host-associated          | free text       | recommended |
+| subject_exposure                     | subject exposure                              | free text       | optional    |
+| subject_exposure_duration            | subject exposure duration                     | free text       | optional    |
+| type_exposure                        | type exposure                                 | free text       | optional    |
+| personal_protective_equipment        | personal protective equipment                 | free text       | optional    |
+| hospitalisation                      | hospitalisation                               | text choice     | optional    |
+| illness_duration                     | illness duration                              | free text       | optional    |
+| illness_symptoms                     | illness symptoms                              | free text       | optional    |
+| sample_storage_conditions            | sample storage conditions                     | free text       | optional    |
+| strain                               | strain                                        | free text       | optional    |
+| host_description                     | host description                              | free text       | optional    |
+| gravidity                            | gravidity                                     | free text       | optional    |
 
 
-IMPORTANT: Columns That are mandatory and auto_filled have to be present in the table. Recommended ones can be added, but should not be present if not being used.
+Please use the [ENA virus pathogen](https://www.ebi.ac.uk/ena/browser/view/ERC000033) checklist on the website of ENA to know which values are allowed/possible in the `restricted text` and `text choice` fields.
+
 
 ### The data files
 
