@@ -18,6 +18,7 @@ from genshi.template import TemplateLoader
 from lxml import etree
 import pandas as pd
 import tempfile
+from ena_upload._version import __version__
 
 
 # SettingWithCopyWarning causes false positive
@@ -541,7 +542,7 @@ def process_args():
                                      corresponding the ENA objects -- STUDY,
                                      SAMPLE, EXPERIMENT and RUN.''',
                                      formatter_class=SmartFormatter)
-    parser.add_argument('--version', action='version', version='%(prog)s 0.3.1')
+    parser.add_argument('--version', action='version', version='%(prog)s '+__version__)
     parser.add_argument('--action',
                         choices=['add', 'modify', 'cancel', 'release'],
                         required=True,
@@ -578,7 +579,7 @@ def process_args():
 
     parser.add_argument('--tool_version',
                         dest='tool_version',
-                        default='0.3.1',
+                        default=__version__,
                         help='Specify the version of the tool this submission is done with.')
 
     parser.add_argument('--secret',
