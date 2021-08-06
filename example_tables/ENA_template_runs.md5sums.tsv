@@ -1,0 +1,4 @@
+alias	status	accession	experiment_alias	file_name	file_format	file_checksum	submission_date
+run_alias_1a	add	update_by_ENA	experiment_alias_7a	ENA_TEST2.R1.fastq.gz	fastq	3e69af1f875fab020aed82f5edbc1f03	update_by_ENA
+run_alias_1a	add	update_by_ENA	experiment_alias_7a	ENA_TEST2.R2.fastq.gz	fastq	3e69af1f875fab020aed82f5edbc1f03	update_by_ENA
+run_alias_3c	add	update_by_ENA	experiment_alias_9c	ENA_TEST1.R1.fastq.gz	fastq	3e69af1f875fab020aed82f5edbc1f03	update_by_ENA
