@@ -14,6 +14,7 @@ import hashlib
 import ftplib
 import requests
 import uuid
+import re
 from genshi.template import TemplateLoader
 from lxml import etree
 import pandas as pd
@@ -91,6 +92,25 @@ def check_filenames(file_paths, run_df):
     if difference:
         msg = f"different file names between command line and RUN table: {difference}"
         sys.exit(msg)
+
+
+def check_file_checksum(df):
+    '''Return True if 'file_checksum' series contains valid MD5 sums'''
+
+    regex_valid_md5sum = re.compile('^[a-f0-9]{32}$')
+
+    def _is_str_md5sum(x):
+        match = regex_valid_md5sum.fullmatch(x)
+        if match:
+            return True
+        else:
+            return False
+
+
+    s = df.file_checksum.apply(_is_str_md5sum)
+
+    return s.all()
+
 
 
 def validate_xml(xsd, xml):
@@ -686,12 +706,17 @@ def main ():
             # if not, system exits
             check_filenames(file_paths, df)
 
-            file_md5 = {filename: get_md5(path) for filename, path
-                        in file_paths.items()}
+            # generate MD5 sum if not supplied in table
+            if not check_file_checksum(df):
+                print("No valid checksums found, generate now...", end=" ")
+                file_md5 = {filename: get_md5(path) for filename, path
+                            in file_paths.items()}
 
-            # update schema_targets wih md5 hash
-            md5 = df['file_name'].apply(lambda x: file_md5[x]).values
-            df.loc[:, 'file_checksum'] = md5
+                # update schema_targets wih md5 hash
+                md5 = df['file_name'].apply(lambda x: file_md5[x]).values
+                df.loc[:, 'file_checksum'] = md5
+                print("done.")
+
             schema_targets['run'] = df
 
             # submit data to webin ftp server
