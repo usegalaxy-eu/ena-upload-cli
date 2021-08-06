@@ -353,7 +353,7 @@ def submit_data(file_paths, password, webin_id):
         msg = ftp.storbinary(f'STOR {filename}', open(path, 'rb'))
         print (msg)
 
-    print (ftp.quit())
+    print(ftp.quit())
 
 def columns_to_update(df):
     '''
@@ -602,6 +602,11 @@ def process_args():
                         default=__version__,
                         help='Specify the version of the tool this submission is done with.')
 
+    parser.add_argument('--no_upload',
+                        default=False,
+                        action="store_true",
+                        help='Indicate if no upload should be performed (if uploaded was done separately).')
+
     parser.add_argument('--secret',
                         required=True,
                         help='.secret.yml file containing the password and Webin ID of your ENA account')
@@ -720,7 +725,10 @@ def main ():
             schema_targets['run'] = df
 
             # submit data to webin ftp server
-            submit_data(file_paths, password, webin_id)
+            if args.no_upload:
+                print("No files will be uploaded, remove `--no_upload' argument to perform upload.")
+            else:
+                submit_data(file_paths, password, webin_id)
 
         # when adding sample
         # update schema_targets with taxon ids
