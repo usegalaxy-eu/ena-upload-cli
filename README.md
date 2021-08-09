@@ -189,3 +189,10 @@ test command for **viral data**
  ```
  ena_upload --action add --center 'your_center_name' --study example_tables/ENA_template_studies.tsv --sample example_tables/ENA_template_samples_vir.tsv --experiment example_tables/ENA_template_experiments.tsv --run example_tables/ENA_template_runs.tsv --data example_data/*gz --dev --vir --secret .secret.yml
  ```
+
+**Note for Windows users:** Windows, by default, does not support wildcard expansion in command-line arguments.
+Because of this the `--data example_data/*gz` argument should be substituted with one containing a list of the data files.
+For this example, use:
+```
+--data example_data/ENA_TEST1.R1.fastq.gz example_data/ENA_TEST2.R1.fastq.gz example_data/ENA_TEST2.R2.fastq.gz
+```
