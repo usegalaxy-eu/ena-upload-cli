@@ -6,8 +6,6 @@ __license__ = "MIT"
 
 import os
 import sys
-import subprocess
-import shlex
 import argparse
 import yaml
 import hashlib
@@ -294,23 +292,6 @@ def get_md5(filepath):
             md5sum.update(chunk)
 
     return md5sum.hexdigest()
-
-
-def run_cmd(cmd_line):
-    """Execute command line.
-
-    :param cmd_line: the string of command line
-
-    :return output: the string of output from execution
-    """
-
-    args = shlex.split(cmd_line)
-    process = subprocess.Popen(args,
-                               stdout=subprocess.PIPE,
-                               stderr=subprocess.PIPE)
-    output, stderr = process.communicate()
-    return output
-
 
 def get_taxon_id(scientific_name):
     """Get taxon ID for input scientific_name.
