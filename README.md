@@ -45,6 +45,8 @@ pip install ena-upload-cli
 Minimal:  ena-upoad-cli --action {add,modify,cancel,release} --center CENTER_NAME  --secret SECRET
 
 All supported arguments:
+
+optional arguments:
   -h, --help            show this help message and exit
   --version             show program's version number and exit
   --action {add,modify,cancel,release}
@@ -60,12 +62,13 @@ All supported arguments:
   --data [FILE [FILE ...]]
                         data for submission
   --center CENTER_NAME  specific to your Webin account
-  --tool TOOL_NAME      Specify the name of the tool this submission is done with. Default: ena-upload-cli
+  --tool TOOL_NAME      specify the name of the tool this submission is done with. Default: ena-upload-cli
+  --checklist CHECKLIST
+                        specify the sample checklist with following pattern: ERC0000XX, Default: ERC000011
   --tool_version TOOL_VERSION
-                        Specify the version of the tool this submission is done with. Default: current version of tool
-  --secret SECRET       .secret file containing the password of your Webin account
-  -d, --dev             Flag to use the dev/sandbox endpoint of ENA.
-  --vir                 Flag to use the viral sample template.
+                        specify the version of the tool this submission is done with
+  --secret SECRET       .secret.yml file containing the password and Webin ID of your ENA account
+  -d, --dev             flag to use the dev/sandbox endpoint of ENA
 ```
 
 Mandatory arguments: --action, --center and --secret.
@@ -78,6 +81,10 @@ A Webin can be made [here](https://www.ebi.ac.uk/ena/submit/sra/#home) if you do
 
 To avoid exposing your credentials through the terminal history, it is recommended to make use of a `.secret.yml` file, containing your password and username keywords. An example is given in the root of this directory.
 
+### Switching between ENA sample checklists
+
+You can specify ENA sample checklist using the `--checklist` parameter. By default the ENA default sample checklist is used supporting the minimum information required for the sample (ERC000011). If you want to submit viral samples you can use the [ENA virus pathogen](https://www.ebi.ac.uk/ena/browser/view/ERC000033) checklist by adding `ERC000033` to the checklist parameter. Check out our [viral example command](#test-the-tool).
+
 
 ### Dev instance
 
@@ -87,7 +94,7 @@ Use the *--dev* flag if you want to do a test submission using the tool by the s
 
 ### Supported columns for viral sample submissions
 
-Viral samples are validated by ENA using the [ENA virus pathogen](https://www.ebi.ac.uk/ena/browser/view/ERC000033) checklist. The columns supported in the sample tsv table used by this tool are:
+Viral samples are validated by ENA using the [ENA virus pathogen](https://www.ebi.ac.uk/ena/browser/view/ERC000033) checklist. Check out our [viral example command](#test-the-tool). The columns supported in the sample tsv table used by this tool are:
 
 | Column name                          | ENA field name	                               | Field format    | Cardinality |
 |--------------------------------------|-----------------------------------------------|-----------------|-------------|
@@ -172,27 +179,25 @@ outputs:
 
 ## Test the tool
 
-test command: **add metadata and sequence data**
+* **add metadata and sequence data**
+  ```
+  ena_upload --action add --center 'your_center_name' --study example_tables/ENA_template_studies.tsv --sample example_tables/ENA_template_samples.tsv --experiment example_tables/ENA_template_experiments.tsv --run example_tables/ENA_template_runs.tsv --data example_data/*gz --dev --secret .secret.yml
+  ```
 
- ```
- ena_upload --action add --center 'your_center_name' --study example_tables/ENA_template_studies.tsv --sample example_tables/ENA_template_samples.tsv --experiment example_tables/ENA_template_experiments.tsv --run example_tables/ENA_template_runs.tsv --data example_data/*gz --dev --secret .secret.yml
- ```
+* **modify metadata**
+  ```
+  ena_upload --action modify --center 'your_center_name' --study example_tables/ENA_template_studies-2020-05-01T1421.tsv --dev --secret .secret.yml
+  ```
 
- test command: **modify metadata**
+* **viral data**
+  ```
+  ena_upload --action add --center 'your_center_name' --study example_tables/ENA_template_studies.tsv --sample example_tables/ENA_template_samples_vir.tsv --experiment example_tables/ENA_template_experiments.tsv --run example_tables/ENA_template_runs.tsv --data example_data/*gz --dev --checklist ERC000033 --secret .secret.yml
+  ```
 
- ```
- ena_upload --action modify --center 'your_center_name' --study example_tables/ENA_template_studies-2020-05-01T1421.tsv --dev --secret .secret.yml
- ```
-
-test command for **viral data**
-
- ```
- ena_upload --action add --center 'your_center_name' --study example_tables/ENA_template_studies.tsv --sample example_tables/ENA_template_samples_vir.tsv --experiment example_tables/ENA_template_experiments.tsv --run example_tables/ENA_template_runs.tsv --data example_data/*gz --dev --vir --secret .secret.yml
- ```
-
-**Note for Windows users:** Windows, by default, does not support wildcard expansion in command-line arguments.
-Because of this the `--data example_data/*gz` argument should be substituted with one containing a list of the data files.
-For this example, use:
-```
---data example_data/ENA_TEST1.R1.fastq.gz example_data/ENA_TEST2.R1.fastq.gz example_data/ENA_TEST2.R2.fastq.gz
-```
+> **Note for Windows users:** Windows, by default, does not support wildcard expansion in command-line arguments.
+> Because of this the `--data example_data/*gz` argument should be substituted with one containing a list of the data files.
+> For this example, use:
+> 
+> ```
+> --data example_data/ENA_TEST1.R1.fastq.gz example_data/ENA_TEST2.R1.fastq.gz example_data/ENA_TEST2.R2.fastq.gz
+> ```
