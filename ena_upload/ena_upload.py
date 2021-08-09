@@ -704,11 +704,14 @@ def main ():
             # ? do I have to define the absolute path
             df = schema_targets['run']
 
-            if not args.no_upload:  # check supplied datafiles only if doing upload
+            if args.no_upload:
+                file_paths = {}
+            else:  # check supplied datafiles only if doing upload
                 # if argument is a string, assume file of filenames
                 if type(args.data) == str:
                     with open(args.data) as fin:
-                        file_paths = [line.strip() for line in fin.readlines()]
+                        file_paths = {os.path.basename(line.strip()):os.path.abspath(line.strip())
+                                      for line in fin.readlines()}
                 elif type(args.data) == list:
                     file_paths = {os.path.basename(path): os.path.abspath(path)
                                   for path in args.data}
