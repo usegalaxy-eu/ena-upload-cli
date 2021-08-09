@@ -702,18 +702,20 @@ def main ():
         if 'run' in schema_targets:
             # a dictionary of filename:file_path
             # ? do I have to define the absolute path
-            if type(args.data) == str:
-                with open(args.data) as fin:
-                    file_paths = [line.strip() for line in fin.readlines()]
-            elif type(args.data) == list:
-                file_paths = {os.path.basename(path): os.path.abspath(path)
-                              for path in args.data}
-
             df = schema_targets['run']
 
-            # check if file names identical between command line and table
-            # if not, system exits
-            check_filenames(file_paths, df)
+            if not args.no_upload:  # check supplied datafiles only if doing upload
+                # if argument is a string, assume file of filenames
+                if type(args.data) == str:
+                    with open(args.data) as fin:
+                        file_paths = [line.strip() for line in fin.readlines()]
+                elif type(args.data) == list:
+                    file_paths = {os.path.basename(path): os.path.abspath(path)
+                                  for path in args.data}
+
+                # check if file names identical between command line and table
+                # if not, system exits
+                check_filenames(file_paths, df)
 
             # generate MD5 sum if not supplied in table
             if not check_file_checksum(df):
