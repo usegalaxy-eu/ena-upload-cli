@@ -46,7 +46,6 @@ Minimal:  ena-upoad-cli --action {add,modify,cancel,release} --center CENTER_NAM
 
 All supported arguments:
 
-optional arguments:
   -h, --help            show this help message and exit
   --version             show program's version number and exit
   --action {add,modify,cancel,release}
