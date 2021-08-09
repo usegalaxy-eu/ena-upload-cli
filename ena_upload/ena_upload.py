@@ -659,7 +659,27 @@ def collect_tables(args):
 
     return schema_tables
 
+def get_data_file_path(data):
+    '''Return a list of data files provided as command line argument.
 
+    If a single file was provided as argument, assume it is a file of filenames.
+    If a list of files was provided, treat them as the data files to be uploaded.
+
+    '''
+    # if argument is a string, assume file of filenames
+    if type(data) == str:
+        if os.path.exists(data):
+            with open(data) as fin:
+                file_paths = {os.path.basename(line.strip()):os.path.abspath(line.strip())
+                              for line in fin.readlines()}
+        else:
+            print("Error: File of filenames {} was not found.".format(args.data))
+
+    elif type(data) == list:
+        file_paths = {os.path.basename(path): os.path.abspath(path)
+                      for path in data}
+
+    return file_paths
 def main ():
     args = process_args()
     action = args.action.upper()
@@ -706,16 +726,9 @@ def main ():
 
             if args.no_upload:
                 file_paths = {}
+                print("No files will be uploaded, remove `--no_upload' argument to perform upload.")
             else:  # check supplied datafiles only if doing upload
-                # if argument is a string, assume file of filenames
-                if type(args.data) == str:
-                    with open(args.data) as fin:
-                        file_paths = {os.path.basename(line.strip()):os.path.abspath(line.strip())
-                                      for line in fin.readlines()}
-                elif type(args.data) == list:
-                    file_paths = {os.path.basename(path): os.path.abspath(path)
-                                  for path in args.data}
-
+                file_paths = get_data_file_path(args.data)
                 # check if file names identical between command line and table
                 # if not, system exits
                 check_filenames(file_paths, df)
@@ -734,9 +747,7 @@ def main ():
             schema_targets['run'] = df
 
             # submit data to webin ftp server
-            if args.no_upload:
-                print("No files will be uploaded, remove `--no_upload' argument to perform upload.")
-            else:
+            if not args.no_upload:
                 submit_data(file_paths, password, webin_id)
 
         # when adding sample
