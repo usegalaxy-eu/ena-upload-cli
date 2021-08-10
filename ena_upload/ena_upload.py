@@ -581,13 +581,13 @@ def process_args():
                         required=True,
                         help='specific to your Webin account')
 
+    parser.add_argument('--checklist', help="specify the sample checklist with following pattern: ERC0000XX, Default: ERC000011", dest='checklist',
+                        default='ERC000011')
+
     parser.add_argument('--tool',
                         dest='tool_name',
                         default='ena-upload-cli',
                         help='specify the name of the tool this submission is done with. Default: ena-upload-cli')
-
-    parser.add_argument('--checklist', help="specify the sample checklist with following pattern: ERC0000XX, Default: ERC000011", dest='checklist',
-                        default='ERC000011')
 
     parser.add_argument('--tool_version',
                         dest='tool_version',
