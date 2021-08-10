@@ -6,14 +6,13 @@ __license__ = "MIT"
 
 import os
 import sys
-import subprocess
-import shlex
 import argparse
 import yaml
 import hashlib
 import ftplib
 import requests
 import uuid
+import numpy as np
 import re
 from genshi.template import TemplateLoader
 from lxml import etree
@@ -27,7 +26,7 @@ from ena_upload._version import __version__
 pd.options.mode.chained_assignment = None
 
 
-def create_dataframe(schema_tables):
+def create_dataframe(schema_tables, action):
     '''create pandas dataframe from the tables in schema_tables
        and return schema_dataframe
 
@@ -46,7 +45,14 @@ def create_dataframe(schema_tables):
 
     for schema, table in schema_tables.items():
         df = pd.read_csv(table, sep='\t', comment='#')
-
+        # checking for optional columns and if not present adding them
+        optional_columns = ['accession', 'submission_date', 'status']
+        for header in optional_columns:
+            if not header in df.columns:
+                if header == 'status':
+                    df[header] = action.lower()
+                else:
+                    df[header] = np.nan
         # status column contain action keywords
         # for xml rendering, keywords require uppercase
         # according to scheme definition of submission
@@ -287,23 +293,6 @@ def get_md5(filepath):
 
     return md5sum.hexdigest()
 
-
-def run_cmd(cmd_line):
-    """Execute command line.
-
-    :param cmd_line: the string of command line
-
-    :return output: the string of output from execution
-    """
-
-    args = shlex.split(cmd_line)
-    process = subprocess.Popen(args,
-                               stdout=subprocess.PIPE,
-                               stderr=subprocess.PIPE)
-    output, stderr = process.communicate()
-    return output
-
-
 def get_taxon_id(scientific_name):
     """Get taxon ID for input scientific_name.
 
@@ -496,7 +485,7 @@ def update_table(schema_dataframe, schema_targets, schema_update):
             if schema == 'sample':
                 dataframe.loc[index,
                               'taxon_id'] = targets.loc[index, 'taxon_id']
-            if schema == 'run':
+            elif schema == 'run':
                 # since index is set to alias
                 # then targets of run can have multiple rows with
                 # identical index because each row has a file
@@ -682,7 +671,7 @@ def main():
     schema_tables = collect_tables(args)
 
     # create dataframe from table
-    schema_dataframe = create_dataframe(schema_tables)
+    schema_dataframe = create_dataframe(schema_tables, action)
 
     # ? add a function to sanitize characters
     # ? print 'validate table for specific action'
