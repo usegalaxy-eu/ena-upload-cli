@@ -654,8 +654,8 @@ def main():
     checklist = args.checklist
     secret = args.secret
 
-    secret_file = open(secret, "r")
-    credentials = yaml.load(secret_file, Loader=yaml.FullLoader)
+    with open(secret, 'r') as secret_file:
+        credentials = yaml.load(secret_file, Loader=yaml.FullLoader)
 
     password = credentials['password'].strip()
     webin_id = credentials['username'].strip()
