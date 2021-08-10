@@ -91,6 +91,16 @@ By default the submission will be done using following url to ENA: https://www.e
 
 Use the *--dev* flag if you want to do a test submission using the tool by the sandbox dev instance of ENA: https://wwwdev.ebi.ac.uk/ena/submit/drop-box/submit/?auth=ENA. A TEST submission will be discarded within 24 hours.
 
+### Submitting a selection of rows to ENA
+
+Optionally you can add a status column that contains the action you want to apply during this submission. If you chose to add only the first 2 samples to ENA, you specify `--action add` as parameter in the command and you add the `add` value to the status column of the rows you want to submit as demonstrated below.
+
+| alias          | status | title          | scientific_name  |
+|----------------|--------|----------------|------------------|
+| sample_alias_4 | add    | sample_title_1 | homo sapiens     |
+| sample_alias_5 | add    | sample_title_2 | human metagenome |
+| sample_alias_6 |        | sample_title_3 | homo sapiens     |
+
 ### Supported columns for viral sample submissions
 
 Viral samples are validated by ENA using the [ENA virus pathogen](https://www.ebi.ac.uk/ena/browser/view/ERC000033) checklist. Check out our [viral example command](#test-the-tool). The columns supported in the sample tsv table used by this tool are:
@@ -98,13 +108,11 @@ Viral samples are validated by ENA using the [ENA virus pathogen](https://www.eb
 | Column name                          | ENA field name	                               | Field format    | Cardinality |
 |--------------------------------------|-----------------------------------------------|-----------------|-------------|
 | alias                                | alias                                         | free text       | mandatory   |
-| status                               |                                               |                 | auto_filled |
-| accession                            | accession                                     |                 | auto_filled |
+| status                               |                                               |                 | optional    |
 | title                                | TITLE                                         | free text       | mandatory   |
 | scientific_name                      | SCIENTIFIC_NAME                               | free text       | mandatory   |
 | taxon_id                             | TAXON_ID                                      |                 | auto_filled |
 | sample_description                   | DESCRIPTION                                   | free text       | mandatory   |
-| submission_date                      |                                               |                 | auto_filled |
 | geographic_location                  | geographic location (country and/or sea)      | text choice     | mandatory   |
 | host_common_name                     | host common name                              | free text       | mandatory   |
 | host_subject_id                      | host subject id                               | free text       | mandatory   |
