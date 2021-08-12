@@ -2,7 +2,7 @@ from lxml import etree
 from jinja2 import Environment, FileSystemLoader
 import requests
 
-# Gathering all Checklists ID's
+# Gathering all checklist ID's
 session = requests.Session()
 session.trust_env = False
 r = session.get('https://www.ebi.ac.uk/ena/browser/api/summary/ERC000001-ERC999999')
