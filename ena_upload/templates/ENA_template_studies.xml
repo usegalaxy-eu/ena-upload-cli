@@ -5,23 +5,16 @@
     <py:for each="index, row in df.iterrows()">
     <STUDY alias="${row.alias}"
         center_name="${center}">
-        <!--"TODO: UNIQUE NAME FOR SUBMISSION"-->
-        <!--"TODO: CENTER NAME"-->
         <DESCRIPTOR>
             <STUDY_TITLE>${row.title}</STUDY_TITLE>
-            <!--TODO: STUDY TITLE AS IT COULD APPEAR IN A PUBLICATION-->
             <STUDY_TYPE existing_study_type="${row.study_type}"/>
-            <!--"TODO: CHOOSE FROM CONTROLLED VOCABULARY"-->
             <STUDY_ABSTRACT>${row.study_abstract}</STUDY_ABSTRACT>
-            <!--TODO: STUDY ABSTRACT AS IT COULD APPEAR IN A
-                PUBLICATION-->
         </DESCRIPTOR>
         <STUDY_LINKS py:if="row.pubmed_id != 'None'">
             <STUDY_LINK>
                 <XREF_LINK>
                     <DB>PUBMED</DB>
                     <ID>${row.pubmed_id}</ID>
-                    <!--TODO: PubMed ID-->
                 </XREF_LINK>
             </STUDY_LINK>
         </STUDY_LINKS>

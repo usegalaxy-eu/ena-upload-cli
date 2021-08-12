@@ -18,6 +18,30 @@ def attributetest(row, column):
         </SAMPLE_NAME>
         <DESCRIPTION>${row.sample_description}</DESCRIPTION>
         <SAMPLE_ATTRIBUTES>
+            <py:if test="attributetest(row, 'number of inoculated individuals')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>number of inoculated individuals</TAG>
+                <VALUE>${row['number of inoculated individuals']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="attributetest(row, 'inoculation route')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>inoculation route</TAG>
+                <VALUE>${row['inoculation route']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="attributetest(row, 'inoculation dose')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>inoculation dose</TAG>
+                <VALUE>${row['inoculation dose']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="attributetest(row, 'inoculation stock availability')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>inoculation stock availability</TAG>
+                <VALUE>${row['inoculation stock availability']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
             <py:if test="attributetest(row, 'subject exposure')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>subject exposure</TAG>
@@ -46,6 +70,78 @@ def attributetest(row, column):
             <SAMPLE_ATTRIBUTE>
                 <TAG>hospitalisation</TAG>
                 <VALUE>${row['hospitalisation']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="attributetest(row, 'antiviral treatment')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>antiviral treatment</TAG>
+                <VALUE>${row['antiviral treatment']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="attributetest(row, 'antiviral treatment initiation')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>antiviral treatment initiation</TAG>
+                <VALUE>${row['antiviral treatment initiation']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="attributetest(row, 'antiviral treatment dosage')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>antiviral treatment dosage</TAG>
+                <VALUE>${row['antiviral treatment dosage']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="attributetest(row, 'antiviral treatment duration')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>antiviral treatment duration</TAG>
+                <VALUE>${row['antiviral treatment duration']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="attributetest(row, 'influenza vaccination type')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>influenza vaccination type</TAG>
+                <VALUE>${row['influenza vaccination type']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="attributetest(row, 'influenza vaccination date')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>influenza vaccination date</TAG>
+                <VALUE>${row['influenza vaccination date']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="attributetest(row, 'source of vaccination information')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>source of vaccination information</TAG>
+                <VALUE>${row['source of vaccination information']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="attributetest(row, 'vaccine lot number')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>vaccine lot number</TAG>
+                <VALUE>${row['vaccine lot number']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="attributetest(row, 'vaccine manufacturer')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>vaccine manufacturer</TAG>
+                <VALUE>${row['vaccine manufacturer']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="attributetest(row, 'vaccine dosage')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>vaccine dosage</TAG>
+                <VALUE>${row['vaccine dosage']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="attributetest(row, 'influenza-like illness at the time of sample collection')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>influenza-like illness at the time of sample collection</TAG>
+                <VALUE>${row['influenza-like illness at the time of sample collection']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="attributetest(row, 'illness onset date')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>illness onset date</TAG>
+                <VALUE>${row['illness onset date']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'illness duration')">
@@ -126,10 +222,50 @@ def attributetest(row, column):
                 <TAG>host scientific name</TAG>
                 <VALUE>${row['host scientific name']}</VALUE>
             </SAMPLE_ATTRIBUTE>
+            <SAMPLE_ATTRIBUTE>
+                <TAG>influenza test method</TAG>
+                <VALUE>${row['influenza test method']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            <SAMPLE_ATTRIBUTE>
+                <TAG>influenza test result</TAG>
+                <VALUE>${row['influenza test result']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            <SAMPLE_ATTRIBUTE>
+                <TAG>other pathogens tested</TAG>
+                <VALUE>${row['other pathogens tested']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            <SAMPLE_ATTRIBUTE>
+                <TAG>other pathogens test result</TAG>
+                <VALUE>${row['other pathogens test result']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            <py:if test="attributetest(row, 'influenza virus type')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>influenza virus type</TAG>
+                <VALUE>${row['influenza virus type']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
             <py:if test="attributetest(row, 'virus identifier')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>virus identifier</TAG>
                 <VALUE>${row['virus identifier']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="attributetest(row, 'influenza strain unique number')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>influenza strain unique number</TAG>
+                <VALUE>${row['influenza strain unique number']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="attributetest(row, 'WHO/OIE/FAO clade (required for HPAI H5N1 viruses)')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>WHO/OIE/FAO clade (required for HPAI H5N1 viruses)</TAG>
+                <VALUE>${row['WHO/OIE/FAO clade (required for HPAI H5N1 viruses)']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="attributetest(row, 'lineage:swl (required for H1N1 viruses)')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>lineage:swl (required for H1N1 viruses)</TAG>
+                <VALUE>${row['lineage:swl (required for H1N1 viruses)']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <SAMPLE_ATTRIBUTE>
@@ -158,16 +294,18 @@ def attributetest(row, column):
                 <VALUE>${row['definition for seropositive sample']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
+            <py:if test="attributetest(row, 'meaning of cut off value')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>meaning of cut off value</TAG>
+                <VALUE>${row['meaning of cut off value']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
             <py:if test="attributetest(row, 'serotype (required for a seropositive sample)')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>serotype (required for a seropositive sample)</TAG>
                 <VALUE>${row['serotype (required for a seropositive sample)']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <SAMPLE_ATTRIBUTE>
-                <TAG>isolate</TAG>
-                <VALUE>${row['isolate']}</VALUE>
-            </SAMPLE_ATTRIBUTE>
             <py:if test="attributetest(row, 'strain')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>strain</TAG>

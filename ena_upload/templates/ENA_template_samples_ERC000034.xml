@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?python
+import pandas as pd
+def attributetest(row, column):
+    if hasattr(row, column) and pd.notna(row[column]) and not row[column].isspace() and str(row[column]).lower() not in ['nan', 'na']:
+        return True 
+    else:
+        return False?>
+<SAMPLE_SET xmlns:py="http://genshi.edgewall.org/"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="ftp://ftp.sra.ebi.ac.uk/meta/xsd/sra_1_6/SRA.sample.xsd">
+    <py:for each="index, row in df.iterrows()">
+    <SAMPLE alias="${row.alias}" center_name="${center}">
+        <TITLE>${row.title}</TITLE>
+        <SAMPLE_NAME>
+            <TAXON_ID>${row.taxon_id}</TAXON_ID>
+            <SCIENTIFIC_NAME>${row.scientific_name}</SCIENTIFIC_NAME>
+        </SAMPLE_NAME>
+        <DESCRIPTION>${row.sample_description}</DESCRIPTION>
+        <SAMPLE_ATTRIBUTES>
+            <SAMPLE_ATTRIBUTE>
+                <TAG>tissue_type</TAG>
+                <VALUE>${row['tissue_type']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            <SAMPLE_ATTRIBUTE>
+                <TAG>sex</TAG>
+                <VALUE>${row['sex']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            <py:if test="attributetest(row, 'date of birth')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>date of birth</TAG>
+                <VALUE>${row['date of birth']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="attributetest(row, 'date of death')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>date of death</TAG>
+                <VALUE>${row['date of death']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <SAMPLE_ATTRIBUTE>
+                <TAG>diagnosis</TAG>
+                <VALUE>${row['diagnosis']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            <SAMPLE_ATTRIBUTE>
+                <TAG>strain</TAG>
+                <VALUE>${row['strain']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            <py:if test="attributetest(row, 'tumor grading (OBI_0600002)')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>tumor grading (OBI_0600002)</TAG>
+                <VALUE>${row['tumor grading (OBI_0600002)']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="attributetest(row, 'treatment agent')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>treatment agent</TAG>
+                <VALUE>${row['treatment agent']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="attributetest(row, 'treatment dose')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>treatment dose</TAG>
+                <VALUE>${row['treatment dose']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="attributetest(row, 'treatment date')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>treatment date</TAG>
+                <VALUE>${row['treatment date']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="attributetest(row, 'Further Details')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>Further Details</TAG>
+                <VALUE>${row['Further Details']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+        </SAMPLE_ATTRIBUTES>
+    </SAMPLE>
+    </py:for>
+</SAMPLE_SET>

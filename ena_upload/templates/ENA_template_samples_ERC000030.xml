@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?python
+import pandas as pd
+def attributetest(row, column):
+    if hasattr(row, column) and pd.notna(row[column]) and not row[column].isspace() and str(row[column]).lower() not in ['nan', 'na']:
+        return True 
+    else:
+        return False?>
+<SAMPLE_SET xmlns:py="http://genshi.edgewall.org/"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="ftp://ftp.sra.ebi.ac.uk/meta/xsd/sra_1_6/SRA.sample.xsd">
+    <py:for each="index, row in df.iterrows()">
+    <SAMPLE alias="${row.alias}" center_name="${center}">
+        <TITLE>${row.title}</TITLE>
+        <SAMPLE_NAME>
+            <TAXON_ID>${row.taxon_id}</TAXON_ID>
+            <SCIENTIFIC_NAME>${row.scientific_name}</SCIENTIFIC_NAME>
+        </SAMPLE_NAME>
+        <DESCRIPTION>${row.sample_description}</DESCRIPTION>
+        <SAMPLE_ATTRIBUTES>
+            <py:if test="attributetest(row, 'Event Label')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>Event Label</TAG>
+                <VALUE>${row['Event Label']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <SAMPLE_ATTRIBUTE>
+                <TAG>Event Date/Time Start</TAG>
+                <VALUE>${row['Event Date/Time Start']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            <py:if test="attributetest(row, 'Event Date/Time End')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>Event Date/Time End</TAG>
+                <VALUE>${row['Event Date/Time End']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <SAMPLE_ATTRIBUTE>
+                <TAG>Latitude Start</TAG>
+                <VALUE>${row['Latitude Start']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            <SAMPLE_ATTRIBUTE>
+                <TAG>Longitude Start</TAG>
+                <VALUE>${row['Longitude Start']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            <py:if test="attributetest(row, 'Latitude End')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>Latitude End</TAG>
+                <VALUE>${row['Latitude End']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="attributetest(row, 'Longitude End')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>Longitude End</TAG>
+                <VALUE>${row['Longitude End']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <SAMPLE_ATTRIBUTE>
+                <TAG>Depth</TAG>
+                <VALUE>${row['Depth']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            <py:if test="attributetest(row, 'Sample Collection Device')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>Sample Collection Device</TAG>
+                <VALUE>${row['Sample Collection Device']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <SAMPLE_ATTRIBUTE>
+                <TAG>Protocol Label</TAG>
+                <VALUE>${row['Protocol Label']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            <py:if test="attributetest(row, 'Size Fraction Lower Threshold')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>Size Fraction Lower Threshold</TAG>
+                <VALUE>${row['Size Fraction Lower Threshold']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="attributetest(row, 'Size Fraction Upper Threshold')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>Size Fraction Upper Threshold</TAG>
+                <VALUE>${row['Size Fraction Upper Threshold']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="attributetest(row, 'Sample Status')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>Sample Status</TAG>
+                <VALUE>${row['Sample Status']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="attributetest(row, 'Last Update Date')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>Last Update Date</TAG>
+                <VALUE>${row['Last Update Date']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <SAMPLE_ATTRIBUTE>
+                <TAG>project name</TAG>
+                <VALUE>${row['project name']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            <SAMPLE_ATTRIBUTE>
+                <TAG>environmental package</TAG>
+                <VALUE>${row['environmental package']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            <SAMPLE_ATTRIBUTE>
+                <TAG>environment (biome)</TAG>
+                <VALUE>${row['environment (biome)']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            <SAMPLE_ATTRIBUTE>
+                <TAG>environment (feature)</TAG>
+                <VALUE>${row['environment (feature)']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            <SAMPLE_ATTRIBUTE>
+                <TAG>environment (material)</TAG>
+                <VALUE>${row['environment (material)']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            <SAMPLE_ATTRIBUTE>
+                <TAG>Sampling Campaign</TAG>
+                <VALUE>${row['Sampling Campaign']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            <SAMPLE_ATTRIBUTE>
+                <TAG>Sampling Station</TAG>
+                <VALUE>${row['Sampling Station']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            <SAMPLE_ATTRIBUTE>
+                <TAG>Sampling Platform</TAG>
+                <VALUE>${row['Sampling Platform']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            <SAMPLE_ATTRIBUTE>
+                <TAG>Marine Region</TAG>
+                <VALUE>${row['Marine Region']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            <SAMPLE_ATTRIBUTE>
+                <TAG>Salinity Sensor</TAG>
+                <VALUE>${row['Salinity Sensor']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            <py:if test="attributetest(row, 'Oxygen Sensor')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>Oxygen Sensor</TAG>
+                <VALUE>${row['Oxygen Sensor']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="attributetest(row, 'Nitrate Sensor')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>Nitrate Sensor</TAG>
+                <VALUE>${row['Nitrate Sensor']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <SAMPLE_ATTRIBUTE>
+                <TAG>Temperature</TAG>
+                <VALUE>${row['Temperature']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            <py:if test="attributetest(row, 'Chlorophyll Sensor')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>Chlorophyll Sensor</TAG>
+                <VALUE>${row['Chlorophyll Sensor']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="attributetest(row, 'Citation')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>Citation</TAG>
+                <VALUE>${row['Citation']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="attributetest(row, 'Further Details')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>Further Details</TAG>
+                <VALUE>${row['Further Details']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+        </SAMPLE_ATTRIBUTES>
+    </SAMPLE>
+    </py:for>
+</SAMPLE_SET>
