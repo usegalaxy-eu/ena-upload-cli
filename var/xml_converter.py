@@ -2,10 +2,13 @@ from lxml import etree
 from jinja2 import Environment, FileSystemLoader
 import requests
 
-# TODO: automatically crawl all checklists without hardcoding them
-checklists = ["ERC000012", "ERC000013", "ERC000014", "ERC000015", "ERC000016", "ERC000017", "ERC000018", "ERC000019", "ERC000020", "ERC000021", "ERC000022", "ERC000023", "ERC000024", "ERC000025", "ERC000027", "ERC000028", "ERC000029", "ERC000030", "ERC000031", "ERC000032", "ERC000033", "ERC000034", "ERC000035", "ERC000036", "ERC000037", "ERC000038", "ERC000039", "ERC000040", "ERC000041", "ERC000043", "ERC000044", "ERC000045", "ERC000047", "ERC000048", "ERC000049", "ERC000050", "ERC000051", "ERC000052", "ERC000053", "ERC000011"]
+# Gathering all Checklists ID's
+session = requests.Session()
+session.trust_env = False
+r = session.get('https://www.ebi.ac.uk/ena/browser/api/summary/ERC000001-ERC999999')
 
-for checklist in checklists:
+for response_object in r.json()['summaries']:
+    checklist = response_object['accession']
     print(f"Parsing {checklist}")
     # Getting the xml checklist from ENA
     url = f"https://www.ebi.ac.uk/ena/browser/api/xml/{checklist}?download=true"
