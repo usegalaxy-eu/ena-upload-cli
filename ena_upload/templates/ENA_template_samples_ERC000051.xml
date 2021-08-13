@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?python
+import pandas as pd
+def attributetest(row, column):
+    if hasattr(row, column) and pd.notna(row[column]) and not row[column].isspace() and str(row[column]).lower() not in ['nan', 'na']:
+        return True 
+    else:
+        return False?>
+<SAMPLE_SET xmlns:py="http://genshi.edgewall.org/"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="ftp://ftp.sra.ebi.ac.uk/meta/xsd/sra_1_6/SRA.sample.xsd">
+    <py:for each="index, row in df.iterrows()">
+    <SAMPLE alias="${row.alias}" center_name="${center}">
+        <TITLE>${row.title}</TITLE>
+        <SAMPLE_NAME>
+            <TAXON_ID>${row.taxon_id}</TAXON_ID>
+            <SCIENTIFIC_NAME>${row.scientific_name}</SCIENTIFIC_NAME>
+        </SAMPLE_NAME>
+        <DESCRIPTION>${row.sample_description}</DESCRIPTION>
+        <SAMPLE_ATTRIBUTES>
+            <SAMPLE_ATTRIBUTE>
+                <TAG>sample origin</TAG>
+                <VALUE>${row['sample origin']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            <SAMPLE_ATTRIBUTE>
+                <TAG>sample taxon name</TAG>
+                <VALUE>${row['sample taxon name']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            <SAMPLE_ATTRIBUTE>
+                <TAG>sample material</TAG>
+                <VALUE>${row['sample material']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            <SAMPLE_ATTRIBUTE>
+                <TAG>engrafted tumor sample passage</TAG>
+                <VALUE>${row['engrafted tumor sample passage']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            <py:if test="attributetest(row, 'engrafted tumor collection site')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>engrafted tumor collection site</TAG>
+                <VALUE>${row['engrafted tumor collection site']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <SAMPLE_ATTRIBUTE>
+                <TAG>patient tumor site of collection</TAG>
+                <VALUE>${row['patient tumor site of collection']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            <SAMPLE_ATTRIBUTE>
+                <TAG>patient tumor type</TAG>
+                <VALUE>${row['patient tumor type']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            <SAMPLE_ATTRIBUTE>
+                <TAG>sample unique ID</TAG>
+                <VALUE>${row['sample unique ID']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            <py:if test="attributetest(row, 'engraftment host strain name')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>engraftment host strain name</TAG>
+                <VALUE>${row['engraftment host strain name']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <SAMPLE_ATTRIBUTE>
+                <TAG>patient age at collection of tumor</TAG>
+                <VALUE>${row['patient age at collection of tumor']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            <SAMPLE_ATTRIBUTE>
+                <TAG>patient tumor diagnosis at time of collection</TAG>
+                <VALUE>${row['patient tumor diagnosis at time of collection']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            <SAMPLE_ATTRIBUTE>
+                <TAG>patient tumor primary site</TAG>
+                <VALUE>${row['patient tumor primary site']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            <py:if test="attributetest(row, 'was the PDX model humanised?')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>was the PDX model humanised?</TAG>
+                <VALUE>${row['was the PDX model humanised?']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <SAMPLE_ATTRIBUTE>
+                <TAG>patient sex</TAG>
+                <VALUE>${row['patient sex']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+        </SAMPLE_ATTRIBUTES>
+    </SAMPLE>
+    </py:for>
+</SAMPLE_SET>

@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?python
+import pandas as pd
+def attributetest(row, column):
+    if hasattr(row, column) and pd.notna(row[column]) and not row[column].isspace() and str(row[column]).lower() not in ['nan', 'na']:
+        return True 
+    else:
+        return False?>
+<SAMPLE_SET xmlns:py="http://genshi.edgewall.org/"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="ftp://ftp.sra.ebi.ac.uk/meta/xsd/sra_1_6/SRA.sample.xsd">
+    <py:for each="index, row in df.iterrows()">
+    <SAMPLE alias="${row.alias}" center_name="${center}">
+        <TITLE>${row.title}</TITLE>
+        <SAMPLE_NAME>
+            <TAXON_ID>${row.taxon_id}</TAXON_ID>
+            <SCIENTIFIC_NAME>${row.scientific_name}</SCIENTIFIC_NAME>
+        </SAMPLE_NAME>
+        <DESCRIPTION>${row.sample_description}</DESCRIPTION>
+        <SAMPLE_ATTRIBUTES>
+            <py:if test="attributetest(row, 'subject exposure')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>subject exposure</TAG>
+                <VALUE>${row['subject exposure']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="attributetest(row, 'subject exposure duration')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>subject exposure duration</TAG>
+                <VALUE>${row['subject exposure duration']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="attributetest(row, 'type exposure')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>type exposure</TAG>
+                <VALUE>${row['type exposure']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="attributetest(row, 'personal protective equipment')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>personal protective equipment</TAG>
+                <VALUE>${row['personal protective equipment']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="attributetest(row, 'hospitalisation')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>hospitalisation</TAG>
+                <VALUE>${row['hospitalisation']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="attributetest(row, 'illness duration')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>illness duration</TAG>
+                <VALUE>${row['illness duration']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="attributetest(row, 'illness symptoms')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>illness symptoms</TAG>
+                <VALUE>${row['illness symptoms']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="attributetest(row, 'collection date')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>collection date</TAG>
+                <VALUE>${row['collection date']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <SAMPLE_ATTRIBUTE>
+                <TAG>geographic location (country and/or sea)</TAG>
+                <VALUE>${row['geographic location (country and/or sea)']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            <py:if test="attributetest(row, 'geographic location (latitude)')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>geographic location (latitude)</TAG>
+                <VALUE>${row['geographic location (latitude)']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="attributetest(row, 'geographic location (longitude)')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>geographic location (longitude)</TAG>
+                <VALUE>${row['geographic location (longitude)']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="attributetest(row, 'geographic location (region and locality)')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>geographic location (region and locality)</TAG>
+                <VALUE>${row['geographic location (region and locality)']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="attributetest(row, 'sample capture status')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>sample capture status</TAG>
+                <VALUE>${row['sample capture status']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="attributetest(row, 'host disease outcome')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>host disease outcome</TAG>
+                <VALUE>${row['host disease outcome']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <SAMPLE_ATTRIBUTE>
+                <TAG>host common name</TAG>
+                <VALUE>${row['host common name']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            <SAMPLE_ATTRIBUTE>
+                <TAG>host subject id</TAG>
+                <VALUE>${row['host subject id']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            <py:if test="attributetest(row, 'host age')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>host age</TAG>
+                <VALUE>${row['host age']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <SAMPLE_ATTRIBUTE>
+                <TAG>host health state</TAG>
+                <VALUE>${row['host health state']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            <SAMPLE_ATTRIBUTE>
+                <TAG>host sex</TAG>
+                <VALUE>${row['host sex']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            <SAMPLE_ATTRIBUTE>
+                <TAG>host scientific name</TAG>
+                <VALUE>${row['host scientific name']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            <py:if test="attributetest(row, 'virus identifier')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>virus identifier</TAG>
+                <VALUE>${row['virus identifier']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <SAMPLE_ATTRIBUTE>
+                <TAG>collector name</TAG>
+                <VALUE>${row['collector name']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            <SAMPLE_ATTRIBUTE>
+                <TAG>collecting institution</TAG>
+                <VALUE>${row['collecting institution']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            <py:if test="attributetest(row, 'receipt date')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>receipt date</TAG>
+                <VALUE>${row['receipt date']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="attributetest(row, 'sample storage conditions')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>sample storage conditions</TAG>
+                <VALUE>${row['sample storage conditions']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="attributetest(row, 'definition for seropositive sample')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>definition for seropositive sample</TAG>
+                <VALUE>${row['definition for seropositive sample']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="attributetest(row, 'serotype (required for a seropositive sample)')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>serotype (required for a seropositive sample)</TAG>
+                <VALUE>${row['serotype (required for a seropositive sample)']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <SAMPLE_ATTRIBUTE>
+                <TAG>isolate</TAG>
+                <VALUE>${row['isolate']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            <py:if test="attributetest(row, 'strain')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>strain</TAG>
+                <VALUE>${row['strain']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="attributetest(row, 'host habitat')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>host habitat</TAG>
+                <VALUE>${row['host habitat']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="attributetest(row, 'isolation source host-associated')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>isolation source host-associated</TAG>
+                <VALUE>${row['isolation source host-associated']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="attributetest(row, 'host description')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>host description</TAG>
+                <VALUE>${row['host description']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="attributetest(row, 'gravidity')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>gravidity</TAG>
+                <VALUE>${row['gravidity']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="attributetest(row, 'host behaviour')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>host behaviour</TAG>
+                <VALUE>${row['host behaviour']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="attributetest(row, 'isolation source non-host-associated')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>isolation source non-host-associated</TAG>
+                <VALUE>${row['isolation source non-host-associated']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+        </SAMPLE_ATTRIBUTES>
+    </SAMPLE>
+    </py:for>
+</SAMPLE_SET>
