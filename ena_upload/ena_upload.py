@@ -314,6 +314,26 @@ def get_taxon_id(scientific_name):
         msg = f'Oops, no taxon ID avaible for {scientific_name}. Is it a valid scientific name?'
         sys.exit(msg)
 
+def get_scientific_name(taxon_id):
+    """Get taxon ID for input scientific_name.
+
+    :param scientific_name: scientific name of sample that distinguishes
+                            its taxonomy
+    :return taxon_id: NCBI taxonomy identifier
+    """
+    # endpoint for taxonomy id
+    url = 'http://www.ebi.ac.uk/ena/taxonomy/rest/tax-id'
+    session = requests.Session()
+    session.trust_env = False
+    # url encoding: space -> %20
+    r = session.get(f"{url}/{taxon_id.strip()}")
+    try:
+        taxon_id = r.json()[0]['scientificName']
+        return taxon_id
+    except ValueError:
+        msg = f'Oops, no taxon ID avaible for {taxon_id}. Is it a valid scientific name?'
+        sys.exit(msg)
+
 
 def submit_data(file_paths, password, webin_id):
     """Submit data to webin ftp server.
@@ -717,12 +737,18 @@ def main():
         # update schema_targets with taxon ids
         if 'sample' in schema_targets:
             df = schema_targets['sample']
-
-            # retrieve taxon id using scientific name
-            print('retrieving taxon IDs...')
-            taxonID = df['scientific_name'].apply(get_taxon_id).values
-            print('taxon IDs are retrieved')
-            df.loc[:, 'taxon_id'] = taxonID
+            if  df['scientific_name'] and not df['taxon_id']:
+                # retrieve taxon id using scientific name
+                print('retrieving taxon IDs...')
+                taxonID = df['scientific_name'].apply(get_taxon_id).values
+                print('taxon IDs are retrieved')
+                df.loc[:, 'taxon_id'] = taxonID
+            elif df['taxon_id'] and not df['scientific_name']:
+                # retrieve scientific name using taxon id
+                print('retrieving taxon IDs...')
+                taxonID = df['taxon_id'].apply(get_scientific_name).values
+                print('scientific names are retrieved')
+                df.loc[:, 'scientific_name'] = taxonID
             schema_targets['sample'] = df
 
     # ? need to add a place holder for setting up
