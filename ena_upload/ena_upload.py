@@ -44,9 +44,12 @@ def create_dataframe(schema_tables, action):
     schema_dataframe = {}
 
     for schema, table in schema_tables.items():
-        df = pd.read_csv(table, sep='\t', comment='#')
+        df = pd.read_csv(table, sep='\t', comment='#', dtype = str)
         # checking for optional columns and if not present adding them
-        optional_columns = ['accession', 'submission_date', 'status']
+        if schema == 'sample':
+            optional_columns = ['accession', 'submission_date', 'status', 'scientific_name', 'taxon_id']
+        else:
+            optional_columns = ['accession', 'submission_date', 'status']
         for header in optional_columns:
             if not header in df.columns:
                 if header == 'status':
@@ -315,23 +318,21 @@ def get_taxon_id(scientific_name):
         sys.exit(msg)
 
 def get_scientific_name(taxon_id):
-    """Get taxon ID for input scientific_name.
+    """Get scientific name for input taxon_id.
 
-    :param scientific_name: scientific name of sample that distinguishes
-                            its taxonomy
-    :return taxon_id: NCBI taxonomy identifier
+    :param taxon_id: NCBI taxonomy identifier
+    :return scientific_name: scientific name of sample that distinguishes its taxonomy
     """
-    # endpoint for taxonomy id
+    # endpoint for scientific name
     url = 'http://www.ebi.ac.uk/ena/taxonomy/rest/tax-id'
     session = requests.Session()
     session.trust_env = False
-    # url encoding: space -> %20
-    r = session.get(f"{url}/{taxon_id.strip()}")
+    r = session.get(f"{url}/{str(taxon_id).strip()}")
     try:
-        taxon_id = r.json()[0]['scientificName']
+        taxon_id = r.json()['scientificName']
         return taxon_id
     except ValueError:
-        msg = f'Oops, no taxon ID avaible for {taxon_id}. Is it a valid scientific name?'
+        msg = f'Oops, no scientific name avaible for {taxon_id}. Is it a valid taxon_id?'
         sys.exit(msg)
 
 
@@ -734,21 +735,22 @@ def main():
             submit_data(file_paths, password, webin_id)
 
         # when adding sample
-        # update schema_targets with taxon ids
+        # update schema_targets with taxon ids or scientific names
         if 'sample' in schema_targets:
             df = schema_targets['sample']
-            if  df['scientific_name'] and not df['taxon_id']:
-                # retrieve taxon id using scientific name
-                print('retrieving taxon IDs...')
-                taxonID = df['scientific_name'].apply(get_taxon_id).values
-                print('taxon IDs are retrieved')
-                df.loc[:, 'taxon_id'] = taxonID
-            elif df['taxon_id'] and not df['scientific_name']:
-                # retrieve scientific name using taxon id
-                print('retrieving taxon IDs...')
-                taxonID = df['taxon_id'].apply(get_scientific_name).values
-                print('scientific names are retrieved')
-                df.loc[:, 'scientific_name'] = taxonID
+            print('retrieving taxon IDs and scientific names if needed')
+            for index, row in df.iterrows():
+                if pd.notna(row['scientific_name']) and pd.isna(row['taxon_id']):
+                    # retrieve taxon id using scientific name
+                    taxonID = get_taxon_id(row['scientific_name'])
+                    df.loc[index, 'taxon_id'] = taxonID
+                elif pd.notna(row['taxon_id']) and pd.isna(row['scientific_name']):
+                    # retrieve scientific name using taxon id
+                    scientificName = get_scientific_name(row['taxon_id'])
+                    df.loc[index, 'scientific_name'] = scientificName
+                elif pd.isna(row['taxon_id']) and pd.isna(row['scientific_name']):
+                    sys.exit(f"No taxon_id or scientific_name was given with sample {row['alias']}.")
+            print('taxon IDs and scientific names are retrieved')
             schema_targets['sample'] = df
 
     # ? need to add a place holder for setting up

@@ -15,6 +15,9 @@ def attributetest(row, column):
         <SAMPLE_NAME>
             <TAXON_ID>${row.taxon_id}</TAXON_ID>
             <SCIENTIFIC_NAME>${row.scientific_name}</SCIENTIFIC_NAME>
+            <py:if test="attributetest(row, 'common_name')">
+            <COMMON_NAME>${row.common_name}</COMMON_NAME>
+            </py:if>
         </SAMPLE_NAME>
         <DESCRIPTION>${row.sample_description}</DESCRIPTION>
         <SAMPLE_ATTRIBUTES>
