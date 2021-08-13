@@ -61,9 +61,9 @@ All supported arguments:
   --data [FILE [FILE ...]]
                         data for submission
   --center CENTER_NAME  specific to your Webin account
-  --tool TOOL_NAME      specify the name of the tool this submission is done with. Default: ena-upload-cli
   --checklist CHECKLIST
                         specify the sample checklist with following pattern: ERC0000XX, Default: ERC000011
+  --tool TOOL_NAME      specify the name of the tool this submission is done with. Default: ena-upload-cli
   --tool_version TOOL_VERSION
                         specify the version of the tool this submission is done with
   --secret SECRET       .secret.yml file containing the password and Webin ID of your ENA account
@@ -82,7 +82,11 @@ To avoid exposing your credentials through the terminal history, it is recommend
 
 ### Switching between ENA sample checklists
 
-You can specify ENA sample checklist using the `--checklist` parameter. By default the ENA default sample checklist is used supporting the minimum information required for the sample (ERC000011). If you want to submit viral samples you can use the [ENA virus pathogen](https://www.ebi.ac.uk/ena/browser/view/ERC000033) checklist by adding `ERC000033` to the checklist parameter. Check out our [viral example command](#test-the-tool).
+You can specify ENA sample checklist using the `--checklist` parameter. By default the ENA default sample checklist is used supporting the minimum information required for the sample (ERC000011). The supported checklists are listed on the [ENA website](https://www.ebi.ac.uk/ena/browser/checklists). This website will also describe which Field Names you have to use in the header of your sample tsv table. The Field Names will be automatically mapped in the outputted xml if the correct `--checklist` parameter is given.
+
+#### Viral submissions
+
+If you want to submit viral samples you can use the [ENA virus pathogen](https://www.ebi.ac.uk/ena/browser/view/ERC000033) checklist by adding `ERC000033` to the checklist parameter. Check out our [viral example command](#test-the-tool) as demonstration. Please use the [ENA virus pathogen](https://www.ebi.ac.uk/ena/browser/view/ERC000033) checklist on the website of ENA to know which values are allowed/possible in the `restricted text` and `text choice` fields.
 
 
 ### Dev instance
@@ -100,57 +104,6 @@ Optionally you can add a status column that contains the action you want to appl
 | sample_alias_4 | add    | sample_title_1 | homo sapiens     |
 | sample_alias_5 | add    | sample_title_2 | human metagenome |
 | sample_alias_6 |        | sample_title_3 | homo sapiens     |
-
-### Supported columns for viral sample submissions
-
-Viral samples are validated by ENA using the [ENA virus pathogen](https://www.ebi.ac.uk/ena/browser/view/ERC000033) checklist. Check out our [viral example command](#test-the-tool). The columns supported in the sample tsv table used by this tool are:
-
-| Column name                          | ENA field name	                               | Field format    | Cardinality |
-|--------------------------------------|-----------------------------------------------|-----------------|-------------|
-| alias                                | alias                                         | free text       | mandatory   |
-| status                               |                                               |                 | optional    |
-| title                                | TITLE                                         | free text       | mandatory   |
-| scientific_name                      | SCIENTIFIC_NAME                               | free text       | mandatory   |
-| taxon_id                             | TAXON_ID                                      |                 | auto_filled |
-| sample_description                   | DESCRIPTION                                   | free text       | mandatory   |
-| geographic_location                  | geographic location (country and/or sea)      | text choice     | mandatory   |
-| host_common_name                     | host common name                              | free text       | mandatory   |
-| host_subject_id                      | host subject id                               | free text       | mandatory   |
-| host_health_state                    | host health state                             | text choice     | mandatory   |
-| host_sex                             | host sex                                      | text choice     | mandatory   |
-| host_scientific_name                 | host scientific name                          | free text       | mandatory   |
-| collector_name                       | collector name                                | free text       | mandatory   |
-| collecting_institution               | collecting institution                        | free text       | mandatory   |
-| isolate                              | isolate                                       | free text       | mandatory   |
-| collection_date                      | collection date                               | restricted text | recommended |
-| geographic_location_latitude         | geographic location (latitude)                | restricted text | recommended |
-| geographic_location_longitude        | geographic location (longitude)               | restricted text | recommended |
-| geographic_location_region           | geographic location (region and locality)     | free text       | recommended |
-| sample_capture_status                | sample capture status                         | text choice     | recommended |
-| host_disease_outcome                 | host disease outcome                          | text choice     | recommended |
-| host_age                             | host age                                      | restricted text | recommended |
-| virus_identifier                     | virus identifier                              | free text       | recommended |
-| receipt_date                         | receipt date                                  | restricted text | recommended |
-| definition_for_seropositive_sample   | definition for seropositive sample            | free text       | recommended |
-| serotype                             | serotype (required for a seropositive sample) | free text       | recommended |
-| host_habitat                         | host habitat                                  | text choice     | recommended |
-| isolation_source_host_associated     | isolation source host-associated              | free text       | recommended |
-| host_behaviour                       | host behaviour                                | text choice     | recommended |
-| isolation_source_non_host_associated | isolation source non-host-associated          | free text       | recommended |
-| subject_exposure                     | subject exposure                              | free text       | optional    |
-| subject_exposure_duration            | subject exposure duration                     | free text       | optional    |
-| type_exposure                        | type exposure                                 | free text       | optional    |
-| personal_protective_equipment        | personal protective equipment                 | free text       | optional    |
-| hospitalisation                      | hospitalisation                               | text choice     | optional    |
-| illness_duration                     | illness duration                              | free text       | optional    |
-| illness_symptoms                     | illness symptoms                              | free text       | optional    |
-| sample_storage_conditions            | sample storage conditions                     | free text       | optional    |
-| strain                               | strain                                        | free text       | optional    |
-| host_description                     | host description                              | free text       | optional    |
-| gravidity                            | gravidity                                     | free text       | optional    |
-
-
-Please use the [ENA virus pathogen](https://www.ebi.ac.uk/ena/browser/view/ERC000033) checklist on the website of ENA to know which values are allowed/possible in the `restricted text` and `text choice` fields.
 
 
 ### The data files

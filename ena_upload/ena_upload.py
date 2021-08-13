@@ -601,13 +601,13 @@ def process_args():
                         required=True,
                         help='specific to your Webin account')
 
+    parser.add_argument('--checklist', help="specify the sample checklist with following pattern: ERC0000XX, Default: ERC000011", dest='checklist',
+                        default='ERC000011')
+
     parser.add_argument('--tool',
                         dest='tool_name',
                         default='ena-upload-cli',
                         help='specify the name of the tool this submission is done with. Default: ena-upload-cli')
-
-    parser.add_argument('--checklist', help="specify the sample checklist with following pattern: ERC0000XX, Default: ERC000011", dest='checklist',
-                        default='ERC000011')
 
     parser.add_argument('--tool_version',
                         dest='tool_version',
@@ -674,8 +674,8 @@ def main():
     checklist = args.checklist
     secret = args.secret
 
-    secret_file = open(secret, "r")
-    credentials = yaml.load(secret_file, Loader=yaml.FullLoader)
+    with open(secret, 'r') as secret_file:
+        credentials = yaml.load(secret_file, Loader=yaml.FullLoader)
 
     password = credentials['password'].strip()
     webin_id = credentials['username'].strip()
