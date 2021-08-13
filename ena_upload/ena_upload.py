@@ -605,7 +605,7 @@ def process_args():
     parser.add_argument('--no_upload',
                         default=False,
                         action="store_true",
-                        help='Indicate if no upload should be performed (if uploaded was done separately).')
+                        help='Indicate if no upload should be performed and you like to submit a RUN object (e.g. if uploaded was done separately).')
 
     parser.add_argument('--secret',
                         required=True,
