@@ -45,6 +45,7 @@ pip install ena-upload-cli
 Minimal:  ena-upoad-cli --action {add,modify,cancel,release} --center CENTER_NAME  --secret SECRET
 
 All supported arguments:
+
   -h, --help            show this help message and exit
   --version             show program's version number and exit
   --action {add,modify,cancel,release}
@@ -60,13 +61,14 @@ All supported arguments:
   --data [FILE [FILE ...]]
                         data for submission
   --center CENTER_NAME  specific to your Webin account
-  --tool TOOL_NAME      Specify the name of the tool this submission is done with. Default: ena-upload-cli
+  --checklist CHECKLIST
+                        specify the sample checklist with following pattern: ERC0000XX, Default: ERC000011
+  --tool TOOL_NAME      specify the name of the tool this submission is done with. Default: ena-upload-cli
   --tool_version TOOL_VERSION
-                        Specify the version of the tool this submission is done with. Default: current version of tool
+                        specify the version of the tool this submission is done with
   --no_upload           Indicate if no upload should be performed and you like to submit a RUN object (e.g. if uploaded was done separately).
-  --secret SECRET       .secret file containing the password of your Webin account
-  -d, --dev             Flag to use the dev/sandbox endpoint of ENA.
-  --vir                 Flag to use the viral sample template.
+  --secret SECRET       .secret.yml file containing the password and Webin ID of your ENA account
+  -d, --dev             flag to use the dev/sandbox endpoint of ENA
 ```
 
 Mandatory arguments: --action, --center and --secret.
@@ -79,6 +81,14 @@ A Webin can be made [here](https://www.ebi.ac.uk/ena/submit/sra/#home) if you do
 
 To avoid exposing your credentials through the terminal history, it is recommended to make use of a `.secret.yml` file, containing your password and username keywords. An example is given in the root of this directory.
 
+### Switching between ENA sample checklists
+
+You can specify ENA sample checklist using the `--checklist` parameter. By default the ENA default sample checklist is used supporting the minimum information required for the sample (ERC000011). The supported checklists are listed on the [ENA website](https://www.ebi.ac.uk/ena/browser/checklists). This website will also describe which Field Names you have to use in the header of your sample tsv table. The Field Names will be automatically mapped in the outputted xml if the correct `--checklist` parameter is given.
+
+#### Viral submissions
+
+If you want to submit viral samples you can use the [ENA virus pathogen](https://www.ebi.ac.uk/ena/browser/view/ERC000033) checklist by adding `ERC000033` to the checklist parameter. Check out our [viral example command](#test-the-tool) as demonstration. Please use the [ENA virus pathogen](https://www.ebi.ac.uk/ena/browser/view/ERC000033) checklist on the website of ENA to know which values are allowed/possible in the `restricted text` and `text choice` fields.
+
 
 ### Dev instance
 
@@ -86,58 +96,15 @@ By default the submission will be done using following url to ENA: https://www.e
 
 Use the *--dev* flag if you want to do a test submission using the tool by the sandbox dev instance of ENA: https://wwwdev.ebi.ac.uk/ena/submit/drop-box/submit/?auth=ENA. A TEST submission will be discarded within 24 hours.
 
-### Supported columns for viral sample submissions
+### Submitting a selection of rows to ENA
 
-Viral samples are validated by ENA using the [ENA virus pathogen](https://www.ebi.ac.uk/ena/browser/view/ERC000033) checklist. The columns supported in the sample tsv table used by this tool are:
+Optionally you can add a status column that contains the action you want to apply during this submission. If you chose to add only the first 2 samples to ENA, you specify `--action add` as parameter in the command and you add the `add` value to the status column of the rows you want to submit as demonstrated below.
 
-| Column name                          | ENA field name	                               | Field format    | Cardinality |
-|--------------------------------------|-----------------------------------------------|-----------------|-------------|
-| alias                                | alias                                         | free text       | mandatory   |
-| status                               |                                               |                 | auto_filled |
-| accession                            | accession                                     |                 | auto_filled |
-| title                                | TITLE                                         | free text       | mandatory   |
-| scientific_name                      | SCIENTIFIC_NAME                               | free text       | mandatory   |
-| taxon_id                             | TAXON_ID                                      |                 | auto_filled |
-| sample_description                   | DESCRIPTION                                   | free text       | mandatory   |
-| submission_date                      |                                               |                 | auto_filled |
-| geographic_location                  | geographic location (country and/or sea)      | text choice     | mandatory   |
-| host_common_name                     | host common name                              | free text       | mandatory   |
-| host_subject_id                      | host subject id                               | free text       | mandatory   |
-| host_health_state                    | host health state                             | text choice     | mandatory   |
-| host_sex                             | host sex                                      | text choice     | mandatory   |
-| host_scientific_name                 | host scientific name                          | free text       | mandatory   |
-| collector_name                       | collector name                                | free text       | mandatory   |
-| collecting_institution               | collecting institution                        | free text       | mandatory   |
-| isolate                              | isolate                                       | free text       | mandatory   |
-| collection_date                      | collection date                               | restricted text | recommended |
-| geographic_location_latitude         | geographic location (latitude)                | restricted text | recommended |
-| geographic_location_longitude        | geographic location (longitude)               | restricted text | recommended |
-| geographic_location_region           | geographic location (region and locality)     | free text       | recommended |
-| sample_capture_status                | sample capture status                         | text choice     | recommended |
-| host_disease_outcome                 | host disease outcome                          | text choice     | recommended |
-| host_age                             | host age                                      | restricted text | recommended |
-| virus_identifier                     | virus identifier                              | free text       | recommended |
-| receipt_date                         | receipt date                                  | restricted text | recommended |
-| definition_for_seropositive_sample   | definition for seropositive sample            | free text       | recommended |
-| serotype                             | serotype (required for a seropositive sample) | free text       | recommended |
-| host_habitat                         | host habitat                                  | text choice     | recommended |
-| isolation_source_host_associated     | isolation source host-associated              | free text       | recommended |
-| host_behaviour                       | host behaviour                                | text choice     | recommended |
-| isolation_source_non_host_associated | isolation source non-host-associated          | free text       | recommended |
-| subject_exposure                     | subject exposure                              | free text       | optional    |
-| subject_exposure_duration            | subject exposure duration                     | free text       | optional    |
-| type_exposure                        | type exposure                                 | free text       | optional    |
-| personal_protective_equipment        | personal protective equipment                 | free text       | optional    |
-| hospitalisation                      | hospitalisation                               | text choice     | optional    |
-| illness_duration                     | illness duration                              | free text       | optional    |
-| illness_symptoms                     | illness symptoms                              | free text       | optional    |
-| sample_storage_conditions            | sample storage conditions                     | free text       | optional    |
-| strain                               | strain                                        | free text       | optional    |
-| host_description                     | host description                              | free text       | optional    |
-| gravidity                            | gravidity                                     | free text       | optional    |
-
-
-Please use the [ENA virus pathogen](https://www.ebi.ac.uk/ena/browser/view/ERC000033) checklist on the website of ENA to know which values are allowed/possible in the `restricted text` and `text choice` fields.
+| alias          | status | title          | scientific_name  |
+|----------------|--------|----------------|------------------|
+| sample_alias_4 | add    | sample_title_1 | homo sapiens     |
+| sample_alias_5 | add    | sample_title_2 | human metagenome |
+| sample_alias_6 |        | sample_title_3 | homo sapiens     |
 
 
 ### The data files
@@ -182,27 +149,25 @@ outputs:
 
 ## Test the tool
 
-test command: **add metadata and sequence data**
+* **add metadata and sequence data**
+  ```
+  ena_upload --action add --center 'your_center_name' --study example_tables/ENA_template_studies.tsv --sample example_tables/ENA_template_samples.tsv --experiment example_tables/ENA_template_experiments.tsv --run example_tables/ENA_template_runs.tsv --data example_data/*gz --dev --secret .secret.yml
+  ```
 
- ```
- ena_upload --action add --center 'your_center_name' --study example_tables/ENA_template_studies.tsv --sample example_tables/ENA_template_samples.tsv --experiment example_tables/ENA_template_experiments.tsv --run example_tables/ENA_template_runs.tsv --data example_data/*gz --dev --secret .secret.yml
- ```
+* **modify metadata**
+  ```
+  ena_upload --action modify --center 'your_center_name' --study example_tables/ENA_template_studies-2020-05-01T1421.tsv --dev --secret .secret.yml
+  ```
 
- test command: **modify metadata**
+* **viral data**
+  ```
+  ena_upload --action add --center 'your_center_name' --study example_tables/ENA_template_studies.tsv --sample example_tables/ENA_template_samples_vir.tsv --experiment example_tables/ENA_template_experiments.tsv --run example_tables/ENA_template_runs.tsv --data example_data/*gz --dev --checklist ERC000033 --secret .secret.yml
+  ```
 
- ```
- ena_upload --action modify --center 'your_center_name' --study example_tables/ENA_template_studies-2020-05-01T1421.tsv --dev --secret .secret.yml
- ```
-
-test command for **viral data**
-
- ```
- ena_upload --action add --center 'your_center_name' --study example_tables/ENA_template_studies.tsv --sample example_tables/ENA_template_samples_vir.tsv --experiment example_tables/ENA_template_experiments.tsv --run example_tables/ENA_template_runs.tsv --data example_data/*gz --dev --vir --secret .secret.yml
- ```
-
-**Note for Windows users:** Windows, by default, does not support wildcard expansion in command-line arguments.
-Because of this the `--data example_data/*gz` argument should be substituted with one containing a list of the data files.
-For this example, use:
-```
---data example_data/ENA_TEST1.R1.fastq.gz example_data/ENA_TEST2.R1.fastq.gz example_data/ENA_TEST2.R2.fastq.gz
-```
+> **Note for Windows users:** Windows, by default, does not support wildcard expansion in command-line arguments.
+> Because of this the `--data example_data/*gz` argument should be substituted with one containing a list of the data files.
+> For this example, use:
+> 
+> ```
+> --data example_data/ENA_TEST1.R1.fastq.gz example_data/ENA_TEST2.R1.fastq.gz example_data/ENA_TEST2.R2.fastq.gz
+> ```

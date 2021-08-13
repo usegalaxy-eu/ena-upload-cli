@@ -1,19 +1,18 @@
 #! /usr/bin/env python
-__authors__ = "Dilmurat Yusuf"
+__authors__ = ["Dilmurat Yusuf", "Bert Droesbeke"]
 __copyright__ = "Copyright 2020, Dilmurat Yusuf"
 __email__ = "Dilmurat.yusuf@gmail.com"
 __license__ = "MIT"
 
 import os
 import sys
-import subprocess
-import shlex
 import argparse
 import yaml
 import hashlib
 import ftplib
 import requests
 import uuid
+import numpy as np
 import re
 from genshi.template import TemplateLoader
 from lxml import etree
@@ -27,7 +26,7 @@ from ena_upload._version import __version__
 pd.options.mode.chained_assignment = None
 
 
-def create_dataframe(schema_tables):
+def create_dataframe(schema_tables, action):
     '''create pandas dataframe from the tables in schema_tables
        and return schema_dataframe
 
@@ -46,7 +45,14 @@ def create_dataframe(schema_tables):
 
     for schema, table in schema_tables.items():
         df = pd.read_csv(table, sep='\t', comment='#')
-
+        # checking for optional columns and if not present adding them
+        optional_columns = ['accession', 'submission_date', 'status']
+        for header in optional_columns:
+            if not header in df.columns:
+                if header == 'status':
+                    df[header] = action.lower()
+                else:
+                    df[header] = np.nan
         # status column contain action keywords
         # for xml rendering, keywords require uppercase
         # according to scheme definition of submission
@@ -106,11 +112,9 @@ def check_file_checksum(df):
         else:
             return False
 
-
     s = df.file_checksum.apply(_is_str_md5sum)
 
     return s.all()
-
 
 
 def validate_xml(xsd, xml):
@@ -155,7 +159,8 @@ def generate_stream(schema, targets, Template, center, tool):
                                    tool_name=tool['tool_name'],
                                    tool_version=tool['tool_version'])
     else:
-        stream = Template.generate(df=targets, center=center, tool_name=tool['tool_name'],tool_version=tool['tool_version'])
+        stream = Template.generate(
+            df=targets, center=center, tool_name=tool['tool_name'], tool_version=tool['tool_version'])
 
     return stream
 
@@ -173,16 +178,17 @@ def construct_xml(schema, stream, xsd):
 
     validate_xml(xsd, xml_string)
 
-    xml_file = os.path.join(tempfile.gettempdir(), schema + '_' + str(uuid.uuid4()) + '.xml')
+    xml_file = os.path.join(tempfile.gettempdir(),
+                            schema + '_' + str(uuid.uuid4()) + '.xml')
     with open(xml_file, 'w') as fw:
-        fw.write(xml_string.decode("utf-8") )
+        fw.write(xml_string.decode("utf-8"))
 
-    print (f'wrote {xml_file}')
+    print(f'wrote {xml_file}')
 
     return xml_file
 
 
-def actors(template_path, vir):
+def actors(template_path, checklist):
     ''':return: the filenames of schema definitions and templates
     '''
 
@@ -196,25 +202,19 @@ def actors(template_path, vir):
             'submission': 'SRA.submission.xsd',
             'sample': 'SRA.sample.xsd',
             'study': 'SRA.study.xsd'}
-    if vir:
-        templates = {'run': 'ENA_template_runs.xml',
-                    'experiment': 'ENA_template_experiments.xml',
-                    'submission': 'ENA_template_submission.xml',
-                    'sample': 'ENA_template_vir_sample.xml',
-                    'study': 'ENA_template_studies.xml'}
-    else:
-        templates = {'run': 'ENA_template_runs.xml',
-                    'experiment': 'ENA_template_experiments.xml',
-                    'submission': 'ENA_template_submission.xml',
-                    'sample': 'ENA_template_samples.xml',
-                    'study': 'ENA_template_studies.xml'}
+
+    templates = {'run': 'ENA_template_runs.xml',
+                 'experiment': 'ENA_template_experiments.xml',
+                 'submission': 'ENA_template_submission.xml',
+                 'sample': f'ENA_template_samples_{checklist}.xml',
+                 'study': 'ENA_template_studies.xml'}
 
     xsds = add_path(xsds, template_path)
 
     return xsds, templates
 
 
-def run_construct(template_path, schema_targets,  center, vir, tool):
+def run_construct(template_path, schema_targets,  center, checklist, tool):
     '''construct XMLs for schema in schema_targets
 
     :param schema_targets: dictionary of 'schema:targets' generated
@@ -222,12 +222,12 @@ def run_construct(template_path, schema_targets,  center, vir, tool):
     :param loader: object of TemplateLoader in genshi
     :param center: center name used to register ENA Webin
     :param tool: dict of tool_name and tool_version , by default ena-upload-cli
-    :param vir: flag to enable viral sample submission
+    :param checklist: parameter to select a specific sample checklist
 
     :return schema_xmls: dictionary of 'schema:filename'
     '''
 
-    xsds, templates = actors(template_path, vir)
+    xsds, templates = actors(template_path, checklist)
 
     schema_xmls = {}
 
@@ -242,7 +242,7 @@ def run_construct(template_path, schema_targets,  center, vir, tool):
     return schema_xmls
 
 
-def construct_submission(template_path, action, submission_input, center, vir, tool):
+def construct_submission(template_path, action, submission_input, center, checklist, tool):
     '''construct XML for submission
 
     :param action: action for submission -
@@ -252,19 +252,19 @@ def construct_submission(template_path, action, submission_input, center, vir, t
     :param loader: object of TemplateLoader in genshi
     :param center: center name used to register ENA Webin
     :param tool: tool name, by default ena-upload-cli
-    :param vir: flag to enable viral sample submission
+    :param checklist: parameter to select a specific sample checklist
 
     :return submission_xml: filename of submission XML
     '''
 
-    xsds, templates = actors(template_path, vir)
+    xsds, templates = actors(template_path, checklist)
 
     template = templates['submission']
     loader = TemplateLoader(search_path=template_path)
     Template = loader.load(template)
 
     stream = Template.generate(action=action, input=submission_input,
-                               center=center, tool_name=tool['tool_name'],tool_version=tool['tool_version'])
+                               center=center, tool_name=tool['tool_name'], tool_version=tool['tool_version'])
 
     submission_xml = construct_xml('submission', stream, xsds['submission'])
 
@@ -292,23 +292,6 @@ def get_md5(filepath):
             md5sum.update(chunk)
 
     return md5sum.hexdigest()
-
-
-def run_cmd(cmd_line):
-    """Execute command line.
-
-    :param cmd_line: the string of command line
-
-    :return output: the string of output from execution
-    """
-
-    args = shlex.split(cmd_line)
-    process = subprocess.Popen(args,
-                     stdout=subprocess.PIPE, 
-                     stderr=subprocess.PIPE)
-    output, stderr = process.communicate()
-    return output
-
 
 def get_taxon_id(scientific_name):
     """Get taxon ID for input scientific_name.
@@ -340,18 +323,18 @@ def submit_data(file_paths, password, webin_id):
     """
 
     try:
-        print ("\nconnecting to ftp.webin.ebi.ac.uk....")
+        print("\nconnecting to ftp.webin.ebi.ac.uk....")
         ftp = ftplib.FTP("webin.ebi.ac.uk", webin_id, password)
     except IOError:
-        print (ftp.lastErrorText())
-        print ("ERROR: could not connect to the ftp server.\
+        print(ftp.lastErrorText())
+        print("ERROR: could not connect to the ftp server.\
                Please check your login details.")
 
     for filename, path in file_paths.items():
-        print (f'uploading {path}')
+        print(f'uploading {path}')
         ftp.storbinary(f'STOR {filename}', open(path, 'rb'))
         msg = ftp.storbinary(f'STOR {filename}', open(path, 'rb'))
-        print (msg)
+        print(msg)
 
     print(ftp.quit())
 
@@ -384,13 +367,13 @@ def send_schemas(schema_xmls, url, webin_id, password):
     password -- ENA password of user
     '''
 
-
-    sources = [(schema.upper(), (source, open(source, 'rb'))) for schema, source in schema_xmls.items()]
+    sources = [(schema.upper(), (source, open(source, 'rb')))
+               for schema, source in schema_xmls.items()]
     session = requests.Session()
     session.trust_env = False
     r = session.post(f"{url}",
-                    auth=(webin_id,password),
-                    files=sources)
+                     auth=(webin_id, password),
+                     files=sources)
 
     print(r.text)
     return r
@@ -408,7 +391,7 @@ def process_receipt(receipt, action):
                                    'accession', 'submission_date'
     '''
     receipt_root = etree.fromstring(receipt)
-    
+
     success = receipt_root.get('success')
 
     if success == 'true':
@@ -429,7 +412,8 @@ def process_receipt(receipt, action):
         update_list = []
         print(f"\n{ena_type.capitalize()} accession details:")
         for element in update:
-            extract = (element.get('alias'), element.get('accession'), receiptDate, status[action])
+            extract = (element.get('alias'), element.get(
+                'accession'), receiptDate, status[action])
             print("\t".join(extract))
             update_list.append(extract)
         # used for labelling dataframe
@@ -453,7 +437,8 @@ def process_receipt(receipt, action):
         schema_update['sample'] = make_update(sample_update, 'sample')
 
     if experiment_update:
-        schema_update['experiment'] = make_update(experiment_update, 'experiment')
+        schema_update['experiment'] = make_update(
+            experiment_update, 'experiment')
 
     if run_update:
         schema_update['run'] = make_update(run_update, 'run')
@@ -499,7 +484,7 @@ def update_table(schema_dataframe, schema_targets, schema_update):
             if schema == 'sample':
                 dataframe.loc[index,
                               'taxon_id'] = targets.loc[index, 'taxon_id']
-            if schema == 'run':
+            elif schema == 'run':
                 # since index is set to alias
                 # then targets of run can have multiple rows with
                 # identical index because each row has a file
@@ -524,7 +509,7 @@ def save_update(schema_tables_, schema_dataframe_):
         :dataframe: a dataframe
     """
 
-    print ('\nSaving updates in new tsv tables::')
+    print('\nSaving updates in new tsv tables::')
     for schema in schema_tables_:
         table = schema_tables_[schema]
         dataframe = schema_dataframe_[schema]
@@ -532,7 +517,7 @@ def save_update(schema_tables_, schema_dataframe_):
         file_name, file_extension = os.path.splitext(table)
         update_name = f'{file_name}_updated{file_extension}'
         dataframe.to_csv(update_name, sep='\t')
-        print (f'save updates in {update_name}')
+        print(f'save updates in {update_name}')
 
 
 class SmartFormatter(argparse.HelpFormatter):
@@ -562,7 +547,9 @@ def process_args():
                                      corresponding the ENA objects -- STUDY,
                                      SAMPLE, EXPERIMENT and RUN.''',
                                      formatter_class=SmartFormatter)
-    parser.add_argument('--version', action='version', version='%(prog)s '+__version__)
+    parser.add_argument('--version', action='version',
+                        version='%(prog)s '+__version__)
+
     parser.add_argument('--action',
                         choices=['add', 'modify', 'cancel', 'release'],
                         required=True,
@@ -585,22 +572,26 @@ def process_args():
 
     parser.add_argument('--data',
                         nargs='*',
-                        help='Data for submission',
+                        help='data for submission',
                         metavar='FILE')
 
     parser.add_argument('--center',
                         dest='center_name',
                         required=True,
                         help='specific to your Webin account')
+
+    parser.add_argument('--checklist', help="specify the sample checklist with following pattern: ERC0000XX, Default: ERC000011", dest='checklist',
+                        default='ERC000011')
+
     parser.add_argument('--tool',
                         dest='tool_name',
                         default='ena-upload-cli',
-                        help='Specify the name of the tool this submission is done with. Default: ena-upload-cli')
+                        help='specify the name of the tool this submission is done with. Default: ena-upload-cli')
 
     parser.add_argument('--tool_version',
                         dest='tool_version',
                         default=__version__,
-                        help='Specify the version of the tool this submission is done with.')
+                        help='specify the version of the tool this submission is done with')
 
     parser.add_argument('--no_upload',
                         default=False,
@@ -611,23 +602,21 @@ def process_args():
                         required=True,
                         help='.secret.yml file containing the password and Webin ID of your ENA account')
 
-    parser.add_argument('-d', '--dev', help="Flag to use the dev/sandbox endpoint of ENA.", action="store_true")
-    
-    parser.add_argument('--vir', help="Flag to use the viral sample template.", action="store_true")
+    parser.add_argument(
+        '-d', '--dev', help="flag to use the dev/sandbox endpoint of ENA", action="store_true")
 
     args = parser.parse_args()
 
     # check if any table is given
     tables = set([args.study, args.sample, args.experiment, args.run])
     if tables == {None}:
-        parser.error('requires at least one table for submission')
+        parser.error('Requires at least one table for submission')
 
     # check if .secret file exists
     if args.secret:
         if not os.path.isfile(args.secret):
             msg = f"Oops, the file {args.secret} does not exist"
             parser.error(msg)
-
 
     # check if data is given when adding a 'run' table
     if args.action == 'add' and args.run is not None:
@@ -660,23 +649,24 @@ def collect_tables(args):
     return schema_tables
 
 
-def main ():
+def main():
     args = process_args()
     action = args.action.upper()
     center = args.center_name
-    tool = {'tool_name':args.tool_name, 'tool_version':args.tool_version}
+    tool = {'tool_name': args.tool_name, 'tool_version': args.tool_version}
     dev = args.dev
-    vir = args.vir
+    checklist = args.checklist
     secret = args.secret
 
-    secret_file = open(secret, "r")
-    credentials = yaml.load(secret_file, Loader=yaml.FullLoader)
+    with open(secret, 'r') as secret_file:
+        credentials = yaml.load(secret_file, Loader=yaml.FullLoader)
 
     password = credentials['password'].strip()
     webin_id = credentials['username'].strip()
 
     if not password or not webin_id:
-        print( f"Oops, file {args.secret} does not contain a password or username")
+        print(
+            f"Oops, file {args.secret} does not contain a password or username")
     secret_file.close()
 
     # ? a function needed to convert characters e.g. # -> %23 in password
@@ -685,7 +675,7 @@ def main ():
     schema_tables = collect_tables(args)
 
     # create dataframe from table
-    schema_dataframe = create_dataframe(schema_tables)
+    schema_dataframe = create_dataframe(schema_tables, action)
 
     # ? add a function to sanitize characters
     # ? print 'validate table for specific action'
@@ -737,23 +727,24 @@ def main ():
             df = schema_targets['sample']
 
             # retrieve taxon id using scientific name
-            print ('retrieving taxon IDs...')
+            print('retrieving taxon IDs...')
             taxonID = df['scientific_name'].apply(get_taxon_id).values
-            print ('taxon IDs are retrieved')
+            print('taxon IDs are retrieved')
             df.loc[:, 'taxon_id'] = taxonID
             schema_targets['sample'] = df
 
     # ? need to add a place holder for setting up
     base_path = os.path.abspath(os.path.dirname(__file__))
-    template_path = os.path.join(base_path,'templates')
+    template_path = os.path.join(base_path, 'templates')
     if action in ['ADD', 'MODIFY']:
         # when ADD/MODIFY,
         # requires source XMLs for 'run', 'experiment', 'sample', 'experiment'
         # schema_xmls record XMLs for all these schema and following 'submission'
-        schema_xmls = run_construct(template_path, schema_targets, center, vir, tool)
+        schema_xmls = run_construct(
+            template_path, schema_targets, center, checklist, tool)
 
         submission_xml = construct_submission(template_path, action,
-                                              schema_xmls, center, vir, tool)
+                                              schema_xmls, center, checklist, tool)
 
     elif action in ['CANCEL', 'RELEASE']:
         # when CANCEL/RELEASE, only accessions needed
@@ -761,7 +752,7 @@ def main ():
         schema_xmls = {}
 
         submission_xml = construct_submission(template_path, action,
-                                              schema_targets, center, vir, tool)
+                                              schema_targets, center, checklist, tool)
 
     schema_xmls['submission'] = submission_xml
 
@@ -787,20 +778,6 @@ def main ():
 
     # save updates in new tables
     save_update(schema_tables, schema_dataframe)
-
-    # print 'optional: need a testing script'
-
-    # receipt example for cancel
-    # <?xml version="1.0" encoding="UTF-8"?>
-    # <?xml-stylesheet type="text/xsl" href="receipt.xsl"?>
-    # <RECEIPT receiptDate="2017-12-05T17:07:13.874Z" submissionFile="submission_cancel.xml" success="true">
-    #      <MESSAGES>
-    #           <INFO>Submission has been committed.</INFO>
-    #           <INFO>This submission is a TEST submission and will be discarded within 24 hours</INFO>
-    #      </MESSAGES>
-    #      <ACTIONS/>
-    #      <ACTIONS/>
-    # </RECEIPT>
 
 
 if __name__ == "__main__":
