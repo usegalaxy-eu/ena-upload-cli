@@ -338,7 +338,6 @@ def submit_data(file_paths, password, webin_id):
 
     print(ftp.quit())
 
-
 def columns_to_update(df):
     '''
     returns the column names where contains the cells to update
@@ -594,6 +593,11 @@ def process_args():
                         default=__version__,
                         help='specify the version of the tool this submission is done with')
 
+    parser.add_argument('--no_upload',
+                        default=False,
+                        action="store_true",
+                        help='Indicate if no upload should be performed and you like to submit a RUN object (e.g. if uploaded was done separately).')
+
     parser.add_argument('--secret',
                         required=True,
                         help='.secret.yml file containing the password and Webin ID of your ENA account')
@@ -688,14 +692,17 @@ def main():
         if 'run' in schema_targets:
             # a dictionary of filename:file_path
             # ? do I have to define the absolute path
-            file_paths = {os.path.basename(path): os.path.abspath(path)
-                          for path in args.data}
-
             df = schema_targets['run']
 
-            # check if file names identical between command line and table
-            # if not, system exits
-            check_filenames(file_paths, df)
+            if args.no_upload:
+                file_paths = {}
+                print("No files will be uploaded, remove `--no_upload' argument to perform upload.")
+            else:  # check supplied datafiles only if doing upload
+                file_paths = {os.path.basename(path): os.path.abspath(path)
+                                                   for path in args.data}
+                # check if file names identical between command line and table
+                # if not, system exits
+                check_filenames(file_paths, df)
 
             # generate MD5 sum if not supplied in table
             if not check_file_checksum(df):
@@ -711,7 +718,8 @@ def main():
             schema_targets['run'] = df
 
             # submit data to webin ftp server
-            submit_data(file_paths, password, webin_id)
+            if not args.no_upload:
+                submit_data(file_paths, password, webin_id)
 
         # when adding sample
         # update schema_targets with taxon ids

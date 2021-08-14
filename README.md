@@ -66,6 +66,7 @@ All supported arguments:
   --tool TOOL_NAME      specify the name of the tool this submission is done with. Default: ena-upload-cli
   --tool_version TOOL_VERSION
                         specify the version of the tool this submission is done with
+  --no_upload           Indicate if no upload should be performed and you like to submit a RUN object (e.g. if uploaded was done separately).
   --secret SECRET       .secret.yml file containing the password and Webin ID of your ENA account
   -d, --dev             flag to use the dev/sandbox endpoint of ENA
 ```
@@ -119,6 +120,15 @@ Optionally you can add a status column that contains the action you want to appl
 Most files uploaded to the ENA FTP server need to be compressed.
 
 More information on how ENA wants to receive the files can be found [here](https://ena-docs.readthedocs.io/en/latest/submit/fileprep/preparation.html).
+
+**Note for data upload:** 
+Uploaded files are persistently stored on the ENA server after the upload for some time. 
+Thus, if multiple test submission are performed, it is possible to skip the data upload with `--no_upload` in
+subsequent submissions.
+This also allows uploading (large) datasets separately e.g. with [aspera](https://ena-docs.readthedocs.io/en/latest/submit/fileprep/upload.html).
+For the `--no_upload` argument,  data file(s) still need to be provided with `--data` 
+if a RUN object is submitted in order to generate MD5 sums.  
+
 
 ## Tool overview
 
