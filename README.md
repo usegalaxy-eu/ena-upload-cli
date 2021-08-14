@@ -81,9 +81,21 @@ A Webin can be made [here](https://www.ebi.ac.uk/ena/submit/sra/#home) if you do
 
 To avoid exposing your credentials through the terminal history, it is recommended to make use of a `.secret.yml` file, containing your password and username keywords. An example is given in the root of this directory.
 
-### Switching between ENA sample checklists
+### ENA sample checklists
 
 You can specify ENA sample checklist using the `--checklist` parameter. By default the ENA default sample checklist is used supporting the minimum information required for the sample (ERC000011). The supported checklists are listed on the [ENA website](https://www.ebi.ac.uk/ena/browser/checklists). This website will also describe which Field Names you have to use in the header of your sample tsv table. The Field Names will be automatically mapped in the outputted xml if the correct `--checklist` parameter is given.
+
+#### Fixed sample columns
+
+The command line tool will automatically fetch the correct scientific name based on the taxon ID or fetch the taxon ID based on the scientific name. Both can be given and no overwrite will be done.
+
+- Mandatory: *alias*, *title*, *sample_description* and either *scientific_name* or *taxon_id* (preferred)
+- Optional: *common_name*
+
+| alias          | title          | taxon_id | scientific_name                                 | common_name | sample_description   |
+|----------------|----------------|----------|-------------------------------------------------|-------------|----------------------|
+| sample_alias_4 | sample_title_2 | 2697049  | Severe acute respiratory syndrome coronavirus 2 | covid-19    | sample_description_1 |
+| sample_alias_5 | sample_title_3 | 2697049  | Severe acute respiratory syndrome coronavirus 2 | covid-19    | sample_description_2 |
 
 #### Viral submissions
 

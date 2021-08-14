@@ -1,3 +1,3 @@
-alias	title	scientific_name	taxon_id	sample_description
-sample_alias_4	sample_title_1	homo sapiens	update_by_ENA	sample_description_1
-sample_alias_5	sample_title_2	human metagenome	update_by_ENA	sample_description_2
+alias	title	scientific_name	sample_description
+sample_alias_4	sample_title_1	homo sapiens	sample_description_1
+sample_alias_5	sample_title_2	human metagenome	sample_description_2
