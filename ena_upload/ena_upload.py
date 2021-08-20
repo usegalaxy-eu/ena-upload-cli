@@ -109,9 +109,10 @@ def check_file_checksum(df):
     regex_valid_md5sum = re.compile('^[a-f0-9]{32}$')
 
     def _is_str_md5sum(x):
-        match = regex_valid_md5sum.fullmatch(x)
-        if match:
-            return True
+        if pd.notna(x):
+            match = regex_valid_md5sum.fullmatch(x)
+            if match:
+                return True
         else:
             return False
 
