@@ -5,7 +5,16 @@ def attributetest(row, column):
     if hasattr(row, column) and pd.notna(row[column]) and not row[column].isspace() and str(row[column]).lower() not in ['nan', 'na']:
         return True 
     else:
-        return False?>
+        return False
+{%- if 'mandatory' not in attributes.values() %}
+def onlyoptional(row):
+    attributelist = {{ attributes.keys() | list}}
+    for attribute in attributelist:
+        if attribute in row:
+            return True 
+    return False
+    {%- endif %}
+?>
 <SAMPLE_SET xmlns:py="http://genshi.edgewall.org/"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:noNamespaceSchemaLocation="ftp://ftp.sra.ebi.ac.uk/meta/xsd/sra_1_6/SRA.sample.xsd">
@@ -20,6 +29,9 @@ def attributetest(row, column):
             </py:if>
         </SAMPLE_NAME>
         <DESCRIPTION>${row.sample_description}</DESCRIPTION>
+        {%- if 'mandatory' not in attributes.values() %}
+        <py:if test="onlyoptional(row)">
+        {%- endif %}
         <SAMPLE_ATTRIBUTES>
             {%- for key, value in attributes.items() %}
             {%- if value == 'mandatory' %}
@@ -37,6 +49,9 @@ def attributetest(row, column):
             {%- endif %}
             {%- endfor %}
         </SAMPLE_ATTRIBUTES>
+        {%- if 'mandatory' not in attributes.values() %}
+        </py:if>
+        {%- endif %}
     </SAMPLE>
     </py:for>
 </SAMPLE_SET>
