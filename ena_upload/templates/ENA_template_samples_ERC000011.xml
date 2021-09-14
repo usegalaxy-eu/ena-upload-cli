@@ -8,9 +8,9 @@ def attributetest(row, column):
         return False
 def onlyoptional(row):
     attributelist = ['cell_type', 'dev_stage', 'germline', 'tissue_lib', 'tissue_type', 'collection_date', 'isolation_source', 'lat_lon', 'collected_by', 'geographic location (country and/or sea)', 'geographic location (region and locality)', 'identified_by', 'environmental_sample', 'mating_type', 'sex', 'lab_host', 'host scientific name', 'bio_material', 'culture_collection', 'specimen_voucher', 'cultivar', 'ecotype', 'isolate', 'sub_species', 'variety', 'sub_strain', 'cell_line', 'serotype', 'serovar', 'strain']
-    for attribute in attributelist:
-        if attribute in row:
-            return True 
+    for column in attributelist:
+        if hasattr(row, column) and pd.notna(row[column]) and not row[column].isspace() and str(row[column]).lower() not in ['nan', 'na']:
+            return True
     return False
 ?>
 <SAMPLE_SET xmlns:py="http://genshi.edgewall.org/"

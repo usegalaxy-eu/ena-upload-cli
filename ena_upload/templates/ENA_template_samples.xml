@@ -8,12 +8,12 @@ def attributetest(row, column):
         return False
 {%- if 'mandatory' not in attributes.values() %}
 def onlyoptional(row):
-    attributelist = {{ attributes.keys() | list}}
-    for attribute in attributelist:
-        if attribute in row:
-            return True 
+    attributelist = {{ attributes.keys() | list }}
+    for column in attributelist:
+        if hasattr(row, column) and pd.notna(row[column]) and not row[column].isspace() and str(row[column]).lower() not in ['nan', 'na']:
+            return True
     return False
-    {%- endif %}
+{%- endif %}
 ?>
 <SAMPLE_SET xmlns:py="http://genshi.edgewall.org/"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"

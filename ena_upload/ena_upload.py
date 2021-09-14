@@ -395,8 +395,6 @@ def send_schemas(schema_xmls, url, webin_id, password):
     r = session.post(f"{url}",
                      auth=(webin_id, password),
                      files=sources)
-
-    print(r.text)
     return r
 
 
