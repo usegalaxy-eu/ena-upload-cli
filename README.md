@@ -110,7 +110,7 @@ Use the *--dev* flag if you want to do a test submission using the tool by the s
 
 ### Submitting a selection of rows to ENA
 
-Optionally you can add a status column that contains the action you want to apply during this submission. If you chose to add only the first 2 samples to ENA, you specify `--action add` as parameter in the command and you add the `add` value to the status column of the rows you want to submit as demonstrated below.
+Optionally you can add a status column that contains the action you want to apply during this submission. If you chose to add only the first 2 samples to ENA, you specify `--action add` as parameter in the command and you add the `add` value to the status column of the rows you want to submit as demonstrated below. Same holds for the action `modify`.
 
 | alias          | status | title          | scientific_name  |
 |----------------|--------|----------------|------------------|
@@ -168,7 +168,7 @@ outputs:
 
 * **modify metadata**
   ```
-  ena_upload --action modify --center 'your_center_name' --study example_tables/ENA_template_studies-2020-05-01T1421.tsv --dev --secret .secret.yml
+  ena-upload-cli --action modify --center 'your_center_name' --sample example_tables/ENA_template_samples_modify.tsv --dev --secret .secret.yml
   ```
 
 * **viral data**
