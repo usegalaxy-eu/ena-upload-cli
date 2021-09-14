@@ -615,7 +615,7 @@ def process_args():
                         default=__version__,
                         help='specify the version of the tool this submission is done with')
 
-    parser.add_argument('--no_upload',
+    parser.add_argument('--no_data_upload',
                         default=False,
                         action="store_true",
                         help='Indicate if no upload should be performed and you like to submit a RUN object (e.g. if uploaded was done separately).')
@@ -736,10 +736,10 @@ def main():
             schema_targets['run'] = df
 
             # submit data to webin ftp server
-            if not args.no_upload:
+            if not args.no_data_upload:
                 submit_data(file_paths, password, webin_id)
             else:
-                print("No files will be uploaded, remove `--no_upload' argument to perform upload.")
+                print("No files will be uploaded, remove `--no_data_upload' argument to perform upload.")
 
         # when adding sample
         # update schema_targets with taxon ids or scientific names
