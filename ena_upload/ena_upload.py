@@ -613,7 +613,7 @@ def process_args():
                         default=__version__,
                         help='specify the version of the tool this submission is done with')
 
-    parser.add_argument('--no_upload',
+    parser.add_argument('--no_data_upload',
                         default=False,
                         action="store_true",
                         help='Indicate if no upload should be performed and you like to submit a RUN object (e.g. if uploaded was done separately).')
@@ -713,16 +713,12 @@ def main():
             # a dictionary of filename:file_path
             # ? do I have to define the absolute path
             df = schema_targets['run']
-
-            if args.no_upload:
-                file_paths = {}
-                print("No files will be uploaded, remove `--no_upload' argument to perform upload.")
-            else:  # check supplied datafiles only if doing upload
-                file_paths = {os.path.basename(path): os.path.abspath(path)
-                                                   for path in args.data}
-                # check if file names identical between command line and table
-                # if not, system exits
-                check_filenames(file_paths, df)
+               
+            file_paths = {os.path.basename(path): os.path.abspath(path)
+                                                for path in args.data}
+            # check if file names identical between command line and table
+            # if not, system exits
+            check_filenames(file_paths, df)
 
             # generate MD5 sum if not supplied in table
             if not check_file_checksum(df):
@@ -738,8 +734,10 @@ def main():
             schema_targets['run'] = df
 
             # submit data to webin ftp server
-            if not args.no_upload:
+            if not args.no_data_upload:
                 submit_data(file_paths, password, webin_id)
+            else:
+                print("No files will be uploaded, remove `--no_data_upload' argument to perform upload.")
 
         # when adding sample
         # update schema_targets with taxon ids or scientific names
