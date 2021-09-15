@@ -135,10 +135,10 @@ More information on how ENA wants to receive the files can be found [here](https
 
 **Note for data upload:** 
 Uploaded files are persistently stored on the ENA server after the upload for some time. 
-Thus, if multiple test submission are performed, it is possible to skip the data upload with `--no_upload` in
+Thus, if multiple test submission are performed, it is possible to skip the data upload with `--no_data_upload` in
 subsequent submissions.
 This also allows uploading (large) datasets separately e.g. with [aspera](https://ena-docs.readthedocs.io/en/latest/submit/fileprep/upload.html).
-For the `--no_upload` argument,  data file(s) still need to be provided with `--data` 
+For the `--no_data_upload` argument,  data file(s) still need to be provided with `--data` 
 if a RUN object is submitted in order to generate MD5 sums.  
 
 
