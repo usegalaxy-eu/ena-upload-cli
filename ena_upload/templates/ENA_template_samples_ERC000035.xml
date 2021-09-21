@@ -6,12 +6,6 @@ def attributetest(row, column):
         return True 
     else:
         return False
-def onlyoptional(row):
-    attributelist = ['cell_type', 'dev_stage', 'organism part', 'ploidy', 'infect', 'protocol', 'sampling time point', 'initial time point', 'growth condition', 'genotype', 'sex', 'age', 'genetic modification', 'phenotype', 'cellular component', 'individual', 'disease staging', 'immunoprecipitate', 'replicate', 'cultivar', 'ecotype', 'cell_line', 'strain', 'time', 'dose', 'chemical compound', 'experimental factor 1', 'experimental factor 2', 'experimental factor 3', 'experimental factor 4', 'experimental factor 5', 'block', 'environmental stress', 'environmental history']
-    for column in attributelist:
-        if hasattr(row, column) and pd.notna(row[column]) and not row[column].isspace() and str(row[column]).lower() not in ['nan', 'na']:
-            return True
-    return False
 ?>
 <SAMPLE_SET xmlns:py="http://genshi.edgewall.org/"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -27,7 +21,6 @@ def onlyoptional(row):
             </py:if>
         </SAMPLE_NAME>
         <DESCRIPTION>${row.sample_description}</DESCRIPTION>
-        <py:if test="onlyoptional(row)">
         <SAMPLE_ATTRIBUTES>
             <py:if test="attributetest(row, 'cell_type')">
             <SAMPLE_ATTRIBUTE>
@@ -233,8 +226,15 @@ def onlyoptional(row):
                 <VALUE>${row['environmental history']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
+            <SAMPLE_ATTRIBUTE>
+                <TAG>SUBMISSION_TOOL</TAG>
+                <VALUE>${tool_name}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            <SAMPLE_ATTRIBUTE>
+                <TAG>SUBMISSION_TOOL_VERSION</TAG>
+                <VALUE>${tool_version}</VALUE>
+            </SAMPLE_ATTRIBUTE>
         </SAMPLE_ATTRIBUTES>
-        </py:if>
     </SAMPLE>
     </py:for>
 </SAMPLE_SET>

@@ -6,14 +6,6 @@ def attributetest(row, column):
         return True 
     else:
         return False
-{%- if 'mandatory' not in attributes.values() %}
-def onlyoptional(row):
-    attributelist = {{ attributes.keys() | list }}
-    for column in attributelist:
-        if hasattr(row, column) and pd.notna(row[column]) and not row[column].isspace() and str(row[column]).lower() not in ['nan', 'na']:
-            return True
-    return False
-{%- endif %}
 ?>
 <SAMPLE_SET xmlns:py="http://genshi.edgewall.org/"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -29,9 +21,6 @@ def onlyoptional(row):
             </py:if>
         </SAMPLE_NAME>
         <DESCRIPTION>${row.sample_description}</DESCRIPTION>
-        {%- if 'mandatory' not in attributes.values() %}
-        <py:if test="onlyoptional(row)">
-        {%- endif %}
         <SAMPLE_ATTRIBUTES>
             {%- for key, value in attributes.items() %}
             {%- if value == 'mandatory' %}
@@ -48,10 +37,15 @@ def onlyoptional(row):
             </py:if>
             {%- endif %}
             {%- endfor %}
+            <SAMPLE_ATTRIBUTE>
+                <TAG>SUBMISSION_TOOL</TAG>
+                <VALUE>${tool_name}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            <SAMPLE_ATTRIBUTE>
+                <TAG>SUBMISSION_TOOL_VERSION</TAG>
+                <VALUE>${tool_version}</VALUE>
+            </SAMPLE_ATTRIBUTE>
         </SAMPLE_ATTRIBUTES>
-        {%- if 'mandatory' not in attributes.values() %}
-        </py:if>
-        {%- endif %}
     </SAMPLE>
     </py:for>
 </SAMPLE_SET>

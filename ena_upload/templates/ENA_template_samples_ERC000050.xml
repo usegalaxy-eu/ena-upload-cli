@@ -308,6 +308,14 @@ def attributetest(row, column):
                 <VALUE>${row['relationship to oxygen']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
+            <SAMPLE_ATTRIBUTE>
+                <TAG>SUBMISSION_TOOL</TAG>
+                <VALUE>${tool_name}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            <SAMPLE_ATTRIBUTE>
+                <TAG>SUBMISSION_TOOL_VERSION</TAG>
+                <VALUE>${tool_version}</VALUE>
+            </SAMPLE_ATTRIBUTE>
         </SAMPLE_ATTRIBUTES>
     </SAMPLE>
     </py:for>
