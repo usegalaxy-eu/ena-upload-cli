@@ -48,6 +48,8 @@ def create_dataframe(schema_tables, action):
         # checking for optional columns and if not present adding them
         if schema == 'sample':
             optional_columns = ['accession', 'submission_date', 'status', 'scientific_name', 'taxon_id']
+        elif schema == 'run':
+            optional_columns = ['accession', 'submission_date', 'status', 'file_checksum']
         else:
             optional_columns = ['accession', 'submission_date', 'status']
         for header in optional_columns:
@@ -511,8 +513,8 @@ def update_table(schema_dataframe, schema_targets, schema_update):
                 # which is associated with a run.
                 # and a run can have multiple files.
                 # the following assignment assumes 'targets' retain
-                # the orginal row order in 'dataframe'
-                # because targets was initially subset of 'datafram'.
+                # the original row order in 'dataframe'
+                # because targets was initially subset of 'dataframe'.
                 dataframe.loc[index,
                               'file_checksum'] = targets.loc[index, 'file_checksum']
 
