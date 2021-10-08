@@ -20,8 +20,8 @@ The program to perform the following actions:
 
 * add: add an object to the archive
 * modify: modify an object in the archive
-* cancel: cancel a private object and its dependent objects (**under development**)
-* release: release a private object immediately to the public (**under development**)
+* cancel: cancel a private object and its dependent objects
+* release: release a private object immediately to the public
 
 After a successful submission, new tsv tables will be generated with the ENA accession numbers filled in along with a submission receipt.
 
@@ -142,12 +142,16 @@ For the `--no_data_upload` argument,  data file(s) still need to be provided wit
 if a RUN object is submitted in order to generate MD5 sums.  
 
 
+### Releasing and canceling data
+
+
+
 ## Tool overview
 
 inputs:
 * metadata tables
   * examples in `example_table`
-  * Please define actions in **status** column e.g. `add`, `modify`, cancel, release
+  * Please define actions in **status** column e.g. `add`, `modify`, `cancel`, `release`
   * to perform bulk submission of all objects, the `aliases ids` in different ENA objects should be in the association where alias ids in experiment object link all objects together
 * experimental data
   * examples in `example_data`
@@ -155,9 +159,10 @@ inputs:
 outputs:
 * In the same directory of inputs
 * metadata tables with updated info in `status` and other relevant columns, e.g:
-  * updated status: `added`, `modified`, canceled, released
+  * updated status: `added`, `modified`, `canceled`, `released`
   * accession ids
   * submission date
+  * file checksums in runstable
 
 ## Test the tool
 

@@ -18,7 +18,7 @@ from genshi.template import TemplateLoader
 from lxml import etree
 import pandas as pd
 import tempfile
-from ena_upload._version import __version__
+__version__ = 'uedje'
 
 
 # SettingWithCopyWarning causes false positive
@@ -444,28 +444,48 @@ def process_receipt(receipt, action):
         return df
 
     receiptDate = receipt_root.get('receiptDate')
-
-    study_update = receipt_root.findall('STUDY')
-    sample_update = receipt_root.findall('SAMPLE')
-    experiment_update = receipt_root.findall('EXPERIMENT')
-    run_update = receipt_root.findall('RUN')
-
     schema_update = {}  # schema as key, dataframe as value
+    if action in ['ADD', 'MODIFY']:
+        study_update = receipt_root.findall('STUDY')
+        sample_update = receipt_root.findall('SAMPLE')
+        experiment_update = receipt_root.findall('EXPERIMENT')
+        run_update = receipt_root.findall('RUN')
 
-    if study_update:
-        schema_update['study'] = make_update(study_update, 'study')
+        if study_update:
+            schema_update['study'] = make_update(study_update, 'study')
 
-    if sample_update:
-        schema_update['sample'] = make_update(sample_update, 'sample')
+        if sample_update:
+            schema_update['sample'] = make_update(sample_update, 'sample')
 
-    if experiment_update:
-        schema_update['experiment'] = make_update(
-            experiment_update, 'experiment')
+        if experiment_update:
+            schema_update['experiment'] = make_update(
+                experiment_update, 'experiment')
 
-    if run_update:
-        schema_update['run'] = make_update(run_update, 'run')
+        if run_update:
+            schema_update['run'] = make_update(run_update, 'run')
+        return schema_update
 
-    return schema_update
+    elif action == 'RELEASE':
+        receipt_info = {}
+        infoblocks = receipt_root.findall('MESSAGES/INFO')
+        for element in infoblocks:
+            match = re.search('(.+?) accession "(.+?)"', element.text)
+            if match and match.group(1) in receipt_info:
+                receipt_info[match.group(1)].append(match.group(2))
+            elif match and match.group(1) not in receipt_info:
+                receipt_info[match.group(1)]= [match.group(2)]
+        for ena_type, accessions in receipt_info.items():
+            print(f"\n{ena_type.capitalize()} accession details:")
+            update_list = []
+            for accession in accessions:
+                extract = ( accession, receiptDate, status[action])
+                update_list.append(extract)
+                print("\t".join(extract))
+            # used for labelling dataframe
+            labels = ['accession', 'submission_date', 'status']
+            schema_update['ena_type'] = pd.DataFrame.from_records(update_list, columns=labels)
+
+        return schema_update
 
 
 def update_table(schema_dataframe, schema_targets, schema_update):
@@ -799,12 +819,13 @@ def main():
         print("There was an ERROR during submission:")
         sys.exit(receipt)
 
-    schema_dataframe = update_table(schema_dataframe,
-                                    schema_targets,
-                                    schema_update)
+    if action in ['ADD', 'MODIFY']:
+        schema_dataframe = update_table(schema_dataframe,
+                                        schema_targets,
+                                        schema_update)
 
-    # save updates in new tables
-    save_update(schema_tables, schema_dataframe)
+        # save updates in new tables
+        save_update(schema_tables, schema_dataframe)
 
 
 if __name__ == "__main__":
