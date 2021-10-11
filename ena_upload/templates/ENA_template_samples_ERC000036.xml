@@ -44,6 +44,12 @@ def attributetest(row, column):
                 <TAG>investigation type</TAG>
                 <VALUE>${row['investigation type']}</VALUE>
             </SAMPLE_ATTRIBUTE>
+            <py:if test="attributetest(row, 'surveillance target')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>surveillance target</TAG>
+                <VALUE>${row['surveillance target']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
             <SAMPLE_ATTRIBUTE>
                 <TAG>collection date</TAG>
                 <VALUE>${row['collection date']}</VALUE>
