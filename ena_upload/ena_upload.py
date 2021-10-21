@@ -81,7 +81,7 @@ def extract_targets(action, schema_dataframe):
 
     for schema, dataframe in schema_dataframe.items():
         filtered = dataframe.query(f'status=="{action}"')
-        # ? add a function to control empty filtered, return error
+        # TODO add a function to control empty filtered, return error
         schema_targets[schema] = filtered
 
     return schema_targets
@@ -485,8 +485,6 @@ def process_receipt(receipt, action):
             labels = ['accession', 'submission_date', 'status']
             schema_update['ena_type'] = pd.DataFrame.from_records(update_list, columns=labels)
 
-        return schema_update
-
 
 def update_table(schema_dataframe, schema_targets, schema_update):
     """Update schema_dataframe with info in schema_targets/update.
@@ -540,7 +538,22 @@ def update_table(schema_dataframe, schema_targets, schema_update):
 
     return schema_dataframe
 
+def update_table_simple (schema_dataframe, schema_targets):
+    """Update schema_dataframe with info in schema_targets.
 
+    :param schema_dataframe: a dictionary - {schema:dataframe}
+    :param_targets: a dictionary - {schema:targets}
+
+    'schema' -- a string - 'study', 'sample','run', 'experiment'
+    'dataframe' -- a pandas dataframe created from the input tables
+    'targets' -- a filtered dataframe with 'action' keywords
+                 contains updated columns - md5sum and taxon_id
+
+    :return schema_dataframe: a dictionary - {schema:dataframe}
+                              dataframe -- updated accession, status,
+                                           submission_date,
+                                           md5sum, taxon_id
+    """
 def save_update(schema_tables_, schema_dataframe_):
     """Write updated dataframe to tsv file.
 
@@ -733,7 +746,6 @@ def main():
         # submit data
         if 'run' in schema_targets:
             # a dictionary of filename:file_path
-            # ? do I have to define the absolute path
             df = schema_targets['run']
                
             file_paths = {os.path.basename(path): os.path.abspath(path)
@@ -823,10 +835,17 @@ def main():
         schema_dataframe = update_table(schema_dataframe,
                                         schema_targets,
                                         schema_update)
-
-        # save updates in new tables
+         # save updates in new tables
+        save_update(schema_tables, schema_dataframe)
+    elif action in ['CANCEL', 'RELEASE']:
+        schema_dataframe = update_table_simple(schema_dataframe,
+                                        schema_targets)
+         # save updates in new tables
         save_update(schema_tables, schema_dataframe)
 
+    else:
+        print(f"The action {action} is not supported.")
+       
 
 if __name__ == "__main__":
 
