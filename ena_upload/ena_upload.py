@@ -616,7 +616,7 @@ def process_args():
     parser.add_argument('--no_data_upload',
                         default=False,
                         action="store_true",
-                           help='indicate if no upload should be performed and you like to submit a RUN object (e.g. if uploaded was done separately).')
+                        help='indicate if no upload should be performed and you like to submit a RUN object (e.g. if uploaded was done separately).')
 
     parser.add_argument('--draft',
                         default=False,
