@@ -345,7 +345,7 @@ def submit_data(file_paths, password, webin_id):
     """
 
     try:
-        print("\nconnecting to ftp.webin.ebi.ac.uk....")
+        print("\nConnecting to ftp.webin.ebi.ac.uk....")
         ftp = ftplib.FTP("webin.ebi.ac.uk", webin_id, password)
     except IOError:
         print(ftp.lastErrorText())
@@ -616,7 +616,12 @@ def process_args():
     parser.add_argument('--no_data_upload',
                         default=False,
                         action="store_true",
-                        help='Indicate if no upload should be performed and you like to submit a RUN object (e.g. if uploaded was done separately).')
+                        help='indicate if no upload should be performed and you like to submit a RUN object (e.g. if uploaded was done separately).')
+
+    parser.add_argument('--draft',
+                        default=False,
+                        action="store_true",
+                        help='indicate if no submission should be performed')
 
     parser.add_argument('--secret',
                         required=True,
@@ -677,6 +682,7 @@ def main():
     dev = args.dev
     checklist = args.checklist
     secret = args.secret
+    draft = args.draft
 
     with open(secret, 'r') as secret_file:
         credentials = yaml.load(secret_file, Loader=yaml.FullLoader)
@@ -711,7 +717,6 @@ def main():
         # submit data
         if 'run' in schema_targets:
             # a dictionary of filename:file_path
-            # ? do I have to define the absolute path
             df = schema_targets['run']
                
             file_paths = {os.path.basename(path): os.path.abspath(path)
@@ -734,16 +739,19 @@ def main():
             schema_targets['run'] = df
 
             # submit data to webin ftp server
-            if not args.no_data_upload:
-                submit_data(file_paths, password, webin_id)
-            else:
+            if args.no_data_upload:
                 print("No files will be uploaded, remove `--no_data_upload' argument to perform upload.")
+            elif draft:
+                print("No files will be uploaded, remove `--draft' argument to perform upload.")
+            else:
+                submit_data(file_paths, password, webin_id)
+                  
 
         # when adding sample
         # update schema_targets with taxon ids or scientific names
         if 'sample' in schema_targets:
             df = schema_targets['sample']
-            print('retrieving taxon IDs and scientific names if needed')
+            print('Retrieving taxon IDs and scientific names if needed')
             for index, row in df.iterrows():
                 if pd.notna(row['scientific_name']) and pd.isna(row['taxon_id']):
                     # retrieve taxon id using scientific name
@@ -755,7 +763,7 @@ def main():
                     df.loc[index, 'scientific_name'] = scientificName
                 elif pd.isna(row['taxon_id']) and pd.isna(row['scientific_name']):
                     sys.exit(f"No taxon_id or scientific_name was given with sample {row['alias']}.")
-            print('taxon IDs and scientific names are retrieved')
+            print('Taxon IDs and scientific names are retrieved')
             schema_targets['sample'] = df
 
     # ? need to add a place holder for setting up
@@ -781,28 +789,31 @@ def main():
 
     schema_xmls['submission'] = submission_xml
 
-    if dev:
-        url = 'https://wwwdev.ebi.ac.uk/ena/submit/drop-box/submit/?auth=ENA'
+    if draft:
+        print("No submission will be performed, remove `--draft' argument to perform submission.")
     else:
-        url = 'https://www.ebi.ac.uk/ena/submit/drop-box/submit/?auth=ENA'
+        if dev:
+            url = 'https://wwwdev.ebi.ac.uk/ena/submit/drop-box/submit/?auth=ENA'
+        else:
+            url = 'https://www.ebi.ac.uk/ena/submit/drop-box/submit/?auth=ENA'
 
-    print(f'\nSubmitting XMLs to ENA server: {url}')
-    receipt = send_schemas(schema_xmls, url, webin_id, password).text
-    print("Printing receipt to ./receipt.xml")
-    with open('receipt.xml', 'w') as fw:
-        fw.write(receipt)
-    try:
-        schema_update = process_receipt(receipt.encode("utf-8"), action)
-    except ValueError:
-        print("There was an ERROR during submission:")
-        sys.exit(receipt)
+        print(f'\nSubmitting XMLs to ENA server: {url}')
+        receipt = send_schemas(schema_xmls, url, webin_id, password).text
+        print("Printing receipt to ./receipt.xml")
+        with open('receipt.xml', 'w') as fw:
+            fw.write(receipt)
+        try:
+            schema_update = process_receipt(receipt.encode("utf-8"), action)
+        except ValueError:
+            print("There was an ERROR during submission:")
+            sys.exit(receipt)
 
-    schema_dataframe = update_table(schema_dataframe,
-                                    schema_targets,
-                                    schema_update)
+        schema_dataframe = update_table(schema_dataframe,
+                                        schema_targets,
+                                        schema_update)
 
-    # save updates in new tables
-    save_update(schema_tables, schema_dataframe)
+        # save updates in new tables
+        save_update(schema_tables, schema_dataframe)
 
 
 if __name__ == "__main__":
