@@ -345,7 +345,7 @@ def submit_data(file_paths, password, webin_id):
     """
 
     try:
-        print("\nconnecting to ftp.webin.ebi.ac.uk....")
+        print("\nConnecting to ftp.webin.ebi.ac.uk....")
         ftp = ftplib.FTP("webin.ebi.ac.uk", webin_id, password)
     except IOError:
         print(ftp.lastErrorText())
@@ -739,16 +739,19 @@ def main():
             schema_targets['run'] = df
 
             # submit data to webin ftp server
-            if not args.no_data_upload:
-                submit_data(file_paths, password, webin_id)
-            else:
+            if args.no_data_upload:
                 print("No files will be uploaded, remove `--no_data_upload' argument to perform upload.")
+            elif draft:
+                print("No files will be uploaded, remove `--draft' argument to perform upload.")
+            else:
+                submit_data(file_paths, password, webin_id)
+                  
 
         # when adding sample
         # update schema_targets with taxon ids or scientific names
         if 'sample' in schema_targets:
             df = schema_targets['sample']
-            print('retrieving taxon IDs and scientific names if needed')
+            print('Retrieving taxon IDs and scientific names if needed')
             for index, row in df.iterrows():
                 if pd.notna(row['scientific_name']) and pd.isna(row['taxon_id']):
                     # retrieve taxon id using scientific name
@@ -760,7 +763,7 @@ def main():
                     df.loc[index, 'scientific_name'] = scientificName
                 elif pd.isna(row['taxon_id']) and pd.isna(row['scientific_name']):
                     sys.exit(f"No taxon_id or scientific_name was given with sample {row['alias']}.")
-            print('taxon IDs and scientific names are retrieved')
+            print('Taxon IDs and scientific names are retrieved')
             schema_targets['sample'] = df
 
     # ? need to add a place holder for setting up
