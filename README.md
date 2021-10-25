@@ -66,7 +66,8 @@ All supported arguments:
   --tool TOOL_NAME      specify the name of the tool this submission is done with. Default: ena-upload-cli
   --tool_version TOOL_VERSION
                         specify the version of the tool this submission is done with
-  --no_data_upload      Indicate if no upload should be performed and you like to submit a RUN object (e.g. if uploaded was done separately).
+  --no_data_upload      indicate if no upload should be performed and you like to submit a RUN object (e.g. if uploaded was done separately).
+  --draft               indicate if no submission should be performed
   --secret SECRET       .secret.yml file containing the password and Webin ID of your ENA account
   -d, --dev             flag to use the dev/sandbox endpoint of ENA
 ```

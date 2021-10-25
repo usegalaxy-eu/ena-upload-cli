@@ -128,6 +128,18 @@ def attributetest(row, column):
                 <VALUE>${row['sample symbiont of']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
+            <py:if test="attributetest(row, 'sample coordinator')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>sample coordinator</TAG>
+                <VALUE>${row['sample coordinator']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="attributetest(row, 'sample coordinator affiliation')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>sample coordinator affiliation</TAG>
+                <VALUE>${row['sample coordinator affiliation']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
             <SAMPLE_ATTRIBUTE>
                 <TAG>sex</TAG>
                 <VALUE>${row['sex']}</VALUE>
