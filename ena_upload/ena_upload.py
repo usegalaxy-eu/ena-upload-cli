@@ -18,7 +18,7 @@ from genshi.template import TemplateLoader
 from lxml import etree
 import pandas as pd
 import tempfile
-from ena_upload._version import __version__
+__version__ = "test"
 
 
 # SettingWithCopyWarning causes false positive
@@ -79,8 +79,8 @@ def extract_targets(action, schema_dataframe):
 
     for schema, dataframe in schema_dataframe.items():
         filtered = dataframe.query(f'status=="{action}"')
-        # ? add a function to control empty filtered, return error
-        schema_targets[schema] = filtered
+        if filtered.empty != True:
+            schema_targets[schema] = filtered
 
     return schema_targets
 
@@ -710,6 +710,9 @@ def main():
     # extract rows tagged by action
     # these rows are the targets for submission
     schema_targets = extract_targets(action, schema_dataframe)
+
+    if not schema_targets:
+        sys.exit(f"There is no table submitted having at least one row with {action} as action in the status column.")
 
     if action == 'ADD':
         # when adding run object
