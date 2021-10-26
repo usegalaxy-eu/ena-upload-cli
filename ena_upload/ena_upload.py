@@ -79,7 +79,7 @@ def extract_targets(action, schema_dataframe):
 
     for schema, dataframe in schema_dataframe.items():
         filtered = dataframe.query(f'status=="{action}"')
-        if filtered.empty != True:
+        if not filtered.empty:
             schema_targets[schema] = filtered
 
     return schema_targets
