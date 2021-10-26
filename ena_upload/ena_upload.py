@@ -18,7 +18,7 @@ from genshi.template import TemplateLoader
 from lxml import etree
 import pandas as pd
 import tempfile
-from _version import __version__
+from ena_upload._version import __version__
 
 
 # SettingWithCopyWarning causes false positive
