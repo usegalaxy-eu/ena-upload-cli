@@ -1,6 +1,7 @@
 #! /usr/bin/env python
 __authors__ = ["Dilmurat Yusuf", "Bert Droesbeke"]
 __copyright__ = "Copyright 2020, Dilmurat Yusuf"
+__maintainer__ = "Bert Droesbeke"
 __email__ = "Dilmurat.yusuf@gmail.com"
 __license__ = "MIT"
 
@@ -19,11 +20,6 @@ from lxml import etree
 import pandas as pd
 import tempfile
 __version__ = 'uedje'
-
-
-# SettingWithCopyWarning causes false positive
-# e.g at df.loc[:, 'file_checksum'] = md5
-pd.options.mode.chained_assignment = None
 
 
 def create_dataframe(schema_tables, action):
@@ -262,6 +258,8 @@ def construct_submission(template_path, action, submission_input, center, checkl
 
     :return submission_xml: filename of submission XML
     '''
+
+    print("Constructing submission")
 
     xsds, templates = actors(template_path, checklist)
 
@@ -525,12 +523,12 @@ def update_table(schema_dataframe, schema_targets, schema_update):
                 dataframe.loc[index,
                               'taxon_id'] = targets.loc[index, 'taxon_id']
             elif schema == 'run':
-                # since index is set to alias
+                # Since index is set to alias
                 # then targets of run can have multiple rows with
                 # identical index because each row has a file
-                # which is associated with a run.
+                # which is associated with a run
                 # and a run can have multiple files.
-                # the following assignment assumes 'targets' retain
+                # The following assignment assumes 'targets' retain
                 # the original row order in 'dataframe'
                 # because targets was initially subset of 'dataframe'.
                 dataframe.loc[index,
@@ -538,7 +536,7 @@ def update_table(schema_dataframe, schema_targets, schema_update):
 
     return schema_dataframe
 
-def update_table_simple (schema_dataframe, schema_targets):
+def update_table_simple (schema_dataframe, schema_targets, action):
     """Update schema_dataframe with info in schema_targets.
 
     :param schema_dataframe: a dictionary - {schema:dataframe}
@@ -550,10 +548,25 @@ def update_table_simple (schema_dataframe, schema_targets):
                  contains updated columns - md5sum and taxon_id
 
     :return schema_dataframe: a dictionary - {schema:dataframe}
-                              dataframe -- updated accession, status,
-                                           submission_date,
-                                           md5sum, taxon_id
+                              dataframe -- updated status
     """
+    # define expected status based on action
+    status = {'ADD': 'added', 'MODIFY': 'modified',
+              'CANCEL': 'cancelled', 'RELEASE': 'released'}
+
+    for schema in schema_dataframe:
+        dataframe = schema_dataframe[schema]
+        targets = schema_targets[schema]
+
+        dataframe.set_index('alias', inplace=True)
+        targets.set_index('alias', inplace=True)
+
+        for index in targets.index:
+            dataframe.loc[index, 'status'] = status[action]
+
+    return schema_dataframe
+
+
 def save_update(schema_tables_, schema_dataframe_):
     """Write updated dataframe to tsv file.
 
@@ -564,7 +577,7 @@ def save_update(schema_tables_, schema_dataframe_):
         :dataframe: a dataframe
     """
 
-    print('\nSaving updates in new tsv tables::')
+    print('\nSaving updates in new tsv tables:')
     for schema in schema_tables_:
         table = schema_tables_[schema]
         dataframe = schema_dataframe_[schema]
@@ -572,7 +585,7 @@ def save_update(schema_tables_, schema_dataframe_):
         file_name, file_extension = os.path.splitext(table)
         update_name = f'{file_name}_updated{file_extension}'
         dataframe.to_csv(update_name, sep='\t')
-        print(f'save updates in {update_name}')
+        print(f'\t{update_name}')
 
 
 class SmartFormatter(argparse.HelpFormatter):
@@ -730,8 +743,6 @@ def main():
             f"Oops, file {args.secret} does not contain a password or username")
     secret_file.close()
 
-    # ? a function needed to convert characters e.g. # -> %23 in password
-
     # collect the schema with table input from command-line
     schema_tables = collect_tables(args)
 
@@ -771,6 +782,9 @@ def main():
 
                 # update schema_targets wih md5 hash
                 md5 = df['file_name'].apply(lambda x: file_md5[x]).values
+                # SettingWithCopyWarning causes false positive
+                # e.g at df.loc[:, 'file_checksum'] = md5
+                pd.options.mode.chained_assignment = None
                 df.loc[:, 'file_checksum'] = md5
                 print("done.")
 
@@ -856,7 +870,8 @@ def main():
             save_update(schema_tables, schema_dataframe)
         elif action in ['CANCEL', 'RELEASE']:
             schema_dataframe = update_table_simple(schema_dataframe,
-                                            schema_targets)
+                                            schema_targets,
+                                            action)
             # save updates in new tables
             save_update(schema_tables, schema_dataframe)
 
