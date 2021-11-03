@@ -854,8 +854,8 @@ def main():
         elif action in ['CANCEL', 'RELEASE']:
             schema_dataframe = update_table_simple(schema_dataframe,
                                             schema_targets)
-        # save updates in new tables
-        save_update(schema_tables, schema_dataframe)
+            # save updates in new tables
+            save_update(schema_tables, schema_dataframe)
 
 
 if __name__ == "__main__":
