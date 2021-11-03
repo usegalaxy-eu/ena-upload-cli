@@ -19,7 +19,7 @@ from genshi.template import TemplateLoader
 from lxml import etree
 import pandas as pd
 import tempfile
-__version__ = 'uedje'
+__version__ = '0.4.3'
 
 
 def create_dataframe(schema_tables, action):
