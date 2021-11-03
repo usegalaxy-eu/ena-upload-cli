@@ -81,8 +81,8 @@ def extract_targets(action, schema_dataframe):
 
     for schema, dataframe in schema_dataframe.items():
         filtered = dataframe.query(f'status=="{action}"')
-        # TODO add a function to control empty filtered, return error
-        schema_targets[schema] = filtered
+        if not filtered.empty:
+            schema_targets[schema] = filtered
 
     return schema_targets
 
@@ -745,6 +745,9 @@ def main():
     # extract rows tagged by action
     # these rows are the targets for submission
     schema_targets = extract_targets(action, schema_dataframe)
+
+    if not schema_targets:
+        sys.exit(f"There is no table submitted having at least one row with {action} as action in the status column.")
 
     if action == 'ADD':
         # when adding run object
