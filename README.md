@@ -113,7 +113,7 @@ Use the *--dev* flag if you want to do a test submission using the tool by the s
 
 Optionally you can add a status column to every table that contains the action you want to apply during this submission. If you chose to add only the first 2 samples to ENA, you specify `--action add` as parameter in the command and you add the `add` value to the status column of the rows you want to submit as demonstrated below. Same holds for the action `modify`, `release` and `cancel`.
 
-**Example with modify as seen in the[example sample modify table](example_tables/ENA_template_samples_modify.tsv)**
+**Example with modify as seen in the [example sample modify table](example_tables/ENA_template_samples_modify.tsv)**
 
 | alias          | status | title          | taxon_id | sample_description   |
 |----------------|--------|----------------|----------|----------------------|
