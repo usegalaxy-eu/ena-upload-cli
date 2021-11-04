@@ -159,7 +159,7 @@ By default the updated tables after submission will have the action `added` in t
 **inputs**:
 * metadata tables
   * examples in `example_table`
-  * Please define actions in **status** column e.g. `add`, `modify`, `cancel`, `release` (optional, when not given the whole table is submitted)
+  * (optional) define actions in **status** column e.g. `add`, `modify`, `cancel`, `release` (when not given the whole table is submitted)
   * to perform bulk submission of all objects, the `aliases ids` in different ENA objects should be in the association where alias ids in experiment object link all objects together
 * experimental data
   * examples in `example_data`
