@@ -111,14 +111,17 @@ Use the *--dev* flag if you want to do a test submission using the tool by the s
 
 ### Submitting a selection of rows to ENA
 
-Optionally you can add a status column that contains the action you want to apply during this submission. If you chose to add only the first 2 samples to ENA, you specify `--action add` as parameter in the command and you add the `add` value to the status column of the rows you want to submit as demonstrated below. Same holds for the action `modify`.
+Optionally you can add a status column to every table that contains the action you want to apply during this submission. If you chose to add only the first 2 samples to ENA, you specify `--action add` as parameter in the command and you add the `add` value to the status column of the rows you want to submit as demonstrated below. Same holds for the action `modify`, `release` and `cancel`.
 
-| alias          | status | title          | scientific_name  |
-|----------------|--------|----------------|------------------|
-| sample_alias_4 | add    | sample_title_1 | homo sapiens     |
-| sample_alias_5 | add    | sample_title_2 | human metagenome |
-| sample_alias_6 |        | sample_title_3 | homo sapiens     |
+**Example with modify as seen in the[example sample modify table](example_tables/ENA_template_samples_modify.tsv)**
 
+| alias          | status | title          | taxon_id | sample_description   |
+|----------------|--------|----------------|----------|----------------------|
+| sample_alias_4 | modify | sample_title_1 | 2697049  | sample_description_1 |
+| sample_alias_5 |        | sample_title_2 | 2697049  | sample_description_2 |
+
+
+> IMPORTANT: if the status column is given but not filled in, or filled in with a different action from the one in the `--action` parameter, not rows will be submitted! Either leave out the column or add to every row the corect action.
 
 ### The data files
 
@@ -140,30 +143,35 @@ Thus, if multiple test submission are performed, it is possible to skip the data
 subsequent submissions.
 This also allows uploading (large) datasets separately e.g. with [aspera](https://ena-docs.readthedocs.io/en/latest/submit/fileprep/upload.html).
 For the `--no_data_upload` argument,  data file(s) still need to be provided with `--data` 
-if a RUN object is submitted in order to generate MD5 sums.  
+if a RUN object is submitted in order to generate MD5 sums.
+If the 
 
+### Releasing and canceling a submission
 
-### Releasing and canceling data
+If you want to release or cancel data, you can do so by using `cancel` or `release` in the `--action` parameter in the command line. Tables that have to be released or cancelled need an accession column with corresponding accession ids. This means that you first have to use `add` to submit your data, and use afterwords the updated table with accession ids, if you did not yet submit your data. 
 
+By default the updated tables after submission will have the action `added` in their status column. Don't forget to change the values to `release` or `cancel` if you want to use one of these actions (or delete the status column if your action applies for the whole table).
 
+> NOTE: Releasing a study will make all child elements like runs and experiments public.
 
 ## Tool overview
 
-inputs:
+**inputs**:
 * metadata tables
   * examples in `example_table`
-  * Please define actions in **status** column e.g. `add`, `modify`, `cancel`, `release`
+  * Please define actions in **status** column e.g. `add`, `modify`, `cancel`, `release` (optional, when not given the whole table is submitted)
   * to perform bulk submission of all objects, the `aliases ids` in different ENA objects should be in the association where alias ids in experiment object link all objects together
 * experimental data
   * examples in `example_data`
 
-outputs:
-* In the same directory of inputs
-* metadata tables with updated info in `status` and other relevant columns, e.g:
+**outputs**:
+* a receipt.xml file in the working directory with the receipt from the ENA submission
+* metadata tables with updated info in the same directory of inputs:
   * updated status: `added`, `modified`, `canceled`, `released`
   * accession ids
   * submission date
-  * file checksums in runstable
+  * file checksums in runs table if not given
+  * taxon id or scientific name in sample table if not given
 
 ## Test the tool
 
@@ -172,7 +180,16 @@ outputs:
   ena-upload-cli --action add --center 'your_center_name' --study example_tables/ENA_template_studies.tsv --sample example_tables/ENA_template_samples.tsv --experiment example_tables/ENA_template_experiments.tsv --run example_tables/ENA_template_runs.tsv --data example_data/*gz --dev --secret .secret.yml
   ```
 
-* **modify metadata**
+* **add metadata only**
+  ```
+  ena-upload-cli --action add --center 'your_center_name' --study example_tables/ENA_template_studies.tsv --sample example_tables/ENA_template_samples.tsv --experiment example_tables/ENA_template_experiments.tsv --run example_tables/ENA_template_runs_md5sums.tsv --dev --secret .secret.yml
+  ```
+* **add studies**
+  ```
+  ena-upload-cli --action add --center 'your_center_name' --study example_tables/ENA_template_studies.tsv --dev --secret .secret.yml
+  ```
+
+* **modify sample metadata**
   ```
   ena-upload-cli --action modify --center 'your_center_name' --sample example_tables/ENA_template_samples_modify.tsv --dev --secret .secret.yml
   ```
@@ -180,6 +197,11 @@ outputs:
 * **viral data**
   ```
   ena-upload-cli --action add --center 'your_center_name' --study example_tables/ENA_template_studies.tsv --sample example_tables/ENA_template_samples_vir.tsv --experiment example_tables/ENA_template_experiments.tsv --run example_tables/ENA_template_runs.tsv --data example_data/*gz --dev --checklist ERC000033 --secret .secret.yml
+  ```
+
+* **release submission**
+  ```
+  ena-upload-cli --action release --center'your_center_name' --study example_tables/ENA_template_studies_release.tsv --dev --secret .secret.yml 
   ```
 
 > **Note for Windows users:** Windows, by default, does not support wildcard expansion in command-line arguments.

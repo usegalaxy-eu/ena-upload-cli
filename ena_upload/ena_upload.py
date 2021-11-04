@@ -19,7 +19,7 @@ from genshi.template import TemplateLoader
 from lxml import etree
 import pandas as pd
 import tempfile
-__version__ = '0.4.3'
+from ena_upload._version import __version__
 
 
 def create_dataframe(schema_tables, action):
@@ -415,7 +415,7 @@ def process_receipt(receipt, action):
     success = receipt_root.get('success')
 
     if success == 'true':
-        print('\nSubmission was done successfully')
+        print('Submission was done successfully')
     else:
         errors = []
         for element in receipt_root.findall('MESSAGES/ERROR'):
@@ -463,6 +463,7 @@ def process_receipt(receipt, action):
             schema_update['run'] = make_update(run_update, 'run')
         return schema_update
 
+    # release does have the accession numbers that are released in the recipe
     elif action == 'RELEASE':
         receipt_info = {}
         infoblocks = receipt_root.findall('MESSAGES/INFO')
@@ -479,9 +480,6 @@ def process_receipt(receipt, action):
                 extract = ( accession, receiptDate, status[action])
                 update_list.append(extract)
                 print("\t".join(extract))
-            # used for labelling dataframe
-            labels = ['accession', 'submission_date', 'status']
-            schema_update['ena_type'] = pd.DataFrame.from_records(update_list, columns=labels)
 
 
 def update_table(schema_dataframe, schema_targets, schema_update):
@@ -585,7 +583,7 @@ def save_update(schema_tables_, schema_dataframe_):
         file_name, file_extension = os.path.splitext(table)
         update_name = f'{file_name}_updated{file_extension}'
         dataframe.to_csv(update_name, sep='\t')
-        print(f'\t{update_name}')
+        print(f'{update_name}')
 
 
 class SmartFormatter(argparse.HelpFormatter):
