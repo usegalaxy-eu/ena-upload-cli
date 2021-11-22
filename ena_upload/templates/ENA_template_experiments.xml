@@ -1,4 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?python
+import pandas as pd
+def attributetest(row, column):
+    if hasattr(row, column) and pd.notna(row[column]) and not row[column].isspace() and str(row[column]).lower() not in ['nan', 'na']:
+        return True 
+    else:
+        return False
+?>
 <EXPERIMENT_SET xmlns:py="http://genshi.edgewall.org/"
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -8,7 +16,9 @@
             <TITLE>${row.title}</TITLE>
             <STUDY_REF refname="${row.study_alias}"/>
             <DESIGN>
+                <py:if test="attributetest(row, 'design_description')">
                 <DESIGN_DESCRIPTION>${row.design_description}</DESIGN_DESCRIPTION>
+                </py:if>
                 <SAMPLE_DESCRIPTOR refname="${row.sample_alias}"/>
                 <LIBRARY_DESCRIPTOR>
                     <LIBRARY_NAME>${row.library_name}</LIBRARY_NAME>
@@ -19,7 +29,9 @@
                         <PAIRED py:when="row.library_layout == 'paired'" NOMINAL_LENGTH="${row.insert_size}" />
                         <SINGLE py:when="row.library_layout == 'single'" />
                     </LIBRARY_LAYOUT>
+                    <py:if test="attributetest(row, 'library_construction_protocol')">
                     <LIBRARY_CONSTRUCTION_PROTOCOL>${row.library_construction_protocol}</LIBRARY_CONSTRUCTION_PROTOCOL>
+                    </py:if>
                 </LIBRARY_DESCRIPTOR>
             </DESIGN>
             <xi:include href="ENA_template_PLATFORM.xml" />

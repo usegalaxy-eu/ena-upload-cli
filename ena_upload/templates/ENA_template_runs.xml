@@ -1,12 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?python
+import pandas as pd
+def attributetest(row, column):
+    if hasattr(row, column) and pd.notna(row[column]) and not row[column].isspace() and str(row[column]).lower() not in ['nan', 'na']:
+        return True 
+    else:
+        return False
+?>
 <RUN_SET xmlns:py="http://genshi.edgewall.org/"
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:noNamespaceSchemaLocation="ftp://ftp.sra.ebi.ac.uk/meta/xsd/sra_1_6/SRA.run.xsd">
     <py:for each="alias, experiment_alias in run_groups.iteritems()">
     <RUN alias="${alias}" center_name="${center}">
+        <py:if test="attributetest(row, 'study_abstract')">
+            <TITLE>${row.title}</TITLE>
+        </py:if>
         <EXPERIMENT_REF refname="${experiment_alias}"/>
-         <DATA_BLOCK>
+        <DATA_BLOCK>
             <FILES>
                 <py:for each="index, row in file_groups.get_group(alias).iterrows()">
                 <xi:include href="ENA_template_FILE.xml" />

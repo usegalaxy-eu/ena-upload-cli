@@ -1,4 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?python
+import pandas as pd
+def attributetest(row, column):
+    if hasattr(row, column) and pd.notna(row[column]) and not row[column].isspace() and str(row[column]).lower() not in ['nan', 'na']:
+        return True 
+    else:
+        return False
+?>
 <STUDY_SET xmlns:py="http://genshi.edgewall.org/"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:noNamespaceSchemaLocation="ftp://ftp.sra.ebi.ac.uk/meta/xsd/sra_1_6/SRA.study.xsd">
@@ -8,9 +16,21 @@
         <DESCRIPTOR>
             <STUDY_TITLE>${row.title}</STUDY_TITLE>
             <STUDY_TYPE existing_study_type="${row.study_type}"/>
+            <py:if test="attributetest(row, 'study_abstract')">
             <STUDY_ABSTRACT>${row.study_abstract}</STUDY_ABSTRACT>
+            </py:if>
+            <py:if test="attributetest(row, 'center_name')">
+            <CENTER_NAME>${row.center_name}</CENTER_NAME>
+            </py:if>
+            <py:if test="attributetest(row, 'center_project_name')">
+            <CENTER_PROJECT_NAME>${row.center_project_name}</CENTER_PROJECT_NAME>
+            </py:if>
+            <py:if test="attributetest(row, 'study_description')">
+            <STUDY_DESCRIPTION>${row.study_description}</STUDY_DESCRIPTION>
+            </py:if>
         </DESCRIPTOR>
-        <STUDY_LINKS py:if="row.pubmed_id != 'None'">
+        <py:if test="attributetest(row, 'pubmed_id')">
+        <STUDY_LINKS>
             <STUDY_LINK>
                 <XREF_LINK>
                     <DB>PUBMED</DB>
@@ -18,6 +38,7 @@
                 </XREF_LINK>
             </STUDY_LINK>
         </STUDY_LINKS>
+        </py:if>
         <STUDY_ATTRIBUTES>
             <STUDY_ATTRIBUTE>
                 <TAG>SUBMISSION_TOOL</TAG>
