@@ -1,7 +1,8 @@
 #! /usr/bin/env python
 __authors__ = ["Dilmurat Yusuf", "Bert Droesbeke"]
 __copyright__ = "Copyright 2020, Dilmurat Yusuf"
-__email__ = "Dilmurat.yusuf@gmail.com"
+__maintainer__ = "Bert Droesbeke"
+__email__ = "bedro@psb.vib-ugent.be"
 __license__ = "MIT"
 
 import os
@@ -19,11 +20,6 @@ from lxml import etree
 import pandas as pd
 import tempfile
 from ena_upload._version import __version__
-
-
-# SettingWithCopyWarning causes false positive
-# e.g at df.loc[:, 'file_checksum'] = md5
-pd.options.mode.chained_assignment = None
 
 
 def create_dataframe(schema_tables, action):
@@ -48,6 +44,8 @@ def create_dataframe(schema_tables, action):
         # checking for optional columns and if not present adding them
         if schema == 'sample':
             optional_columns = ['accession', 'submission_date', 'status', 'scientific_name', 'taxon_id']
+        elif schema == 'run':
+            optional_columns = ['accession', 'submission_date', 'status', 'file_checksum']
         else:
             optional_columns = ['accession', 'submission_date', 'status']
         for header in optional_columns:
@@ -261,6 +259,8 @@ def construct_submission(template_path, action, submission_input, center, checkl
     :return submission_xml: filename of submission XML
     '''
 
+    print("Constructing submission")
+
     xsds, templates = actors(template_path, checklist)
 
     template = templates['submission']
@@ -415,7 +415,7 @@ def process_receipt(receipt, action):
     success = receipt_root.get('success')
 
     if success == 'true':
-        print('\nSubmission was done successfully')
+        print('Submission was done successfully')
     else:
         errors = []
         for element in receipt_root.findall('MESSAGES/ERROR'):
@@ -442,28 +442,44 @@ def process_receipt(receipt, action):
         return df
 
     receiptDate = receipt_root.get('receiptDate')
-
-    study_update = receipt_root.findall('STUDY')
-    sample_update = receipt_root.findall('SAMPLE')
-    experiment_update = receipt_root.findall('EXPERIMENT')
-    run_update = receipt_root.findall('RUN')
-
     schema_update = {}  # schema as key, dataframe as value
+    if action in ['ADD', 'MODIFY']:
+        study_update = receipt_root.findall('STUDY')
+        sample_update = receipt_root.findall('SAMPLE')
+        experiment_update = receipt_root.findall('EXPERIMENT')
+        run_update = receipt_root.findall('RUN')
 
-    if study_update:
-        schema_update['study'] = make_update(study_update, 'study')
+        if study_update:
+            schema_update['study'] = make_update(study_update, 'study')
 
-    if sample_update:
-        schema_update['sample'] = make_update(sample_update, 'sample')
+        if sample_update:
+            schema_update['sample'] = make_update(sample_update, 'sample')
 
-    if experiment_update:
-        schema_update['experiment'] = make_update(
-            experiment_update, 'experiment')
+        if experiment_update:
+            schema_update['experiment'] = make_update(
+                experiment_update, 'experiment')
 
-    if run_update:
-        schema_update['run'] = make_update(run_update, 'run')
+        if run_update:
+            schema_update['run'] = make_update(run_update, 'run')
+        return schema_update
 
-    return schema_update
+    # release does have the accession numbers that are released in the recipe
+    elif action == 'RELEASE':
+        receipt_info = {}
+        infoblocks = receipt_root.findall('MESSAGES/INFO')
+        for element in infoblocks:
+            match = re.search('(.+?) accession "(.+?)"', element.text)
+            if match and match.group(1) in receipt_info:
+                receipt_info[match.group(1)].append(match.group(2))
+            elif match and match.group(1) not in receipt_info:
+                receipt_info[match.group(1)]= [match.group(2)]
+        for ena_type, accessions in receipt_info.items():
+            print(f"\n{ena_type.capitalize()} accession details:")
+            update_list = []
+            for accession in accessions:
+                extract = ( accession, receiptDate, status[action])
+                update_list.append(extract)
+                print("\t".join(extract))
 
 
 def update_table(schema_dataframe, schema_targets, schema_update):
@@ -505,16 +521,46 @@ def update_table(schema_dataframe, schema_targets, schema_update):
                 dataframe.loc[index,
                               'taxon_id'] = targets.loc[index, 'taxon_id']
             elif schema == 'run':
-                # since index is set to alias
+                # Since index is set to alias
                 # then targets of run can have multiple rows with
                 # identical index because each row has a file
-                # which is associated with a run.
+                # which is associated with a run
                 # and a run can have multiple files.
-                # the following assignment assumes 'targets' retain
-                # the orginal row order in 'dataframe'
-                # because targets was initially subset of 'datafram'.
+                # The following assignment assumes 'targets' retain
+                # the original row order in 'dataframe'
+                # because targets was initially subset of 'dataframe'.
                 dataframe.loc[index,
                               'file_checksum'] = targets.loc[index, 'file_checksum']
+
+    return schema_dataframe
+
+def update_table_simple (schema_dataframe, schema_targets, action):
+    """Update schema_dataframe with info in schema_targets.
+
+    :param schema_dataframe: a dictionary - {schema:dataframe}
+    :param_targets: a dictionary - {schema:targets}
+
+    'schema' -- a string - 'study', 'sample','run', 'experiment'
+    'dataframe' -- a pandas dataframe created from the input tables
+    'targets' -- a filtered dataframe with 'action' keywords
+                 contains updated columns - md5sum and taxon_id
+
+    :return schema_dataframe: a dictionary - {schema:dataframe}
+                              dataframe -- updated status
+    """
+    # define expected status based on action
+    status = {'ADD': 'added', 'MODIFY': 'modified',
+              'CANCEL': 'cancelled', 'RELEASE': 'released'}
+
+    for schema in schema_dataframe:
+        dataframe = schema_dataframe[schema]
+        targets = schema_targets[schema]
+
+        dataframe.set_index('alias', inplace=True)
+        targets.set_index('alias', inplace=True)
+
+        for index in targets.index:
+            dataframe.loc[index, 'status'] = status[action]
 
     return schema_dataframe
 
@@ -529,7 +575,7 @@ def save_update(schema_tables_, schema_dataframe_):
         :dataframe: a dataframe
     """
 
-    print('\nSaving updates in new tsv tables::')
+    print('\nSaving updates in new tsv tables:')
     for schema in schema_tables_:
         table = schema_tables_[schema]
         dataframe = schema_dataframe_[schema]
@@ -537,7 +583,7 @@ def save_update(schema_tables_, schema_dataframe_):
         file_name, file_extension = os.path.splitext(table)
         update_name = f'{file_name}_updated{file_extension}'
         dataframe.to_csv(update_name, sep='\t')
-        print(f'save updates in {update_name}')
+        print(f'{update_name}')
 
 
 class SmartFormatter(argparse.HelpFormatter):
@@ -695,8 +741,6 @@ def main():
             f"Oops, file {args.secret} does not contain a password or username")
     secret_file.close()
 
-    # ? a function needed to convert characters e.g. # -> %23 in password
-
     # collect the schema with table input from command-line
     schema_tables = collect_tables(args)
 
@@ -736,6 +780,9 @@ def main():
 
                 # update schema_targets wih md5 hash
                 md5 = df['file_name'].apply(lambda x: file_md5[x]).values
+                # SettingWithCopyWarning causes false positive
+                # e.g at df.loc[:, 'file_checksum'] = md5
+                pd.options.mode.chained_assignment = None
                 df.loc[:, 'file_checksum'] = md5
                 print("done.")
 
@@ -790,6 +837,8 @@ def main():
         submission_xml = construct_submission(template_path, action,
                                               schema_targets, center, checklist, tool)
 
+    else:
+        print(f"The action {action} is not supported.")
     schema_xmls['submission'] = submission_xml
 
     if draft:
@@ -811,14 +860,19 @@ def main():
             print("There was an ERROR during submission:")
             sys.exit(receipt)
 
-        schema_dataframe = update_table(schema_dataframe,
-                                        schema_targets,
-                                        schema_update)
-
-        # save updates in new tables
-        save_update(schema_tables, schema_dataframe)
+        if action in ['ADD', 'MODIFY']:
+            schema_dataframe = update_table(schema_dataframe,
+                                            schema_targets,
+                                            schema_update)
+            # save updates in new tables
+            save_update(schema_tables, schema_dataframe)
+        elif action in ['CANCEL', 'RELEASE']:
+            schema_dataframe = update_table_simple(schema_dataframe,
+                                            schema_targets,
+                                            action)
+            # save updates in new tables
+            save_update(schema_tables, schema_dataframe)
 
 
 if __name__ == "__main__":
-
     main()

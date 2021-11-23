@@ -1,0 +1,3 @@
+alias	title	study_type	study_abstract	pubmed_id	accession	submission_date	status
+study_alias_4	study_title_1	Transcriptome Analysis	study_abstract_1	None	ERP132964	2021-11-03T13:32:34.113Z	release
+study_alias_5	study_title_2	RNASeq	study_abstract_2	pubmed_id_2	ERP132965	2021-11-03T13:32:34.113Z	release
