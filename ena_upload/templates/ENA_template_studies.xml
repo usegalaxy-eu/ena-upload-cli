@@ -16,9 +16,7 @@ def attributetest(row, column):
         <DESCRIPTOR>
             <STUDY_TITLE>${row.title}</STUDY_TITLE>
             <STUDY_TYPE existing_study_type="${row.study_type}"/>
-            <py:if test="attributetest(row, 'study_abstract')">
             <STUDY_ABSTRACT>${row.study_abstract}</STUDY_ABSTRACT>
-            </py:if>
             <py:if test="attributetest(row, 'center_name')">
             <CENTER_NAME>${row.center_name}</CENTER_NAME>
             </py:if>
