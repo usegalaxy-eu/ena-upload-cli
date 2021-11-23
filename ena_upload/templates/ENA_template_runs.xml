@@ -13,9 +13,6 @@ def attributetest(row, column):
     xsi:noNamespaceSchemaLocation="ftp://ftp.sra.ebi.ac.uk/meta/xsd/sra_1_6/SRA.run.xsd">
     <py:for each="alias, experiment_alias in run_groups.iteritems()">
     <RUN alias="${alias}" center_name="${center}">
-        <py:if test="attributetest(row, 'study_abstract')">
-            <TITLE>${row.title}</TITLE>
-        </py:if>
         <EXPERIMENT_REF refname="${experiment_alias}"/>
         <DATA_BLOCK>
             <FILES>
