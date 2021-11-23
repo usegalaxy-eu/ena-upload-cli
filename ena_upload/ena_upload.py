@@ -2,7 +2,7 @@
 __authors__ = ["Dilmurat Yusuf", "Bert Droesbeke"]
 __copyright__ = "Copyright 2020, Dilmurat Yusuf"
 __maintainer__ = "Bert Droesbeke"
-__email__ = "Dilmurat.yusuf@gmail.com"
+__email__ = "bedro@psb.vib-ugent.be"
 __license__ = "MIT"
 
 import os
