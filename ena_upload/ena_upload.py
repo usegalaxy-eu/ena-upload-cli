@@ -22,6 +22,16 @@ import tempfile
 from ena_upload._version import __version__
 
 
+class MyFTP_TLS(ftplib.FTP_TLS):
+    """Explicit FTPS, with shared TLS session"""
+    def ntransfercmd(self, cmd, rest=None):
+        conn, size = ftplib.FTP.ntransfercmd(self, cmd, rest)
+        if self._prot_p:
+            conn = self.context.wrap_socket(conn,
+                                            server_hostname=self.host,
+                                            session=self.sock.session)
+        return conn, size
+
 def create_dataframe(schema_tables, action):
     '''create pandas dataframe from the tables in schema_tables
        and return schema_dataframe
@@ -343,22 +353,28 @@ def submit_data(file_paths, password, webin_id):
     :param file_paths: a dictionary of filename string and file_path string
     :param args: the command-line arguments parsed by ArgumentParser
     """
+    ftp_host = "webin2.ebi.ac.uk"
 
+    print("\nConnecting to ftp.webin.ebi.ac.uk....")
     try:
-        print("\nConnecting to ftp.webin.ebi.ac.uk....")
-        ftp = ftplib.FTP("webin.ebi.ac.uk", webin_id, password)
+        ftps = MyFTP_TLS(timeout=10)
+        ftps.context.set_ciphers('DEFAULT@SECLEVEL=1')
+        ftps.connect(ftp_host, port=21)
+        ftps.auth()
+        ftps.login(webin_id, password)
+        ftps.prot_p()
+
     except IOError:
-        print(ftp.lastErrorText())
+        print(ftps.lastErrorText())
         print("ERROR: could not connect to the ftp server.\
                Please check your login details.")
-
     for filename, path in file_paths.items():
         print(f'uploading {path}')
-        ftp.storbinary(f'STOR {filename}', open(path, 'rb'))
-        msg = ftp.storbinary(f'STOR {filename}', open(path, 'rb'))
+        ftps.storbinary(f'STOR {filename}', open(path, 'rb'))
+        msg = ftps.storbinary(f'STOR {filename}', open(path, 'rb'))
         print(msg)
 
-    print(ftp.quit())
+    print(ftps.quit())
 
 def columns_to_update(df):
     '''
