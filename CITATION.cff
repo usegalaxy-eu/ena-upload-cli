@@ -1,0 +1,47 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+authors:
+- family-names: "Droesbeke"
+  given-names: "Bert"
+  orcid: "https://orcid.org/0000-0002-3079-6586"
+- family-names: "Yusuf"
+  given-names: "Dilmurat"
+- family-names: "Grüning"
+  given-names: "Björn"
+title: "ena-upload-cli"
+doi: 10.5281/zenodo.5599603
+date-released: 2021-02-12
+url: "https://github.com/usegalaxy-eu/ena-upload-cli"
+preferred-citation:
+  type: article
+  authors:
+  - family-names: "Roncoroni"
+    given-names: "Miguel"
+    orcid: "https://orcid.org/0000-0001-7461-1427"
+  - family-names: "Droesbeke"
+    given-names: "Bert"
+    orcid: "https://orcid.org/0000-0002-3079-6586"
+  - family-names: "Eguinoa"
+    given-names: "Ignacio"
+    orcid: "https://orcid.org/0000-0001-8231-3323"
+  - family-names: "De Ruyck"
+    given-names: "Kim"
+  - family-names: "D’Anna"
+    given-names: "Flora"
+  - family-names: "Yusuf"
+    given-names: "Dilmurat"
+  - family-names: "Grüning"
+    given-names: "Björn"
+  - family-names: "Backofen"
+    given-names: "Rolf"
+  - family-names: "Coppens"
+    given-names: "Frederik"
+  doi: "https://doi.org/10.1093/bioinformatics/btab421"
+  journal: "Bioinformatics"
+  month: 11
+  start: 3983
+  end: 3985
+  title: "A SARS-CoV-2 sequence submission tool for the European Nucleotide Archive"
+  issue: 21
+  volume: 37
+  year: 2021
