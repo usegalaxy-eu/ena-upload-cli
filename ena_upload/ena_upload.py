@@ -355,7 +355,7 @@ def submit_data(file_paths, password, webin_id):
     """
     ftp_host = "webin2.ebi.ac.uk"
 
-    print("\nConnecting to ftp.webin.ebi.ac.uk....")
+    print("\nConnecting to ftp.webin2.ebi.ac.uk....")
     try:
         ftps = MyFTP_TLS(timeout=10)
         ftps.context.set_ciphers('DEFAULT@SECLEVEL=1')
@@ -370,10 +370,14 @@ def submit_data(file_paths, password, webin_id):
                Please check your login details.")
     for filename, path in file_paths.items():
         print(f'uploading {path}')
-        ftps.storbinary(f'STOR {filename}', open(path, 'rb'))
-        msg = ftps.storbinary(f'STOR {filename}', open(path, 'rb'))
-        print(msg)
-
+        try:
+            ftps.storbinary(f'STOR {filename}', open(path, 'rb'))
+            msg = ftps.storbinary(f'STOR {filename}', open(path, 'rb'))
+            print(msg)
+        except BaseException as err:
+            print(f"ERROR: {err}")
+            print("ERROR: If your connection times out at this stage, it propably is because a firewall that is in place. FTP is used in passive mode and connection will be opened to one of the ports: 40000 and 50000.")
+            raise
     print(ftps.quit())
 
 def columns_to_update(df):
