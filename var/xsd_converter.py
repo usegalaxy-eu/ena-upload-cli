@@ -42,6 +42,8 @@ def elem2dict(node):
             value = element.attrib['value']
         elif element.text and element.text.strip():
             value = element.text.strip().rstrip()
+        elif element.attrib and 'type' in element.attrib:
+            value = element.attrib['type']
         else:
             value = elem2dict(element)
         if key in result:
@@ -71,7 +73,7 @@ def findkeys(node, query):
                 yield x
     
 def main():
-    mapping = { "FILE":"run", "LIBRARY_SELECTION":"", "LIBRARY_SOURCE":"", "LIBRARY_STRATEGY":"", "PLATFORM":"" }
+    mapping = { "run":["FILE"], "experiment":["LIBRARY_SELECTION", "LIBRARY_SOURCE", "LIBRARY_STRATEGY"], "common":["PLATFORM"]}
     template_names= ["ENA.project", "SRA.common", "SRA.experiment", "SRA.run", "SRA.sample", "SRA.study", "SRA.submission"]
     
     for template_name in template_names:
@@ -83,35 +85,54 @@ def main():
 
         open(f'ena_upload/templates/{template_name}.xsd', 'wb').write(response)
     
-        if template_name_sm in mapping.values():
+        if template_name_sm in mapping.keys():
 
-            # Dictionary that will contain all attributes needed
-            xml_tree = {}
+            for template_block in mapping[template_name_sm]:
+                # Loading templates directory
+                file_loader = FileSystemLoader('ena_upload/templates/jinja_templates')
+                env = Environment(loader=file_loader)
 
-            # Loading templates directory
-            file_loader = FileSystemLoader('ena_upload/templates/jinja_templates')
-            env = Environment(loader=file_loader)
+                # Parsing XSD
+                parser = etree.XMLParser(recover=True, encoding='utf-8',remove_comments=True, remove_blank_text=True)
+                root = etree.fromstring(response, parser)
+                incl = etree.XInclude()
+                incl(root)
 
-            # Parsing XSD
-            parser = etree.XMLParser(recover=True, encoding='utf-8',remove_comments=True, remove_blank_text=True)
-            root = etree.fromstring(response, parser)
-            incl = etree.XInclude()
-            incl(root)
+                xsd_dict = elem2dict(root)
+                if template_block == "FILE":
+                    query_dict = (list(findkeys(xsd_dict, 'filetype')))[0]
+                    xml_tree = query_dict['simpleType']['restriction']['enumeration']
+                elif template_block == "LIBRARY_SELECTION":
+                    query_dict = (list(findkeys(xsd_dict, 'typeLibrarySelection')))[0]
+                    xml_tree = query_dict['restriction']['enumeration']
+                elif template_block == "LIBRARY_SOURCE":
+                    query_dict = (list(findkeys(xsd_dict, 'typeLibrarySource')))[0]
+                    xml_tree = query_dict['restriction']['enumeration']
+                elif template_block == "LIBRARY_STRATEGY":
+                    query_dict = (list(findkeys(xsd_dict, 'typeLibraryStrategy')))[0]
+                    xml_tree = query_dict['restriction']['enumeration']
+                elif template_block == "PLATFORM":
+                    platformtype_dict = (list(findkeys(xsd_dict, 'PlatformType')))[0]
+                    xml_tree = {}
+                    for platformtype, instrument_models in platformtype_dict['choice'].items():
+                        instrument_models_dict = (list(findkeys(xsd_dict, instrument_models['complexType']['sequence']['INSTRUMENT_MODEL'].strip('com:'))))[0]
+                        xml_tree[platformtype] = instrument_models_dict['restriction']['enumeration']
 
-            xsd_dict = elem2dict(root)
+                else:
+                    break
+                
+                
+                print(xml_tree)
 
-            query_dict = (list(findkeys(xsd_dict, 'filetype')))[0]
-            print(query_dict['simpleType']['restriction']['enumeration'])
+                # Loading the xml jinja2 template for samples
+                t = env.get_template(f'ENA_template_{template_block}.xml')
 
-            # Loading the xml jinja2 template for samples
-            t = env.get_template(f'ENA_template_{mapping[template_name_sm]}.xml')
+                # Render template with values from the ENA xml
+                output_from_parsed_template = t.render(attributes=xml_tree)
 
-            # Render template with values from the ENA xml
-            output_from_parsed_template = t.render(attributes=xml_tree)
-
-            # Saving new xml template file
-            with open(f"ena_upload/templates/ENA_template_{mapping[template_name_sm]}.xml", "w") as fh:
-                fh.write(output_from_parsed_template)
+                # Saving new xml template file
+                with open(f"ena_upload/templates/ENA_template_{template_block}.xml", "w") as fh:
+                    fh.write(output_from_parsed_template)
 
 
 
