@@ -1,0 +1,7 @@
+<py:choose xmlns:py="http://genshi.edgewall.org/" test="">
+<FILE py:when="row.file_format == 'sra'"
+                filename="${row.file_name}"
+                filetype="sra"
+                checksum_method="MD5"
+                checksum="${row.file_checksum}"/>
+</py:choose>

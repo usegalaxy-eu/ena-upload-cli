@@ -1,0 +1,93 @@
+<PLATFORM xmlns:py="http://genshi.edgewall.org/" py:choose="">
+<LS454 py:when="row.platform.lower().strip() == 'ls454'" py:choose="">
+<INSTRUMENT_MODEL py:when="row.instrument_model.lower().strip() == '454 gs'">454 GS</INSTRUMENT_MODEL>
+<INSTRUMENT_MODEL py:when="row.instrument_model.lower().strip() == '454 gs 20'">454 GS 20</INSTRUMENT_MODEL>
+<INSTRUMENT_MODEL py:when="row.instrument_model.lower().strip() == '454 gs flx'">454 GS FLX</INSTRUMENT_MODEL>
+<INSTRUMENT_MODEL py:when="row.instrument_model.lower().strip() == '454 gs flx+'">454 GS FLX+</INSTRUMENT_MODEL>
+<INSTRUMENT_MODEL py:when="row.instrument_model.lower().strip() == '454 gs flx titanium'">454 GS FLX Titanium</INSTRUMENT_MODEL>
+<INSTRUMENT_MODEL py:when="row.instrument_model.lower().strip() == '454 gs junior'">454 GS Junior</INSTRUMENT_MODEL>
+<INSTRUMENT_MODEL py:when="row.instrument_model.lower().strip() == 'unspecified'">unspecified</INSTRUMENT_MODEL>
+</LS454>
+<ILLUMINA py:when="row.platform.lower().strip() == 'illumina'" py:choose="">
+<INSTRUMENT_MODEL py:when="row.instrument_model.lower().strip() == 'illumina genome analyzer'">Illumina Genome Analyzer</INSTRUMENT_MODEL>
+<INSTRUMENT_MODEL py:when="row.instrument_model.lower().strip() == 'illumina genome analyzer ii'">Illumina Genome Analyzer II</INSTRUMENT_MODEL>
+<INSTRUMENT_MODEL py:when="row.instrument_model.lower().strip() == 'illumina genome analyzer iix'">Illumina Genome Analyzer IIx</INSTRUMENT_MODEL>
+<INSTRUMENT_MODEL py:when="row.instrument_model.lower().strip() == 'illumina hiseq 4000'">Illumina HiSeq 4000</INSTRUMENT_MODEL>
+<INSTRUMENT_MODEL py:when="row.instrument_model.lower().strip() == 'illumina hiseq 3000'">Illumina HiSeq 3000</INSTRUMENT_MODEL>
+<INSTRUMENT_MODEL py:when="row.instrument_model.lower().strip() == 'illumina hiseq 2500'">Illumina HiSeq 2500</INSTRUMENT_MODEL>
+<INSTRUMENT_MODEL py:when="row.instrument_model.lower().strip() == 'illumina hiseq 2000'">Illumina HiSeq 2000</INSTRUMENT_MODEL>
+<INSTRUMENT_MODEL py:when="row.instrument_model.lower().strip() == 'illumina hiseq 1500'">Illumina HiSeq 1500</INSTRUMENT_MODEL>
+<INSTRUMENT_MODEL py:when="row.instrument_model.lower().strip() == 'illumina hiseq 1000'">Illumina HiSeq 1000</INSTRUMENT_MODEL>
+<INSTRUMENT_MODEL py:when="row.instrument_model.lower().strip() == 'illumina miseq'">Illumina MiSeq</INSTRUMENT_MODEL>
+<INSTRUMENT_MODEL py:when="row.instrument_model.lower().strip() == 'illumina iseq 100'">Illumina iSeq 100</INSTRUMENT_MODEL>
+<INSTRUMENT_MODEL py:when="row.instrument_model.lower().strip() == 'illumina miniseq'">Illumina MiniSeq</INSTRUMENT_MODEL>
+<INSTRUMENT_MODEL py:when="row.instrument_model.lower().strip() == 'illumina hiscansq'">Illumina HiScanSQ</INSTRUMENT_MODEL>
+<INSTRUMENT_MODEL py:when="row.instrument_model.lower().strip() == 'hiseq x ten'">HiSeq X Ten</INSTRUMENT_MODEL>
+<INSTRUMENT_MODEL py:when="row.instrument_model.lower().strip() == 'nextseq 500'">NextSeq 500</INSTRUMENT_MODEL>
+<INSTRUMENT_MODEL py:when="row.instrument_model.lower().strip() == 'hiseq x five'">HiSeq X Five</INSTRUMENT_MODEL>
+<INSTRUMENT_MODEL py:when="row.instrument_model.lower().strip() == 'nextseq 550'">NextSeq 550</INSTRUMENT_MODEL>
+<INSTRUMENT_MODEL py:when="row.instrument_model.lower().strip() == 'illumina novaseq 6000'">Illumina NovaSeq 6000</INSTRUMENT_MODEL>
+<INSTRUMENT_MODEL py:when="row.instrument_model.lower().strip() == 'unspecified'">unspecified</INSTRUMENT_MODEL>
+</ILLUMINA>
+<HELICOS py:when="row.platform.lower().strip() == 'helicos'" py:choose="">
+<INSTRUMENT_MODEL py:when="row.instrument_model.lower().strip() == 'helicos heliscope'">Helicos HeliScope</INSTRUMENT_MODEL>
+<INSTRUMENT_MODEL py:when="row.instrument_model.lower().strip() == 'unspecified'">unspecified</INSTRUMENT_MODEL>
+</HELICOS>
+<ABI_SOLID py:when="row.platform.lower().strip() == 'abi_solid'" py:choose="">
+<INSTRUMENT_MODEL py:when="row.instrument_model.lower().strip() == 'ab solid system'">AB SOLiD System</INSTRUMENT_MODEL>
+<INSTRUMENT_MODEL py:when="row.instrument_model.lower().strip() == 'ab solid system 2.0'">AB SOLiD System 2.0</INSTRUMENT_MODEL>
+<INSTRUMENT_MODEL py:when="row.instrument_model.lower().strip() == 'ab solid system 3.0'">AB SOLiD System 3.0</INSTRUMENT_MODEL>
+<INSTRUMENT_MODEL py:when="row.instrument_model.lower().strip() == 'ab solid 3 plus system'">AB SOLiD 3 Plus System</INSTRUMENT_MODEL>
+<INSTRUMENT_MODEL py:when="row.instrument_model.lower().strip() == 'ab solid 4 system'">AB SOLiD 4 System</INSTRUMENT_MODEL>
+<INSTRUMENT_MODEL py:when="row.instrument_model.lower().strip() == 'ab solid 4hq system'">AB SOLiD 4hq System</INSTRUMENT_MODEL>
+<INSTRUMENT_MODEL py:when="row.instrument_model.lower().strip() == 'ab solid pi system'">AB SOLiD PI System</INSTRUMENT_MODEL>
+<INSTRUMENT_MODEL py:when="row.instrument_model.lower().strip() == 'ab 5500 genetic analyzer'">AB 5500 Genetic Analyzer</INSTRUMENT_MODEL>
+<INSTRUMENT_MODEL py:when="row.instrument_model.lower().strip() == 'ab 5500xl genetic analyzer'">AB 5500xl Genetic Analyzer</INSTRUMENT_MODEL>
+<INSTRUMENT_MODEL py:when="row.instrument_model.lower().strip() == 'ab 5500xl-w genetic analysis system'">AB 5500xl-W Genetic Analysis System</INSTRUMENT_MODEL>
+<INSTRUMENT_MODEL py:when="row.instrument_model.lower().strip() == 'unspecified'">unspecified</INSTRUMENT_MODEL>
+</ABI_SOLID>
+<COMPLETE_GENOMICS py:when="row.platform.lower().strip() == 'complete_genomics'" py:choose="">
+<INSTRUMENT_MODEL py:when="row.instrument_model.lower().strip() == 'complete genomics'">Complete Genomics</INSTRUMENT_MODEL>
+<INSTRUMENT_MODEL py:when="row.instrument_model.lower().strip() == 'unspecified'">unspecified</INSTRUMENT_MODEL>
+</COMPLETE_GENOMICS>
+<BGISEQ py:when="row.platform.lower().strip() == 'bgiseq'" py:choose="">
+<INSTRUMENT_MODEL py:when="row.instrument_model.lower().strip() == 'bgiseq-500'">BGISEQ-500</INSTRUMENT_MODEL>
+</BGISEQ>
+<OXFORD_NANOPORE py:when="row.platform.lower().strip() == 'oxford_nanopore'" py:choose="">
+<INSTRUMENT_MODEL py:when="row.instrument_model.lower().strip() == 'minion'">MinION</INSTRUMENT_MODEL>
+<INSTRUMENT_MODEL py:when="row.instrument_model.lower().strip() == 'gridion'">GridION</INSTRUMENT_MODEL>
+<INSTRUMENT_MODEL py:when="row.instrument_model.lower().strip() == 'promethion'">PromethION</INSTRUMENT_MODEL>
+<INSTRUMENT_MODEL py:when="row.instrument_model.lower().strip() == 'unspecified'">unspecified</INSTRUMENT_MODEL>
+</OXFORD_NANOPORE>
+<PACBIO_SMRT py:when="row.platform.lower().strip() == 'pacbio_smrt'" py:choose="">
+<INSTRUMENT_MODEL py:when="row.instrument_model.lower().strip() == 'pacbio rs'">PacBio RS</INSTRUMENT_MODEL>
+<INSTRUMENT_MODEL py:when="row.instrument_model.lower().strip() == 'pacbio rs ii'">PacBio RS II</INSTRUMENT_MODEL>
+<INSTRUMENT_MODEL py:when="row.instrument_model.lower().strip() == 'sequel'">Sequel</INSTRUMENT_MODEL>
+<INSTRUMENT_MODEL py:when="row.instrument_model.lower().strip() == 'sequel ii'">Sequel II</INSTRUMENT_MODEL>
+<INSTRUMENT_MODEL py:when="row.instrument_model.lower().strip() == 'unspecified'">unspecified</INSTRUMENT_MODEL>
+</PACBIO_SMRT>
+<ION_TORRENT py:when="row.platform.lower().strip() == 'ion_torrent'" py:choose="">
+<INSTRUMENT_MODEL py:when="row.instrument_model.lower().strip() == 'ion torrent pgm'">Ion Torrent PGM</INSTRUMENT_MODEL>
+<INSTRUMENT_MODEL py:when="row.instrument_model.lower().strip() == 'ion torrent proton'">Ion Torrent Proton</INSTRUMENT_MODEL>
+<INSTRUMENT_MODEL py:when="row.instrument_model.lower().strip() == 'ion torrent s5'">Ion Torrent S5</INSTRUMENT_MODEL>
+<INSTRUMENT_MODEL py:when="row.instrument_model.lower().strip() == 'ion torrent s5 xl'">Ion Torrent S5 XL</INSTRUMENT_MODEL>
+<INSTRUMENT_MODEL py:when="row.instrument_model.lower().strip() == 'unspecified'">unspecified</INSTRUMENT_MODEL>
+</ION_TORRENT>
+<CAPILLARY py:when="row.platform.lower().strip() == 'capillary'" py:choose="">
+<INSTRUMENT_MODEL py:when="row.instrument_model.lower().strip() == 'ab 3730xl genetic analyzer'">AB 3730xL Genetic Analyzer</INSTRUMENT_MODEL>
+<INSTRUMENT_MODEL py:when="row.instrument_model.lower().strip() == 'ab 3730 genetic analyzer'">AB 3730 Genetic Analyzer</INSTRUMENT_MODEL>
+<INSTRUMENT_MODEL py:when="row.instrument_model.lower().strip() == 'ab 3500xl genetic analyzer'">AB 3500xL Genetic Analyzer</INSTRUMENT_MODEL>
+<INSTRUMENT_MODEL py:when="row.instrument_model.lower().strip() == 'ab 3500 genetic analyzer'">AB 3500 Genetic Analyzer</INSTRUMENT_MODEL>
+<INSTRUMENT_MODEL py:when="row.instrument_model.lower().strip() == 'ab 3130xl genetic analyzer'">AB 3130xL Genetic Analyzer</INSTRUMENT_MODEL>
+<INSTRUMENT_MODEL py:when="row.instrument_model.lower().strip() == 'ab 3130 genetic analyzer'">AB 3130 Genetic Analyzer</INSTRUMENT_MODEL>
+<INSTRUMENT_MODEL py:when="row.instrument_model.lower().strip() == 'ab 310 genetic analyzer'">AB 310 Genetic Analyzer</INSTRUMENT_MODEL>
+<INSTRUMENT_MODEL py:when="row.instrument_model.lower().strip() == 'unspecified'">unspecified</INSTRUMENT_MODEL>
+</CAPILLARY>
+<DNBSEQ py:when="row.platform.lower().strip() == 'dnbseq'" py:choose="">
+    <INSTRUMENT_MODEL py:when="row.instrument_model.lower().strip() == 'dnbseq-t7'">DNBSEQ-T7</INSTRUMENT_MODEL>
+    <INSTRUMENT_MODEL py:when="row.instrument_model.lower().strip() == 'dnbseq-g400'">DNBSEQ-G400</INSTRUMENT_MODEL>
+    <INSTRUMENT_MODEL py:when="row.instrument_model.lower().strip() == 'dnbseq-g50'">DNBSEQ-G50</INSTRUMENT_MODEL>
+    <INSTRUMENT_MODEL py:when="row.instrument_model.lower().strip() == 'dnbseq-g400 fast'">DNBSEQ-G400 FAST</INSTRUMENT_MODEL>
+    <INSTRUMENT_MODEL py:when="row.instrument_model.lower().strip() == 'unspecified'">unspecified</INSTRUMENT_MODEL>
+</DNBSEQ>
+</PLATFORM>

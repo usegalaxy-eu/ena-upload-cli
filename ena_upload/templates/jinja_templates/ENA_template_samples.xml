@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?python
+import pandas as pd
+def attributetest(row, column):
+    if hasattr(row, column) and pd.notna(row[column]) and not row[column].isspace() and str(row[column]).lower() not in ['nan', 'na']:
+        return True 
+    else:
+        return False
+?>
+<SAMPLE_SET xmlns:py="http://genshi.edgewall.org/"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="ftp://ftp.sra.ebi.ac.uk/meta/xsd/sra_1_6/SRA.sample.xsd">
+    <py:for each="index, row in df.iterrows()">
+    <SAMPLE alias="${row.alias}" center_name="${center}">
+        <TITLE>${row.title}</TITLE>
+        <SAMPLE_NAME>
+            <TAXON_ID>${row.taxon_id}</TAXON_ID>
+            <SCIENTIFIC_NAME>${row.scientific_name}</SCIENTIFIC_NAME>
+            <py:if test="attributetest(row, 'common_name')">
+            <COMMON_NAME>${row.common_name}</COMMON_NAME>
+            </py:if>
+        </SAMPLE_NAME>
+        <DESCRIPTION>${row.sample_description}</DESCRIPTION>
+        <SAMPLE_ATTRIBUTES>
+            {%- for key, value in attributes.items() %}
+            {%- if value == 'mandatory' %}
+            <SAMPLE_ATTRIBUTE>
+                <TAG>{{key}}</TAG>
+                <VALUE>${row['{{key}}']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            {%- else %}
+            <py:if test="attributetest(row, '{{key}}')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>{{key}}</TAG>
+                <VALUE>${row['{{key}}']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            {%- endif %}
+            {%- endfor %}
+            <SAMPLE_ATTRIBUTE>
+                <TAG>SUBMISSION_TOOL</TAG>
+                <VALUE>${tool_name}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            <SAMPLE_ATTRIBUTE>
+                <TAG>SUBMISSION_TOOL_VERSION</TAG>
+                <VALUE>${tool_version}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+        </SAMPLE_ATTRIBUTES>
+    </SAMPLE>
+    </py:for>
+</SAMPLE_SET>
