@@ -19,6 +19,9 @@ def attributetest(row, column):
                 <py:if test="attributetest(row, 'design_description')">
                 <DESIGN_DESCRIPTION>${row.design_description}</DESIGN_DESCRIPTION>
                 </py:if>
+                <py:if test="attributetest(row, 'spot_descriptor')">
+                <SPOT_DESCRIPTOR>${row.spot_descriptor}</SPOT_DESCRIPTOR>
+                </py:if>
                 <SAMPLE_DESCRIPTOR refname="${row.sample_alias}"/>
                 <LIBRARY_DESCRIPTOR>
                     <LIBRARY_NAME>${row.library_name}</LIBRARY_NAME>

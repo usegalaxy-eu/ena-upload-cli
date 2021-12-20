@@ -14,6 +14,9 @@ def attributetest(row, column):
     <py:for each="alias, experiment_alias in run_groups.iteritems()">
     <RUN alias="${alias}" center_name="${center}">
         <EXPERIMENT_REF refname="${experiment_alias}"/>
+        <py:if test="attributetest(row, 'spot_descriptor')">
+        <SPOT_DESCRIPTOR>${row.spot_descriptor}</SPOT_DESCRIPTOR>
+        </py:if>
         <DATA_BLOCK>
             <FILES>
                 <py:for each="index, row in file_groups.get_group(alias).iterrows()">
