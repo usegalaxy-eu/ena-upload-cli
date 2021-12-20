@@ -1,11 +1,5 @@
 <py:choose xmlns:py="http://genshi.edgewall.org/" test="">
-<LIBRARY_SOURCE py:when="row.library_source.lower().strip() == 'genomic'">GENOMIC</LIBRARY_SOURCE>
-<LIBRARY_SOURCE py:when="row.library_source.lower().strip() == 'genomic single cell'">GENOMIC SINGLE CELL</LIBRARY_SOURCE>
-<LIBRARY_SOURCE py:when="row.library_source.lower().strip() == 'transcriptomic'">TRANSCRIPTOMIC</LIBRARY_SOURCE>
-<LIBRARY_SOURCE py:when="row.library_source.lower().strip() == 'transcriptomic single cell'">TRANSCRIPTOMIC SINGLE CELL</LIBRARY_SOURCE>
-<LIBRARY_SOURCE py:when="row.library_source.lower().strip() == 'metagenomic'">METAGENOMIC</LIBRARY_SOURCE>
-<LIBRARY_SOURCE py:when="row.library_source.lower().strip() == 'metatranscriptomic'">METATRANSCRIPTOMIC</LIBRARY_SOURCE>
-<LIBRARY_SOURCE py:when="row.library_source.lower().strip() == 'synthetic'">SYNTHETIC</LIBRARY_SOURCE>
-<LIBRARY_SOURCE py:when="row.library_source.lower().strip() == 'viral rna'">VIRAL RNA</LIBRARY_SOURCE>
-<LIBRARY_SOURCE py:when="row.library_source.lower().strip() == 'other'">OTHER</LIBRARY_SOURCE>
+{%- for value in attributes %}
+<LIBRARY_SOURCE py:when="row.library_source.lower().strip() == '{{value | lower}}'">{{value}}</LIBRARY_SOURCE>
+{%- endfor %}
 </py:choose>

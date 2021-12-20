@@ -122,7 +122,7 @@ def main():
                     break
                 
                 
-                print(xml_tree)
+                print(f"Parsed values: {xml_tree}")
 
                 # Loading the xml jinja2 template for samples
                 t = env.get_template(f'ENA_template_{template_block}.xml')
