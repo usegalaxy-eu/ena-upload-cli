@@ -27,8 +27,8 @@ def attributetest(row, column):
                     <xi:include href="ENA_template_LIBRARY_SOURCE.xml" />
                     <xi:include href="ENA_template_LIBRARY_SELECTION.xml" />
                     <LIBRARY_LAYOUT py:choose="">
-                        <PAIRED py:when="row.library_layout == 'paired'" NOMINAL_LENGTH="${row.insert_size}" />
-                        <SINGLE py:when="row.library_layout == 'single'" />
+                        <PAIRED py:when="row.library_layout.lower().strip() == 'paired'" NOMINAL_LENGTH="${row.insert_size}" />
+                        <SINGLE py:when="row.library_layout.lower().strip() == 'single'" />
                     </LIBRARY_LAYOUT>
                     <py:if test="attributetest(row, 'library_construction_protocol')">
                     <LIBRARY_CONSTRUCTION_PROTOCOL>${row.library_construction_protocol}</LIBRARY_CONSTRUCTION_PROTOCOL>
