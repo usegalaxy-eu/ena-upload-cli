@@ -158,7 +158,10 @@ def generate_stream(schema, targets, Template, center, tool):
     if schema == 'run':
         # These attributes are required for rendering
         # the run xml templates
-        file_attrib = ['file_name', 'file_format', 'file_checksum']
+        # Adding backwards compatibility for file_format
+        if 'file_format' in targets:
+            targets.rename(columns={'file_format':'file_type'}, inplace=True)
+        file_attrib = ['file_name', 'file_type', 'file_checksum']
         other_attrib = ['alias', 'experiment_alias']
         run_groups = targets[other_attrib].groupby(targets['alias'])
         run_groups = run_groups.experiment_alias.unique()
