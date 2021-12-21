@@ -16,9 +16,7 @@ def attributetest(row, column):
             <TITLE>${row.title}</TITLE>
             <STUDY_REF refname="${row.study_alias}"/>
             <DESIGN>
-                <py:if test="attributetest(row, 'design_description')">
                 <DESIGN_DESCRIPTION>${row.design_description}</DESIGN_DESCRIPTION>
-                </py:if>
                 <py:if test="attributetest(row, 'spot_descriptor')">
                 <SPOT_DESCRIPTOR>${row.spot_descriptor}</SPOT_DESCRIPTOR>
                 </py:if>
