@@ -104,17 +104,52 @@ The command line tool will automatically fetch the correct scientific name based
 
 If you want to submit viral samples you can use the [ENA virus pathogen](https://www.ebi.ac.uk/ena/browser/view/ERC000033) checklist by adding `ERC000033` to the checklist parameter. Check out our [viral example command](#test-the-tool) as demonstration. Please use the [ENA virus pathogen](https://www.ebi.ac.uk/ena/browser/view/ERC000033) checklist on the website of ENA to know which values are allowed/possible in the `restricted text` and `text choice` fields.
 
-### ENA study, experiment and run lists
+### ENA study, experiment and run tables
 
-| Name of column      | cardinality | documentation                                                                                                                                                        | CV  |
-|---------------------|-------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----|
-| alias               | mandatory   | Submitter designated name for the object. The name must be unique within the submission account.                                                                     |     |
-| title               | mandatory   | Title of the study as would be used in a publication.                                                                                                                |     |
-| study_type          | mandatory   | The STUDY_TYPE presents a controlled vocabulary for expressing the overall purpose of the study.                                                                     | yes |
-| study_abstract      | mandatory   | Briefly describes the goals, purpose, and scope of the Study.  This need not be listed if it can be                         inherited from a referenced publication. |     |
-| center_project_name | optional    | Submitter defined project name.  This field is intended for backward tracking of the study record to the submitter's LIMS.                                           |     |
-| study_description   | optional    | More extensive free-form description of the study.                                                                                                                   |     |
-| pubmed_id           | optional    | Link to publication related to this study.                                                                                                                           |     |
+Here we list all the possible columns one can have in its study, experiment or run table along with its cardinality and controlled vocabulary (CV).
+Currently we refer to the [ENA Webin](https://wwwdev.ebi.ac.uk/ena/submit/webin/) to discover which values are allowed when a controlled vocabulary is used, but this will change in the future.
+
+#### Study tsv table
+
+| Name of column | Cardinality | Documentation | CV |
+|---|---|---|---|
+| alias | mandatory | Submitter designated name for the object. The name must be unique within the submission account. |  |
+| title | mandatory | Title of the study as would be used in a publication. |  |
+| study_type | mandatory | The STUDY_TYPE presents a controlled vocabulary for expressing the overall purpose of the study. | yes |
+| study_abstract | mandatory | Briefly describes the goals, purpose, and scope of the Study.  This need not be listed if it can be inherited from a referenced publication. |  |
+| center_project_name | optional | Submitter defined project name.  This field is intended for backward tracking of the study record to the submitter's LIMS. |  |
+| study_description | optional | More extensive free-form description of the study. |  |
+| pubmed_id | optional | Link to publication related to this study. |  |
+
+#### Experiment tsv table
+
+| Name of column | Cardinality | Documentation | CV |
+|---|---|---|---|
+| alias | mandatory | Submitter designated name for the object. The name must be unique within the submission account. |  |
+| title | mandatory | Short text that can be used to call out experiment records in searches or in displays. |  |
+| study_alias | mandatory | Identifies the parent study. |  |
+| sample_alias | mandatory | Pick a sample to associate this experiment with. The sample may be an individual or a pool, depending on how it is specified. |  |
+| design_description | mandatory | Goal and setup of the individual library including library was constructed. |  |
+| spot_descriptor | optional | The SPOT_DESCRIPTOR specifies how to decode the individual reads of interest from the monolithic spot sequence. The spot descriptor contains aspects of the experimental design, platform, and processing information. There will be two methods of specification: one will be an index into a table of typical decodings, the other being an exact specification. This construct is needed for loading data and for interpreting the loaded runs. It can be omitted if the loader can infer read layout (from multiple input files or from one input files). |  |
+| library_name | mandatory | The submitter's name for this library. |  |
+| library_layout | mandatory | LIBRARY_LAYOUT specifies whether to expect single, paired, or other configuration of reads. In the case of paired reads, information about the relative distance and orientation is specified. | yes |
+| insert_size | mandatory | Relative distance. |  |
+| library_strategy | mandatory | Sequencing technique intended for this library | yes |
+| library_source | mandatory | The LIBRARY_SOURCE specifies the type of source material that is being sequenced. | yes |
+| library_selection | mandatory | Method used to enrich the target in the sequence library preparation | yes |
+| platform | mandatory | The PLATFORM record selects which sequencing platform and platform-specific runtime parameters. This will be determined by the Center. | yes |
+| library_construction_protocol | optional | Free form text describing the protocol by which the sequencing library was constructed. |  |
+
+
+#### Run tsv table
+
+| Name of column | Cardinality | Documentation | CV |
+|---|---|---|---|
+| alias | mandatory | Submitter designated name for the object. The name must be unique within the submission account. |  |
+| experiment_alias | mandatory | Identifies the parent experiment. |  |
+| file_name | mandatory | The name or relative pathname of a run data file. |  |
+| file_type | mandatory | The run data file model. | yes |
+| file_checksum | optional | Checksum of uncompressed file. If not given, the checksum will be calculated based on the data files specified in the --data option |  |
 
 
 ### Dev instance
