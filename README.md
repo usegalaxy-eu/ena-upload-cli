@@ -78,7 +78,7 @@ Mandatory arguments: --action, --center and --secret.
 
 ### ENA Webin
 
-A Webin can be made [here](https://www.ebi.ac.uk/ena/submit/sra/#home) if you don't have one already. The *--webin_id* parameter makes use of the full username looking like: `Webin-XXXXX`. Visit [Webin online](https://www.ebi.ac.uk/ena/submit/webin) to check on your submissions or [dev Webin](https://wwwdev.ebi.ac.uk/ena/submit/webin) to check on test submissions.
+A Webin can be made [here](https://www.ebi.ac.uk/ena/submit/sra/#home) if you don't have one already. The Webin ID makes use of the full username looking like: `Webin-XXXXX`. Visit [Webin online](https://www.ebi.ac.uk/ena/submit/webin) to check on your submissions or [dev Webin](https://wwwdev.ebi.ac.uk/ena/submit/webin) to check on test submissions.
 
 ### The .secret.yml file
 
@@ -103,6 +103,18 @@ The command line tool will automatically fetch the correct scientific name based
 #### Viral submissions
 
 If you want to submit viral samples you can use the [ENA virus pathogen](https://www.ebi.ac.uk/ena/browser/view/ERC000033) checklist by adding `ERC000033` to the checklist parameter. Check out our [viral example command](#test-the-tool) as demonstration. Please use the [ENA virus pathogen](https://www.ebi.ac.uk/ena/browser/view/ERC000033) checklist on the website of ENA to know which values are allowed/possible in the `restricted text` and `text choice` fields.
+
+### ENA study, experiment and run lists
+
+| Name of column      | cardinality | documentation                                                                                                                                                        | CV  |
+|---------------------|-------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----|
+| alias               | mandatory   | Submitter designated name for the object. The name must be unique within the submission account.                                                                     |     |
+| title               | mandatory   | Title of the study as would be used in a publication.                                                                                                                |     |
+| study_type          | mandatory   | The STUDY_TYPE presents a controlled vocabulary for expressing the overall purpose of the study.                                                                     | yes |
+| study_abstract      | mandatory   | Briefly describes the goals, purpose, and scope of the Study.  This need not be listed if it can be                         inherited from a referenced publication. |     |
+| center_project_name | optional    | Submitter defined project name.  This field is intended for backward tracking of the study record to the submitter's LIMS.                                           |     |
+| study_description   | optional    | More extensive free-form description of the study.                                                                                                                   |     |
+| pubmed_id           | optional    | Link to publication related to this study.                                                                                                                           |     |
 
 
 ### Dev instance
