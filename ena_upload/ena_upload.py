@@ -51,7 +51,8 @@ def create_dataframe(schema_tables, action):
 
     for schema, table in schema_tables.items():
         df = pd.read_csv(table, sep='\t', comment='#', dtype = str)
-        # checking for optional columns and if not present adding them
+        df = df.dropna(how='all')
+        # checking for optional columns and if not present, adding them
         if schema == 'sample':
             optional_columns = ['accession', 'submission_date', 'status', 'scientific_name', 'taxon_id']
         elif schema == 'run':
