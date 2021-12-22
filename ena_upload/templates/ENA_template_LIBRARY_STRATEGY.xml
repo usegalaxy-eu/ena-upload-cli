@@ -34,8 +34,8 @@
 <LIBRARY_STRATEGY py:when="row.library_strategy.lower().strip() == 'synthetic-long-read'">Synthetic-Long-Read</LIBRARY_STRATEGY>
 <LIBRARY_STRATEGY py:when="row.library_strategy.lower().strip() == 'targeted-capture'">Targeted-Capture</LIBRARY_STRATEGY>
 <LIBRARY_STRATEGY py:when="row.library_strategy.lower().strip() == 'tethered chromatin conformation capture'">Tethered Chromatin Conformation Capture</LIBRARY_STRATEGY>
-<LIBRARY_STRATEGY py:when="row.library_strategy.lower().strip() == 'other'">OTHER</LIBRARY_STRATEGY>
 <LIBRARY_STRATEGY py:when="row.library_strategy.lower().strip() == 'nome-seq'">NOMe-Seq</LIBRARY_STRATEGY>
 <LIBRARY_STRATEGY py:when="row.library_strategy.lower().strip() == 'chm-seq'">ChM-Seq</LIBRARY_STRATEGY>
 <LIBRARY_STRATEGY py:when="row.library_strategy.lower().strip() == 'gbs'">GBS</LIBRARY_STRATEGY>
+<LIBRARY_STRATEGY py:when="row.library_strategy.lower().strip() == 'other'">OTHER</LIBRARY_STRATEGY>
 </py:choose>

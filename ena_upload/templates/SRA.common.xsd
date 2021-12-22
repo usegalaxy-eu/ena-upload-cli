@@ -10,7 +10,7 @@
   ~ specific language governing permissions and limitations under the License.
   -->
 
-<!-- version:1.6.1-SNAPSHOT -->
+<!-- version:1.11.0 -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:com="SRA.common"
     targetNamespace="SRA.common">
 
@@ -920,7 +920,7 @@
             <xs:enumeration value="HiSeq X Ten"/>
             <xs:enumeration value="Illumina Genome Analyzer"/>
             <xs:enumeration value="Illumina Genome Analyzer II"/>
-            <xs:enumeration value="Illumina Genome Analyzer IIx"/>
+            <xs:enumeration value="Illumina Genome Analyzer IIx"/>  
             <xs:enumeration value="Illumina HiScanSQ"/>
             <xs:enumeration value="Illumina HiSeq 1000"/>
             <xs:enumeration value="Illumina HiSeq 1500"/>
@@ -928,12 +928,15 @@
             <xs:enumeration value="Illumina HiSeq 2500"/>
             <xs:enumeration value="Illumina HiSeq 3000"/>
             <xs:enumeration value="Illumina HiSeq 4000"/>
+            <xs:enumeration value="Illumina HiSeq X"/>
             <xs:enumeration value="Illumina iSeq 100"/>
             <xs:enumeration value="Illumina MiSeq"/>
             <xs:enumeration value="Illumina MiniSeq"/>
-            <xs:enumeration value="Illumina NovaSeq 6000"/>
-            <xs:enumeration value="NextSeq 500"/>
+            <xs:enumeration value="Illumina NovaSeq 6000"/>          
+            <xs:enumeration value="NextSeq 500"/>  
             <xs:enumeration value="NextSeq 550"/>
+            <xs:enumeration value="NextSeq 1000"/>
+            <xs:enumeration value="NextSeq 2000"/>
             <xs:enumeration value="unspecified"/>
         </xs:restriction>
     </xs:simpleType>
@@ -974,7 +977,9 @@
 
     <xs:simpleType name="typeBGISEQModel">
         <xs:restriction base="xs:string">
+            <xs:enumeration value="BGISEQ-50"/>
             <xs:enumeration value="BGISEQ-500"/>
+            <xs:enumeration value="MGISEQ-2000RS"/>
         </xs:restriction>
     </xs:simpleType>
 
@@ -994,6 +999,10 @@
             <xs:enumeration value="Ion Torrent Proton"/>
             <xs:enumeration value="Ion Torrent S5"/>
             <xs:enumeration value="Ion Torrent S5 XL"/>
+            <xs:enumeration value="Ion Torrent Genexus"/>
+            <xs:enumeration value="Ion GeneStudio S5"/>
+            <xs:enumeration value="Ion GeneStudio S5 Prime"/>
+            <xs:enumeration value="Ion GeneStudio S5 Plus"/>
             <xs:enumeration value="unspecified"/>
         </xs:restriction>
     </xs:simpleType>

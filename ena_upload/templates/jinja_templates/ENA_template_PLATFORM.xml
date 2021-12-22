@@ -1,0 +1,9 @@
+<PLATFORM xmlns:py="http://genshi.edgewall.org/" py:choose="">
+{%- for key, value in attributes.items() %}
+<{{key | upper}} py:when="row.platform.lower().strip() == '{{key | lower}}'" py:choose="">
+    {%- for instr_model in value %}
+    <INSTRUMENT_MODEL py:when="row.instrument_model.lower().strip() == '{{ instr_model | lower }}'">{{instr_model}}</INSTRUMENT_MODEL>
+    {%- endfor %}
+</{{key | upper}}>
+{%- endfor %}
+</PLATFORM>
