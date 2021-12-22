@@ -22,6 +22,16 @@ import tempfile
 from ena_upload._version import __version__
 
 
+class MyFTP_TLS(ftplib.FTP_TLS):
+    """Explicit FTPS, with shared TLS session"""
+    def ntransfercmd(self, cmd, rest=None):
+        conn, size = ftplib.FTP.ntransfercmd(self, cmd, rest)
+        if self._prot_p:
+            conn = self.context.wrap_socket(conn,
+                                            server_hostname=self.host,
+                                            session=self.sock.session)
+        return conn, size
+
 def create_dataframe(schema_tables, action):
     '''create pandas dataframe from the tables in schema_tables
        and return schema_dataframe
@@ -41,7 +51,8 @@ def create_dataframe(schema_tables, action):
 
     for schema, table in schema_tables.items():
         df = pd.read_csv(table, sep='\t', comment='#', dtype = str)
-        # checking for optional columns and if not present adding them
+        df = df.dropna(how='all')
+        # checking for optional columns and if not present, adding them
         if schema == 'sample':
             optional_columns = ['accession', 'submission_date', 'status', 'scientific_name', 'taxon_id']
         elif schema == 'run':
@@ -148,7 +159,10 @@ def generate_stream(schema, targets, Template, center, tool):
     if schema == 'run':
         # These attributes are required for rendering
         # the run xml templates
-        file_attrib = ['file_name', 'file_format', 'file_checksum']
+        # Adding backwards compatibility for file_format
+        if 'file_format' in targets:
+            targets.rename(columns={'file_format':'file_type'}, inplace=True)
+        file_attrib = ['file_name', 'file_type', 'file_checksum']
         other_attrib = ['alias', 'experiment_alias']
         run_groups = targets[other_attrib].groupby(targets['alias'])
         run_groups = run_groups.experiment_alias.unique()
@@ -343,22 +357,32 @@ def submit_data(file_paths, password, webin_id):
     :param file_paths: a dictionary of filename string and file_path string
     :param args: the command-line arguments parsed by ArgumentParser
     """
+    ftp_host = "webin2.ebi.ac.uk"
 
+    print("\nConnecting to ftp.webin2.ebi.ac.uk....")
     try:
-        print("\nConnecting to ftp.webin.ebi.ac.uk....")
-        ftp = ftplib.FTP("webin.ebi.ac.uk", webin_id, password)
+        ftps = MyFTP_TLS(timeout=10)
+        ftps.context.set_ciphers('DEFAULT@SECLEVEL=1')
+        ftps.connect(ftp_host, port=21)
+        ftps.auth()
+        ftps.login(webin_id, password)
+        ftps.prot_p()
+
     except IOError:
-        print(ftp.lastErrorText())
+        print(ftps.lastErrorText())
         print("ERROR: could not connect to the ftp server.\
                Please check your login details.")
-
     for filename, path in file_paths.items():
         print(f'uploading {path}')
-        ftp.storbinary(f'STOR {filename}', open(path, 'rb'))
-        msg = ftp.storbinary(f'STOR {filename}', open(path, 'rb'))
-        print(msg)
-
-    print(ftp.quit())
+        try:
+            ftps.storbinary(f'STOR {filename}', open(path, 'rb'))
+            msg = ftps.storbinary(f'STOR {filename}', open(path, 'rb'))
+            print(msg)
+        except BaseException as err:
+            print(f"ERROR: {err}")
+            print("ERROR: If your connection times out at this stage, it propably is because a firewall that is in place. FTP is used in passive mode and connection will be opened to one of the ports: 40000 and 50000.")
+            raise
+    print(ftps.quit())
 
 def columns_to_update(df):
     '''

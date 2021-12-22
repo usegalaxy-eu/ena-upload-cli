@@ -1,0 +1,9 @@
+<py:choose xmlns:py="http://genshi.edgewall.org/" test="">
+{%- for value in attributes %}
+<FILE py:when="row.file_type.lower().strip() == '{{value | lower}}'"
+                filename="${row.file_name}"
+                filetype="{{value}}"
+                checksum_method="MD5"
+                checksum="${row.file_checksum}"/>
+{%- endfor %}
+</py:choose>

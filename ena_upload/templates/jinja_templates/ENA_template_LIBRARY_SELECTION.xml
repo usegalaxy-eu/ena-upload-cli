@@ -1,0 +1,5 @@
+<py:choose xmlns:py="http://genshi.edgewall.org/" test="">
+{%- for value in attributes %}
+<LIBRARY_SELECTION py:when="row.library_selection.lower().strip() == '{{value | lower}}'">{{value}}</LIBRARY_SELECTION>
+{%- endfor %}
+</py:choose>

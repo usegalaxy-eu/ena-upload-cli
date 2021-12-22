@@ -7,9 +7,11 @@
 
 # ENA upload tool
 
-## About
+This command line tool (CLI) allows easy submission of experimental data and respective metadata to the European Nucleotide Archive (ENA) using tabular files. The supported metadata that can be submitted includes study, sample, run and experiment info so you can use the tool for programatic submission of everything ENA needs without the need of logging in to the Webin interface. This also includes client side validation using ENA checklists and releasing the ENA objects. This command line tool is also available as a [Galaxy tool](https://toolshed.g2.bx.psu.edu/view/iuc/ena_upload/4aab5ae907b6) and can be added to you own Galaxy instance or you can make use of one of the existing Galaxy instances, like [usegalaxy.eu](https://usegalaxy.eu/root?tool_id=toolshed.g2.bx.psu.edu/repos/iuc/ena_upload/ena_upload).
 
-The program submits experimental data and respective metadata to the European Nucleotide Archive (ENA). The metadata should be provided in separate tables corresponding to the following ENA objects:
+## Overview
+
+The metadata should be provided in separate tables corresponding to the following ENA objects:
 
 * STUDY
 * SAMPLE
@@ -76,7 +78,7 @@ Mandatory arguments: --action, --center and --secret.
 
 ### ENA Webin
 
-A Webin can be made [here](https://www.ebi.ac.uk/ena/submit/sra/#home) if you don't have one already. The *--webin_id* parameter makes use of the full username looking like: `Webin-XXXXX`. Visit [Webin online](https://www.ebi.ac.uk/ena/submit/webin) to check on your submissions or [dev Webin](https://wwwdev.ebi.ac.uk/ena/submit/webin) to check on test submissions.
+A Webin can be made [here](https://www.ebi.ac.uk/ena/submit/sra/#home) if you don't have one already. The Webin ID makes use of the full username looking like: `Webin-XXXXX`. Visit [Webin online](https://www.ebi.ac.uk/ena/submit/webin) to check on your submissions or [dev Webin](https://wwwdev.ebi.ac.uk/ena/submit/webin) to check on test submissions.
 
 ### The .secret.yml file
 
@@ -101,6 +103,53 @@ The command line tool will automatically fetch the correct scientific name based
 #### Viral submissions
 
 If you want to submit viral samples you can use the [ENA virus pathogen](https://www.ebi.ac.uk/ena/browser/view/ERC000033) checklist by adding `ERC000033` to the checklist parameter. Check out our [viral example command](#test-the-tool) as demonstration. Please use the [ENA virus pathogen](https://www.ebi.ac.uk/ena/browser/view/ERC000033) checklist on the website of ENA to know which values are allowed/possible in the `restricted text` and `text choice` fields.
+
+### ENA study, experiment and run tables
+
+Here we list all the possible columns one can have in its study, experiment or run table along with its cardinality and controlled vocabulary (CV).
+Currently we refer to the [ENA Webin](https://wwwdev.ebi.ac.uk/ena/submit/webin/) to discover which values are allowed when a controlled vocabulary is used, but this will change in the future.
+
+#### Study tsv table
+
+| Name of column | Cardinality | Documentation | CV |
+|---|---|---|---|
+| alias | mandatory | Submitter designated name for the object. The name must be unique within the submission account. |  |
+| title | mandatory | Title of the study as would be used in a publication. |  |
+| study_type | mandatory | The STUDY_TYPE presents a controlled vocabulary for expressing the overall purpose of the study. | yes |
+| study_abstract | mandatory | Briefly describes the goals, purpose, and scope of the Study.  This need not be listed if it can be inherited from a referenced publication. |  |
+| center_project_name | optional | Submitter defined project name.  This field is intended for backward tracking of the study record to the submitter's LIMS. |  |
+| study_description | optional | More extensive free-form description of the study. |  |
+| pubmed_id | optional | Link to publication related to this study. |  |
+
+#### Experiment tsv table
+
+| Name of column | Cardinality | Documentation | CV |
+|---|---|---|---|
+| alias | mandatory | Submitter designated name for the object. The name must be unique within the submission account. |  |
+| title | mandatory | Short text that can be used to call out experiment records in searches or in displays. |  |
+| study_alias | mandatory | Identifies the parent study. |  |
+| sample_alias | mandatory | Pick a sample to associate this experiment with. The sample may be an individual or a pool, depending on how it is specified. |  |
+| design_description | mandatory | Goal and setup of the individual library including library was constructed. |  |
+| spot_descriptor | optional | The SPOT_DESCRIPTOR specifies how to decode the individual reads of interest from the monolithic spot sequence. The spot descriptor contains aspects of the experimental design, platform, and processing information. There will be two methods of specification: one will be an index into a table of typical decodings, the other being an exact specification. This construct is needed for loading data and for interpreting the loaded runs. It can be omitted if the loader can infer read layout (from multiple input files or from one input files). |  |
+| library_name | mandatory | The submitter's name for this library. |  |
+| library_layout | mandatory | LIBRARY_LAYOUT specifies whether to expect single, paired, or other configuration of reads. In the case of paired reads, information about the relative distance and orientation is specified. | yes |
+| insert_size | mandatory | Relative distance. |  |
+| library_strategy | mandatory | Sequencing technique intended for this library | yes |
+| library_source | mandatory | The LIBRARY_SOURCE specifies the type of source material that is being sequenced. | yes |
+| library_selection | mandatory | Method used to enrich the target in the sequence library preparation | yes |
+| platform | mandatory | The PLATFORM record selects which sequencing platform and platform-specific runtime parameters. This will be determined by the Center. | yes |
+| library_construction_protocol | optional | Free form text describing the protocol by which the sequencing library was constructed. |  |
+
+
+#### Run tsv table
+
+| Name of column | Cardinality | Documentation | CV |
+|---|---|---|---|
+| alias | mandatory | Submitter designated name for the object. The name must be unique within the submission account. |  |
+| experiment_alias | mandatory | Identifies the parent experiment. |  |
+| file_name | mandatory | The name or relative pathname of a run data file. |  |
+| file_type | mandatory | The run data file model. | yes |
+| file_checksum | optional | Checksum of uncompressed file. If not given, the checksum will be calculated based on the data files specified in the --data option |  |
 
 
 ### Dev instance
