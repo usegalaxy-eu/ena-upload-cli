@@ -20,6 +20,7 @@ from lxml import etree
 import pandas as pd
 import tempfile
 from ena_upload._version import __version__
+from process_xlsx import parse_xlsx_to_pandas
 
 
 class MyFTP_TLS(ftplib.FTP_TLS):
