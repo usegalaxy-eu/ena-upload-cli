@@ -45,7 +45,7 @@ def main():
         xml_tree = {}
 
         # Loading templates directory
-        file_loader = FileSystemLoader('ena_upload/templates')
+        file_loader = FileSystemLoader('ena_upload/templates/jinja_templates')
         env = Environment(loader=file_loader)
 
         # Parsing XML

@@ -25,6 +25,7 @@ from process_xlsx import parse_xlsx_to_pandas
 
 class MyFTP_TLS(ftplib.FTP_TLS):
     """Explicit FTPS, with shared TLS session"""
+
     def ntransfercmd(self, cmd, rest=None):
         conn, size = ftplib.FTP.ntransfercmd(self, cmd, rest)
         if self._prot_p:
@@ -32,6 +33,7 @@ class MyFTP_TLS(ftplib.FTP_TLS):
                                             server_hostname=self.host,
                                             session=self.sock.session)
         return conn, size
+
 
 def create_dataframe(schema_tables, action):
     '''create pandas dataframe from the tables in schema_tables
@@ -51,13 +53,15 @@ def create_dataframe(schema_tables, action):
     schema_dataframe = {}
 
     for schema, table in schema_tables.items():
-        df = pd.read_csv(table, sep='\t', comment='#', dtype = str)
+        df = pd.read_csv(table, sep='\t', comment='#', dtype=str)
         df = df.dropna(how='all')
         # checking for optional columns and if not present, adding them
         if schema == 'sample':
-            optional_columns = ['accession', 'submission_date', 'status', 'scientific_name', 'taxon_id']
+            optional_columns = ['accession', 'submission_date',
+                                'status', 'scientific_name', 'taxon_id']
         elif schema == 'run':
-            optional_columns = ['accession', 'submission_date', 'status', 'file_checksum']
+            optional_columns = ['accession',
+                                'submission_date', 'status', 'file_checksum']
         else:
             optional_columns = ['accession', 'submission_date', 'status']
         for header in optional_columns:
@@ -162,7 +166,7 @@ def generate_stream(schema, targets, Template, center, tool):
         # the run xml templates
         # Adding backwards compatibility for file_format
         if 'file_format' in targets:
-            targets.rename(columns={'file_format':'file_type'}, inplace=True)
+            targets.rename(columns={'file_format': 'file_type'}, inplace=True)
         file_attrib = ['file_name', 'file_type', 'file_checksum']
         other_attrib = ['alias', 'experiment_alias']
         run_groups = targets[other_attrib].groupby(targets['alias'])
@@ -312,6 +316,7 @@ def get_md5(filepath):
 
     return md5sum.hexdigest()
 
+
 def get_taxon_id(scientific_name):
     """Get taxon ID for input scientific_name.
 
@@ -332,6 +337,7 @@ def get_taxon_id(scientific_name):
     except ValueError:
         msg = f'Oops, no taxon ID avaible for {scientific_name}. Is it a valid scientific name?'
         sys.exit(msg)
+
 
 def get_scientific_name(taxon_id):
     """Get scientific name for input taxon_id.
@@ -363,27 +369,27 @@ def submit_data(file_paths, password, webin_id):
     print("\nConnecting to ftp.webin2.ebi.ac.uk....")
     try:
         ftps = MyFTP_TLS(timeout=10)
-        ftps.context.set_ciphers('DEFAULT@SECLEVEL=1')
+        ftps.context.set_ciphers('HIGH:!DH:!aNULL')
         ftps.connect(ftp_host, port=21)
         ftps.auth()
         ftps.login(webin_id, password)
         ftps.prot_p()
 
-    except IOError:
-        print(ftps.lastErrorText())
+    except IOError as ioe:
+        print(ioe)
         print("ERROR: could not connect to the ftp server.\
                Please check your login details.")
+        sys.exit()
     for filename, path in file_paths.items():
         print(f'uploading {path}')
         try:
-            ftps.storbinary(f'STOR {filename}', open(path, 'rb'))
-            msg = ftps.storbinary(f'STOR {filename}', open(path, 'rb'))
-            print(msg)
+            print(ftps.storbinary(f'STOR {filename}', open(path, 'rb')))
         except BaseException as err:
             print(f"ERROR: {err}")
-            print("ERROR: If your connection times out at this stage, it propably is because a firewall that is in place. FTP is used in passive mode and connection will be opened to one of the ports: 40000 and 50000.")
+            print("ERROR: If your connection times out at this stage, it propably is because of a firewall that is in place. FTP is used in passive mode and connection will be opened to one of the ports: 40000 and 50000.")
             raise
     print(ftps.quit())
+
 
 def columns_to_update(df):
     '''
@@ -497,12 +503,12 @@ def process_receipt(receipt, action):
             if match and match.group(1) in receipt_info:
                 receipt_info[match.group(1)].append(match.group(2))
             elif match and match.group(1) not in receipt_info:
-                receipt_info[match.group(1)]= [match.group(2)]
+                receipt_info[match.group(1)] = [match.group(2)]
         for ena_type, accessions in receipt_info.items():
             print(f"\n{ena_type.capitalize()} accession details:")
             update_list = []
             for accession in accessions:
-                extract = ( accession, receiptDate, status[action])
+                extract = (accession, receiptDate, status[action])
                 update_list.append(extract)
                 print("\t".join(extract))
 
@@ -559,7 +565,8 @@ def update_table(schema_dataframe, schema_targets, schema_update):
 
     return schema_dataframe
 
-def update_table_simple (schema_dataframe, schema_targets, action):
+
+def update_table_simple(schema_dataframe, schema_targets, action):
     """Update schema_dataframe with info in schema_targets.
 
     :param schema_dataframe: a dictionary - {schema:dataframe}
@@ -781,7 +788,8 @@ def main():
     schema_targets = extract_targets(action, schema_dataframe)
 
     if not schema_targets:
-        sys.exit(f"There is no table submitted having at least one row with {action} as action in the status column.")
+        sys.exit(
+            f"There is no table submitted having at least one row with {action} as action in the status column.")
 
     if action == 'ADD':
         # when adding run object
@@ -790,9 +798,9 @@ def main():
         if 'run' in schema_targets:
             # a dictionary of filename:file_path
             df = schema_targets['run']
-               
+
             file_paths = {os.path.basename(path): os.path.abspath(path)
-                                                for path in args.data}
+                          for path in args.data}
             # check if file names identical between command line and table
             # if not, system exits
             check_filenames(file_paths, df)
@@ -815,12 +823,13 @@ def main():
 
             # submit data to webin ftp server
             if args.no_data_upload:
-                print("No files will be uploaded, remove `--no_data_upload' argument to perform upload.")
+                print(
+                    "No files will be uploaded, remove `--no_data_upload' argument to perform upload.")
             elif draft:
-                print("No files will be uploaded, remove `--draft' argument to perform upload.")
+                print(
+                    "No files will be uploaded, remove `--draft' argument to perform upload.")
             else:
                 submit_data(file_paths, password, webin_id)
-                  
 
         # when adding sample
         # update schema_targets with taxon ids or scientific names
@@ -837,7 +846,8 @@ def main():
                     scientificName = get_scientific_name(row['taxon_id'])
                     df.loc[index, 'scientific_name'] = scientificName
                 elif pd.isna(row['taxon_id']) and pd.isna(row['scientific_name']):
-                    sys.exit(f"No taxon_id or scientific_name was given with sample {row['alias']}.")
+                    sys.exit(
+                        f"No taxon_id or scientific_name was given with sample {row['alias']}.")
             print('Taxon IDs and scientific names are retrieved')
             schema_targets['sample'] = df
 
@@ -893,8 +903,8 @@ def main():
             save_update(schema_tables, schema_dataframe)
         elif action in ['CANCEL', 'RELEASE']:
             schema_dataframe = update_table_simple(schema_dataframe,
-                                            schema_targets,
-                                            action)
+                                                   schema_targets,
+                                                   action)
             # save updates in new tables
             save_update(schema_tables, schema_dataframe)
 
