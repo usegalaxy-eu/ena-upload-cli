@@ -19,7 +19,7 @@ from genshi.template import TemplateLoader
 from lxml import etree
 import pandas as pd
 import tempfile
-__version__ = "test"
+from ena_upload._version import __version__
 
 
 class MyFTP_TLS(ftplib.FTP_TLS):
