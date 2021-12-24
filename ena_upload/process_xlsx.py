@@ -97,7 +97,7 @@ def paste_xls2yaml(xlsx_path):
     print('YAML -------------')
 
 
-def get_sample_row_values(sample_alias, sample, dev_submission, action, viral_submission, samples_optional_cols_loaded):
+def get_sample_row_values(sample_alias, sample, dev_submission, action, samples_optional_cols_loaded):
     if dev_submission:
         entry_action = action
     else:
@@ -106,7 +106,6 @@ def get_sample_row_values(sample_alias, sample, dev_submission, action, viral_su
                           sample['sample_description'], entry_action, 'ena_accession',
                           '', 'ENA_submission_date']
     if viral_submission:
-        # add the values that are unique for the viral samples
         if sample['collector name'] == '':
             sample['collector name'] = 'unknown'
         samples_row_values = samples_row_values + \
@@ -147,7 +146,7 @@ def get_sample_row_values(sample_alias, sample, dev_submission, action, viral_su
     return samples_row_values
 
 
-def parse_xlsx_to_pandas(xlsx_path, dev_submission, viral_submission, action):
+def parse_xlsx_to_pandas(xlsx_path, dev_submission, action):
 
     import pandas as pd
     xl_workbook = xlrd.open_workbook(xlsx_path)
@@ -185,17 +184,13 @@ def parse_xlsx_to_pandas(xlsx_path, dev_submission, viral_submission, action):
                              study['study_type'], study['study_abstract'], '',
                              'ENA_submission_data'])
 
-    if viral_submission:
-        samples_list = [SAMPLES_HEADERS_VIRAL]
-    else:
-        samples_list = [SAMPLES_HEADERS]
+    samples_list = [SAMPLES_HEADERS]
     experiments_list = [EXPERIMENTS_HEADERS]
     runs_rows_list = [RUN_TABLE_HEADERS]
     runs_included = []
     exp_included = []
     for sample_alias, sample in samples_dict.items():
-        samples_row_values = get_sample_row_values(sample_alias, sample, dev_submission, action,
-                                                   viral_submission, samples_optional_cols_loaded)
+        samples_row_values = get_sample_row_values(sample_alias, sample, dev_submission, action, samples_optional_cols_loaded)
         samples_list.append(samples_row_values)
         for exp_alias, exp in experiments_dict.items():
             # process the experiments for this sample
