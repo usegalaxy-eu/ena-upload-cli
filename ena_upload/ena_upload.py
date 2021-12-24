@@ -680,6 +680,8 @@ def process_args():
 
     parser.add_argument('--checklist', help="specify the sample checklist with following pattern: ERC0000XX, Default: ERC000011", dest='checklist',
                         default='ERC000011')
+    parser.add_argument('--xlsx',
+                        help='Excel table with metadata')
 
     parser.add_argument('--tool',
                         dest='tool_name',
@@ -761,6 +763,7 @@ def main():
     checklist = args.checklist
     secret = args.secret
     draft = args.draft
+    xlsx = args.xlsx
 
     with open(secret, 'r') as secret_file:
         credentials = yaml.load(secret_file, Loader=yaml.FullLoader)
@@ -773,11 +776,17 @@ def main():
             f"Oops, file {args.secret} does not contain a password or username")
     secret_file.close()
 
-    # collect the schema with table input from command-line
-    schema_tables = collect_tables(args)
+    if xlsx:
+        # create dataframe from xlsx table
+        schema_dataframe = parse_xlsx_to_pandas(xlsx, dev, action)
+        # TO DO: Create data table equivalent 
+        schema_tables = ""
+    else:
+        # collect the schema with table input from command-line
+        schema_tables = collect_tables(args)
 
-    # create dataframe from table
-    schema_dataframe = create_dataframe(schema_tables, action)
+        # create dataframe from table
+        schema_dataframe = create_dataframe(schema_tables, action)
 
     # ? add a function to sanitize characters
     # ? print 'validate table for specific action'
