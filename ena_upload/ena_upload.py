@@ -368,10 +368,6 @@ def submit_data(file_paths, password, webin_id):
     print("\nConnecting to ftp.webin2.ebi.ac.uk....")
     try:
         ftps = MyFTP_TLS(timeout=10)
-        ciphers = []
-        for cipher in ftps.context.get_ciphers():
-            ciphers.append(cipher['name'])
-        ftps.context.set_ciphers(':'.join(ciphers))
         ftps.context.set_ciphers('HIGH:!DH:!aNULL')
         ftps.connect(ftp_host, port=21)
         ftps.auth()
