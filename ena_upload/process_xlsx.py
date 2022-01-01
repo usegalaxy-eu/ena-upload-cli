@@ -1,5 +1,4 @@
 import sys
-
 import xlrd
 import yaml
 from check_remote import check_remote_entry
