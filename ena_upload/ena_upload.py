@@ -686,7 +686,7 @@ def process_args():
                         default='ERC000011')
     
     parser.add_argument('--xlsx',
-                        help='Excel table with metadata')
+                        help='excel table with metadata')
     
     parser.add_argument('--tool',
                         dest='tool_name',
