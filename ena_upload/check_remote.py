@@ -4,7 +4,7 @@ import requests
 URL = "https://www.ebi.ac.uk/ena/portal/api/search"
 
 def identify_action(entry_type, alias):
-    ''' define action ['add' | 'modify'] that needs to be perfomed for this entry '''
+    ''' define action ['add' | 'modify'] that needs to be performed for this entry '''
     query = {entry_type + '_alias': alias}
     remote_accessions = check_remote_entry(entry_type, query)
     if isinstance(remote_accessions, list) and len(remote_accessions) > 0:

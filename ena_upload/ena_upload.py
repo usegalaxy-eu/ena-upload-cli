@@ -20,7 +20,7 @@ from lxml import etree
 import pandas as pd
 import tempfile
 from _version import __version__
-from check_remote import check_remote_entry
+from check_remote import identify_action
 
 SCHEMA_TYPES = ['study', 'experiment', 'run', 'sample']
 
@@ -81,7 +81,7 @@ def extract_targets(action, schema_dataframe):
     return schema_targets
 
 
-def check_columns(df, schema, action):
+def check_columns(df, schema, action, dev=False, auto_action=False):
     # checking for optional columns and if not present, adding them
     if schema == 'sample':
         optional_columns = ['accession', 'submission_date',
@@ -91,16 +91,20 @@ def check_columns(df, schema, action):
                             'submission_date', 'status', 'file_checksum']
     else:
         optional_columns = ['accession', 'submission_date', 'status']
+
     for header in optional_columns:
         if not header in df.columns:
             if header == 'status':
-                df[header] = action.lower()
+                if auto_action and not dev:
+                    for index, row in df.iterrows():
+                        df[header][index] = str(identify_action(schema, str(df['alias'][index]))).upper()
+                else:
+                    # status column contain action keywords
+                    # for xml rendering, keywords require uppercase
+                    # according to scheme definition of submission
+                    df[header] = str(action).upper()
             else:
                 df[header] = np.nan
-    # status column contain action keywords
-    # for xml rendering, keywords require uppercase
-    # according to scheme definition of submission
-    df['status'] = df['status'].str.upper()
 
     return df
 
@@ -731,9 +735,15 @@ def process_args():
         if not os.path.isfile(args.secret):
             msg = f"Oops, the file {args.secret} does not exist"
             parser.error(msg)
+    
+    # check if xlsx file exists
+    if args.xlsx:
+        if not os.path.isfile(args.xlsx):
+            msg = f"Oops, the file {args.xlsx} does not exist"
+            parser.error(msg)
 
     # check if data is given when adding a 'run' table
-    if args.action == 'add' and args.run is not None:
+    if (not args.no_data_upload and args.run) or (not args.no_data_upload and args.xlsx):
         if args.data is None:
             parser.error('Oops, requires data for submitting RUN object')
 
@@ -800,9 +810,8 @@ def main():
         # create dataframe from xlsx table
         xl_workbook = pd.ExcelFile(xlsx)
         schema_dataframe = {}  # load the parsed data in a dict: sheet_name -> pandas_frame
+        schema_tables = {}
 
-        # PARSING SCHEMAS
-        #################
         for schema in SCHEMA_TYPES:
             xl_sheet = xl_workbook.parse(schema, header=0)
             xl_sheet = xl_sheet.drop(0).dropna(how='all')
@@ -813,8 +822,10 @@ def main():
             if True in xl_sheet.columns.duplicated():
                 sys.exit("Duplicated columns found")
 
-            xl_sheet = check_columns(xl_sheet, schema, action)
+            xl_sheet = check_columns(xl_sheet, schema, action, dev, auto_action)
             schema_dataframe[schema] = xl_sheet
+            path = os.path.dirname(os.path.abspath(xlsx))
+            schema_tables[schema] = f"{path}/ENA_template_{schema}.tsv"
     else:
         # collect the schema with table input from command-line
         schema_tables = collect_tables(args)
