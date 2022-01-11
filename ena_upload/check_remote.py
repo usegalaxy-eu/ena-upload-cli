@@ -1,8 +1,18 @@
 import json
-
 import requests
 
 URL = "https://www.ebi.ac.uk/ena/portal/api/search"
+
+def identify_action(entry_type, alias):
+    ''' define action ['add' | 'modify'] that needs to be perfomed for this entry '''
+    query = {entry_type + '_alias': alias}
+    remote_accessions = check_remote_entry(entry_type, query)
+    if isinstance(remote_accessions, list) and len(remote_accessions) > 0:
+        print(f'Found: {entry_type} entry with alias {alias}')
+        return 'modify'
+    else:
+        print(f'No {entry_type} entry found with alias {alias}')
+        return 'add'
 
 
 def check_remote_entry(entry_type, query_dict, out_format='json'):
