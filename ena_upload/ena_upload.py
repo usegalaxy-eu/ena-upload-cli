@@ -19,8 +19,7 @@ from genshi.template import TemplateLoader
 from lxml import etree
 import pandas as pd
 import tempfile
-from _version import __version__
-from check_remote import identify_action
+from ena_upload._version import __version__
 
 SCHEMA_TYPES = ['study', 'experiment', 'run', 'sample']
 
@@ -81,7 +80,7 @@ def extract_targets(action, schema_dataframe):
     return schema_targets
 
 
-def check_columns(df, schema, action, dev=False, auto_action=False):
+def check_columns(df, schema, action):
     # checking for optional columns and if not present, adding them
     if schema == 'sample':
         optional_columns = ['accession', 'submission_date',
@@ -95,14 +94,10 @@ def check_columns(df, schema, action, dev=False, auto_action=False):
     for header in optional_columns:
         if not header in df.columns:
             if header == 'status':
-                if auto_action and not dev:
-                    for index, row in df.iterrows():
-                        df[header][index] = str(identify_action(schema, str(df['alias'][index]))).upper()
-                else:
-                    # status column contain action keywords
-                    # for xml rendering, keywords require uppercase
-                    # according to scheme definition of submission
-                    df[header] = str(action).upper()
+                # status column contain action keywords
+                # for xml rendering, keywords require uppercase
+                # according to scheme definition of submission
+                df[header] = str(action).upper()
             else:
                 df[header] = np.nan
 
@@ -693,9 +688,6 @@ def process_args():
     parser.add_argument('--xlsx',
                         help='Excel table with metadata')
     
-    parser.add_argument('--auto_action',
-                        help='detect automatically which action (add or modify) to apply when the action column is not given')
-
     parser.add_argument('--tool',
                         dest='tool_name',
                         default='ena-upload-cli',
@@ -793,7 +785,6 @@ def main():
     secret = args.secret
     draft = args.draft
     xlsx = args.xlsx
-    auto_action = args.auto_action
 
     with open(secret, 'r') as secret_file:
         credentials = yaml.load(secret_file, Loader=yaml.FullLoader)
@@ -822,7 +813,7 @@ def main():
             if True in xl_sheet.columns.duplicated():
                 sys.exit("Duplicated columns found")
 
-            xl_sheet = check_columns(xl_sheet, schema, action, dev, auto_action)
+            xl_sheet = check_columns(xl_sheet, schema, action)
             schema_dataframe[schema] = xl_sheet
             path = os.path.dirname(os.path.abspath(xlsx))
             schema_tables[schema] = f"{path}/ENA_template_{schema}.tsv"
