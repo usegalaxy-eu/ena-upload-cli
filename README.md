@@ -7,7 +7,7 @@
 
 # ENA upload tool
 
-This command line tool (CLI) allows easy submission of experimental data and respective metadata to the European Nucleotide Archive (ENA) using tabular files. The supported metadata that can be submitted includes study, sample, run and experiment info so you can use the tool for programatic submission of everything ENA needs without the need of logging in to the Webin interface. This also includes client side validation using ENA checklists and releasing the ENA objects. This command line tool is also available as a [Galaxy tool](https://toolshed.g2.bx.psu.edu/view/iuc/ena_upload/4aab5ae907b6) and can be added to you own Galaxy instance or you can make use of one of the existing Galaxy instances, like [usegalaxy.eu](https://usegalaxy.eu/root?tool_id=toolshed.g2.bx.psu.edu/repos/iuc/ena_upload/ena_upload).
+This command line tool (CLI) allows easy submission of experimental data and respective metadata to the European Nucleotide Archive (ENA) using tabular files of one of the excel spreadsheet that can be found on this [template repo](https://github.com/ELIXIR-Belgium/ENA-metadata-templates). The supported metadata that can be submitted includes study, sample, run and experiment info so you can use the tool for programatic submission of everything ENA needs without the need of logging in to the Webin interface. This also includes client side validation using ENA checklists and releasing the ENA objects. This command line tool is also available as a [Galaxy tool](https://toolshed.g2.bx.psu.edu/view/iuc/ena_upload/4aab5ae907b6) and can be added to you own Galaxy instance or you can make use of one of the existing Galaxy instances, like [usegalaxy.eu](https://usegalaxy.eu/root?tool_id=toolshed.g2.bx.psu.edu/repos/iuc/ena_upload/ena_upload).
 
 ## Overview
 
@@ -60,15 +60,16 @@ All supported arguments:
   --experiment EXPERIMENT
                         table of EXPERIMENT object
   --run RUN             table of RUN object
-  --data [FILE [FILE ...]]
-                        data for submission
+  --data [FILE ...]     data for submission
   --center CENTER_NAME  specific to your Webin account
   --checklist CHECKLIST
                         specify the sample checklist with following pattern: ERC0000XX, Default: ERC000011
+  --xlsx XLSX           Excel table with metadata
   --tool TOOL_NAME      specify the name of the tool this submission is done with. Default: ena-upload-cli
   --tool_version TOOL_VERSION
                         specify the version of the tool this submission is done with
-  --no_data_upload      indicate if no upload should be performed and you like to submit a RUN object (e.g. if uploaded was done separately).
+  --no_data_upload      indicate if no upload should be performed and you like to submit a RUN object (e.g. if uploaded     
+                        was done separately).
   --draft               indicate if no submission should be performed
   --secret SECRET       .secret.yml file containing the password and Webin ID of your ENA account
   -d, --dev             flag to use the dev/sandbox endpoint of ENA
@@ -172,6 +173,11 @@ Optionally you can add a status column to every table that contains the action y
 
 > IMPORTANT: if the status column is given but not filled in, or filled in with a different action from the one in the `--action` parameter, not rows will be submitted! Either leave out the column or add to every row the corect action.
 
+
+### Using Excel templates
+
+We also support the use of specific excel templates, designed for each sample checklist. Use the `--xlsx` command to add the path to an excel template file filled in from this [template repo](https://github.com/ELIXIR-Belgium/ENA-metadata-templates). 
+
 ### The data files
 
 **Supported data**
@@ -206,8 +212,8 @@ By default the updated tables after submission will have the action `added` in t
 ## Tool overview
 
 **inputs**:
-* metadata tables
-  * examples in `example_table`
+* metadata tables/excelsheet
+  * examples in `example_table` and on this [template repo](https://github.com/ELIXIR-Belgium/ENA-metadata-templates) for excel sheets
   * (optional) define actions in **status** column e.g. `add`, `modify`, `cancel`, `release` (when not given the whole table is submitted)
   * to perform bulk submission of all objects, the `aliases ids` in different ENA objects should be in the association where alias ids in experiment object link all objects together
 * experimental data
@@ -246,6 +252,11 @@ By default the updated tables after submission will have the action `added` in t
 * **viral data**
   ```
   ena-upload-cli --action add --center 'your_center_name' --study example_tables/ENA_template_studies.tsv --sample example_tables/ENA_template_samples_vir.tsv --experiment example_tables/ENA_template_experiments.tsv --run example_tables/ENA_template_runs.tsv --data example_data/*gz --dev --checklist ERC000033 --secret .secret.yml
+  ```
+
+* **Using an Excel template**
+  ```
+  ena-upload-cli --action add --center 'your_center_name' --data example_data/*gz --dev --checklist ERC000033 --secret .secret.yml --xlsx example_tables/ENA_excel_example_ERC000033.xlsx 
   ```
 
 * **release submission**

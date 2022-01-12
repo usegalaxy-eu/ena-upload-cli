@@ -21,6 +21,8 @@ import pandas as pd
 import tempfile
 from ena_upload._version import __version__
 
+SCHEMA_TYPES = ['study', 'experiment', 'run', 'sample']
+
 
 class MyFTP_TLS(ftplib.FTP_TLS):
     """Explicit FTPS, with shared TLS session"""
@@ -47,32 +49,12 @@ def create_dataframe(schema_tables, action):
                           dataframe -- pandas dataframe
     '''
 
-    # ? would it be good to use alias to index rows?
-
     schema_dataframe = {}
 
     for schema, table in schema_tables.items():
         df = pd.read_csv(table, sep='\t', comment='#', dtype=str)
         df = df.dropna(how='all')
-        # checking for optional columns and if not present, adding them
-        if schema == 'sample':
-            optional_columns = ['accession', 'submission_date',
-                                'status', 'scientific_name', 'taxon_id']
-        elif schema == 'run':
-            optional_columns = ['accession',
-                                'submission_date', 'status', 'file_checksum']
-        else:
-            optional_columns = ['accession', 'submission_date', 'status']
-        for header in optional_columns:
-            if not header in df.columns:
-                if header == 'status':
-                    df[header] = action.lower()
-                else:
-                    df[header] = np.nan
-        # status column contain action keywords
-        # for xml rendering, keywords require uppercase
-        # according to scheme definition of submission
-        df['status'] = df['status'].str.upper()
+        df = check_columns(df, schema, action)
         schema_dataframe[schema] = df
 
     return schema_dataframe
@@ -97,6 +79,29 @@ def extract_targets(action, schema_dataframe):
 
     return schema_targets
 
+
+def check_columns(df, schema, action):
+    # checking for optional columns and if not present, adding them
+    if schema == 'sample':
+        optional_columns = ['accession', 'submission_date',
+                            'status', 'scientific_name', 'taxon_id']
+    elif schema == 'run':
+        optional_columns = ['accession',
+                            'submission_date', 'status', 'file_checksum']
+    else:
+        optional_columns = ['accession', 'submission_date', 'status']
+
+    for header in optional_columns:
+        if not header in df.columns:
+            if header == 'status':
+                # status column contain action keywords
+                # for xml rendering, keywords require uppercase
+                # according to scheme definition of submission
+                df[header] = str(action).upper()
+            else:
+                df[header] = np.nan
+
+    return df
 
 def check_filenames(file_paths, run_df):
     """Compare data filenames from command line and from RUN table.
@@ -679,7 +684,10 @@ def process_args():
 
     parser.add_argument('--checklist', help="specify the sample checklist with following pattern: ERC0000XX, Default: ERC000011", dest='checklist',
                         default='ERC000011')
-
+    
+    parser.add_argument('--xlsx',
+                        help='excel table with metadata')
+    
     parser.add_argument('--tool',
                         dest='tool_name',
                         default='ena-upload-cli',
@@ -711,7 +719,7 @@ def process_args():
 
     # check if any table is given
     tables = set([args.study, args.sample, args.experiment, args.run])
-    if tables == {None}:
+    if tables == {None} and not args.xlsx:
         parser.error('Requires at least one table for submission')
 
     # check if .secret file exists
@@ -719,9 +727,15 @@ def process_args():
         if not os.path.isfile(args.secret):
             msg = f"Oops, the file {args.secret} does not exist"
             parser.error(msg)
+    
+    # check if xlsx file exists
+    if args.xlsx:
+        if not os.path.isfile(args.xlsx):
+            msg = f"Oops, the file {args.xlsx} does not exist"
+            parser.error(msg)
 
     # check if data is given when adding a 'run' table
-    if args.action == 'add' and args.run is not None:
+    if (not args.no_data_upload and args.run) or (not args.no_data_upload and args.xlsx):
         if args.data is None:
             parser.error('Oops, requires data for submitting RUN object')
 
@@ -750,6 +764,16 @@ def collect_tables(args):
 
     return schema_tables
 
+def update_date(date):
+    if pd.isnull(date) or isinstance(date, str):
+        return date
+    try:
+        return date.strftime('%Y-%m-%d')
+    except AttributeError:
+        return date
+    except Exception:
+        raise
+
 
 def main():
     args = process_args()
@@ -760,6 +784,7 @@ def main():
     checklist = args.checklist
     secret = args.secret
     draft = args.draft
+    xlsx = args.xlsx
 
     with open(secret, 'r') as secret_file:
         credentials = yaml.load(secret_file, Loader=yaml.FullLoader)
@@ -772,11 +797,32 @@ def main():
             f"Oops, file {args.secret} does not contain a password or username")
     secret_file.close()
 
-    # collect the schema with table input from command-line
-    schema_tables = collect_tables(args)
+    if xlsx:
+        # create dataframe from xlsx table
+        xl_workbook = pd.ExcelFile(xlsx)
+        schema_dataframe = {}  # load the parsed data in a dict: sheet_name -> pandas_frame
+        schema_tables = {}
 
-    # create dataframe from table
-    schema_dataframe = create_dataframe(schema_tables, action)
+        for schema in SCHEMA_TYPES:
+            xl_sheet = xl_workbook.parse(schema, header=0)
+            xl_sheet = xl_sheet.drop(0).dropna(how='all')
+            for column_name in list(xl_sheet.columns.values):
+                if 'date' in column_name:
+                    xl_sheet[column_name] = xl_sheet[column_name].apply(update_date)
+
+            if True in xl_sheet.columns.duplicated():
+                sys.exit("Duplicated columns found")
+
+            xl_sheet = check_columns(xl_sheet, schema, action)
+            schema_dataframe[schema] = xl_sheet
+            path = os.path.dirname(os.path.abspath(xlsx))
+            schema_tables[schema] = f"{path}/ENA_template_{schema}.tsv"
+    else:
+        # collect the schema with table input from command-line
+        schema_tables = collect_tables(args)
+
+        # create dataframe from table
+        schema_dataframe = create_dataframe(schema_tables, action)
 
     # ? add a function to sanitize characters
     # ? print 'validate table for specific action'
@@ -797,15 +843,16 @@ def main():
         if 'run' in schema_targets:
             # a dictionary of filename:file_path
             df = schema_targets['run']
-
-            file_paths = {os.path.basename(path): os.path.abspath(path)
-                          for path in args.data}
-            # check if file names identical between command line and table
-            # if not, system exits
-            check_filenames(file_paths, df)
-
+            file_paths = {}
+            if args.data:
+                for path in args.data:
+                    file_paths[os.path.basename(path)] =  os.path.abspath(path) 
+                # check if file names identical between command line and table
+                # if not, system exits
+                check_filenames(file_paths, df)
+            
             # generate MD5 sum if not supplied in table
-            if not check_file_checksum(df):
+            if file_paths and not check_file_checksum(df):
                 print("No valid checksums found, generate now...", end=" ")
                 file_md5 = {filename: get_md5(path) for filename, path
                             in file_paths.items()}
@@ -817,6 +864,10 @@ def main():
                 pd.options.mode.chained_assignment = None
                 df.loc[:, 'file_checksum'] = md5
                 print("done.")
+            elif check_file_checksum(df):
+                print("Valid checksums found", end=" ")
+            else:
+                sys.exit("No valid checksums found and no files given to generate checksum from. Please list the files using the --data option or specify the checksums in the run-table when the data is uploaded separately.")
 
             schema_targets['run'] = df
 
