@@ -696,6 +696,8 @@ def process_args():
                         help='Excel table with metadata')
     
     parser.add_argument('--auto_action',
+                        action="store_true",
+                        default=False,
                         help='detect automatically which action (add or modify) to apply when the action column is not given')
 
     parser.add_argument('--tool',
@@ -745,7 +747,7 @@ def process_args():
             parser.error(msg)
 
     # check if data is given when adding a 'run' table
-    if (not args.no_data_upload and args.run) or (not args.no_data_upload and args.xlsx):
+    if (not args.no_data_upload and args.run and args.action not in ['release','cancel']) or (not args.no_data_upload and args.xlsx and args.action not in ['release','cancel']):
         if args.data is None:
             parser.error('Oops, requires data for submitting RUN object')
 
