@@ -738,7 +738,7 @@ def process_args():
             parser.error(msg)
 
     # check if data is given when adding a 'run' table
-    if (not args.no_data_upload and args.run and args.action.upper() not in ['RELEASE','CANCEL']) or (not args.no_data_upload and args.xlsx and args.action not in ['RELEASE','CANCEL']):
+    if (not args.no_data_upload and args.run and args.action.upper() not in ['RELEASE','CANCEL']) or (not args.no_data_upload and args.xlsx and args.action.upper() not in ['RELEASE','CANCEL']):
         if args.data is None:
             parser.error('Oops, requires data for submitting RUN object')
 
