@@ -19,7 +19,8 @@ from genshi.template import TemplateLoader
 from lxml import etree
 import pandas as pd
 import tempfile
-from ena_upload._version import __version__
+__version__ = "test"
+from check_remote import identify_action
 
 SCHEMA_TYPES = ['study', 'experiment', 'run', 'sample']
 
@@ -36,7 +37,7 @@ class MyFTP_TLS(ftplib.FTP_TLS):
         return conn, size
 
 
-def create_dataframe(schema_tables, action):
+def create_dataframe(schema_tables, action, dev, auto_action):
     '''create pandas dataframe from the tables in schema_tables
        and return schema_dataframe
 
@@ -54,7 +55,7 @@ def create_dataframe(schema_tables, action):
     for schema, table in schema_tables.items():
         df = pd.read_csv(table, sep='\t', comment='#', dtype=str)
         df = df.dropna(how='all')
-        df = check_columns(df, schema, action)
+        df = check_columns(df, schema, action, dev, auto_action)
         schema_dataframe[schema] = df
 
     return schema_dataframe
@@ -80,7 +81,7 @@ def extract_targets(action, schema_dataframe):
     return schema_targets
 
 
-def check_columns(df, schema, action):
+def check_columns(df, schema, action, dev, auto_action):
     # checking for optional columns and if not present, adding them
     if schema == 'sample':
         optional_columns = ['accession', 'submission_date',
@@ -94,10 +95,16 @@ def check_columns(df, schema, action):
     for header in optional_columns:
         if not header in df.columns:
             if header == 'status':
-                # status column contain action keywords
-                # for xml rendering, keywords require uppercase
-                # according to scheme definition of submission
-                df[header] = str(action).upper()
+                if auto_action:
+                    print("Using the ENA API to detect whether an alias already exits or not.")
+                    for index, row in df.iterrows():
+                        df[header][index] = str(identify_action(schema, str(df['alias'][index]), dev)).upper()
+                    print("Done")
+                else:
+                    # status column contain action keywords
+                    # for xml rendering, keywords require uppercase
+                    # according to scheme definition of submission
+                    df[header] = str(action).upper()
             else:
                 df[header] = np.nan
 
@@ -686,8 +693,11 @@ def process_args():
                         default='ERC000011')
     
     parser.add_argument('--xlsx',
-                        help='excel table with metadata')
+                        help='Excel table with metadata')
     
+    parser.add_argument('--auto_action',
+                        help='detect automatically which action (add or modify) to apply when the action column is not given')
+
     parser.add_argument('--tool',
                         dest='tool_name',
                         default='ena-upload-cli',
@@ -785,6 +795,7 @@ def main():
     secret = args.secret
     draft = args.draft
     xlsx = args.xlsx
+    auto_action = args.auto_action
 
     with open(secret, 'r') as secret_file:
         credentials = yaml.load(secret_file, Loader=yaml.FullLoader)
@@ -813,7 +824,7 @@ def main():
             if True in xl_sheet.columns.duplicated():
                 sys.exit("Duplicated columns found")
 
-            xl_sheet = check_columns(xl_sheet, schema, action)
+            xl_sheet = check_columns(xl_sheet, schema, action, dev, auto_action)
             schema_dataframe[schema] = xl_sheet
             path = os.path.dirname(os.path.abspath(xlsx))
             schema_tables[schema] = f"{path}/ENA_template_{schema}.tsv"
@@ -822,7 +833,7 @@ def main():
         schema_tables = collect_tables(args)
 
         # create dataframe from table
-        schema_dataframe = create_dataframe(schema_tables, action)
+        schema_dataframe = create_dataframe(schema_tables, action, dev, auto_action)
 
     # ? add a function to sanitize characters
     # ? print 'validate table for specific action'
