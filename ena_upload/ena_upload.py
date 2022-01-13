@@ -100,6 +100,9 @@ def check_columns(df, schema, action):
                 df[header] = str(action).upper()
             else:
                 df[header] = np.nan
+        else:
+            if header == 'status':
+                df[header] = df[header].str.upper()
 
     return df
 
@@ -537,7 +540,7 @@ def update_table(schema_dataframe, schema_targets, schema_update):
                                            md5sum, taxon_id
     """
 
-    for schema in schema_dataframe:
+    for schema in schema_update.keys():
         dataframe = schema_dataframe[schema]
         targets = schema_targets[schema]
         update = schema_update[schema]
@@ -588,7 +591,7 @@ def update_table_simple(schema_dataframe, schema_targets, action):
     status = {'ADD': 'added', 'MODIFY': 'modified',
               'CANCEL': 'cancelled', 'RELEASE': 'released'}
 
-    for schema in schema_dataframe:
+    for schema in schema_targets.keys():
         dataframe = schema_dataframe[schema]
         targets = schema_targets[schema]
 
@@ -601,7 +604,7 @@ def update_table_simple(schema_dataframe, schema_targets, action):
     return schema_dataframe
 
 
-def save_update(schema_tables_, schema_dataframe_):
+def save_update(schema_tables, schema_dataframe):
     """Write updated dataframe to tsv file.
 
     :param schema_tables_: a dictionary - {schema:file_path}
@@ -612,9 +615,9 @@ def save_update(schema_tables_, schema_dataframe_):
     """
 
     print('\nSaving updates in new tsv tables:')
-    for schema in schema_tables_:
-        table = schema_tables_[schema]
-        dataframe = schema_dataframe_[schema]
+    for schema in schema_tables:
+        table = schema_tables[schema]
+        dataframe = schema_dataframe[schema]
 
         file_name, file_extension = os.path.splitext(table)
         update_name = f'{file_name}_updated{file_extension}'
@@ -735,7 +738,7 @@ def process_args():
             parser.error(msg)
 
     # check if data is given when adding a 'run' table
-    if (not args.no_data_upload and args.run and args.action not in ['release','cancel']) or (not args.no_data_upload and args.xlsx and args.action not in ['release','cancel']):
+    if (not args.no_data_upload and args.run and args.action.upper() not in ['RELEASE','CANCEL']) or (not args.no_data_upload and args.xlsx and args.action.upper() not in ['RELEASE','CANCEL']):
         if args.data is None:
             parser.error('Oops, requires data for submitting RUN object')
 
