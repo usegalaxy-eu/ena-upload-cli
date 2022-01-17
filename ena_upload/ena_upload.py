@@ -19,8 +19,8 @@ from genshi.template import TemplateLoader
 from lxml import etree
 import pandas as pd
 import tempfile
-__version__ = "test"
-from check_remote import identify_action
+from ena_upload._version import __version__
+from ena_upload.check_remote import identify_action
 
 SCHEMA_TYPES = ['study', 'experiment', 'run', 'sample']
 
@@ -96,10 +96,15 @@ def check_columns(df, schema, action, dev, auto_action):
         if not header in df.columns:
             if header == 'status':
                 if auto_action:
-                    print("Using the ENA API to detect whether an alias already exits or not.")
                     for index, row in df.iterrows():
-                        df[header][index] = str(identify_action(schema, str(df['alias'][index]), dev)).upper()
-                    print("Done")
+                        try:
+                            remote_action = str(identify_action(schema, str(df['alias'][index]), dev)).upper()
+                            print(f"\t'{df['alias'][index]}' gets '{remote_action}' as action in the status column")
+
+                        except Exception as e:
+                            print(e)
+                            print(f"Something went wrong with detecting the ENA object {df['alias'][index]} on the servers of ENA. This object will be skipped.")
+                        df.at[index, header] = remote_action
                 else:
                     # status column contain action keywords
                     # for xml rendering, keywords require uppercase
@@ -701,7 +706,7 @@ def process_args():
     parser.add_argument('--auto_action',
                         action="store_true",
                         default=False,
-                        help='detect automatically which action (add or modify) to apply when the action column is not given')
+                        help='BETA: detect automatically which action (add or modify) to apply when the action column is not given')
 
     parser.add_argument('--tool',
                         dest='tool_name',
@@ -966,18 +971,23 @@ def main():
             print("There was an ERROR during submission:")
             sys.exit(receipt)
 
-        if action in ['ADD', 'MODIFY']:
-            schema_dataframe = update_table(schema_dataframe,
-                                            schema_targets,
-                                            schema_update)
-            # save updates in new tables
-            save_update(schema_tables, schema_dataframe)
-        elif action in ['CANCEL', 'RELEASE']:
+    if action in ['ADD', 'MODIFY']:
+        if draft: 
             schema_dataframe = update_table_simple(schema_dataframe,
-                                                   schema_targets,
-                                                   action)
-            # save updates in new tables
-            save_update(schema_tables, schema_dataframe)
+                                                schema_targets,
+                                                action)
+        else:
+            schema_dataframe = update_table(schema_dataframe,
+                                        schema_targets,
+                                        schema_update)
+        # save updates in new tables
+        save_update(schema_tables, schema_dataframe)
+    elif action in ['CANCEL', 'RELEASE']:
+        schema_dataframe = update_table_simple(schema_dataframe,
+                                                schema_targets,
+                                                action)
+        # save updates in new tables
+        save_update(schema_tables, schema_dataframe)
 
 
 if __name__ == "__main__":

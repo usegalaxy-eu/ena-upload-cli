@@ -9,10 +9,10 @@ def identify_action(entry_type, alias, dev):
     query = {entry_type + '_alias': alias}
     remote_accessions = check_remote_entry(entry_type, query, dev)
     if isinstance(remote_accessions, list) and len(remote_accessions) > 0:
-        print(f'Found: {entry_type} entry with alias {alias}')
+        print(f'\tFound: {entry_type} entry with alias {alias}')
         return 'modify'
     else:
-        print(f'No {entry_type} entry found with alias {alias}')
+        print(f'\tNo {entry_type} entry found with alias {alias}')
         return 'add'
 
 

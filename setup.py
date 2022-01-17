@@ -1,4 +1,4 @@
-from setuptools import setup, find_packages
+from setuptools import setup
 from ena_upload._version import __version__
 
 with open("README.md", 'r') as f:
