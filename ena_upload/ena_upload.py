@@ -24,6 +24,8 @@ from ena_upload.check_remote import identify_action
 
 SCHEMA_TYPES = ['study', 'experiment', 'run', 'sample']
 
+STATUS_CHANGES = {'ADD': 'ADDED', 'MODIFY': 'MODIFIED',
+              'CANCEL': 'CANCELLED', 'RELEASE': 'RELEASED'}
 
 class MyFTP_TLS(ftplib.FTP_TLS):
     """Explicit FTPS, with shared TLS session"""
@@ -97,17 +99,25 @@ def check_columns(df, schema, action, dev, auto_action):
             if header == 'status':
                 if auto_action:
                     for index, row in df.iterrows():
+                        remote_present = np.nan
                         try:
-                            remote_action = str(identify_action(
+                            remote_present = str(identify_action(
                                 schema, str(df['alias'][index]), dev)).upper()
-                            print(
-                                f"\t'{df['alias'][index]}' gets '{remote_action}' as action in the status column")
 
                         except Exception as e:
                             print(e)
                             print(
                                 f"Something went wrong with detecting the ENA object {df['alias'][index]} on the servers of ENA. This object will be skipped.")
-                        df.at[index, header] = remote_action
+                        if remote_present == np.nan:
+                            df.at[index, header] = np.nan
+                        elif remote_present and action == 'MODIFY':
+                            df.at[index, header] = action
+                            print(
+                                f"\t'{df['alias'][index]}' gets '{remote_present}' as action in the status column")
+                        elif not remote_present and action in ['ADD', 'CANCEL', 'RELEASE']:
+                            df.at[index, header] = action
+                            print(
+                                f"\t'{df['alias'][index]}' gets '{remote_present}' as action in the status column")
                 else:
                     # status column contain action keywords
                     # for xml rendering, keywords require uppercase
@@ -478,16 +488,12 @@ def process_receipt(receipt, action):
         errors = '\nOops:\n' + '\n'.join(errors)
         sys.exit(errors)
 
-    # define expected status based on action
-    status = {'ADD': 'added', 'MODIFY': 'modified',
-              'CANCEL': 'cancelled', 'RELEASE': 'released'}
-
     def make_update(update, ena_type):
         update_list = []
         print(f"\n{ena_type.capitalize()} accession details:")
         for element in update:
             extract = (element.get('alias'), element.get(
-                'accession'), receiptDate, status[action])
+                'accession'), receiptDate, STATUS_CHANGES[action])
             print("\t".join(extract))
             update_list.append(extract)
         # used for labelling dataframe
@@ -531,7 +537,7 @@ def process_receipt(receipt, action):
             print(f"\n{ena_type.capitalize()} accession details:")
             update_list = []
             for accession in accessions:
-                extract = (accession, receiptDate, status[action])
+                extract = (accession, receiptDate, STATUS_CHANGES[action])
                 update_list.append(extract)
                 print("\t".join(extract))
 
@@ -603,9 +609,6 @@ def update_table_simple(schema_dataframe, schema_targets, action):
     :return schema_dataframe: a dictionary - {schema:dataframe}
                               dataframe -- updated status
     """
-    # define expected status based on action
-    status = {'ADD': 'added', 'MODIFY': 'modified',
-              'CANCEL': 'cancelled', 'RELEASE': 'released'}
 
     for schema in schema_targets.keys():
         dataframe = schema_dataframe[schema]
@@ -615,7 +618,7 @@ def update_table_simple(schema_dataframe, schema_targets, action):
         targets.set_index('alias', inplace=True)
 
         for index in targets.index:
-            dataframe.loc[index, 'status'] = status[action]
+            dataframe.loc[index, 'status'] = STATUS_CHANGES[action]
 
     return schema_dataframe
 
