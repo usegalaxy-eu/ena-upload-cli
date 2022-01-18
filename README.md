@@ -60,16 +60,17 @@ All supported arguments:
   --experiment EXPERIMENT
                         table of EXPERIMENT object
   --run RUN             table of RUN object
-  --data [FILE ...]     data for submission
+  --data [FILE [FILE ...]]
+                        data for submission
   --center CENTER_NAME  specific to your Webin account
   --checklist CHECKLIST
                         specify the sample checklist with following pattern: ERC0000XX, Default: ERC000011
-  --xlsx XLSX           Excel table with metadata
+  --xlsx XLSX           filled in excel template with metadata
+  --auto_action         BETA: detect automatically which action (add or modify) to apply when the action column is not given
   --tool TOOL_NAME      specify the name of the tool this submission is done with. Default: ena-upload-cli
   --tool_version TOOL_VERSION
                         specify the version of the tool this submission is done with
-  --no_data_upload      indicate if no upload should be performed and you like to submit a RUN object (e.g. if uploaded     
-                        was done separately).
+  --no_data_upload      indicate if no upload should be performed and you like to submit a RUN object (e.g. if uploaded was done separately).
   --draft               indicate if no submission should be performed
   --secret SECRET       .secret.yml file containing the password and Webin ID of your ENA account
   -d, --dev             flag to use the dev/sandbox endpoint of ENA
@@ -161,7 +162,10 @@ Use the *--dev* flag if you want to do a test submission using the tool by the s
 
 ### Submitting a selection of rows to ENA
 
-Optionally you can add a status column to every table that contains the action you want to apply during this submission. If you chose to add only the first 2 samples to ENA, you specify `--action add` as parameter in the command and you add the `add` value to the status column of the rows you want to submit as demonstrated below. Same holds for the action `modify`, `release` and `cancel`.
+There are two ways of submitting only a selection of objects to ENA. This is handy for reoccurring submissions, especially when they belong to the same study.
+
+- Manual: you can add an optional `status` column to every table/sheet that contains the action you want to apply during this submission. If you chose to add only the first 2 samples to ENA, you specify `--action add` as parameter in the command and you add the `add` value to the status column of the rows you want to submit as demonstrated below. Same holds for the action `modify`, `release` and `cancel`.
+- Automatic (BETA): using the `--auto_action` it is possible to auto detect wether an object (using the alias) is already present on ENA and will add `modify` or `add` to the table. This works only with ENA objects that are published and findable on the website trough the search function. If the tool does not correctly detect its presence on the website we suggest to use the more robust manual approach as discribed above.
 
 **Example with modify as seen in the [example sample modify table](example_tables/ENA_template_samples_modify.tsv)**
 

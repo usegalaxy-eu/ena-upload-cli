@@ -98,12 +98,15 @@ def check_columns(df, schema, action, dev, auto_action):
                 if auto_action:
                     for index, row in df.iterrows():
                         try:
-                            remote_action = str(identify_action(schema, str(df['alias'][index]), dev)).upper()
-                            print(f"\t'{df['alias'][index]}' gets '{remote_action}' as action in the status column")
+                            remote_action = str(identify_action(
+                                schema, str(df['alias'][index]), dev)).upper()
+                            print(
+                                f"\t'{df['alias'][index]}' gets '{remote_action}' as action in the status column")
 
                         except Exception as e:
                             print(e)
-                            print(f"Something went wrong with detecting the ENA object {df['alias'][index]} on the servers of ENA. This object will be skipped.")
+                            print(
+                                f"Something went wrong with detecting the ENA object {df['alias'][index]} on the servers of ENA. This object will be skipped.")
                         df.at[index, header] = remote_action
                 else:
                     # status column contain action keywords
@@ -117,6 +120,7 @@ def check_columns(df, schema, action, dev, auto_action):
                 df[header] = df[header].str.upper()
 
     return df
+
 
 def check_filenames(file_paths, run_df):
     """Compare data filenames from command line and from RUN table.
@@ -699,10 +703,10 @@ def process_args():
 
     parser.add_argument('--checklist', help="specify the sample checklist with following pattern: ERC0000XX, Default: ERC000011", dest='checklist',
                         default='ERC000011')
-    
+
     parser.add_argument('--xlsx',
-                        help='Excel table with metadata')
-    
+                        help='filled in excel template with metadata')
+
     parser.add_argument('--auto_action',
                         action="store_true",
                         default=False,
@@ -747,7 +751,7 @@ def process_args():
         if not os.path.isfile(args.secret):
             msg = f"Oops, the file {args.secret} does not exist"
             parser.error(msg)
-    
+
     # check if xlsx file exists
     if args.xlsx:
         if not os.path.isfile(args.xlsx):
@@ -755,7 +759,7 @@ def process_args():
             parser.error(msg)
 
     # check if data is given when adding a 'run' table
-    if (not args.no_data_upload and args.run and args.action.upper() not in ['RELEASE','CANCEL']) or (not args.no_data_upload and args.xlsx and args.action.upper() not in ['RELEASE','CANCEL']):
+    if (not args.no_data_upload and args.run and args.action.upper() not in ['RELEASE', 'CANCEL']) or (not args.no_data_upload and args.xlsx and args.action.upper() not in ['RELEASE', 'CANCEL']):
         if args.data is None:
             parser.error('Oops, requires data for submitting RUN object')
 
@@ -783,6 +787,7 @@ def collect_tables(args):
                      if table is not None}
 
     return schema_tables
+
 
 def update_date(date):
     if pd.isnull(date) or isinstance(date, str):
@@ -830,16 +835,19 @@ def main():
             elif f"ENA_{schema}" in xl_workbook.book.sheetnames:
                 xl_sheet = xl_workbook.parse(f"ENA_{schema}", header=0)
             else:
-                sys.exit(f"The sheet '{schema}' is not present in the excel sheet {xlsx}")
+                sys.exit(
+                    f"The sheet '{schema}' is not present in the excel sheet {xlsx}")
             xl_sheet = xl_sheet.drop(0).dropna(how='all')
             for column_name in list(xl_sheet.columns.values):
                 if 'date' in column_name:
-                    xl_sheet[column_name] = xl_sheet[column_name].apply(update_date)
+                    xl_sheet[column_name] = xl_sheet[column_name].apply(
+                        update_date)
 
             if True in xl_sheet.columns.duplicated():
                 sys.exit("Duplicated columns found")
 
-            xl_sheet = check_columns(xl_sheet, schema, action, dev, auto_action)
+            xl_sheet = check_columns(
+                xl_sheet, schema, action, dev, auto_action)
             schema_dataframe[schema] = xl_sheet
             path = os.path.dirname(os.path.abspath(xlsx))
             schema_tables[schema] = f"{path}/ENA_template_{schema}.tsv"
@@ -848,7 +856,8 @@ def main():
         schema_tables = collect_tables(args)
 
         # create dataframe from table
-        schema_dataframe = create_dataframe(schema_tables, action, dev, auto_action)
+        schema_dataframe = create_dataframe(
+            schema_tables, action, dev, auto_action)
 
     # ? add a function to sanitize characters
     # ? print 'validate table for specific action'
@@ -872,11 +881,11 @@ def main():
             file_paths = {}
             if args.data:
                 for path in args.data:
-                    file_paths[os.path.basename(path)] =  os.path.abspath(path) 
+                    file_paths[os.path.basename(path)] = os.path.abspath(path)
                 # check if file names identical between command line and table
                 # if not, system exits
                 check_filenames(file_paths, df)
-            
+
             # generate MD5 sum if not supplied in table
             if file_paths and not check_file_checksum(df):
                 print("No valid checksums found, generate now...", end=" ")
@@ -972,20 +981,20 @@ def main():
             sys.exit(receipt)
 
     if action in ['ADD', 'MODIFY']:
-        if draft: 
+        if draft:
             schema_dataframe = update_table_simple(schema_dataframe,
-                                                schema_targets,
-                                                action)
+                                                   schema_targets,
+                                                   action)
         else:
             schema_dataframe = update_table(schema_dataframe,
-                                        schema_targets,
-                                        schema_update)
+                                            schema_targets,
+                                            schema_update)
         # save updates in new tables
         save_update(schema_tables, schema_dataframe)
     elif action in ['CANCEL', 'RELEASE']:
         schema_dataframe = update_table_simple(schema_dataframe,
-                                                schema_targets,
-                                                action)
+                                               schema_targets,
+                                               action)
         # save updates in new tables
         save_update(schema_tables, schema_dataframe)
 
