@@ -20,9 +20,12 @@ from lxml import etree
 import pandas as pd
 import tempfile
 from ena_upload._version import __version__
+from ena_upload.check_remote import identify_action
 
 SCHEMA_TYPES = ['study', 'experiment', 'run', 'sample']
 
+STATUS_CHANGES = {'ADD': 'ADDED', 'MODIFY': 'MODIFIED',
+              'CANCEL': 'CANCELLED', 'RELEASE': 'RELEASED'}
 
 class MyFTP_TLS(ftplib.FTP_TLS):
     """Explicit FTPS, with shared TLS session"""
@@ -36,7 +39,7 @@ class MyFTP_TLS(ftplib.FTP_TLS):
         return conn, size
 
 
-def create_dataframe(schema_tables, action):
+def create_dataframe(schema_tables, action, dev, auto_action):
     '''create pandas dataframe from the tables in schema_tables
        and return schema_dataframe
 
@@ -54,7 +57,7 @@ def create_dataframe(schema_tables, action):
     for schema, table in schema_tables.items():
         df = pd.read_csv(table, sep='\t', comment='#', dtype=str)
         df = df.dropna(how='all')
-        df = check_columns(df, schema, action)
+        df = check_columns(df, schema, action, dev, auto_action)
         schema_dataframe[schema] = df
 
     return schema_dataframe
@@ -80,7 +83,7 @@ def extract_targets(action, schema_dataframe):
     return schema_targets
 
 
-def check_columns(df, schema, action):
+def check_columns(df, schema, action, dev, auto_action):
     # checking for optional columns and if not present, adding them
     if schema == 'sample':
         optional_columns = ['accession', 'submission_date',
@@ -94,10 +97,32 @@ def check_columns(df, schema, action):
     for header in optional_columns:
         if not header in df.columns:
             if header == 'status':
-                # status column contain action keywords
-                # for xml rendering, keywords require uppercase
-                # according to scheme definition of submission
-                df[header] = str(action).upper()
+                if auto_action:
+                    for index, row in df.iterrows():
+                        remote_present = np.nan
+                        try:
+                            remote_present = str(identify_action(
+                                schema, str(df['alias'][index]), dev)).upper()
+
+                        except Exception as e:
+                            print(e)
+                            print(
+                                f"Something went wrong with detecting the ENA object {df['alias'][index]} on the servers of ENA. This object will be skipped.")
+                        if remote_present == np.nan:
+                            df.at[index, header] = np.nan
+                        elif remote_present and action == 'MODIFY':
+                            df.at[index, header] = action
+                            print(
+                                f"\t'{df['alias'][index]}' gets '{remote_present}' as action in the status column")
+                        elif not remote_present and action in ['ADD', 'CANCEL', 'RELEASE']:
+                            df.at[index, header] = action
+                            print(
+                                f"\t'{df['alias'][index]}' gets '{remote_present}' as action in the status column")
+                else:
+                    # status column contain action keywords
+                    # for xml rendering, keywords require uppercase
+                    # according to scheme definition of submission
+                    df[header] = str(action).upper()
             else:
                 df[header] = np.nan
         else:
@@ -105,6 +130,7 @@ def check_columns(df, schema, action):
                 df[header] = df[header].str.upper()
 
     return df
+
 
 def check_filenames(file_paths, run_df):
     """Compare data filenames from command line and from RUN table.
@@ -462,16 +488,12 @@ def process_receipt(receipt, action):
         errors = '\nOops:\n' + '\n'.join(errors)
         sys.exit(errors)
 
-    # define expected status based on action
-    status = {'ADD': 'added', 'MODIFY': 'modified',
-              'CANCEL': 'cancelled', 'RELEASE': 'released'}
-
     def make_update(update, ena_type):
         update_list = []
         print(f"\n{ena_type.capitalize()} accession details:")
         for element in update:
             extract = (element.get('alias'), element.get(
-                'accession'), receiptDate, status[action])
+                'accession'), receiptDate, STATUS_CHANGES[action])
             print("\t".join(extract))
             update_list.append(extract)
         # used for labelling dataframe
@@ -515,7 +537,7 @@ def process_receipt(receipt, action):
             print(f"\n{ena_type.capitalize()} accession details:")
             update_list = []
             for accession in accessions:
-                extract = (accession, receiptDate, status[action])
+                extract = (accession, receiptDate, STATUS_CHANGES[action])
                 update_list.append(extract)
                 print("\t".join(extract))
 
@@ -587,9 +609,6 @@ def update_table_simple(schema_dataframe, schema_targets, action):
     :return schema_dataframe: a dictionary - {schema:dataframe}
                               dataframe -- updated status
     """
-    # define expected status based on action
-    status = {'ADD': 'added', 'MODIFY': 'modified',
-              'CANCEL': 'cancelled', 'RELEASE': 'released'}
 
     for schema in schema_targets.keys():
         dataframe = schema_dataframe[schema]
@@ -599,7 +618,7 @@ def update_table_simple(schema_dataframe, schema_targets, action):
         targets.set_index('alias', inplace=True)
 
         for index in targets.index:
-            dataframe.loc[index, 'status'] = status[action]
+            dataframe.loc[index, 'status'] = STATUS_CHANGES[action]
 
     return schema_dataframe
 
@@ -687,10 +706,15 @@ def process_args():
 
     parser.add_argument('--checklist', help="specify the sample checklist with following pattern: ERC0000XX, Default: ERC000011", dest='checklist',
                         default='ERC000011')
-    
+
     parser.add_argument('--xlsx',
-                        help='excel table with metadata')
-    
+                        help='filled in excel template with metadata')
+
+    parser.add_argument('--auto_action',
+                        action="store_true",
+                        default=False,
+                        help='BETA: detect automatically which action (add or modify) to apply when the action column is not given')
+
     parser.add_argument('--tool',
                         dest='tool_name',
                         default='ena-upload-cli',
@@ -730,7 +754,7 @@ def process_args():
         if not os.path.isfile(args.secret):
             msg = f"Oops, the file {args.secret} does not exist"
             parser.error(msg)
-    
+
     # check if xlsx file exists
     if args.xlsx:
         if not os.path.isfile(args.xlsx):
@@ -738,7 +762,7 @@ def process_args():
             parser.error(msg)
 
     # check if data is given when adding a 'run' table
-    if (not args.no_data_upload and args.run and args.action.upper() not in ['RELEASE','CANCEL']) or (not args.no_data_upload and args.xlsx and args.action.upper() not in ['RELEASE','CANCEL']):
+    if (not args.no_data_upload and args.run and args.action.upper() not in ['RELEASE', 'CANCEL']) or (not args.no_data_upload and args.xlsx and args.action.upper() not in ['RELEASE', 'CANCEL']):
         if args.data is None:
             parser.error('Oops, requires data for submitting RUN object')
 
@@ -767,6 +791,7 @@ def collect_tables(args):
 
     return schema_tables
 
+
 def update_date(date):
     if pd.isnull(date) or isinstance(date, str):
         return date
@@ -788,6 +813,7 @@ def main():
     secret = args.secret
     draft = args.draft
     xlsx = args.xlsx
+    auto_action = args.auto_action
 
     with open(secret, 'r') as secret_file:
         credentials = yaml.load(secret_file, Loader=yaml.FullLoader)
@@ -812,16 +838,19 @@ def main():
             elif f"ENA_{schema}" in xl_workbook.book.sheetnames:
                 xl_sheet = xl_workbook.parse(f"ENA_{schema}", header=0)
             else:
-                sys.exit(f"The sheet '{schema}' is not present in the excel sheet {xlsx}")
+                sys.exit(
+                    f"The sheet '{schema}' is not present in the excel sheet {xlsx}")
             xl_sheet = xl_sheet.drop(0).dropna(how='all')
             for column_name in list(xl_sheet.columns.values):
                 if 'date' in column_name:
-                    xl_sheet[column_name] = xl_sheet[column_name].apply(update_date)
+                    xl_sheet[column_name] = xl_sheet[column_name].apply(
+                        update_date)
 
             if True in xl_sheet.columns.duplicated():
                 sys.exit("Duplicated columns found")
 
-            xl_sheet = check_columns(xl_sheet, schema, action)
+            xl_sheet = check_columns(
+                xl_sheet, schema, action, dev, auto_action)
             schema_dataframe[schema] = xl_sheet
             path = os.path.dirname(os.path.abspath(xlsx))
             schema_tables[schema] = f"{path}/ENA_template_{schema}.tsv"
@@ -830,7 +859,8 @@ def main():
         schema_tables = collect_tables(args)
 
         # create dataframe from table
-        schema_dataframe = create_dataframe(schema_tables, action)
+        schema_dataframe = create_dataframe(
+            schema_tables, action, dev, auto_action)
 
     # ? add a function to sanitize characters
     # ? print 'validate table for specific action'
@@ -854,11 +884,11 @@ def main():
             file_paths = {}
             if args.data:
                 for path in args.data:
-                    file_paths[os.path.basename(path)] =  os.path.abspath(path) 
+                    file_paths[os.path.basename(path)] = os.path.abspath(path)
                 # check if file names identical between command line and table
                 # if not, system exits
                 check_filenames(file_paths, df)
-            
+
             # generate MD5 sum if not supplied in table
             if file_paths and not check_file_checksum(df):
                 print("No valid checksums found, generate now...", end=" ")
@@ -953,18 +983,16 @@ def main():
             print("There was an ERROR during submission:")
             sys.exit(receipt)
 
-        if action in ['ADD', 'MODIFY']:
-            schema_dataframe = update_table(schema_dataframe,
+    if action in ['ADD', 'MODIFY'] and not draft:
+        schema_dataframe = update_table(schema_dataframe,
                                             schema_targets,
                                             schema_update)
-            # save updates in new tables
-            save_update(schema_tables, schema_dataframe)
-        elif action in ['CANCEL', 'RELEASE']:
-            schema_dataframe = update_table_simple(schema_dataframe,
-                                                   schema_targets,
-                                                   action)
-            # save updates in new tables
-            save_update(schema_tables, schema_dataframe)
+    else:
+        schema_dataframe = update_table_simple(schema_dataframe,
+                                               schema_targets,
+                                               action)
+    # save updates in new tables
+    save_update(schema_tables, schema_dataframe)
 
 
 if __name__ == "__main__":
