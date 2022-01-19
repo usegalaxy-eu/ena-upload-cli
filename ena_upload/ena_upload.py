@@ -983,23 +983,16 @@ def main():
             print("There was an ERROR during submission:")
             sys.exit(receipt)
 
-    if action in ['ADD', 'MODIFY']:
-        if draft:
-            schema_dataframe = update_table_simple(schema_dataframe,
-                                                   schema_targets,
-                                                   action)
-        else:
-            schema_dataframe = update_table(schema_dataframe,
+    if action in ['ADD', 'MODIFY'] and not draft:
+        schema_dataframe = update_table(schema_dataframe,
                                             schema_targets,
                                             schema_update)
-        # save updates in new tables
-        save_update(schema_tables, schema_dataframe)
-    elif action in ['CANCEL', 'RELEASE']:
+    else:
         schema_dataframe = update_table_simple(schema_dataframe,
                                                schema_targets,
                                                action)
-        # save updates in new tables
-        save_update(schema_tables, schema_dataframe)
+    # save updates in new tables
+    save_update(schema_tables, schema_dataframe)
 
 
 if __name__ == "__main__":
