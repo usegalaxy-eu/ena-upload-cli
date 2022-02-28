@@ -4,6 +4,7 @@
 <LIBRARY_STRATEGY py:when="row.library_strategy.lower().strip() == 'wxs'">WXS</LIBRARY_STRATEGY>
 <LIBRARY_STRATEGY py:when="row.library_strategy.lower().strip() == 'rna-seq'">RNA-Seq</LIBRARY_STRATEGY>
 <LIBRARY_STRATEGY py:when="row.library_strategy.lower().strip() == 'ssrna-seq'">ssRNA-seq</LIBRARY_STRATEGY>
+<LIBRARY_STRATEGY py:when="row.library_strategy.lower().strip() == 'snrna-seq'">snRNA-seq</LIBRARY_STRATEGY>
 <LIBRARY_STRATEGY py:when="row.library_strategy.lower().strip() == 'mirna-seq'">miRNA-Seq</LIBRARY_STRATEGY>
 <LIBRARY_STRATEGY py:when="row.library_strategy.lower().strip() == 'ncrna-seq'">ncRNA-Seq</LIBRARY_STRATEGY>
 <LIBRARY_STRATEGY py:when="row.library_strategy.lower().strip() == 'fl-cdna'">FL-cDNA</LIBRARY_STRATEGY>
