@@ -10,7 +10,6 @@
   ~ specific language governing permissions and limitations under the License.
   -->
 
-<!-- version:1.12.0 -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:com="SRA.common"
     targetNamespace="SRA.common">
 
