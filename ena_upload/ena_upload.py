@@ -85,6 +85,7 @@ def extract_targets(action, schema_dataframe):
 
 def check_columns(df, schema, action, dev, auto_action):
     # checking for optional columns and if not present, adding them
+    print(f"Check if all required columns are present in the {schema} table.")
     if schema == 'sample':
         optional_columns = ['accession', 'submission_date',
                             'status', 'scientific_name', 'taxon_id']
@@ -119,7 +120,7 @@ def check_columns(df, schema, action, dev, auto_action):
                         else:
                             df.at[index, header] = np.nan
                             print(
-                                f"\t'{df['alias'][index]}' gets skipped since it is already present at ENA.")
+                                f"\t'{df['alias'][index]}' gets skipped since it is already present at EN")
 
                 else:
                     # status column contain action keywords
