@@ -101,23 +101,26 @@ def check_columns(df, schema, action, dev, auto_action):
                     for index, row in df.iterrows():
                         remote_present = np.nan
                         try:
-                            remote_present = str(identify_action(
-                                schema, str(df['alias'][index]), dev)).upper()
+                            remote_present = identify_action(
+                                schema, str(df['alias'][index]), dev)
 
                         except Exception as e:
                             print(e)
                             print(
                                 f"Something went wrong with detecting the ENA object {df['alias'][index]} on the servers of ENA. This object will be skipped.")
-                        if remote_present == np.nan:
-                            df.at[index, header] = np.nan
-                        elif remote_present and action == 'MODIFY':
+                        if remote_present and action == 'MODIFY':
                             df.at[index, header] = action
                             print(
-                                f"\t'{df['alias'][index]}' gets '{remote_present}' as action in the status column")
+                                f"\t'{df['alias'][index]}' gets '{action}' as action in the status column")
                         elif not remote_present and action in ['ADD', 'CANCEL', 'RELEASE']:
                             df.at[index, header] = action
                             print(
-                                f"\t'{df['alias'][index]}' gets '{remote_present}' as action in the status column")
+                                f"\t'{df['alias'][index]}' gets '{action}' as action in the status column")
+                        else:
+                            df.at[index, header] = np.nan
+                            print(
+                                f"\t'{df['alias'][index]}' gets skipped since it is already present at ENA.")
+
                 else:
                     # status column contain action keywords
                     # for xml rendering, keywords require uppercase
