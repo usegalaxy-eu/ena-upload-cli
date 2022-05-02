@@ -41,26 +41,31 @@ def attributetest(row, column):
             <SAMPLE_ATTRIBUTE>
                 <TAG>Latitude Start</TAG>
                 <VALUE>${row['Latitude Start']}</VALUE>
+                <UNITS>DD</UNITS>
             </SAMPLE_ATTRIBUTE>
             <SAMPLE_ATTRIBUTE>
                 <TAG>Longitude Start</TAG>
                 <VALUE>${row['Longitude Start']}</VALUE>
+                <UNITS>DD</UNITS>
             </SAMPLE_ATTRIBUTE>
             <py:if test="attributetest(row, 'Latitude End')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>Latitude End</TAG>
                 <VALUE>${row['Latitude End']}</VALUE>
+                <UNITS>DD</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'Longitude End')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>Longitude End</TAG>
                 <VALUE>${row['Longitude End']}</VALUE>
+                <UNITS>DD</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <SAMPLE_ATTRIBUTE>
                 <TAG>Depth</TAG>
                 <VALUE>${row['Depth']}</VALUE>
+                <UNITS>m</UNITS>
             </SAMPLE_ATTRIBUTE>
             <py:if test="attributetest(row, 'Sample Collection Device')">
             <SAMPLE_ATTRIBUTE>
@@ -135,27 +140,32 @@ def attributetest(row, column):
             <SAMPLE_ATTRIBUTE>
                 <TAG>Salinity Sensor</TAG>
                 <VALUE>${row['Salinity Sensor']}</VALUE>
+                <UNITS>psu</UNITS>
             </SAMPLE_ATTRIBUTE>
             <py:if test="attributetest(row, 'Oxygen Sensor')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>Oxygen Sensor</TAG>
                 <VALUE>${row['Oxygen Sensor']}</VALUE>
+                <UNITS>µmol/kg</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'Nitrate Sensor')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>Nitrate Sensor</TAG>
                 <VALUE>${row['Nitrate Sensor']}</VALUE>
+                <UNITS>µmol/L</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <SAMPLE_ATTRIBUTE>
                 <TAG>Temperature</TAG>
                 <VALUE>${row['Temperature']}</VALUE>
+                <UNITS>ºC</UNITS>
             </SAMPLE_ATTRIBUTE>
             <py:if test="attributetest(row, 'Chlorophyll Sensor')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>Chlorophyll Sensor</TAG>
                 <VALUE>${row['Chlorophyll Sensor']}</VALUE>
+                <UNITS>mg Chl/m3</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'Citation')">

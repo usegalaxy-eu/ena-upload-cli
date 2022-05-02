@@ -23,16 +23,22 @@ def attributetest(row, column):
         <DESCRIPTION>${row.sample_description}</DESCRIPTION>
         <SAMPLE_ATTRIBUTES>
             {%- for key, value in attributes.items() %}
-            {%- if value == 'mandatory' %}
+            {%- if value['cardinality'].lower() == 'mandatory' %}
             <SAMPLE_ATTRIBUTE>
                 <TAG>{{key}}</TAG>
                 <VALUE>${row['{{key}}']}</VALUE>
+                {%- if value['units'] %}
+                <UNITS>{{value['units']}}</UNITS>
+                {%- endif %}
             </SAMPLE_ATTRIBUTE>
             {%- else %}
             <py:if test="attributetest(row, '{{key}}')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>{{key}}</TAG>
                 <VALUE>${row['{{key}}']}</VALUE>
+                {%- if value['units'] %}
+                <UNITS>{{value['units']}}</UNITS>
+                {%- endif %}
             </SAMPLE_ATTRIBUTE>
             </py:if>
             {%- endif %}

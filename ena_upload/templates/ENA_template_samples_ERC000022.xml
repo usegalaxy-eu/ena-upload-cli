@@ -26,6 +26,7 @@ def attributetest(row, column):
             <SAMPLE_ATTRIBUTE>
                 <TAG>slope gradient</TAG>
                 <VALUE>${row['slope gradient']}</VALUE>
+                <UNITS>%</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'slope aspect')">
@@ -96,6 +97,7 @@ def attributetest(row, column):
             <SAMPLE_ATTRIBUTE>
                 <TAG>sample volume or weight for DNA extraction</TAG>
                 <VALUE>${row['sample volume or weight for DNA extraction']}</VALUE>
+                <UNITS>ng</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'nucleic acid extraction')">
@@ -222,6 +224,7 @@ def attributetest(row, column):
             <SAMPLE_ATTRIBUTE>
                 <TAG>geographic location (altitude)</TAG>
                 <VALUE>${row['geographic location (altitude)']}</VALUE>
+                <UNITS>m</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <SAMPLE_ATTRIBUTE>
@@ -231,10 +234,12 @@ def attributetest(row, column):
             <SAMPLE_ATTRIBUTE>
                 <TAG>geographic location (latitude)</TAG>
                 <VALUE>${row['geographic location (latitude)']}</VALUE>
+                <UNITS>DD</UNITS>
             </SAMPLE_ATTRIBUTE>
             <SAMPLE_ATTRIBUTE>
                 <TAG>geographic location (longitude)</TAG>
                 <VALUE>${row['geographic location (longitude)']}</VALUE>
+                <UNITS>DD</UNITS>
             </SAMPLE_ATTRIBUTE>
             <py:if test="attributetest(row, 'geographic location (region and locality)')">
             <SAMPLE_ATTRIBUTE>
@@ -249,6 +254,7 @@ def attributetest(row, column):
             <SAMPLE_ATTRIBUTE>
                 <TAG>geographic location (depth)</TAG>
                 <VALUE>${row['geographic location (depth)']}</VALUE>
+                <UNITS>m</UNITS>
             </SAMPLE_ATTRIBUTE>
             <SAMPLE_ATTRIBUTE>
                 <TAG>environment (biome)</TAG>
@@ -265,6 +271,7 @@ def attributetest(row, column):
             <SAMPLE_ATTRIBUTE>
                 <TAG>geographic location (elevation)</TAG>
                 <VALUE>${row['geographic location (elevation)']}</VALUE>
+                <UNITS>m</UNITS>
             </SAMPLE_ATTRIBUTE>
             <py:if test="attributetest(row, 'source material identifiers')">
             <SAMPLE_ATTRIBUTE>
@@ -300,6 +307,7 @@ def attributetest(row, column):
             <SAMPLE_ATTRIBUTE>
                 <TAG>amount or size of sample collected</TAG>
                 <VALUE>${row['amount or size of sample collected']}</VALUE>
+                <UNITS>m3</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'composite design/sieving (if any)')">
@@ -312,6 +320,7 @@ def attributetest(row, column):
             <SAMPLE_ATTRIBUTE>
                 <TAG>sample weight for DNA extraction</TAG>
                 <VALUE>${row['sample weight for DNA extraction']}</VALUE>
+                <UNITS>g</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'storage conditions (fresh/frozen/other)')">
@@ -324,6 +333,7 @@ def attributetest(row, column):
             <SAMPLE_ATTRIBUTE>
                 <TAG>microbial biomass</TAG>
                 <VALUE>${row['microbial biomass']}</VALUE>
+                <UNITS>g/kg</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'microbial biomass method')">
@@ -336,6 +346,7 @@ def attributetest(row, column):
             <SAMPLE_ATTRIBUTE>
                 <TAG>extreme_unusual_properties/salinity</TAG>
                 <VALUE>${row['extreme_unusual_properties/salinity']}</VALUE>
+                <UNITS>psu</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'extreme_unusual_properties/salinity method')">
@@ -360,6 +371,7 @@ def attributetest(row, column):
             <SAMPLE_ATTRIBUTE>
                 <TAG>extreme_unusual_properties/Al saturation</TAG>
                 <VALUE>${row['extreme_unusual_properties/Al saturation']}</VALUE>
+                <UNITS>%</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'extreme_unusual_properties/Al saturation method')">
@@ -432,12 +444,14 @@ def attributetest(row, column):
             <SAMPLE_ATTRIBUTE>
                 <TAG>mean annual and seasonal temperature</TAG>
                 <VALUE>${row['mean annual and seasonal temperature']}</VALUE>
+                <UNITS>ºC</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'mean annual and seasonal precipitation')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>mean annual and seasonal precipitation</TAG>
                 <VALUE>${row['mean annual and seasonal precipitation']}</VALUE>
+                <UNITS>mm</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'soil_taxonomic/FAO classification')">
@@ -480,6 +494,7 @@ def attributetest(row, column):
             <SAMPLE_ATTRIBUTE>
                 <TAG>texture</TAG>
                 <VALUE>${row['texture']}</VALUE>
+                <UNITS>% sand/silt/clay</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'texture method')">
@@ -522,18 +537,21 @@ def attributetest(row, column):
             <SAMPLE_ATTRIBUTE>
                 <TAG>total organic carbon</TAG>
                 <VALUE>${row['total organic carbon']}</VALUE>
+                <UNITS>g/kg</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'water content')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>water content</TAG>
                 <VALUE>${row['water content']}</VALUE>
+                <UNITS>g/g</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'total nitrogen')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>total nitrogen</TAG>
                 <VALUE>${row['total nitrogen']}</VALUE>
+                <UNITS>µmol/L</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'history/previous land use')">

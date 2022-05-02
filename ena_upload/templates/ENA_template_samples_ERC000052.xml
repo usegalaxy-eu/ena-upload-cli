@@ -29,6 +29,7 @@ def attributetest(row, column):
             <SAMPLE_ATTRIBUTE>
                 <TAG>sample volume or weight for DNA extraction</TAG>
                 <VALUE>${row['sample volume or weight for DNA extraction']}</VALUE>
+                <UNITS>ng</UNITS>
             </SAMPLE_ATTRIBUTE>
             <py:if test="attributetest(row, 'nucleic acid extraction')">
             <SAMPLE_ATTRIBUTE>
@@ -72,12 +73,14 @@ def attributetest(row, column):
             <SAMPLE_ATTRIBUTE>
                 <TAG>geographic location (latitude)</TAG>
                 <VALUE>${row['geographic location (latitude)']}</VALUE>
+                <UNITS>DD</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'geographic location (longitude)')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>geographic location (longitude)</TAG>
                 <VALUE>${row['geographic location (longitude)']}</VALUE>
+                <UNITS>DD</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'geographic location (region and locality)')">
@@ -90,16 +93,19 @@ def attributetest(row, column):
             <SAMPLE_ATTRIBUTE>
                 <TAG>trial length</TAG>
                 <VALUE>${row['trial length']}</VALUE>
+                <UNITS>years</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <SAMPLE_ATTRIBUTE>
                 <TAG>trial timepoint</TAG>
                 <VALUE>${row['trial timepoint']}</VALUE>
+                <UNITS>years</UNITS>
             </SAMPLE_ATTRIBUTE>
             <py:if test="attributetest(row, 'sample storage temperature')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>sample storage temperature</TAG>
                 <VALUE>${row['sample storage temperature']}</VALUE>
+                <UNITS>°C</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'sample storage location')">
@@ -146,12 +152,14 @@ def attributetest(row, column):
             <SAMPLE_ATTRIBUTE>
                 <TAG>host length</TAG>
                 <VALUE>${row['host length']}</VALUE>
+                <UNITS>mm</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'host total mass')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>host total mass</TAG>
                 <VALUE>${row['host total mass']}</VALUE>
+                <UNITS>kg</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'host sex')">
@@ -176,6 +184,7 @@ def attributetest(row, column):
             <SAMPLE_ATTRIBUTE>
                 <TAG>host gutted mass</TAG>
                 <VALUE>${row['host gutted mass']}</VALUE>
+                <UNITS>kg</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'host diet')">
@@ -192,6 +201,7 @@ def attributetest(row, column):
             <SAMPLE_ATTRIBUTE>
                 <TAG>host diet treatment concentration</TAG>
                 <VALUE>${row['host diet treatment concentration']}</VALUE>
+                <UNITS>% mass</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'host storage container')">
@@ -210,6 +220,7 @@ def attributetest(row, column):
             <SAMPLE_ATTRIBUTE>
                 <TAG>host storage container temperature</TAG>
                 <VALUE>${row['host storage container temperature']}</VALUE>
+                <UNITS>°C</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <SAMPLE_ATTRIBUTE>

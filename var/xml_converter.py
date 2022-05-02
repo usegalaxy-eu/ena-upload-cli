@@ -55,12 +55,17 @@ def main():
         for attribute in root.iter('FIELD'):
             name = ''
             cardinality = ''
+            units = ''
             for sub_attr in attribute:
                 if sub_attr.tag == 'NAME':
                     name = sub_attr.text
                 elif sub_attr.tag == 'MANDATORY':
                     cardinality = sub_attr.text
-            xml_tree[name] = cardinality
+                elif sub_attr.tag == 'UNITS':
+                    for unit in sub_attr:
+                        units = unit.text
+                    cardinality = sub_attr.text
+            xml_tree[name] = {'cardinality': cardinality, 'units': units}
 
         # Loading the xml jinja2 template for samples
         t = env.get_template('ENA_template_samples.xml')
