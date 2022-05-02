@@ -56,6 +56,7 @@ def attributetest(row, column):
             <SAMPLE_ATTRIBUTE>
                 <TAG>DNA concentration</TAG>
                 <VALUE>${row['DNA concentration']}</VALUE>
+                <UNITS>ng/µl</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'collection_date')">
@@ -86,18 +87,21 @@ def attributetest(row, column):
             <SAMPLE_ATTRIBUTE>
                 <TAG>amount or size of sample collected</TAG>
                 <VALUE>${row['amount or size of sample collected']}</VALUE>
+                <UNITS>m3</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'sample storage duration')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>sample storage duration</TAG>
                 <VALUE>${row['sample storage duration']}</VALUE>
+                <UNITS>years</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'sample storage temperature')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>sample storage temperature</TAG>
                 <VALUE>${row['sample storage temperature']}</VALUE>
+                <UNITS>°C</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'sample storage location')">
@@ -116,6 +120,7 @@ def attributetest(row, column):
             <SAMPLE_ATTRIBUTE>
                 <TAG>sample transportation temperature</TAG>
                 <VALUE>${row['sample transportation temperature']}</VALUE>
+                <UNITS>°C</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'sample transportation date')">

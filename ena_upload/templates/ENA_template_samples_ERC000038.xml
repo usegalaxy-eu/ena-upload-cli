@@ -29,14 +29,17 @@ def attributetest(row, column):
             <SAMPLE_ATTRIBUTE>
                 <TAG>Latitude Start</TAG>
                 <VALUE>${row['Latitude Start']}</VALUE>
+                <UNITS>DD</UNITS>
             </SAMPLE_ATTRIBUTE>
             <SAMPLE_ATTRIBUTE>
                 <TAG>Longitude Start</TAG>
                 <VALUE>${row['Longitude Start']}</VALUE>
+                <UNITS>DD</UNITS>
             </SAMPLE_ATTRIBUTE>
             <SAMPLE_ATTRIBUTE>
                 <TAG>Depth</TAG>
                 <VALUE>${row['Depth']}</VALUE>
+                <UNITS>m</UNITS>
             </SAMPLE_ATTRIBUTE>
             <py:if test="attributetest(row, 'Sample Collection Device')">
             <SAMPLE_ATTRIBUTE>
@@ -111,41 +114,49 @@ def attributetest(row, column):
             <SAMPLE_ATTRIBUTE>
                 <TAG>shellfish total weight</TAG>
                 <VALUE>${row['shellfish total weight']}</VALUE>
+                <UNITS>g</UNITS>
             </SAMPLE_ATTRIBUTE>
             <SAMPLE_ATTRIBUTE>
                 <TAG>shellfish soft tissue weight</TAG>
                 <VALUE>${row['shellfish soft tissue weight']}</VALUE>
+                <UNITS>g</UNITS>
             </SAMPLE_ATTRIBUTE>
             <SAMPLE_ATTRIBUTE>
                 <TAG>shell length</TAG>
                 <VALUE>${row['shell length']}</VALUE>
+                <UNITS>g</UNITS>
             </SAMPLE_ATTRIBUTE>
             <SAMPLE_ATTRIBUTE>
                 <TAG>shell width</TAG>
                 <VALUE>${row['shell width']}</VALUE>
+                <UNITS>g</UNITS>
             </SAMPLE_ATTRIBUTE>
             <py:if test="attributetest(row, 'adductor weight')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>adductor weight</TAG>
                 <VALUE>${row['adductor weight']}</VALUE>
+                <UNITS>g</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'gonad weight')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>gonad weight</TAG>
                 <VALUE>${row['gonad weight']}</VALUE>
+                <UNITS>g</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'shell markings')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>shell markings</TAG>
                 <VALUE>${row['shell markings']}</VALUE>
+                <UNITS>g</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'toxin burden')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>toxin burden</TAG>
                 <VALUE>${row['toxin burden']}</VALUE>
+                <UNITS>mg</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'treatment agent')">

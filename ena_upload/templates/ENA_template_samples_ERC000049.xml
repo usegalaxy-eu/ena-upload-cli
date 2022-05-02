@@ -152,6 +152,7 @@ def attributetest(row, column):
             <SAMPLE_ATTRIBUTE>
                 <TAG>completeness score</TAG>
                 <VALUE>${row['completeness score']}</VALUE>
+                <UNITS>%</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'completeness software')">
@@ -176,6 +177,7 @@ def attributetest(row, column):
             <SAMPLE_ATTRIBUTE>
                 <TAG>reassembly post binning</TAG>
                 <VALUE>${row['reassembly post binning']}</VALUE>
+                <UNITS>Yes</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'MAG coverage software')">
@@ -306,6 +308,7 @@ def attributetest(row, column):
             <SAMPLE_ATTRIBUTE>
                 <TAG>geographic location (altitude)</TAG>
                 <VALUE>${row['geographic location (altitude)']}</VALUE>
+                <UNITS>m</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <SAMPLE_ATTRIBUTE>
@@ -315,10 +318,12 @@ def attributetest(row, column):
             <SAMPLE_ATTRIBUTE>
                 <TAG>geographic location (latitude)</TAG>
                 <VALUE>${row['geographic location (latitude)']}</VALUE>
+                <UNITS>DD</UNITS>
             </SAMPLE_ATTRIBUTE>
             <SAMPLE_ATTRIBUTE>
                 <TAG>geographic location (longitude)</TAG>
                 <VALUE>${row['geographic location (longitude)']}</VALUE>
+                <UNITS>DD</UNITS>
             </SAMPLE_ATTRIBUTE>
             <py:if test="attributetest(row, 'geographic location (region and locality)')">
             <SAMPLE_ATTRIBUTE>
@@ -330,6 +335,7 @@ def attributetest(row, column):
             <SAMPLE_ATTRIBUTE>
                 <TAG>geographic location (depth)</TAG>
                 <VALUE>${row['geographic location (depth)']}</VALUE>
+                <UNITS>m</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <SAMPLE_ATTRIBUTE>
@@ -348,6 +354,7 @@ def attributetest(row, column):
             <SAMPLE_ATTRIBUTE>
                 <TAG>geographic location (elevation)</TAG>
                 <VALUE>${row['geographic location (elevation)']}</VALUE>
+                <UNITS>m</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'source material identifiers')">
@@ -372,6 +379,7 @@ def attributetest(row, column):
             <SAMPLE_ATTRIBUTE>
                 <TAG>amount or size of sample collected</TAG>
                 <VALUE>${row['amount or size of sample collected']}</VALUE>
+                <UNITS>m3</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'size fraction selected')">

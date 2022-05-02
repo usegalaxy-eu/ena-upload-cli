@@ -78,6 +78,7 @@ def attributetest(row, column):
             <SAMPLE_ATTRIBUTE>
                 <TAG>sample volume or weight for DNA extraction</TAG>
                 <VALUE>${row['sample volume or weight for DNA extraction']}</VALUE>
+                <UNITS>ng</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'nucleic acid extraction')">
@@ -201,10 +202,12 @@ def attributetest(row, column):
             <SAMPLE_ATTRIBUTE>
                 <TAG>geographic location (latitude)</TAG>
                 <VALUE>${row['geographic location (latitude)']}</VALUE>
+                <UNITS>DD</UNITS>
             </SAMPLE_ATTRIBUTE>
             <SAMPLE_ATTRIBUTE>
                 <TAG>geographic location (longitude)</TAG>
                 <VALUE>${row['geographic location (longitude)']}</VALUE>
+                <UNITS>DD</UNITS>
             </SAMPLE_ATTRIBUTE>
             <py:if test="attributetest(row, 'geographic location (region and locality)')">
             <SAMPLE_ATTRIBUTE>
@@ -330,6 +333,7 @@ def attributetest(row, column):
             <SAMPLE_ATTRIBUTE>
                 <TAG>amount or size of sample collected</TAG>
                 <VALUE>${row['amount or size of sample collected']}</VALUE>
+                <UNITS>m3</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'sample size sorting method')">
@@ -357,31 +361,37 @@ def attributetest(row, column):
             <SAMPLE_ATTRIBUTE>
                 <TAG>relative air humidity</TAG>
                 <VALUE>${row['relative air humidity']}</VALUE>
+                <UNITS>%</UNITS>
             </SAMPLE_ATTRIBUTE>
             <SAMPLE_ATTRIBUTE>
                 <TAG>absolute air humidity</TAG>
                 <VALUE>${row['absolute air humidity']}</VALUE>
+                <UNITS>kg</UNITS>
             </SAMPLE_ATTRIBUTE>
             <py:if test="attributetest(row, 'surface humidity')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>surface humidity</TAG>
                 <VALUE>${row['surface humidity']}</VALUE>
+                <UNITS>%</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <SAMPLE_ATTRIBUTE>
                 <TAG>air temperature</TAG>
                 <VALUE>${row['air temperature']}</VALUE>
+                <UNITS>ºC</UNITS>
             </SAMPLE_ATTRIBUTE>
             <py:if test="attributetest(row, 'surface temperature')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>surface temperature</TAG>
                 <VALUE>${row['surface temperature']}</VALUE>
+                <UNITS>ºC</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'surface moisture')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>surface moisture</TAG>
                 <VALUE>${row['surface moisture']}</VALUE>
+                <UNITS>parts/million</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'surface moisture pH')">
@@ -394,11 +404,13 @@ def attributetest(row, column):
             <SAMPLE_ATTRIBUTE>
                 <TAG>dew point</TAG>
                 <VALUE>${row['dew point']}</VALUE>
+                <UNITS>ºC</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <SAMPLE_ATTRIBUTE>
                 <TAG>carbon dioxide</TAG>
                 <VALUE>${row['carbon dioxide']}</VALUE>
+                <UNITS>µmol/L</UNITS>
             </SAMPLE_ATTRIBUTE>
             <py:if test="attributetest(row, 'subspecific genetic lineage')">
             <SAMPLE_ATTRIBUTE>

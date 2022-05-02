@@ -66,6 +66,7 @@ def attributetest(row, column):
             <SAMPLE_ATTRIBUTE>
                 <TAG>treatment dose</TAG>
                 <VALUE>${row['treatment dose']}</VALUE>
+                <UNITS>picomolar</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'treatment date')">

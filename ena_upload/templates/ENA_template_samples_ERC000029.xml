@@ -64,6 +64,7 @@ def attributetest(row, column):
             <SAMPLE_ATTRIBUTE>
                 <TAG>geographic location (altitude)</TAG>
                 <VALUE>${row['geographic location (altitude)']}</VALUE>
+                <UNITS>m</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <SAMPLE_ATTRIBUTE>
@@ -73,10 +74,12 @@ def attributetest(row, column):
             <SAMPLE_ATTRIBUTE>
                 <TAG>geographic location (latitude)</TAG>
                 <VALUE>${row['geographic location (latitude)']}</VALUE>
+                <UNITS>DD</UNITS>
             </SAMPLE_ATTRIBUTE>
             <SAMPLE_ATTRIBUTE>
                 <TAG>geographic location (longitude)</TAG>
                 <VALUE>${row['geographic location (longitude)']}</VALUE>
+                <UNITS>DD</UNITS>
             </SAMPLE_ATTRIBUTE>
             <py:if test="attributetest(row, 'geographic location (region and locality)')">
             <SAMPLE_ATTRIBUTE>
@@ -94,12 +97,14 @@ def attributetest(row, column):
             <SAMPLE_ATTRIBUTE>
                 <TAG>geographic location (depth)</TAG>
                 <VALUE>${row['geographic location (depth)']}</VALUE>
+                <UNITS>m</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'amount or size of sample collected')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>amount or size of sample collected</TAG>
                 <VALUE>${row['amount or size of sample collected']}</VALUE>
+                <UNITS>m3</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <SAMPLE_ATTRIBUTE>
@@ -146,6 +151,7 @@ def attributetest(row, column):
             <SAMPLE_ATTRIBUTE>
                 <TAG>host age</TAG>
                 <VALUE>${row['host age']}</VALUE>
+                <UNITS>years</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'host taxid')">
