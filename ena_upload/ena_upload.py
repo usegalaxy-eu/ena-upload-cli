@@ -20,7 +20,7 @@ from lxml import etree
 import pandas as pd
 import tempfile
 from ena_upload._version import __version__
-from ena_upload.check_remote import identify_action
+from ena_upload.check_remote import remote_check
 
 SCHEMA_TYPES = ['study', 'experiment', 'run', 'sample']
 
@@ -102,7 +102,7 @@ def check_columns(df, schema, action, dev, auto_action):
                     for index, row in df.iterrows():
                         remote_present = np.nan
                         try:
-                            remote_present = identify_action(
+                            remote_present = remote_check(
                                 schema, str(df['alias'][index]), dev)
 
                         except Exception as e:

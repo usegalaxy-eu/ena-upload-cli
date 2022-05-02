@@ -4,8 +4,8 @@ import requests
 URL = "https://www.ebi.ac.uk/ena/portal/api/search"
 DEV_URL = "https://wwwdev.ebi.ac.uk/ena/portal/api/search"
 
-def identify_action(entry_type, alias, dev):
-    ''' define action ['add' | 'modify'] that needs to be performed for this entry '''
+def remote_check(entry_type, alias, dev):
+    ''' Identidy if an ENA object is present or not '''
     query = {entry_type + '_alias': alias}
     remote_accessions = check_remote_entry(entry_type, query, dev)
     if isinstance(remote_accessions, list) and len(remote_accessions) > 0:
