@@ -20,7 +20,7 @@ from lxml import etree
 import pandas as pd
 import tempfile
 from ena_upload._version import __version__
-from ena_upload.check_remote import identify_action
+from ena_upload.check_remote import remote_check
 
 SCHEMA_TYPES = ['study', 'experiment', 'run', 'sample']
 
@@ -85,6 +85,7 @@ def extract_targets(action, schema_dataframe):
 
 def check_columns(df, schema, action, dev, auto_action):
     # checking for optional columns and if not present, adding them
+    print(f"Check if all required columns are present in the {schema} table.")
     if schema == 'sample':
         optional_columns = ['accession', 'submission_date',
                             'status', 'scientific_name', 'taxon_id']
@@ -101,23 +102,26 @@ def check_columns(df, schema, action, dev, auto_action):
                     for index, row in df.iterrows():
                         remote_present = np.nan
                         try:
-                            remote_present = str(identify_action(
-                                schema, str(df['alias'][index]), dev)).upper()
+                            remote_present = remote_check(
+                                schema, str(df['alias'][index]), dev)
 
                         except Exception as e:
                             print(e)
                             print(
                                 f"Something went wrong with detecting the ENA object {df['alias'][index]} on the servers of ENA. This object will be skipped.")
-                        if remote_present == np.nan:
-                            df.at[index, header] = np.nan
-                        elif remote_present and action == 'MODIFY':
+                        if remote_present and action == 'MODIFY':
                             df.at[index, header] = action
                             print(
-                                f"\t'{df['alias'][index]}' gets '{remote_present}' as action in the status column")
+                                f"\t'{df['alias'][index]}' gets '{action}' as action in the status column")
                         elif not remote_present and action in ['ADD', 'CANCEL', 'RELEASE']:
                             df.at[index, header] = action
                             print(
-                                f"\t'{df['alias'][index]}' gets '{remote_present}' as action in the status column")
+                                f"\t'{df['alias'][index]}' gets '{action}' as action in the status column")
+                        else:
+                            df.at[index, header] = np.nan
+                            print(
+                                f"\t'{df['alias'][index]}' gets skipped since it is already present at ENA")
+
                 else:
                     # status column contain action keywords
                     # for xml rendering, keywords require uppercase
