@@ -120,7 +120,7 @@ def check_columns(df, schema, action, dev, auto_action):
                         else:
                             df.at[index, header] = np.nan
                             print(
-                                f"\t'{df['alias'][index]}' gets skipped since it is already present at EN")
+                                f"\t'{df['alias'][index]}' gets skipped since it is already present at ENA")
 
                 else:
                     # status column contain action keywords
