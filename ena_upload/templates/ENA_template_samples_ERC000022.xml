@@ -481,7 +481,7 @@ def mandatorytest(row, column, index):
             <SAMPLE_ATTRIBUTE>
                 <TAG>mean annual and seasonal temperature</TAG>
                 <VALUE>${row['mean annual and seasonal temperature']}</VALUE>
-                <UNITS>ºC</UNITS>
+                <UNITS>ÂºC</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'mean annual and seasonal precipitation')">
@@ -588,7 +588,7 @@ def mandatorytest(row, column, index):
             <SAMPLE_ATTRIBUTE>
                 <TAG>total nitrogen</TAG>
                 <VALUE>${row['total nitrogen']}</VALUE>
-                <UNITS>µmol/L</UNITS>
+                <UNITS>Âµmol/L</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'history/previous land use')">

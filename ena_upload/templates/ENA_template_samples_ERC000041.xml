@@ -67,7 +67,7 @@ def mandatorytest(row, column, index):
             <SAMPLE_ATTRIBUTE>
                 <TAG>DNA concentration</TAG>
                 <VALUE>${row['DNA concentration']}</VALUE>
-                <UNITS>ng/µl</UNITS>
+                <UNITS>ng/Âµl</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'collection_date')">
@@ -112,7 +112,7 @@ def mandatorytest(row, column, index):
             <SAMPLE_ATTRIBUTE>
                 <TAG>sample storage temperature</TAG>
                 <VALUE>${row['sample storage temperature']}</VALUE>
-                <UNITS>°C</UNITS>
+                <UNITS>Â°C</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'sample storage location')">
@@ -131,7 +131,7 @@ def mandatorytest(row, column, index):
             <SAMPLE_ATTRIBUTE>
                 <TAG>sample transportation temperature</TAG>
                 <VALUE>${row['sample transportation temperature']}</VALUE>
-                <UNITS>°C</UNITS>
+                <UNITS>Â°C</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'sample transportation date')">

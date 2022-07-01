@@ -102,7 +102,7 @@ def mandatorytest(row, column, index):
             <SAMPLE_ATTRIBUTE>
                 <TAG>sample storage temperature</TAG>
                 <VALUE>${row['sample storage temperature']}</VALUE>
-                <UNITS>°C</UNITS>
+                <UNITS>Â°C</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'growth condition')">
@@ -115,7 +115,7 @@ def mandatorytest(row, column, index):
             <SAMPLE_ATTRIBUTE>
                 <TAG>Temperature</TAG>
                 <VALUE>${row['Temperature']}</VALUE>
-                <UNITS>ºC</UNITS>
+                <UNITS>ÂºC</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'Salinity')">

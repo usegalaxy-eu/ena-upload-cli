@@ -359,7 +359,7 @@ def mandatorytest(row, column, index):
             <SAMPLE_ATTRIBUTE>
                 <TAG>sample storage temperature</TAG>
                 <VALUE>${row['sample storage temperature']}</VALUE>
-                <UNITS>°C</UNITS>
+                <UNITS>Â°C</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'sample storage location')">
@@ -405,7 +405,7 @@ def mandatorytest(row, column, index):
             <SAMPLE_ATTRIBUTE>
                 <TAG>temperature</TAG>
                 <VALUE>${row['temperature']}</VALUE>
-                <UNITS>ºC</UNITS>
+                <UNITS>ÂºC</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'pH')">
@@ -418,21 +418,21 @@ def mandatorytest(row, column, index):
             <SAMPLE_ATTRIBUTE>
                 <TAG>ammonium</TAG>
                 <VALUE>${row['ammonium']}</VALUE>
-                <UNITS>µmol/L</UNITS>
+                <UNITS>Âµmol/L</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'bromide')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>bromide</TAG>
                 <VALUE>${row['bromide']}</VALUE>
-                <UNITS>µmol/L</UNITS>
+                <UNITS>Âµmol/L</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'calcium')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>calcium</TAG>
                 <VALUE>${row['calcium']}</VALUE>
-                <UNITS>µmol/L</UNITS>
+                <UNITS>Âµmol/L</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'chloride')">
@@ -446,7 +446,7 @@ def mandatorytest(row, column, index):
             <SAMPLE_ATTRIBUTE>
                 <TAG>chlorophyll</TAG>
                 <VALUE>${row['chlorophyll']}</VALUE>
-                <UNITS>µg/L</UNITS>
+                <UNITS>Âµg/L</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'diether lipids')">
@@ -460,84 +460,84 @@ def mandatorytest(row, column, index):
             <SAMPLE_ATTRIBUTE>
                 <TAG>dissolved carbon dioxide</TAG>
                 <VALUE>${row['dissolved carbon dioxide']}</VALUE>
-                <UNITS>µmol/L</UNITS>
+                <UNITS>Âµmol/L</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'dissolved hydrogen')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>dissolved hydrogen</TAG>
                 <VALUE>${row['dissolved hydrogen']}</VALUE>
-                <UNITS>µmol/L</UNITS>
+                <UNITS>Âµmol/L</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'dissolved inorganic carbon')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>dissolved inorganic carbon</TAG>
                 <VALUE>${row['dissolved inorganic carbon']}</VALUE>
-                <UNITS>µg/L</UNITS>
+                <UNITS>Âµg/L</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'dissolved organic nitrogen')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>dissolved organic nitrogen</TAG>
                 <VALUE>${row['dissolved organic nitrogen']}</VALUE>
-                <UNITS>µg/L</UNITS>
+                <UNITS>Âµg/L</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'dissolved oxygen')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>dissolved oxygen</TAG>
                 <VALUE>${row['dissolved oxygen']}</VALUE>
-                <UNITS>µmol/kg</UNITS>
+                <UNITS>Âµmol/kg</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'nitrate')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>nitrate</TAG>
                 <VALUE>${row['nitrate']}</VALUE>
-                <UNITS>µmol/L</UNITS>
+                <UNITS>Âµmol/L</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'nitrite')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>nitrite</TAG>
                 <VALUE>${row['nitrite']}</VALUE>
-                <UNITS>µmol/L</UNITS>
+                <UNITS>Âµmol/L</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'nitrogen')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>nitrogen</TAG>
                 <VALUE>${row['nitrogen']}</VALUE>
-                <UNITS>µmol/L</UNITS>
+                <UNITS>Âµmol/L</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'organic carbon')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>organic carbon</TAG>
                 <VALUE>${row['organic carbon']}</VALUE>
-                <UNITS>µmol/L</UNITS>
+                <UNITS>Âµmol/L</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'organic matter')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>organic matter</TAG>
                 <VALUE>${row['organic matter']}</VALUE>
-                <UNITS>µg/L</UNITS>
+                <UNITS>Âµg/L</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'organic nitrogen')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>organic nitrogen</TAG>
                 <VALUE>${row['organic nitrogen']}</VALUE>
-                <UNITS>µg/L</UNITS>
+                <UNITS>Âµg/L</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'phosphate')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>phosphate</TAG>
                 <VALUE>${row['phosphate']}</VALUE>
-                <UNITS>µmol/L</UNITS>
+                <UNITS>Âµmol/L</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'phospholipid fatty acid')">
@@ -551,7 +551,7 @@ def mandatorytest(row, column, index):
             <SAMPLE_ATTRIBUTE>
                 <TAG>potassium</TAG>
                 <VALUE>${row['potassium']}</VALUE>
-                <UNITS>µmol/L</UNITS>
+                <UNITS>Âµmol/L</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'salinity')">
@@ -565,28 +565,28 @@ def mandatorytest(row, column, index):
             <SAMPLE_ATTRIBUTE>
                 <TAG>silicate</TAG>
                 <VALUE>${row['silicate']}</VALUE>
-                <UNITS>µmol/L</UNITS>
+                <UNITS>Âµmol/L</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'sodium')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>sodium</TAG>
                 <VALUE>${row['sodium']}</VALUE>
-                <UNITS>µmol/L</UNITS>
+                <UNITS>Âµmol/L</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'sulfate')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>sulfate</TAG>
                 <VALUE>${row['sulfate']}</VALUE>
-                <UNITS>µmol/L</UNITS>
+                <UNITS>Âµmol/L</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'sulfide')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>sulfide</TAG>
                 <VALUE>${row['sulfide']}</VALUE>
-                <UNITS>µmol/L</UNITS>
+                <UNITS>Âµmol/L</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'miscellaneous parameter')">

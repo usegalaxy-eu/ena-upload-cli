@@ -440,14 +440,14 @@ def mandatorytest(row, column, index):
             <SAMPLE_ATTRIBUTE>
                 <TAG>air temperature</TAG>
                 <VALUE>${row['air temperature']}</VALUE>
-                <UNITS>ºC</UNITS>
+                <UNITS>ÂºC</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'surface temperature')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>surface temperature</TAG>
                 <VALUE>${row['surface temperature']}</VALUE>
-                <UNITS>ºC</UNITS>
+                <UNITS>ÂºC</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'surface moisture')">
@@ -467,14 +467,14 @@ def mandatorytest(row, column, index):
             <SAMPLE_ATTRIBUTE>
                 <TAG>dew point</TAG>
                 <VALUE>${row['dew point']}</VALUE>
-                <UNITS>ºC</UNITS>
+                <UNITS>ÂºC</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="mandatorytest(row, 'carbon dioxide', index)">
             <SAMPLE_ATTRIBUTE>
                 <TAG>carbon dioxide</TAG>
                 <VALUE>${row['carbon dioxide']}</VALUE>
-                <UNITS>µmol/L</UNITS>
+                <UNITS>Âµmol/L</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'subspecific genetic lineage')">

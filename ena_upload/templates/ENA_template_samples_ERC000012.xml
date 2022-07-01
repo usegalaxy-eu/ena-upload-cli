@@ -351,7 +351,7 @@ def mandatorytest(row, column, index):
             <SAMPLE_ATTRIBUTE>
                 <TAG>sample storage temperature</TAG>
                 <VALUE>${row['sample storage temperature']}</VALUE>
-                <UNITS>°C</UNITS>
+                <UNITS>Â°C</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'sample storage location')">
@@ -417,21 +417,21 @@ def mandatorytest(row, column, index):
             <SAMPLE_ATTRIBUTE>
                 <TAG>temperature</TAG>
                 <VALUE>${row['temperature']}</VALUE>
-                <UNITS>ºC</UNITS>
+                <UNITS>ÂºC</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'carbon dioxide')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>carbon dioxide</TAG>
                 <VALUE>${row['carbon dioxide']}</VALUE>
-                <UNITS>µmol/L</UNITS>
+                <UNITS>Âµmol/L</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'carbon monoxide')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>carbon monoxide</TAG>
                 <VALUE>${row['carbon monoxide']}</VALUE>
-                <UNITS>µM/L</UNITS>
+                <UNITS>ÂµM/L</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'oxygen')">
@@ -445,14 +445,14 @@ def mandatorytest(row, column, index):
             <SAMPLE_ATTRIBUTE>
                 <TAG>respirable particulate matter</TAG>
                 <VALUE>${row['respirable particulate matter']}</VALUE>
-                <UNITS>µg/m3</UNITS>
+                <UNITS>Âµg/m3</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'volatile organic compounds')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>volatile organic compounds</TAG>
                 <VALUE>${row['volatile organic compounds']}</VALUE>
-                <UNITS>µg/m3</UNITS>
+                <UNITS>Âµg/m3</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'sample salinity')">
@@ -466,7 +466,7 @@ def mandatorytest(row, column, index):
             <SAMPLE_ATTRIBUTE>
                 <TAG>methane</TAG>
                 <VALUE>${row['methane']}</VALUE>
-                <UNITS>µM/L</UNITS>
+                <UNITS>ÂµM/L</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'miscellaneous parameter')">

@@ -187,21 +187,21 @@ def mandatorytest(row, column, index):
             <SAMPLE_ATTRIBUTE>
                 <TAG>Oxygen Sensor</TAG>
                 <VALUE>${row['Oxygen Sensor']}</VALUE>
-                <UNITS>µmol/kg</UNITS>
+                <UNITS>Âµmol/kg</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'Nitrate Sensor')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>Nitrate Sensor</TAG>
                 <VALUE>${row['Nitrate Sensor']}</VALUE>
-                <UNITS>µmol/L</UNITS>
+                <UNITS>Âµmol/L</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="mandatorytest(row, 'Temperature', index)">
             <SAMPLE_ATTRIBUTE>
                 <TAG>Temperature</TAG>
                 <VALUE>${row['Temperature']}</VALUE>
-                <UNITS>ºC</UNITS>
+                <UNITS>ÂºC</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'Chlorophyll Sensor')">
