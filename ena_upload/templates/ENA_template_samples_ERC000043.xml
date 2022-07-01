@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?python
 import pandas as pd
+import sys
 def attributetest(row, column):
     if hasattr(row, column) and pd.notna(row[column]) and not str(row[column]).isspace() and str(row[column]).lower() not in ['nan', 'na']:
         return True 
     else:
         return False
+def mandatorytest(row, column):
+    if hasattr(row, column) and pd.notna(row[column]) and not str(row[column]).isspace() and str(row[column]).lower() not in ['nan', 'na']:
+        return True 
+    else:
+        sys.exit(f"The mandatory column '{column}' is not filled in at row '{row}'")
 ?>
 <SAMPLE_SET xmlns:py="http://genshi.edgewall.org/"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -91,7 +97,7 @@ def attributetest(row, column):
             <SAMPLE_ATTRIBUTE>
                 <TAG>sample storage temperature</TAG>
                 <VALUE>${row['sample storage temperature']}</VALUE>
-                <UNITS>Â°C</UNITS>
+                <UNITS>°C</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'growth condition')">
@@ -104,7 +110,7 @@ def attributetest(row, column):
             <SAMPLE_ATTRIBUTE>
                 <TAG>Temperature</TAG>
                 <VALUE>${row['Temperature']}</VALUE>
-                <UNITS>ÂºC</UNITS>
+                <UNITS>ºC</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'Salinity')">
@@ -139,10 +145,12 @@ def attributetest(row, column):
                 <VALUE>${row['culture_collection']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
+            <py:if test="mandatorytest(row, 'strain')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>strain</TAG>
                 <VALUE>${row['strain']}</VALUE>
             </SAMPLE_ATTRIBUTE>
+            </py:if>
             <py:if test="attributetest(row, 'Further Details')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>Further Details</TAG>

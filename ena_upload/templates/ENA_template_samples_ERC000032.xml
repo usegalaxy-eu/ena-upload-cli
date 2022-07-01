@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?python
 import pandas as pd
+import sys
 def attributetest(row, column):
     if hasattr(row, column) and pd.notna(row[column]) and not str(row[column]).isspace() and str(row[column]).lower() not in ['nan', 'na']:
         return True 
     else:
         return False
+def mandatorytest(row, column):
+    if hasattr(row, column) and pd.notna(row[column]) and not str(row[column]).isspace() and str(row[column]).lower() not in ['nan', 'na']:
+        return True 
+    else:
+        sys.exit(f"The mandatory column '{column}' is not filled in at row '{row}'")
 ?>
 <SAMPLE_SET xmlns:py="http://genshi.edgewall.org/"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -166,10 +172,12 @@ def attributetest(row, column):
                 <VALUE>${row['collection date']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
+            <py:if test="mandatorytest(row, 'geographic location (country and/or sea)')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>geographic location (country and/or sea)</TAG>
                 <VALUE>${row['geographic location (country and/or sea)']}</VALUE>
             </SAMPLE_ATTRIBUTE>
+            </py:if>
             <py:if test="attributetest(row, 'geographic location (latitude)')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>geographic location (latitude)</TAG>
@@ -202,14 +210,18 @@ def attributetest(row, column):
                 <VALUE>${row['host disease outcome']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
+            <py:if test="mandatorytest(row, 'host common name')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>host common name</TAG>
                 <VALUE>${row['host common name']}</VALUE>
             </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="mandatorytest(row, 'host subject id')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>host subject id</TAG>
                 <VALUE>${row['host subject id']}</VALUE>
             </SAMPLE_ATTRIBUTE>
+            </py:if>
             <py:if test="attributetest(row, 'host age')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>host age</TAG>
@@ -217,34 +229,48 @@ def attributetest(row, column):
                 <UNITS>years</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
+            <py:if test="mandatorytest(row, 'host health state')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>host health state</TAG>
                 <VALUE>${row['host health state']}</VALUE>
             </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="mandatorytest(row, 'host sex')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>host sex</TAG>
                 <VALUE>${row['host sex']}</VALUE>
             </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="mandatorytest(row, 'host scientific name')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>host scientific name</TAG>
                 <VALUE>${row['host scientific name']}</VALUE>
             </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="mandatorytest(row, 'influenza test method')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>influenza test method</TAG>
                 <VALUE>${row['influenza test method']}</VALUE>
             </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="mandatorytest(row, 'influenza test result')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>influenza test result</TAG>
                 <VALUE>${row['influenza test result']}</VALUE>
             </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="mandatorytest(row, 'other pathogens tested')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>other pathogens tested</TAG>
                 <VALUE>${row['other pathogens tested']}</VALUE>
             </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="mandatorytest(row, 'other pathogens test result')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>other pathogens test result</TAG>
                 <VALUE>${row['other pathogens test result']}</VALUE>
             </SAMPLE_ATTRIBUTE>
+            </py:if>
             <py:if test="attributetest(row, 'influenza virus type')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>influenza virus type</TAG>
@@ -275,14 +301,18 @@ def attributetest(row, column):
                 <VALUE>${row['lineage:swl (required for H1N1 viruses)']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
+            <py:if test="mandatorytest(row, 'collector name')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>collector name</TAG>
                 <VALUE>${row['collector name']}</VALUE>
             </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="mandatorytest(row, 'collecting institution')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>collecting institution</TAG>
                 <VALUE>${row['collecting institution']}</VALUE>
             </SAMPLE_ATTRIBUTE>
+            </py:if>
             <py:if test="attributetest(row, 'receipt date')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>receipt date</TAG>

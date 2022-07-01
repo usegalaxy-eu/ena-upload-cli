@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?python
 import pandas as pd
+import sys
 def attributetest(row, column):
     if hasattr(row, column) and pd.notna(row[column]) and not str(row[column]).isspace() and str(row[column]).lower() not in ['nan', 'na']:
         return True 
     else:
         return False
+def mandatorytest(row, column):
+    if hasattr(row, column) and pd.notna(row[column]) and not str(row[column]).isspace() and str(row[column]).lower() not in ['nan', 'na']:
+        return True 
+    else:
+        sys.exit(f"The mandatory column '{column}' is not filled in at row '{row}'")
 ?>
 <SAMPLE_SET xmlns:py="http://genshi.edgewall.org/"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -56,7 +62,7 @@ def attributetest(row, column):
             <SAMPLE_ATTRIBUTE>
                 <TAG>DNA concentration</TAG>
                 <VALUE>${row['DNA concentration']}</VALUE>
-                <UNITS>ng/Âµl</UNITS>
+                <UNITS>ng/µl</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'collection_date')">
@@ -101,7 +107,7 @@ def attributetest(row, column):
             <SAMPLE_ATTRIBUTE>
                 <TAG>sample storage temperature</TAG>
                 <VALUE>${row['sample storage temperature']}</VALUE>
-                <UNITS>Â°C</UNITS>
+                <UNITS>°C</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'sample storage location')">
@@ -120,7 +126,7 @@ def attributetest(row, column):
             <SAMPLE_ATTRIBUTE>
                 <TAG>sample transportation temperature</TAG>
                 <VALUE>${row['sample transportation temperature']}</VALUE>
-                <UNITS>Â°C</UNITS>
+                <UNITS>°C</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'sample transportation date')">
@@ -147,10 +153,12 @@ def attributetest(row, column):
                 <VALUE>${row['links to additional analysis']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
+            <py:if test="mandatorytest(row, 'isolate')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>isolate</TAG>
                 <VALUE>${row['isolate']}</VALUE>
             </SAMPLE_ATTRIBUTE>
+            </py:if>
             <py:if test="attributetest(row, 'sub_species')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>sub_species</TAG>
