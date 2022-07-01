@@ -140,6 +140,7 @@ Currently we refer to the [ENA Webin](https://wwwdev.ebi.ac.uk/ena/submit/webin/
 | library_source | mandatory | The LIBRARY_SOURCE specifies the type of source material that is being sequenced. | yes |
 | library_selection | mandatory | Method used to enrich the target in the sequence library preparation | yes |
 | platform | mandatory | The PLATFORM record selects which sequencing platform and platform-specific runtime parameters. This will be determined by the Center. | yes |
+| instrument_model | mandatory | Model of the sequencing instrument. | yes |
 | library_construction_protocol | optional | Free form text describing the protocol by which the sequencing library was constructed. |  |
 
 
