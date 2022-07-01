@@ -1,22 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?python
 import pandas as pd
+import sys
 def attributetest(row, column):
-    if hasattr(row, column) and pd.notna(row[column]) and not row[column].isspace() and str(row[column]).lower() not in ['nan', 'na']:
+    if hasattr(row, column) and pd.notna(row[column]) and not str(row[column]).isspace():
+        return True 
+def mandatorytest(row, column, index):
+    if hasattr(row, column) and pd.notna(row[column]) and not str(row[column]).isspace():
         return True 
     else:
-        return False
+        print("MISSING VALUE ERROR: The mandatory column '"+ str(column) + "' is not filled in at row '" + str(index) + "'" + "\n")
+        sys.exit("This process is terminated")
 ?>
 <STUDY_SET xmlns:py="http://genshi.edgewall.org/"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:noNamespaceSchemaLocation="ftp://ftp.sra.ebi.ac.uk/meta/xsd/sra_1_6/SRA.study.xsd">
     <py:for each="index, row in df.iterrows()">
-    <STUDY alias="${row.alias}"
-        center_name="${center}">
+    <STUDY alias="${row.alias}" center_name="${center}">
         <DESCRIPTOR>
+            <py:if test="mandatorytest(row, 'title', index)">
             <STUDY_TITLE>${row.title}</STUDY_TITLE>
+            </py:if>
+            <py:if test="mandatorytest(row, 'study_type', index)">
             <STUDY_TYPE existing_study_type="${row.study_type}"/>
+            </py:if>
+            <py:if test="attributetest(row, 'study_abstract')">
             <STUDY_ABSTRACT>${row.study_abstract}</STUDY_ABSTRACT>
+            </py:if>
             <py:if test="attributetest(row, 'center_project_name')">
             <CENTER_PROJECT_NAME>${row.center_project_name}</CENTER_PROJECT_NAME>
             </py:if>

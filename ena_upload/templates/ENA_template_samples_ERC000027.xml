@@ -3,45 +3,50 @@
 import pandas as pd
 import sys
 def attributetest(row, column):
-    if hasattr(row, column) and pd.notna(row[column]) and not str(row[column]).isspace() and str(row[column]).lower() not in ['nan', 'na']:
+    if hasattr(row, column) and pd.notna(row[column]) and not str(row[column]).isspace():
+        return True 
+def mandatorytest(row, column, index):
+    if hasattr(row, column) and pd.notna(row[column]) and not str(row[column]).isspace():
         return True 
     else:
-        return False
-def mandatorytest(row, column):
-    if hasattr(row, column) and pd.notna(row[column]) and not str(row[column]).isspace() and str(row[column]).lower() not in ['nan', 'na']:
-        return True 
-    else:
-        sys.exit(f"The mandatory column '{column}' is not filled in at row '{row}'")
+        print("MISSING VALUE ERROR: The mandatory column '"+ str(column) + "' is not filled in at row '" + str(index) + "'" + "\n")
+        sys.exit("This process is terminated")
 ?>
 <SAMPLE_SET xmlns:py="http://genshi.edgewall.org/"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:noNamespaceSchemaLocation="ftp://ftp.sra.ebi.ac.uk/meta/xsd/sra_1_6/SRA.sample.xsd">
     <py:for each="index, row in df.iterrows()">
     <SAMPLE alias="${row.alias}" center_name="${center}">
+        <py:if test="mandatorytest(row, 'title', index)">
         <TITLE>${row.title}</TITLE>
+        </py:if>
         <SAMPLE_NAME>
+            <py:if test="mandatorytest(row, 'taxon_id', index)">
             <TAXON_ID>${row.taxon_id}</TAXON_ID>
+            </py:if>
             <SCIENTIFIC_NAME>${row.scientific_name}</SCIENTIFIC_NAME>
             <py:if test="attributetest(row, 'common_name')">
             <COMMON_NAME>${row.common_name}</COMMON_NAME>
             </py:if>
         </SAMPLE_NAME>
+        <py:if test="attributetest(row, 'sample_description')">
         <DESCRIPTION>${row.sample_description}</DESCRIPTION>
+        </py:if>
         <SAMPLE_ATTRIBUTES>
-            <py:if test="mandatorytest(row, 'Event Date/Time')">
+            <py:if test="mandatorytest(row, 'Event Date/Time', index)">
             <SAMPLE_ATTRIBUTE>
                 <TAG>Event Date/Time</TAG>
                 <VALUE>${row['Event Date/Time']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="mandatorytest(row, 'Latitude Start')">
+            <py:if test="mandatorytest(row, 'Latitude Start', index)">
             <SAMPLE_ATTRIBUTE>
                 <TAG>Latitude Start</TAG>
                 <VALUE>${row['Latitude Start']}</VALUE>
                 <UNITS>DD</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="mandatorytest(row, 'Longitude Start')">
+            <py:if test="mandatorytest(row, 'Longitude Start', index)">
             <SAMPLE_ATTRIBUTE>
                 <TAG>Longitude Start</TAG>
                 <VALUE>${row['Longitude Start']}</VALUE>
@@ -62,20 +67,20 @@ def mandatorytest(row, column):
                 <UNITS>DD</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="mandatorytest(row, 'Depth')">
+            <py:if test="mandatorytest(row, 'Depth', index)">
             <SAMPLE_ATTRIBUTE>
                 <TAG>Depth</TAG>
                 <VALUE>${row['Depth']}</VALUE>
                 <UNITS>m</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="mandatorytest(row, 'Protocol Label')">
+            <py:if test="mandatorytest(row, 'Protocol Label', index)">
             <SAMPLE_ATTRIBUTE>
                 <TAG>Protocol Label</TAG>
                 <VALUE>${row['Protocol Label']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="mandatorytest(row, 'project name')">
+            <py:if test="mandatorytest(row, 'project name', index)">
             <SAMPLE_ATTRIBUTE>
                 <TAG>project name</TAG>
                 <VALUE>${row['project name']}</VALUE>
@@ -238,43 +243,43 @@ def mandatorytest(row, column):
                 <VALUE>${row['relevant standard operating procedures']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="mandatorytest(row, 'environmental package')">
+            <py:if test="mandatorytest(row, 'environmental package', index)">
             <SAMPLE_ATTRIBUTE>
                 <TAG>environmental package</TAG>
                 <VALUE>${row['environmental package']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="mandatorytest(row, 'environment (biome)')">
+            <py:if test="mandatorytest(row, 'environment (biome)', index)">
             <SAMPLE_ATTRIBUTE>
                 <TAG>environment (biome)</TAG>
                 <VALUE>${row['environment (biome)']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="mandatorytest(row, 'environment (feature)')">
+            <py:if test="mandatorytest(row, 'environment (feature)', index)">
             <SAMPLE_ATTRIBUTE>
                 <TAG>environment (feature)</TAG>
                 <VALUE>${row['environment (feature)']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="mandatorytest(row, 'environment (material)')">
+            <py:if test="mandatorytest(row, 'environment (material)', index)">
             <SAMPLE_ATTRIBUTE>
                 <TAG>environment (material)</TAG>
                 <VALUE>${row['environment (material)']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="mandatorytest(row, 'Sampling Campaign')">
+            <py:if test="mandatorytest(row, 'Sampling Campaign', index)">
             <SAMPLE_ATTRIBUTE>
                 <TAG>Sampling Campaign</TAG>
                 <VALUE>${row['Sampling Campaign']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="mandatorytest(row, 'Sampling Site')">
+            <py:if test="mandatorytest(row, 'Sampling Site', index)">
             <SAMPLE_ATTRIBUTE>
                 <TAG>Sampling Site</TAG>
                 <VALUE>${row['Sampling Site']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="mandatorytest(row, 'Sampling Platform')">
+            <py:if test="mandatorytest(row, 'Sampling Platform', index)">
             <SAMPLE_ATTRIBUTE>
                 <TAG>Sampling Platform</TAG>
                 <VALUE>${row['Sampling Platform']}</VALUE>
@@ -363,20 +368,20 @@ def mandatorytest(row, column):
                 <VALUE>${row['sample storage location']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="mandatorytest(row, 'Marine Region')">
+            <py:if test="mandatorytest(row, 'Marine Region', index)">
             <SAMPLE_ATTRIBUTE>
                 <TAG>Marine Region</TAG>
                 <VALUE>${row['Marine Region']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="mandatorytest(row, 'Temperature')">
+            <py:if test="mandatorytest(row, 'Temperature', index)">
             <SAMPLE_ATTRIBUTE>
                 <TAG>Temperature</TAG>
                 <VALUE>${row['Temperature']}</VALUE>
                 <UNITS>ºC</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="mandatorytest(row, 'Salinity')">
+            <py:if test="mandatorytest(row, 'Salinity', index)">
             <SAMPLE_ATTRIBUTE>
                 <TAG>Salinity</TAG>
                 <VALUE>${row['Salinity']}</VALUE>
