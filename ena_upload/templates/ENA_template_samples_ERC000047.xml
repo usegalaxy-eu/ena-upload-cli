@@ -214,10 +214,6 @@ def attributetest(row, column):
                 <VALUE>${row['assembly quality']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             <SAMPLE_ATTRIBUTE>
-                <TAG>investigation type</TAG>
-                <VALUE>${row['investigation type']}</VALUE>
-            </SAMPLE_ATTRIBUTE>
-            <SAMPLE_ATTRIBUTE>
                 <TAG>binning parameters</TAG>
                 <VALUE>${row['binning parameters']}</VALUE>
             </SAMPLE_ATTRIBUTE>
@@ -239,10 +235,10 @@ def attributetest(row, column):
                 <TAG>collection date</TAG>
                 <VALUE>${row['collection date']}</VALUE>
             </SAMPLE_ATTRIBUTE>
-            <py:if test="attributetest(row, 'geographic location (altitude)')">
+            <py:if test="attributetest(row, 'altitude')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>geographic location (altitude)</TAG>
-                <VALUE>${row['geographic location (altitude)']}</VALUE>
+                <TAG>altitude</TAG>
+                <VALUE>${row['altitude']}</VALUE>
                 <UNITS>m</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
@@ -266,29 +262,29 @@ def attributetest(row, column):
                 <VALUE>${row['geographic location (region and locality)']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'geographic location (depth)')">
+            <py:if test="attributetest(row, 'depth')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>geographic location (depth)</TAG>
-                <VALUE>${row['geographic location (depth)']}</VALUE>
+                <TAG>depth</TAG>
+                <VALUE>${row['depth']}</VALUE>
                 <UNITS>m</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <SAMPLE_ATTRIBUTE>
-                <TAG>environment (biome)</TAG>
-                <VALUE>${row['environment (biome)']}</VALUE>
+                <TAG>broad-scale environmental context</TAG>
+                <VALUE>${row['broad-scale environmental context']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             <SAMPLE_ATTRIBUTE>
-                <TAG>environment (feature)</TAG>
-                <VALUE>${row['environment (feature)']}</VALUE>
+                <TAG>local environmental context</TAG>
+                <VALUE>${row['local environmental context']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             <SAMPLE_ATTRIBUTE>
-                <TAG>environment (material)</TAG>
-                <VALUE>${row['environment (material)']}</VALUE>
+                <TAG>environmental medium</TAG>
+                <VALUE>${row['environmental medium']}</VALUE>
             </SAMPLE_ATTRIBUTE>
-            <py:if test="attributetest(row, 'geographic location (elevation)')">
+            <py:if test="attributetest(row, 'elevation')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>geographic location (elevation)</TAG>
-                <VALUE>${row['geographic location (elevation)']}</VALUE>
+                <TAG>elevation</TAG>
+                <VALUE>${row['elevation']}</VALUE>
                 <UNITS>m</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
@@ -296,12 +292,6 @@ def attributetest(row, column):
             <SAMPLE_ATTRIBUTE>
                 <TAG>source material identifiers</TAG>
                 <VALUE>${row['source material identifiers']}</VALUE>
-            </SAMPLE_ATTRIBUTE>
-            </py:if>
-            <py:if test="attributetest(row, 'sample collection device or method')">
-            <SAMPLE_ATTRIBUTE>
-                <TAG>sample collection device or method</TAG>
-                <VALUE>${row['sample collection device or method']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'sample material processing')">
@@ -331,6 +321,18 @@ def attributetest(row, column):
                 <TAG>metagenomic source</TAG>
                 <VALUE>${row['metagenomic source']}</VALUE>
             </SAMPLE_ATTRIBUTE>
+            <py:if test="attributetest(row, 'sample collection device')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>sample collection device</TAG>
+                <VALUE>${row['sample collection device']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="attributetest(row, 'sample collection method')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>sample collection method</TAG>
+                <VALUE>${row['sample collection method']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
             <py:if test="attributetest(row, 'relationship to oxygen')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>relationship to oxygen</TAG>

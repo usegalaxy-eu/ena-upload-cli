@@ -92,6 +92,7 @@
                                                                         <xs:enumeration value="umi_barcode"/>
                                                                         <xs:enumeration value="feature_barcode"/>
                                                                         <xs:enumeration value="sample_barcode"/>
+                                                                        <xs:enumeration value="spatial_barcode"/>
                                                                         <xs:enumeration value=""/>
                                                                     </xs:restriction>
                                                                 </xs:simpleType>

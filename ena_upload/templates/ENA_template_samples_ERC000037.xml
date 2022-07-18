@@ -63,10 +63,10 @@ def attributetest(row, column):
                 <TAG>collection date</TAG>
                 <VALUE>${row['collection date']}</VALUE>
             </SAMPLE_ATTRIBUTE>
-            <py:if test="attributetest(row, 'geographic location (altitude)')">
+            <py:if test="attributetest(row, 'altitude')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>geographic location (altitude)</TAG>
-                <VALUE>${row['geographic location (altitude)']}</VALUE>
+                <TAG>altitude</TAG>
+                <VALUE>${row['altitude']}</VALUE>
                 <UNITS>m</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
@@ -96,29 +96,29 @@ def attributetest(row, column):
                 <VALUE>${row['identified_by']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'geographic location (depth)')">
+            <py:if test="attributetest(row, 'depth')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>geographic location (depth)</TAG>
-                <VALUE>${row['geographic location (depth)']}</VALUE>
+                <TAG>depth</TAG>
+                <VALUE>${row['depth']}</VALUE>
                 <UNITS>m</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'environment (biome)')">
+            <py:if test="attributetest(row, 'broad-scale environmental context')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>environment (biome)</TAG>
-                <VALUE>${row['environment (biome)']}</VALUE>
+                <TAG>broad-scale environmental context</TAG>
+                <VALUE>${row['broad-scale environmental context']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'environment (feature)')">
+            <py:if test="attributetest(row, 'local environmental context')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>environment (feature)</TAG>
-                <VALUE>${row['environment (feature)']}</VALUE>
+                <TAG>local environmental context</TAG>
+                <VALUE>${row['local environmental context']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'geographic location (elevation)')">
+            <py:if test="attributetest(row, 'elevation')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>geographic location (elevation)</TAG>
-                <VALUE>${row['geographic location (elevation)']}</VALUE>
+                <TAG>elevation</TAG>
+                <VALUE>${row['elevation']}</VALUE>
                 <UNITS>m</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
@@ -383,17 +383,17 @@ def attributetest(row, column):
                 <VALUE>${row['drainage classification']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'texture')">
+            <py:if test="attributetest(row, 'soil texture measurement')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>texture</TAG>
-                <VALUE>${row['texture']}</VALUE>
+                <TAG>soil texture measurement</TAG>
+                <VALUE>${row['soil texture measurement']}</VALUE>
                 <UNITS>% sand/silt/clay</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'texture method')">
+            <py:if test="attributetest(row, 'soil texture method')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>texture method</TAG>
-                <VALUE>${row['texture method']}</VALUE>
+                <TAG>soil texture method</TAG>
+                <VALUE>${row['soil texture method']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'soil water content')">

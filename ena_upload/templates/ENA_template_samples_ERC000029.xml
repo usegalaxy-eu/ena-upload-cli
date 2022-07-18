@@ -60,10 +60,10 @@ def attributetest(row, column):
                 <TAG>collection date</TAG>
                 <VALUE>${row['collection date']}</VALUE>
             </SAMPLE_ATTRIBUTE>
-            <py:if test="attributetest(row, 'geographic location (altitude)')">
+            <py:if test="attributetest(row, 'altitude')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>geographic location (altitude)</TAG>
-                <VALUE>${row['geographic location (altitude)']}</VALUE>
+                <TAG>altitude</TAG>
+                <VALUE>${row['altitude']}</VALUE>
                 <UNITS>m</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
@@ -93,10 +93,10 @@ def attributetest(row, column):
                 <VALUE>${row['identified_by']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'geographic location (depth)')">
+            <py:if test="attributetest(row, 'depth')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>geographic location (depth)</TAG>
-                <VALUE>${row['geographic location (depth)']}</VALUE>
+                <TAG>depth</TAG>
+                <VALUE>${row['depth']}</VALUE>
                 <UNITS>m</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
