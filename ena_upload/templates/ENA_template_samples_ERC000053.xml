@@ -78,17 +78,17 @@ def attributetest(row, column):
                 <VALUE>${row['identified_by']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'geographic location (depth)')">
+            <py:if test="attributetest(row, 'depth')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>geographic location (depth)</TAG>
-                <VALUE>${row['geographic location (depth)']}</VALUE>
+                <TAG>depth</TAG>
+                <VALUE>${row['depth']}</VALUE>
                 <UNITS>m</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'geographic location (elevation)')">
+            <py:if test="attributetest(row, 'elevation')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>geographic location (elevation)</TAG>
-                <VALUE>${row['geographic location (elevation)']}</VALUE>
+                <TAG>elevation</TAG>
+                <VALUE>${row['elevation']}</VALUE>
                 <UNITS>m</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>

@@ -69,6 +69,7 @@
     <INSTRUMENT_MODEL py:when="row.instrument_model.lower().strip() == 'pacbio rs ii'">PacBio RS II</INSTRUMENT_MODEL>
     <INSTRUMENT_MODEL py:when="row.instrument_model.lower().strip() == 'sequel'">Sequel</INSTRUMENT_MODEL>
     <INSTRUMENT_MODEL py:when="row.instrument_model.lower().strip() == 'sequel ii'">Sequel II</INSTRUMENT_MODEL>
+    <INSTRUMENT_MODEL py:when="row.instrument_model.lower().strip() == 'sequel iie'">Sequel IIe</INSTRUMENT_MODEL>
     <INSTRUMENT_MODEL py:when="row.instrument_model.lower().strip() == 'unspecified'">unspecified</INSTRUMENT_MODEL>
 </PACBIO_SMRT>
 <ION_TORRENT py:when="row.platform.lower().strip() == 'ion_torrent'" py:choose="">
