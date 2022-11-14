@@ -92,10 +92,12 @@ def attributetest(row, column):
                 <VALUE>${row['adapters']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
+            <py:if test="attributetest(row, 'sequencing method')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>sequencing method</TAG>
                 <VALUE>${row['sequencing method']}</VALUE>
             </SAMPLE_ATTRIBUTE>
+            </py:if>
             <py:if test="attributetest(row, 'relevant electronic resources')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>relevant electronic resources</TAG>
@@ -169,11 +171,13 @@ def attributetest(row, column):
                 <VALUE>${row['completeness approach']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
+            <py:if test="attributetest(row, 'contamination score')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>contamination score</TAG>
                 <VALUE>${row['contamination score']}</VALUE>
                 <UNITS>%</UNITS>
             </SAMPLE_ATTRIBUTE>
+            </py:if>
             <py:if test="attributetest(row, 'contamination screening input')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>contamination screening input</TAG>
@@ -192,10 +196,12 @@ def attributetest(row, column):
                 <VALUE>${row['decontamination software']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
+            <py:if test="attributetest(row, 'assembly quality')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>assembly quality</TAG>
                 <VALUE>${row['assembly quality']}</VALUE>
             </SAMPLE_ATTRIBUTE>
+            </py:if>
             <SAMPLE_ATTRIBUTE>
                 <TAG>taxonomic identity marker</TAG>
                 <VALUE>${row['taxonomic identity marker']}</VALUE>
