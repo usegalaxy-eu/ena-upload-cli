@@ -116,10 +116,12 @@ def attributetest(row, column):
                 <VALUE>${row['number of standard tRNAs extracted']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
+            <py:if test="attributetest(row, 'assembly software')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>assembly software</TAG>
                 <VALUE>${row['assembly software']}</VALUE>
             </SAMPLE_ATTRIBUTE>
+            </py:if>
             <py:if test="attributetest(row, 'feature prediction')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>feature prediction</TAG>
