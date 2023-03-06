@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?python
 import pandas as pd
+import sys
 def attributetest(row, column):
     if hasattr(row, column) and pd.notna(row[column]) and not str(row[column]).isspace() and str(row[column]).lower() not in ['nan', 'na']:
         return True 
     else:
         return False
+def mandatorytest(row, column):
+    if hasattr(row, column) and pd.notna(row[column]) and not str(row[column]).isspace() and str(row[column]).lower() not in ['nan', 'na']:
+        return True 
+    else:
+        sys.exit(f"The mandatory column '{column}' is not filled in at row '{row}'")
 ?>
 <SAMPLE_SET xmlns:py="http://genshi.edgewall.org/"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -22,14 +28,18 @@ def attributetest(row, column):
         </SAMPLE_NAME>
         <DESCRIPTION>${row.sample_description}</DESCRIPTION>
         <SAMPLE_ATTRIBUTES>
+            <py:if test="mandatorytest(row, 'collection_date')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>collection_date</TAG>
                 <VALUE>${row['collection_date']}</VALUE>
             </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="mandatorytest(row, 'isolation_source')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>isolation_source</TAG>
                 <VALUE>${row['isolation_source']}</VALUE>
             </SAMPLE_ATTRIBUTE>
+            </py:if>
             <py:if test="attributetest(row, 'collected_by')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>collected_by</TAG>
@@ -54,10 +64,12 @@ def attributetest(row, column):
                 <VALUE>${row['receipt date']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
+            <py:if test="mandatorytest(row, 'isolate')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>isolate</TAG>
                 <VALUE>${row['isolate']}</VALUE>
             </SAMPLE_ATTRIBUTE>
+            </py:if>
             <py:if test="attributetest(row, 'serotype')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>serotype</TAG>

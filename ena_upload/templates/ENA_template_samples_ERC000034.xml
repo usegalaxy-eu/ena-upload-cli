@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?python
 import pandas as pd
+import sys
 def attributetest(row, column):
     if hasattr(row, column) and pd.notna(row[column]) and not str(row[column]).isspace() and str(row[column]).lower() not in ['nan', 'na']:
         return True 
     else:
         return False
+def mandatorytest(row, column):
+    if hasattr(row, column) and pd.notna(row[column]) and not str(row[column]).isspace() and str(row[column]).lower() not in ['nan', 'na']:
+        return True 
+    else:
+        sys.exit(f"The mandatory column '{column}' is not filled in at row '{row}'")
 ?>
 <SAMPLE_SET xmlns:py="http://genshi.edgewall.org/"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -22,14 +28,18 @@ def attributetest(row, column):
         </SAMPLE_NAME>
         <DESCRIPTION>${row.sample_description}</DESCRIPTION>
         <SAMPLE_ATTRIBUTES>
+            <py:if test="mandatorytest(row, 'tissue_type')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>tissue_type</TAG>
                 <VALUE>${row['tissue_type']}</VALUE>
             </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="mandatorytest(row, 'sex')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>sex</TAG>
                 <VALUE>${row['sex']}</VALUE>
             </SAMPLE_ATTRIBUTE>
+            </py:if>
             <py:if test="attributetest(row, 'date of birth')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>date of birth</TAG>
@@ -42,14 +52,18 @@ def attributetest(row, column):
                 <VALUE>${row['date of death']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
+            <py:if test="mandatorytest(row, 'diagnosis')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>diagnosis</TAG>
                 <VALUE>${row['diagnosis']}</VALUE>
             </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="mandatorytest(row, 'strain')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>strain</TAG>
                 <VALUE>${row['strain']}</VALUE>
             </SAMPLE_ATTRIBUTE>
+            </py:if>
             <py:if test="attributetest(row, 'tumor grading (OBI_0600002)')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>tumor grading (OBI_0600002)</TAG>
