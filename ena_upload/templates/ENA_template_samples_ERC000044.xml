@@ -53,12 +53,12 @@ def attributetest(row, column):
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <SAMPLE_ATTRIBUTE>
-                <TAG>collection_date</TAG>
-                <VALUE>${row['collection_date']}</VALUE>
-            </SAMPLE_ATTRIBUTE>
-            <SAMPLE_ATTRIBUTE>
                 <TAG>collected_by</TAG>
                 <VALUE>${row['collected_by']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            <SAMPLE_ATTRIBUTE>
+                <TAG>collection date</TAG>
+                <VALUE>${row['collection date']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             <SAMPLE_ATTRIBUTE>
                 <TAG>geographic location (country and/or sea)</TAG>

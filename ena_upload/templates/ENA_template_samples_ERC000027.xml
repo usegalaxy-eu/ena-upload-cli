@@ -23,10 +23,6 @@ def attributetest(row, column):
         <DESCRIPTION>${row.sample_description}</DESCRIPTION>
         <SAMPLE_ATTRIBUTES>
             <SAMPLE_ATTRIBUTE>
-                <TAG>Event Date/Time</TAG>
-                <VALUE>${row['Event Date/Time']}</VALUE>
-            </SAMPLE_ATTRIBUTE>
-            <SAMPLE_ATTRIBUTE>
                 <TAG>Latitude Start</TAG>
                 <VALUE>${row['Latitude Start']}</VALUE>
                 <UNITS>DD</UNITS>
@@ -224,6 +220,16 @@ def attributetest(row, column):
                 <TAG>environmental package</TAG>
                 <VALUE>${row['environmental package']}</VALUE>
             </SAMPLE_ATTRIBUTE>
+            <SAMPLE_ATTRIBUTE>
+                <TAG>collection date</TAG>
+                <VALUE>${row['collection date']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            <py:if test="attributetest(row, 'geographic location (country and/or sea)')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>geographic location (country and/or sea)</TAG>
+                <VALUE>${row['geographic location (country and/or sea)']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
             <SAMPLE_ATTRIBUTE>
                 <TAG>broad-scale environmental context</TAG>
                 <VALUE>${row['broad-scale environmental context']}</VALUE>

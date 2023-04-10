@@ -23,10 +23,6 @@ def attributetest(row, column):
         <DESCRIPTION>${row.sample_description}</DESCRIPTION>
         <SAMPLE_ATTRIBUTES>
             <SAMPLE_ATTRIBUTE>
-                <TAG>collection_date</TAG>
-                <VALUE>${row['collection_date']}</VALUE>
-            </SAMPLE_ATTRIBUTE>
-            <SAMPLE_ATTRIBUTE>
                 <TAG>isolation_source</TAG>
                 <VALUE>${row['isolation_source']}</VALUE>
             </SAMPLE_ATTRIBUTE>
@@ -36,6 +32,10 @@ def attributetest(row, column):
                 <VALUE>${row['collected_by']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
+            <SAMPLE_ATTRIBUTE>
+                <TAG>collection date</TAG>
+                <VALUE>${row['collection date']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
             <py:if test="attributetest(row, 'geographic location (country and/or sea)')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>geographic location (country and/or sea)</TAG>
