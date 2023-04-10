@@ -58,6 +58,18 @@ def attributetest(row, column):
                 <VALUE>${row['protocol']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
+            <py:if test="attributetest(row, 'collection date')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>collection date</TAG>
+                <VALUE>${row['collection date']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="attributetest(row, 'geographic location (country and/or sea)')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>geographic location (country and/or sea)</TAG>
+                <VALUE>${row['geographic location (country and/or sea)']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
             <py:if test="attributetest(row, 'sampling time point')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>sampling time point</TAG>

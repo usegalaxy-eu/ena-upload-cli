@@ -245,12 +245,12 @@ def attributetest(row, column):
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <SAMPLE_ATTRIBUTE>
-                <TAG>collection_date</TAG>
-                <VALUE>${row['collection_date']}</VALUE>
-            </SAMPLE_ATTRIBUTE>
-            <SAMPLE_ATTRIBUTE>
                 <TAG>isolation_source</TAG>
                 <VALUE>${row['isolation_source']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            <SAMPLE_ATTRIBUTE>
+                <TAG>collection date</TAG>
+                <VALUE>${row['collection date']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             <py:if test="attributetest(row, 'altitude')">
             <SAMPLE_ATTRIBUTE>

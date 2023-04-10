@@ -59,16 +59,16 @@ def attributetest(row, column):
                 <UNITS>ng/µl</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'collection_date')">
-            <SAMPLE_ATTRIBUTE>
-                <TAG>collection_date</TAG>
-                <VALUE>${row['collection_date']}</VALUE>
-            </SAMPLE_ATTRIBUTE>
-            </py:if>
             <py:if test="attributetest(row, 'isolation_source')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>isolation_source</TAG>
                 <VALUE>${row['isolation_source']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="attributetest(row, 'collection date')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>collection date</TAG>
+                <VALUE>${row['collection date']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'geographic location (country and/or sea)')">
