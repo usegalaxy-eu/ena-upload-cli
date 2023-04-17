@@ -22,6 +22,34 @@ def attributetest(row, column):
         </SAMPLE_NAME>
         <DESCRIPTION>${row.sample_description}</DESCRIPTION>
         <SAMPLE_ATTRIBUTES>
+            <py:if test="attributetest(row, 'Latitude Start')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>Latitude Start</TAG>
+                <VALUE>${row['Latitude Start']}</VALUE>
+                <UNITS>DD</UNITS>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="attributetest(row, 'Longitude Start')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>Longitude Start</TAG>
+                <VALUE>${row['Longitude Start']}</VALUE>
+                <UNITS>DD</UNITS>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="attributetest(row, 'Latitude End')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>Latitude End</TAG>
+                <VALUE>${row['Latitude End']}</VALUE>
+                <UNITS>DD</UNITS>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="attributetest(row, 'Longitude End')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>Longitude End</TAG>
+                <VALUE>${row['Longitude End']}</VALUE>
+                <UNITS>DD</UNITS>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
             <SAMPLE_ATTRIBUTE>
                 <TAG>organism part</TAG>
                 <VALUE>${row['organism part']}</VALUE>
@@ -58,16 +86,20 @@ def attributetest(row, column):
                 <TAG>geographic location (country and/or sea)</TAG>
                 <VALUE>${row['geographic location (country and/or sea)']}</VALUE>
             </SAMPLE_ATTRIBUTE>
+            <py:if test="attributetest(row, 'geographic location (latitude)')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>geographic location (latitude)</TAG>
                 <VALUE>${row['geographic location (latitude)']}</VALUE>
                 <UNITS>DD</UNITS>
             </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="attributetest(row, 'geographic location (longitude)')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>geographic location (longitude)</TAG>
                 <VALUE>${row['geographic location (longitude)']}</VALUE>
                 <UNITS>DD</UNITS>
             </SAMPLE_ATTRIBUTE>
+            </py:if>
             <SAMPLE_ATTRIBUTE>
                 <TAG>geographic location (region and locality)</TAG>
                 <VALUE>${row['geographic location (region and locality)']}</VALUE>
@@ -190,18 +222,6 @@ def attributetest(row, column):
                 <VALUE>${row['GAL']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'bio_material')">
-            <SAMPLE_ATTRIBUTE>
-                <TAG>bio_material</TAG>
-                <VALUE>${row['bio_material']}</VALUE>
-            </SAMPLE_ATTRIBUTE>
-            </py:if>
-            <py:if test="attributetest(row, 'specimen_voucher')">
-            <SAMPLE_ATTRIBUTE>
-                <TAG>specimen_voucher</TAG>
-                <VALUE>${row['specimen_voucher']}</VALUE>
-            </SAMPLE_ATTRIBUTE>
-            </py:if>
             <py:if test="attributetest(row, 'specimen_id')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>specimen_id</TAG>
@@ -218,6 +238,24 @@ def attributetest(row, column):
             <SAMPLE_ATTRIBUTE>
                 <TAG>proxy voucher</TAG>
                 <VALUE>${row['proxy voucher']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="attributetest(row, 'proxy biomaterial')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>proxy biomaterial</TAG>
+                <VALUE>${row['proxy biomaterial']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="attributetest(row, 'bio_material')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>bio_material</TAG>
+                <VALUE>${row['bio_material']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="attributetest(row, 'specimen_voucher')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>specimen_voucher</TAG>
+                <VALUE>${row['specimen_voucher']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'culture_or_strain_id')">
