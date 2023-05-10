@@ -218,6 +218,11 @@
           <xs:documentation>Genotyping by sequencing is a method to discover single nucleotide polymorphisms for genotyping studies.</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
+      <xs:enumeration value="Ribo-Seq">
+        <xs:annotation>
+          <xs:documentation>Ribosome profiling (also named ribosome footprinting) that uses specialized messenger RNA (mRNA) sequencing to determine which mRNAs are being actively translated. It produces a "global snapshot" of all the ribosomes active in a cell at a particular moment, known as a translatome.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
       <xs:enumeration value="OTHER">
         <xs:annotation>
           <xs:documentation> Library strategy not listed. </xs:documentation>
