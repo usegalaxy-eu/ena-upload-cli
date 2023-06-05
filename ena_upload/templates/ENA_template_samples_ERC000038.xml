@@ -51,12 +51,10 @@ def attributetest(row, column):
                 <TAG>collection date</TAG>
                 <VALUE>${row['collection date']}</VALUE>
             </SAMPLE_ATTRIBUTE>
-            <py:if test="attributetest(row, 'geographic location (country and/or sea)')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>geographic location (country and/or sea)</TAG>
                 <VALUE>${row['geographic location (country and/or sea)']}</VALUE>
             </SAMPLE_ATTRIBUTE>
-            </py:if>
             <SAMPLE_ATTRIBUTE>
                 <TAG>broad-scale environmental context</TAG>
                 <VALUE>${row['broad-scale environmental context']}</VALUE>
