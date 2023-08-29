@@ -11,7 +11,7 @@ def attributetest(row, column):
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:noNamespaceSchemaLocation="ftp://ftp.sra.ebi.ac.uk/meta/xsd/sra_1_6/SRA.run.xsd">
-    <py:for each="alias, experiment_alias in run_groups.iteritems()">
+    <py:for each="alias, experiment_alias in run_groups.items()">
     <RUN alias="${alias}" center_name="${center}">
         <EXPERIMENT_REF refname="${experiment_alias}"/>
         <DATA_BLOCK>
