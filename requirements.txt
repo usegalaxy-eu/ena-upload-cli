@@ -1,6 +1,6 @@
-genshi
-lxml
+genshi==0.7.7
+lxml==4.9.3
 pandas>=1.2
-pyyaml
-requests
-openpyxl
+pyyaml==5.1
+requests==2.31.0
+openpyxl==3.1.2
