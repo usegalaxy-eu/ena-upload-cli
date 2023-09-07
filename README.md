@@ -232,26 +232,26 @@ By default the updated tables after submission will have the action `added` in t
 
 ## Test the tool
 
-* **add metadata and sequence data**
+* **Add metadata and sequence data**
   ```
   ena-upload-cli --action add --center 'your_center_name' --study example_tables/ENA_template_studies.tsv --sample example_tables/ENA_template_samples.tsv --experiment example_tables/ENA_template_experiments.tsv --run example_tables/ENA_template_runs.tsv --data example_data/*gz --dev --secret .secret.yml
   ```
 
-* **add metadata only**
+* **Add metadata only**
   ```
   ena-upload-cli --action add --center 'your_center_name' --study example_tables/ENA_template_studies.tsv --sample example_tables/ENA_template_samples.tsv --experiment example_tables/ENA_template_experiments.tsv --run example_tables/ENA_template_runs_md5sums.tsv --dev --secret .secret.yml
   ```
-* **add studies**
+* **Add studies**
   ```
   ena-upload-cli --action add --center 'your_center_name' --study example_tables/ENA_template_studies.tsv --dev --secret .secret.yml
   ```
 
-* **modify sample metadata**
+* **Modify sample metadata**
   ```
   ena-upload-cli --action modify --center 'your_center_name' --sample example_tables/ENA_template_samples_modify.tsv --dev --secret .secret.yml
   ```
 
-* **viral data**
+* **Viral data**
   ```
   ena-upload-cli --action add --center 'your_center_name' --study example_tables/ENA_template_studies.tsv --sample example_tables/ENA_template_samples_vir.tsv --experiment example_tables/ENA_template_experiments.tsv --run example_tables/ENA_template_runs.tsv --data example_data/*gz --dev --checklist ERC000033 --secret .secret.yml
   ```
@@ -261,7 +261,7 @@ By default the updated tables after submission will have the action `added` in t
   ena-upload-cli --action add --center 'your_center_name' --data example_data/*gz --dev --checklist ERC000033 --secret .secret.yml --xlsx example_tables/ENA_excel_example_ERC000033.xlsx 
   ```
 
-* **release submission**
+* **Release submission**
   ```
   ena-upload-cli --action release --center'your_center_name' --study example_tables/ENA_template_studies_release.tsv --dev --secret .secret.yml 
   ```
