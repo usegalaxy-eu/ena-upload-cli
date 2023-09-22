@@ -33,12 +33,6 @@ def mandatorytest(row, column, index):
         <DESCRIPTION>${row.sample_description}</DESCRIPTION>
         </py:if>
         <SAMPLE_ATTRIBUTES>
-            <py:if test="mandatorytest(row, 'Event Date/Time', index)">
-            <SAMPLE_ATTRIBUTE>
-                <TAG>Event Date/Time</TAG>
-                <VALUE>${row['Event Date/Time']}</VALUE>
-            </SAMPLE_ATTRIBUTE>
-            </py:if>
             <py:if test="mandatorytest(row, 'Latitude Start', index)">
             <SAMPLE_ATTRIBUTE>
                 <TAG>Latitude Start</TAG>
@@ -72,27 +66,31 @@ def mandatorytest(row, column, index):
                 <VALUE>${row['Protocol Label']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="mandatorytest(row, 'environment (biome)', index)">
+            <py:if test="mandatorytest(row, 'collection date', index)">
             <SAMPLE_ATTRIBUTE>
                 <TAG>collection date</TAG>
                 <VALUE>${row['collection date']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="mandatorytest(row, 'environment (feature)', index)">
+            <py:if test="mandatorytest(row, 'geographic location (country and/or sea)', index)">
             <SAMPLE_ATTRIBUTE>
                 <TAG>geographic location (country and/or sea)</TAG>
                 <VALUE>${row['geographic location (country and/or sea)']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="mandatorytest(row, 'environment (material)', index)">
+            <py:if test="mandatorytest(row, 'broad-scale environmental context', index)">
             <SAMPLE_ATTRIBUTE>
                 <TAG>broad-scale environmental context</TAG>
                 <VALUE>${row['broad-scale environmental context']}</VALUE>
             </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="mandatorytest(row, 'local environmental context', index)">
             <SAMPLE_ATTRIBUTE>
                 <TAG>local environmental context</TAG>
                 <VALUE>${row['local environmental context']}</VALUE>
             </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="mandatorytest(row, 'environmental medium', index)">
             <SAMPLE_ATTRIBUTE>
                 <TAG>environmental medium</TAG>
                 <VALUE>${row['environmental medium']}</VALUE>

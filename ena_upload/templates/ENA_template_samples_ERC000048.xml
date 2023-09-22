@@ -105,7 +105,7 @@ def mandatorytest(row, column, index):
                 <VALUE>${row['adapters']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="mandatorytest(row, 'sequencing method', index)">
+            <py:if test="attributetest(row, 'sequencing method')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>sequencing method</TAG>
                 <VALUE>${row['sequencing method']}</VALUE>
@@ -129,7 +129,7 @@ def mandatorytest(row, column, index):
                 <VALUE>${row['number of standard tRNAs extracted']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="mandatorytest(row, 'assembly software', index)">
+            <py:if test="attributetest(row, 'assembly software')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>assembly software</TAG>
                 <VALUE>${row['assembly software']}</VALUE>
@@ -171,14 +171,14 @@ def mandatorytest(row, column, index):
                 <VALUE>${row['tRNA extraction software']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="mandatorytest(row, 'completeness score', index)">
+            <py:if test="attributetest(row, 'completeness score')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>completeness score</TAG>
                 <VALUE>${row['completeness score']}</VALUE>
                 <UNITS>%</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="mandatorytest(row, 'completeness software', index)">
+            <py:if test="attributetest(row, 'completeness software')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>completeness software</TAG>
                 <VALUE>${row['completeness software']}</VALUE>
@@ -190,7 +190,7 @@ def mandatorytest(row, column, index):
                 <VALUE>${row['completeness approach']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="mandatorytest(row, 'contamination score', index)">
+            <py:if test="attributetest(row, 'contamination score')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>contamination score</TAG>
                 <VALUE>${row['contamination score']}</VALUE>
@@ -215,19 +215,13 @@ def mandatorytest(row, column, index):
                 <VALUE>${row['decontamination software']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="mandatorytest(row, 'assembly quality', index)">
+            <py:if test="attributetest(row, 'assembly quality')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>assembly quality</TAG>
                 <VALUE>${row['assembly quality']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="mandatorytest(row, 'investigation type', index)">
-            <SAMPLE_ATTRIBUTE>
-                <TAG>investigation type</TAG>
-                <VALUE>${row['investigation type']}</VALUE>
-            </SAMPLE_ATTRIBUTE>
-            </py:if>
-            <py:if test="mandatorytest(row, 'taxonomic identity marker', index)">
+            <py:if test="attributetest(row, 'taxonomic identity marker')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>taxonomic identity marker</TAG>
                 <VALUE>${row['taxonomic identity marker']}</VALUE>
@@ -269,23 +263,18 @@ def mandatorytest(row, column, index):
                 <VALUE>${row['WGA amplification kit']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="mandatorytest(row, 'collection_date', index)">
-            <SAMPLE_ATTRIBUTE>
-                <TAG>collection_date</TAG>
-                <VALUE>${row['collection_date']}</VALUE>
-            </SAMPLE_ATTRIBUTE>
-            </py:if>
             <py:if test="mandatorytest(row, 'isolation_source', index)">
             <SAMPLE_ATTRIBUTE>
                 <TAG>isolation_source</TAG>
                 <VALUE>${row['isolation_source']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'geographic location (altitude)')">
+            <py:if test="mandatorytest(row, 'collection date', index)">
             <SAMPLE_ATTRIBUTE>
                 <TAG>collection date</TAG>
                 <VALUE>${row['collection date']}</VALUE>
             </SAMPLE_ATTRIBUTE>
+            </py:if>
             <py:if test="attributetest(row, 'altitude')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>altitude</TAG>
@@ -326,25 +315,25 @@ def mandatorytest(row, column, index):
                 <UNITS>m</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="mandatorytest(row, 'environment (biome)', index)">
+            <py:if test="mandatorytest(row, 'broad-scale environmental context', index)">
             <SAMPLE_ATTRIBUTE>
                 <TAG>broad-scale environmental context</TAG>
                 <VALUE>${row['broad-scale environmental context']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="mandatorytest(row, 'environment (feature)', index)">
+            <py:if test="mandatorytest(row, 'local environmental context', index)">
             <SAMPLE_ATTRIBUTE>
                 <TAG>local environmental context</TAG>
                 <VALUE>${row['local environmental context']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="mandatorytest(row, 'environment (material)', index)">
+            <py:if test="mandatorytest(row, 'environmental medium', index)">
             <SAMPLE_ATTRIBUTE>
                 <TAG>environmental medium</TAG>
                 <VALUE>${row['environmental medium']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'geographic location (elevation)')">
+            <py:if test="attributetest(row, 'elevation')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>elevation</TAG>
                 <VALUE>${row['elevation']}</VALUE>
@@ -386,6 +375,18 @@ def mandatorytest(row, column, index):
             <SAMPLE_ATTRIBUTE>
                 <TAG>metagenomic source</TAG>
                 <VALUE>${row['metagenomic source']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="attributetest(row, 'sample collection device')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>sample collection device</TAG>
+                <VALUE>${row['sample collection device']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="attributetest(row, 'sample collection method')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>sample collection method</TAG>
+                <VALUE>${row['sample collection method']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'relationship to oxygen')">

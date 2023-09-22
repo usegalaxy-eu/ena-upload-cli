@@ -76,7 +76,7 @@ def mandatorytest(row, column, index):
                 <VALUE>${row['collection date']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'geographic location (altitude)')">
+            <py:if test="attributetest(row, 'altitude')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>altitude</TAG>
                 <VALUE>${row['altitude']}</VALUE>
