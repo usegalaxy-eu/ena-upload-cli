@@ -1,4 +1,5 @@
 from typing import List, Optional, Dict
+from pandas import DataFrame
 
 
 def study_publication_ids(publication_isa_json) -> List[int]:
@@ -10,7 +11,7 @@ def validate_isa_json(isa_json: Dict, key: str) -> None:
         raise KeyError(f"{key} was not found in the provided ISA JSON.")
 
 
-class IsaStudy:
+class EnaStudy:
     def __init__(
         self,
         alias: str,
@@ -32,7 +33,7 @@ class IsaStudy:
         [validate_isa_json(isa_json, key) for key in mandatory_keys]
 
         return [
-            IsaStudy(
+            EnaStudy(
                 alias="",  # TODO: Add SEEK URL of Study
                 title=study["title"],
                 study_type="",  # TODO: Replace by Custom metadata of the Assay level
@@ -43,3 +44,9 @@ class IsaStudy:
             )
             for study in isa_json["studies"]
         ]
+
+    def to_dataframe(self) -> DataFrame:
+        """
+        Dumps the study object in a pandas DataFrame of the object
+        """
+        return DataFrame.from_dict(vars(self))

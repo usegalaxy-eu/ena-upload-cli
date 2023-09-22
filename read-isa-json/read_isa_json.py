@@ -1,5 +1,5 @@
 import json
-from isa_objects.isa_study import IsaStudy
+from ena_objects.ena_study import EnaStudy
 
 from rich import print_json
 
@@ -7,5 +7,6 @@ from rich import print_json
 isa_json_file = open("read-isa-json/test_isa_json_files/test_local_instance.json")
 isa_json = json.load(isa_json_file)
 
-study_information = IsaStudy.from_isa_json(isa_json)
-print(study_information)
+studies = EnaStudy.from_isa_json(isa_json)
+study_dfs = [study.to_dataframe() for study in studies]
+print(study_dfs[0])
