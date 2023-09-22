@@ -75,12 +75,6 @@ def mandatorytest(row, column, index):
                 <VALUE>${row['reference for biomaterial']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'finishing strategy')">
-            <SAMPLE_ATTRIBUTE>
-                <TAG>finishing strategy</TAG>
-                <VALUE>${row['finishing strategy']}</VALUE>
-            </SAMPLE_ATTRIBUTE>
-            </py:if>
             <py:if test="attributetest(row, 'annotation source')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>annotation source</TAG>
@@ -184,10 +178,10 @@ def mandatorytest(row, column, index):
                 <VALUE>${row['sequence quality check']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'chimera check')">
+            <py:if test="attributetest(row, 'chimera check software')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>chimera check</TAG>
-                <VALUE>${row['chimera check']}</VALUE>
+                <TAG>chimera check software</TAG>
+                <VALUE>${row['chimera check software']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'relevant electronic resources')">
@@ -204,8 +198,8 @@ def mandatorytest(row, column, index):
             </py:if>
             <py:if test="mandatorytest(row, 'investigation type', index)">
             <SAMPLE_ATTRIBUTE>
-                <TAG>investigation type</TAG>
-                <VALUE>${row['investigation type']}</VALUE>
+                <TAG>negative control type</TAG>
+                <VALUE>${row['negative control type']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="mandatorytest(row, 'collection date', index)">
@@ -242,14 +236,14 @@ def mandatorytest(row, column, index):
             </py:if>
             <py:if test="mandatorytest(row, 'human oral environmental package', index)">
             <SAMPLE_ATTRIBUTE>
-                <TAG>human oral environmental package</TAG>
-                <VALUE>${row['human oral environmental package']}</VALUE>
+                <TAG>broad-scale environmental context</TAG>
+                <VALUE>${row['broad-scale environmental context']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="mandatorytest(row, 'environment (biome)', index)">
             <SAMPLE_ATTRIBUTE>
-                <TAG>environment (biome)</TAG>
-                <VALUE>${row['environment (biome)']}</VALUE>
+                <TAG>local environmental context</TAG>
+                <VALUE>${row['local environmental context']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="mandatorytest(row, 'environment (feature)', index)">
@@ -268,12 +262,6 @@ def mandatorytest(row, column, index):
             <SAMPLE_ATTRIBUTE>
                 <TAG>source material identifiers</TAG>
                 <VALUE>${row['source material identifiers']}</VALUE>
-            </SAMPLE_ATTRIBUTE>
-            </py:if>
-            <py:if test="attributetest(row, 'sample collection device or method')">
-            <SAMPLE_ATTRIBUTE>
-                <TAG>sample collection device or method</TAG>
-                <VALUE>${row['sample collection device or method']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'sample material processing')">
@@ -345,6 +333,18 @@ def mandatorytest(row, column, index):
                 <VALUE>${row['sample storage location']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
+            <py:if test="attributetest(row, 'sample collection device')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>sample collection device</TAG>
+                <VALUE>${row['sample collection device']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="attributetest(row, 'sample collection method')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>sample collection method</TAG>
+                <VALUE>${row['sample collection method']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
             <py:if test="attributetest(row, 'nose/mouth/teeth/throat disorder')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>nose/mouth/teeth/throat disorder</TAG>
@@ -396,10 +396,10 @@ def mandatorytest(row, column, index):
                 <UNITS>kg/m2</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'IHMC ethnicity')">
+            <py:if test="attributetest(row, 'ethnicity')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>IHMC ethnicity</TAG>
-                <VALUE>${row['IHMC ethnicity']}</VALUE>
+                <TAG>ethnicity</TAG>
+                <VALUE>${row['ethnicity']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'host occupation')">
@@ -441,17 +441,11 @@ def mandatorytest(row, column, index):
                 <UNITS>ºC</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'sample salinity')">
+            <py:if test="attributetest(row, 'salinity')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>sample salinity</TAG>
-                <VALUE>${row['sample salinity']}</VALUE>
+                <TAG>salinity</TAG>
+                <VALUE>${row['salinity']}</VALUE>
                 <UNITS>psu</UNITS>
-            </SAMPLE_ATTRIBUTE>
-            </py:if>
-            <py:if test="attributetest(row, 'miscellaneous parameter')">
-            <SAMPLE_ATTRIBUTE>
-                <TAG>miscellaneous parameter</TAG>
-                <VALUE>${row['miscellaneous parameter']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'time since last toothbrushing')">

@@ -7,7 +7,7 @@
 
 # ENA upload tool
 
-This command line tool (CLI) allows easy submission of experimental data and respective metadata to the European Nucleotide Archive (ENA) using tabular files or one of the excel spreadsheets that can be found on this [template repo](https://github.com/ELIXIR-Belgium/ENA-metadata-templates). The supported metadata that can be submitted includes study, sample, run and experiment info so you can use the tool for programatic submission of everything ENA needs without the need of logging in to the Webin interface. This also includes client side validation using ENA checklists and releasing the ENA objects. This command line tool is also available as a [Galaxy tool](https://toolshed.g2.bx.psu.edu/view/iuc/ena_upload/4aab5ae907b6) and can be added to you own Galaxy instance or you can make use of one of the existing Galaxy instances, like [usegalaxy.eu](https://usegalaxy.eu/root?tool_id=toolshed.g2.bx.psu.edu/repos/iuc/ena_upload/ena_upload).
+This command line tool (CLI) allows easy submission of experimental data and respective metadata to the European Nucleotide Archive (ENA) using tabular files or one of the excel spreadsheets that can be found on this [template repo](https://github.com/ELIXIR-Belgium/ENA-metadata-templates). The supported metadata that can be submitted includes study, sample, run and experiment info so you can use the tool for programatic submission of everything ENA needs without the need of logging in to the Webin interface. This also includes client side validation using ENA checklists and releasing the ENA objects. This command line tool is also available as a [Galaxy tool](https://toolshed.g2.bx.psu.edu/view/iuc/ena_upload/) and can be added to you own Galaxy instance or you can make use of one of the existing Galaxy instances, like [usegalaxy.eu](https://usegalaxy.eu/root?tool_id=toolshed.g2.bx.psu.edu/repos/iuc/ena_upload/ena_upload).
 
 ## Overview
 
@@ -233,26 +233,26 @@ By default the updated tables after submission will have the action `added` in t
 
 ## Test the tool
 
-* **add metadata and sequence data**
+* **Add metadata and sequence data**
   ```
   ena-upload-cli --action add --center 'your_center_name' --study example_tables/ENA_template_studies.tsv --sample example_tables/ENA_template_samples.tsv --experiment example_tables/ENA_template_experiments.tsv --run example_tables/ENA_template_runs.tsv --data example_data/*gz --dev --secret .secret.yml
   ```
 
-* **add metadata only**
+* **Add metadata only**
   ```
   ena-upload-cli --action add --center 'your_center_name' --study example_tables/ENA_template_studies.tsv --sample example_tables/ENA_template_samples.tsv --experiment example_tables/ENA_template_experiments.tsv --run example_tables/ENA_template_runs_md5sums.tsv --dev --secret .secret.yml
   ```
-* **add studies**
+* **Add studies**
   ```
   ena-upload-cli --action add --center 'your_center_name' --study example_tables/ENA_template_studies.tsv --dev --secret .secret.yml
   ```
 
-* **modify sample metadata**
+* **Modify sample metadata**
   ```
   ena-upload-cli --action modify --center 'your_center_name' --sample example_tables/ENA_template_samples_modify.tsv --dev --secret .secret.yml
   ```
 
-* **viral data**
+* **Viral data**
   ```
   ena-upload-cli --action add --center 'your_center_name' --study example_tables/ENA_template_studies.tsv --sample example_tables/ENA_template_samples_vir.tsv --experiment example_tables/ENA_template_experiments.tsv --run example_tables/ENA_template_runs.tsv --data example_data/*gz --dev --checklist ERC000033 --secret .secret.yml
   ```
@@ -262,7 +262,7 @@ By default the updated tables after submission will have the action `added` in t
   ena-upload-cli --action add --center 'your_center_name' --data example_data/*gz --dev --checklist ERC000033 --secret .secret.yml --xlsx example_tables/ENA_excel_example_ERC000033.xlsx 
   ```
 
-* **release submission**
+* **Release submission**
   ```
   ena-upload-cli --action release --center'your_center_name' --study example_tables/ENA_template_studies_release.tsv --dev --secret .secret.yml 
   ```

@@ -35,6 +35,14 @@ def mandatorytest(row, column, index):
         <SAMPLE_ATTRIBUTES>
             <py:if test="mandatorytest(row, 'sample origin', index)">
             <SAMPLE_ATTRIBUTE>
+                <TAG>collection date</TAG>
+                <VALUE>${row['collection date']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            <SAMPLE_ATTRIBUTE>
+                <TAG>geographic location (country and/or sea)</TAG>
+                <VALUE>${row['geographic location (country and/or sea)']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            <SAMPLE_ATTRIBUTE>
                 <TAG>sample origin</TAG>
                 <VALUE>${row['sample origin']}</VALUE>
             </SAMPLE_ATTRIBUTE>

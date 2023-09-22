@@ -69,6 +69,14 @@ def mandatorytest(row, column, index):
                 <VALUE>${row['protocol']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
+            <SAMPLE_ATTRIBUTE>
+                <TAG>collection date</TAG>
+                <VALUE>${row['collection date']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            <SAMPLE_ATTRIBUTE>
+                <TAG>geographic location (country and/or sea)</TAG>
+                <VALUE>${row['geographic location (country and/or sea)']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
             <py:if test="attributetest(row, 'sampling time point')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>sampling time point</TAG>

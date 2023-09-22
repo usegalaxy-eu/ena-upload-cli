@@ -25,6 +25,7 @@
     <INSTRUMENT_MODEL py:when="row.instrument_model.lower().strip() == 'illumina iseq 100'">Illumina iSeq 100</INSTRUMENT_MODEL>
     <INSTRUMENT_MODEL py:when="row.instrument_model.lower().strip() == 'illumina miseq'">Illumina MiSeq</INSTRUMENT_MODEL>
     <INSTRUMENT_MODEL py:when="row.instrument_model.lower().strip() == 'illumina miniseq'">Illumina MiniSeq</INSTRUMENT_MODEL>
+    <INSTRUMENT_MODEL py:when="row.instrument_model.lower().strip() == 'illumina novaseq x'">Illumina NovaSeq X</INSTRUMENT_MODEL>
     <INSTRUMENT_MODEL py:when="row.instrument_model.lower().strip() == 'illumina novaseq 6000'">Illumina NovaSeq 6000</INSTRUMENT_MODEL>
     <INSTRUMENT_MODEL py:when="row.instrument_model.lower().strip() == 'nextseq 500'">NextSeq 500</INSTRUMENT_MODEL>
     <INSTRUMENT_MODEL py:when="row.instrument_model.lower().strip() == 'nextseq 550'">NextSeq 550</INSTRUMENT_MODEL>
@@ -65,10 +66,13 @@
     <INSTRUMENT_MODEL py:when="row.instrument_model.lower().strip() == 'unspecified'">unspecified</INSTRUMENT_MODEL>
 </OXFORD_NANOPORE>
 <PACBIO_SMRT py:when="row.platform.lower().strip() == 'pacbio_smrt'" py:choose="">
+    <INSTRUMENT_MODEL py:when="row.instrument_model.lower().strip() == 'onso'">Onso</INSTRUMENT_MODEL>
     <INSTRUMENT_MODEL py:when="row.instrument_model.lower().strip() == 'pacbio rs'">PacBio RS</INSTRUMENT_MODEL>
     <INSTRUMENT_MODEL py:when="row.instrument_model.lower().strip() == 'pacbio rs ii'">PacBio RS II</INSTRUMENT_MODEL>
+    <INSTRUMENT_MODEL py:when="row.instrument_model.lower().strip() == 'revio'">Revio</INSTRUMENT_MODEL>
     <INSTRUMENT_MODEL py:when="row.instrument_model.lower().strip() == 'sequel'">Sequel</INSTRUMENT_MODEL>
     <INSTRUMENT_MODEL py:when="row.instrument_model.lower().strip() == 'sequel ii'">Sequel II</INSTRUMENT_MODEL>
+    <INSTRUMENT_MODEL py:when="row.instrument_model.lower().strip() == 'sequel iie'">Sequel IIe</INSTRUMENT_MODEL>
     <INSTRUMENT_MODEL py:when="row.instrument_model.lower().strip() == 'unspecified'">unspecified</INSTRUMENT_MODEL>
 </PACBIO_SMRT>
 <ION_TORRENT py:when="row.platform.lower().strip() == 'ion_torrent'" py:choose="">
@@ -99,4 +103,12 @@
     <INSTRUMENT_MODEL py:when="row.instrument_model.lower().strip() == 'dnbseq-g400 fast'">DNBSEQ-G400 FAST</INSTRUMENT_MODEL>
     <INSTRUMENT_MODEL py:when="row.instrument_model.lower().strip() == 'unspecified'">unspecified</INSTRUMENT_MODEL>
 </DNBSEQ>
+<ELEMENT py:when="row.platform.lower().strip() == 'element'" py:choose="">
+    <INSTRUMENT_MODEL py:when="row.instrument_model.lower().strip() == 'element aviti'">Element AVITI</INSTRUMENT_MODEL>
+    <INSTRUMENT_MODEL py:when="row.instrument_model.lower().strip() == 'unspecified'">unspecified</INSTRUMENT_MODEL>
+</ELEMENT>
+<ULTIMA py:when="row.platform.lower().strip() == 'ultima'" py:choose="">
+    <INSTRUMENT_MODEL py:when="row.instrument_model.lower().strip() == 'ug 100'">UG 100</INSTRUMENT_MODEL>
+    <INSTRUMENT_MODEL py:when="row.instrument_model.lower().strip() == 'unspecified'">unspecified</INSTRUMENT_MODEL>
+</ULTIMA>
 </PLATFORM>

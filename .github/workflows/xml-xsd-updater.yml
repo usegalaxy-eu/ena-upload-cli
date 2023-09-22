@@ -39,8 +39,6 @@ jobs:
         labels: |
           automatic PR
         reviewers: bedroesb
-        team-reviewers: |
-          maintainers
         branch: checklist_update
         base: master
 

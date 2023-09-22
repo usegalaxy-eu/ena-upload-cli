@@ -675,6 +675,20 @@
                     </xs:sequence>
                 </xs:complexType>
             </xs:element>
+            <xs:element name="ELEMENT">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="INSTRUMENT_MODEL" maxOccurs="1" minOccurs="1" type="com:typeElementModel"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="ULTIMA">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="INSTRUMENT_MODEL" maxOccurs="1" minOccurs="1" type="com:typeUltimaModel"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
         </xs:choice>
 
     </xs:complexType>
@@ -931,6 +945,7 @@
             <xs:enumeration value="Illumina iSeq 100"/>
             <xs:enumeration value="Illumina MiSeq"/>
             <xs:enumeration value="Illumina MiniSeq"/>
+            <xs:enumeration value="Illumina NovaSeq X"/>
             <xs:enumeration value="Illumina NovaSeq 6000"/>          
             <xs:enumeration value="NextSeq 500"/>  
             <xs:enumeration value="NextSeq 550"/>
@@ -984,10 +999,13 @@
 
     <xs:simpleType name="typePacBioModel">
         <xs:restriction base="xs:string">
+            <xs:enumeration value="Onso"/>
             <xs:enumeration value="PacBio RS"/>
             <xs:enumeration value="PacBio RS II"/>
+            <xs:enumeration value="Revio"/>
             <xs:enumeration value="Sequel"/>
             <xs:enumeration value="Sequel II"/>
+            <xs:enumeration value="Sequel IIe"/>
             <xs:enumeration value="unspecified"/>
         </xs:restriction>
     </xs:simpleType>
@@ -1034,6 +1052,20 @@
             <xs:enumeration value="MinION"/>
             <xs:enumeration value="GridION"/>
             <xs:enumeration value="PromethION"/>
+            <xs:enumeration value="unspecified"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="typeElementModel">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="Element AVITI"/>
+            <xs:enumeration value="unspecified"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="typeUltimaModel">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="UG 100"/>
             <xs:enumeration value="unspecified"/>
         </xs:restriction>
     </xs:simpleType>

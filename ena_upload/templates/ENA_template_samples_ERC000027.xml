@@ -225,10 +225,10 @@ def mandatorytest(row, column, index):
                 <VALUE>${row['sequence quality check']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'chimera check')">
+            <py:if test="attributetest(row, 'chimera check software')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>chimera check</TAG>
-                <VALUE>${row['chimera check']}</VALUE>
+                <TAG>chimera check software</TAG>
+                <VALUE>${row['chimera check software']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'relevant electronic resources')">
@@ -251,20 +251,28 @@ def mandatorytest(row, column, index):
             </py:if>
             <py:if test="mandatorytest(row, 'environment (biome)', index)">
             <SAMPLE_ATTRIBUTE>
-                <TAG>environment (biome)</TAG>
-                <VALUE>${row['environment (biome)']}</VALUE>
+                <TAG>collection date</TAG>
+                <VALUE>${row['collection date']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="mandatorytest(row, 'environment (feature)', index)">
             <SAMPLE_ATTRIBUTE>
-                <TAG>environment (feature)</TAG>
-                <VALUE>${row['environment (feature)']}</VALUE>
+                <TAG>geographic location (country and/or sea)</TAG>
+                <VALUE>${row['geographic location (country and/or sea)']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="mandatorytest(row, 'environment (material)', index)">
             <SAMPLE_ATTRIBUTE>
-                <TAG>environment (material)</TAG>
-                <VALUE>${row['environment (material)']}</VALUE>
+                <TAG>broad-scale environmental context</TAG>
+                <VALUE>${row['broad-scale environmental context']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            <SAMPLE_ATTRIBUTE>
+                <TAG>local environmental context</TAG>
+                <VALUE>${row['local environmental context']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            <SAMPLE_ATTRIBUTE>
+                <TAG>environmental medium</TAG>
+                <VALUE>${row['environmental medium']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="mandatorytest(row, 'Sampling Campaign', index)">

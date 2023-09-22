@@ -81,13 +81,10 @@ def mandatorytest(row, column, index):
                 <TAG>collection date</TAG>
                 <VALUE>${row['collection date']}</VALUE>
             </SAMPLE_ATTRIBUTE>
-            </py:if>
-            <py:if test="attributetest(row, 'geographic location (country and/or sea)')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>geographic location (country and/or sea)</TAG>
                 <VALUE>${row['geographic location (country and/or sea)']}</VALUE>
             </SAMPLE_ATTRIBUTE>
-            </py:if>
             <py:if test="attributetest(row, 'geographic location (latitude)')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>geographic location (latitude)</TAG>
