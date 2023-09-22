@@ -3,44 +3,42 @@
 import pandas as pd
 import sys
 def attributetest(row, column):
-    if hasattr(row, column) and pd.notna(row[column]) and not str(row[column]).isspace() and str(row[column]).lower() not in ['nan', 'na']:
+    if hasattr(row, column) and pd.notna(row[column]) and not str(row[column]).isspace():
+        return True 
+def mandatorytest(row, column, index):
+    if hasattr(row, column) and pd.notna(row[column]) and not str(row[column]).isspace():
         return True 
     else:
-        return False
-def mandatorytest(row, column):
-    if hasattr(row, column) and pd.notna(row[column]) and not str(row[column]).isspace() and str(row[column]).lower() not in ['nan', 'na']:
-        return True 
-    else:
-        sys.exit(f"The mandatory column '{column}' is not filled in at row '{row}'")
+        print("MISSING VALUE ERROR: The mandatory column '"+ str(column) + "' is not filled in at row '" + str(index) + "'" + "\n")
+        sys.exit("This process is terminated")
 ?>
 <SAMPLE_SET xmlns:py="http://genshi.edgewall.org/"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:noNamespaceSchemaLocation="ftp://ftp.sra.ebi.ac.uk/meta/xsd/sra_1_6/SRA.sample.xsd">
     <py:for each="index, row in df.iterrows()">
     <SAMPLE alias="${row.alias}" center_name="${center}">
+        <py:if test="mandatorytest(row, 'title', index)">
         <TITLE>${row.title}</TITLE>
+        </py:if>
         <SAMPLE_NAME>
+            <py:if test="mandatorytest(row, 'taxon_id', index)">
             <TAXON_ID>${row.taxon_id}</TAXON_ID>
+            </py:if>
             <SCIENTIFIC_NAME>${row.scientific_name}</SCIENTIFIC_NAME>
             <py:if test="attributetest(row, 'common_name')">
             <COMMON_NAME>${row.common_name}</COMMON_NAME>
             </py:if>
         </SAMPLE_NAME>
+        <py:if test="attributetest(row, 'sample_description')">
         <DESCRIPTION>${row.sample_description}</DESCRIPTION>
+        </py:if>
         <SAMPLE_ATTRIBUTES>
             {%- for key, value in attributes.items() %}
-            {%- if value['cardinality'].lower() == 'mandatory' %}
-            <py:if test="mandatorytest(row, '{{key}}')">
-            <SAMPLE_ATTRIBUTE>
-                <TAG>{{key}}</TAG>
-                <VALUE>${row['{{key}}']}</VALUE>
-                {%- if value['units'] %}
-                <UNITS>{{value['units']}}</UNITS>
-                {%- endif %}
-            </SAMPLE_ATTRIBUTE>
-            </py:if>
-            {%- else %}
+            {%- if value['cardinality'].lower() != 'mandatory' %}
             <py:if test="attributetest(row, '{{key}}')">
+            {%- else %}
+            <py:if test="mandatorytest(row, '{{key}}', index)">
+            {%- endif %}
             <SAMPLE_ATTRIBUTE>
                 <TAG>{{key}}</TAG>
                 <VALUE>${row['{{key}}']}</VALUE>
@@ -49,7 +47,6 @@ def mandatorytest(row, column):
                 {%- endif %}
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            {%- endif %}
             {%- endfor %}
             <SAMPLE_ATTRIBUTE>
                 <TAG>SUBMISSION_TOOL</TAG>

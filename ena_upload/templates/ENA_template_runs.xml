@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?python
 import pandas as pd
-def attributetest(row, column):
-    if hasattr(row, column) and pd.notna(row[column]) and not row[column].isspace() and str(row[column]).lower() not in ['nan', 'na']:
+import sys
+def mandatorytest(row, column, index):
+    if hasattr(row, column) and pd.notna(row[column]) and not str(row[column]).isspace():
         return True 
     else:
-        return False
+        print("MISSING VALUE ERROR: The mandatory column '"+ str(column) + "' is not filled in at row '" + str(index) + "'" + "\n")
+        sys.exit("This process is terminated")
 ?>
 <RUN_SET xmlns:py="http://genshi.edgewall.org/"
     xmlns:xi="http://www.w3.org/2001/XInclude"
@@ -17,7 +19,9 @@ def attributetest(row, column):
         <DATA_BLOCK>
             <FILES>
                 <py:for each="index, row in file_groups.get_group(alias).iterrows()">
+                <py:if test="mandatorytest(row, 'file_type', index)">
                 <xi:include href="ENA_template_FILE.xml" />
+                </py:if>
                 </py:for>
             </FILES>
         </DATA_BLOCK>
