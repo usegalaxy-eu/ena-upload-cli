@@ -32,7 +32,7 @@ def study_alias(study_isa_json: str) -> str:
 
 
 class EnaStudy:
-    """Generates a Study study object, compliant to the requirements of ENA"""
+    """Generates a Study object, compliant to the requirements of ENA"""
 
     def __init__(
         self,
