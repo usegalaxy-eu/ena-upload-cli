@@ -94,13 +94,13 @@ You can specify ENA sample checklist using the `--checklist` parameter. By defau
 
 The command line tool will automatically fetch the correct scientific name based on the taxon ID or fetch the taxon ID based on the scientific name. Both can be given and no overwrite will be done.
 
-- Mandatory: *alias*, *title*, *sample_description* and either *scientific_name* or *taxon_id* (preferred)
+- Mandatory: *alias*, *title*, *sample_description*, *collection date*,	*geographic location (country and/or sea)* and either *scientific_name* or *taxon_id* (preferred)
 - Optional: *common_name*
 
-| alias          | title          | taxon_id | scientific_name                                 | common_name | sample_description   |
-|----------------|----------------|----------|-------------------------------------------------|-------------|----------------------|
-| sample_alias_4 | sample_title_2 | 2697049  | Severe acute respiratory syndrome coronavirus 2 | covid-19    | sample_description_1 |
-| sample_alias_5 | sample_title_3 | 2697049  | Severe acute respiratory syndrome coronavirus 2 | covid-19    | sample_description_2 |
+| alias          | title          | taxon_id | scientific_name                                 | common_name | sample_description   | collection date | geographic location (country and/or sea) |
+|----------------|----------------|----------|-------------------------------------------------|-------------|----------------------|-----------------|------------------------------------------|
+| sample_alias_4 | sample_title_2 | 2697049  | Severe acute respiratory syndrome coronavirus 2 | covid-19    | sample_description_1 | 2020-10-11      | Argentina                                |
+| sample_alias_5 | sample_title_3 | 2697049  | Severe acute respiratory syndrome coronavirus 2 | covid-19    | sample_description_2 | 2008-01-24      | Belgium                                  |
 
 #### Viral submissions
 
