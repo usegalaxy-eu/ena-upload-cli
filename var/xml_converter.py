@@ -74,8 +74,8 @@ def main():
         output_from_parsed_template = t.render(attributes=xml_tree)
 
         # Saving new xml template file
-        with open(f"ena_upload/templates/ENA_template_samples_{checklist}.xml", "w") as fh:
-            fh.write(output_from_parsed_template)
+        with open(f"ena_upload/templates/ENA_template_samples_{checklist}.xml", "wb") as fh:
+            fh.write(output_from_parsed_template.encode('utf-8'))
 
 
 if __name__ == "__main__":

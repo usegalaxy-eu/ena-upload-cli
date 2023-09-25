@@ -55,7 +55,7 @@ def create_dataframe(schema_tables, action, dev, auto_action):
     schema_dataframe = {}
 
     for schema, table in schema_tables.items():
-        df = pd.read_csv(table, sep='\t', comment='#', dtype=str)
+        df = pd.read_csv(table, sep='\t', comment='#', dtype=str, na_values=["NA", "Na", "na", "NaN"])
         df = df.dropna(how='all')
         df = check_columns(df, schema, action, dev, auto_action)
         schema_dataframe[schema] = df
@@ -294,7 +294,7 @@ def run_construct(template_path, schema_targets,  center, checklist, tool):
         template = templates[schema]
         Template = loader.load(template)
         stream = generate_stream(schema, targets, Template, center, tool)
-
+        print(f"Constructing XML for '{schema}' schema")
         schema_xmls[schema] = construct_xml(schema, stream, xsds[schema])
 
     return schema_xmls
@@ -315,7 +315,7 @@ def construct_submission(template_path, action, submission_input, center, checkl
     :return submission_xml: filename of submission XML
     '''
 
-    print("Constructing submission")
+    print(f"Constructing XML for submission schema")
 
     xsds, templates = actors(template_path, checklist)
 
@@ -325,7 +325,6 @@ def construct_submission(template_path, action, submission_input, center, checkl
 
     stream = Template.generate(action=action, input=submission_input,
                                center=center, tool_name=tool['tool_name'], tool_version=tool['tool_version'])
-
     submission_xml = construct_xml('submission', stream, xsds['submission'])
 
     return submission_xml
@@ -838,9 +837,9 @@ def main():
 
         for schema in SCHEMA_TYPES:
             if schema in xl_workbook.book.sheetnames:
-                xl_sheet = xl_workbook.parse(schema, header=0)
+                xl_sheet = xl_workbook.parse(schema, header=0, na_values=["NA", "Na", "na", "NaN"])
             elif f"ENA_{schema}" in xl_workbook.book.sheetnames:
-                xl_sheet = xl_workbook.parse(f"ENA_{schema}", header=0)
+                xl_sheet = xl_workbook.parse(f"ENA_{schema}", header=0, na_values=["NA", "Na", "na", "NaN"])
             else:
                 sys.exit(
                     f"The sheet '{schema}' is not present in the excel sheet {xlsx}")
