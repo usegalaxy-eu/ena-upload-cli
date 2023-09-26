@@ -1,6 +1,6 @@
 from typing import List, Optional, Dict
 from pandas import DataFrame
-from ena_objects.ena_std_lib import filter_attribute_by, validate_isa_json
+from ena_objects.ena_std_lib import filter_attribute_by, validate_dict
 
 
 def study_publication_ids(publication_isa_json: Dict) -> List[int]:
@@ -34,6 +34,8 @@ def study_alias(study_isa_json: str) -> str:
 class EnaStudy:
     """Generates a Study object, compliant to the requirements of ENA"""
 
+    mandatory_keys = ["title", "description", "publications"]
+
     def __init__(
         self,
         alias: str,
@@ -59,8 +61,7 @@ class EnaStudy:
         Returns:
             EnaStudy: EnaStudy object
         """
-        mandatory_keys = ["title", "description", "publications"]
-        [validate_isa_json(isa_json, key) for key in mandatory_keys]
+        [validate_dict(isa_json, key) for key in EnaStudy.mandatory_keys]
 
         return [
             EnaStudy(
