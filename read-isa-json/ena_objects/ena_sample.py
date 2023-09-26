@@ -8,10 +8,10 @@ class EnaSample:
 
     def __init__(
         self,
-        alias: str,
-        status: str,
-        taxon_id: int,
-        sample_description: str,
+        alias: str = "Sample alias",
+        status: str = "sample status",
+        taxon_id: int = "sample_taon_id",
+        sample_description: str = "sample_description",
     ) -> None:
         self.alias = alias
         self.status = status

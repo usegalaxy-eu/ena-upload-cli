@@ -1,3 +1,4 @@
+from ast import List, ClassDef
 from typing import Dict
 
 
@@ -25,7 +26,7 @@ def filter_attribute_by(attribute_list: str, key: str, value: str) -> Dict:
     return [attribute for attribute in attribute_list if attribute[key] == value]
 
 
-def validate_isa_json(isa_json: Dict, key: str) -> None:
+def validate_dict(dict: Dict, key: str) -> None:
     """Raises an error if the structure of the ISA JSON Dict is not conform
 
     Args:
@@ -35,5 +36,5 @@ def validate_isa_json(isa_json: Dict, key: str) -> None:
     Raises:
         KeyError: Will display the missing key in the Dict
     """
-    if not key in isa_json.keys():
+    if key not in dict.keys():
         raise KeyError(f"{key} was not found in the provided ISA JSON.")
