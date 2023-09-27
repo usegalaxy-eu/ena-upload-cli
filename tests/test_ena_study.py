@@ -1,5 +1,5 @@
 import pytest
-from read_isa_json.ena_objects.ena_study import EnaStudy
+from ena_objects.ena_study import EnaStudy
 
 
 class TestEnaStudy:

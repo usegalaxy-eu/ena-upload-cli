@@ -1,8 +1,5 @@
 from typing import List, Optional, Dict
 from pandas import DataFrame
-from ena_objects.ena_run import EnaRun
-from ena_objects.ena_experiment import EnaExperiment
-from ena_objects.ena_sample import EnaSample
 from ena_objects.ena_std_lib import filter_attribute_by, validate_dict
 
 
@@ -45,9 +42,6 @@ class EnaStudy:
         title: str,
         study_type: str,
         study_abstract: str,
-        runs: List[EnaRun],
-        samples: List[EnaSample],
-        experiments: List[EnaExperiment],
         new_study_type: Optional[str] = None,
         pubmed_id: Optional[List[int]] = None,
     ) -> None:
@@ -56,9 +50,6 @@ class EnaStudy:
         self.study_type = study_type
         self.new_study_type = new_study_type
         self.study_abstract = study_abstract
-        self.runs = runs
-        self.samples = samples
-        self.experiments = experiments
         self.new_study_type = new_study_type
         self.pubmed_id = pubmed_id
 
@@ -89,9 +80,6 @@ class EnaStudy:
                 title=study["title"],
                 study_type="",  # TODO: Replace by Custom metadata of the Assay level
                 study_abstract=study["description"],
-                runs=None,
-                samples=EnaSample.from_study_dict(study),
-                experiments=None,
                 new_study_type=None,
                 pubmed_id=study_publication_ids(
                     publication_isa_json=study["publications"]

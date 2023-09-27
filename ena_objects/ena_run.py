@@ -1,5 +1,4 @@
 from typing import List, Dict
-from ena_objects.ena_experiment import EnaExperiment
 
 
 class EnaRun:
@@ -10,11 +9,11 @@ class EnaRun:
     def __init__(
         self,
         alias: str,
-        experiments: List[EnaExperiment],
+        experiment_alias: str,
         filename: str,
         file_type: str,
     ) -> None:
         self.alias = alias
-        self.experiments = experiments
+        self.experiments = experiment_alias
         self.filename = filename
         self.file_type = file_type
