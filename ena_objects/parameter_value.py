@@ -11,5 +11,9 @@ class ParameterValue(Characteristic):
     def __init__(self, category: Category, value: Value, unit: Unit) -> None:
         super().__init__(category, value, unit)
 
-    def from_dict(self, dict: Dict):
-        return super().from_dict(dict)
+    @classmethod
+    def from_dict(self, dict: Dict, parameters: Dict):
+        return super().from_dict(dict, parameters)
+
+    def to_dict(self) -> Dict:
+        return super().to_dict()

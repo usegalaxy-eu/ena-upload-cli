@@ -89,10 +89,9 @@ def sample_alias(id: str) -> str:
     Returns:
         str: Unique string representation of the alias
     """
-    prefix = "https://datahub.elixir-belgium.org/samples/"  # TODO: Replace by something less hard-coded
 
     sample_id = re.split("/", id)[1]
-    return prefix + sample_id
+    return EnaSample.prefix + sample_id
 
 
 class EnaSample:
@@ -100,11 +99,13 @@ class EnaSample:
     Generates an Sample object, compliant to the requirements of ENA
     """
 
+    prefix: str = "https://datahub.elixir-belgium.org/samples/"  # TODO: Replace by something less hard-coded
+
     def __init__(self, characteristics: Dict, alias: str) -> None:
         self.alias = alias
         self.characteristics = characteristics
 
-    def __dict__(self):
+    def to_dict(self) -> Dict:
         return {
             "alias": self.alias,
             "characteristics": self.characteristics,
@@ -162,7 +163,7 @@ def export_samples_to_dataframe(samples: List[EnaSample]):
     """
     flat_dicts = []
     for sample in samples:
-        sample_dict = sample.__dict__()
+        sample_dict = sample.to_dict()
         characteristics = sample_dict.pop("characteristics")
         for char in characteristics:
             sample_dict.update({char["category_name"]: char["value"]})

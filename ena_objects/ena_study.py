@@ -1,5 +1,8 @@
 from typing import List, Optional, Dict
 from pandas import DataFrame
+from ena_objects.ena_experiment import EnaExperiment
+from ena_objects.ena_run import EnaRun
+from ena_objects.ena_sample import EnaSample
 from ena_objects.ena_std_lib import filter_attribute_by, validate_dict
 
 
@@ -24,17 +27,17 @@ def study_alias(study_isa_json: str) -> str:
     Returns:
         str: the study_alias
     """
-    prefix = "https://datahub.elixir-belgium.org/studies/"  # TODO: Replace by something less hard-coded
     seek_study_id: str = filter_attribute_by(
         study_isa_json["comments"], key="name", value="SEEK Study ID"
     )[0]["value"]
-    return prefix + seek_study_id
+    return EnaStudy.prefix + seek_study_id
 
 
 class EnaStudy:
     """Generates a Study object, compliant to the requirements of ENA"""
 
     mandatory_keys = ["title", "description", "publications"]
+    prefix = "https://datahub.elixir-belgium.org/studies/"  # TODO: Replace by something less hard-coded
 
     def __init__(
         self,
@@ -42,6 +45,9 @@ class EnaStudy:
         title: str,
         study_type: str,
         study_abstract: str,
+        samples: List[EnaSample],
+        experiments: List[EnaExperiment] = [],
+        runs: List[EnaRun] = [],
         new_study_type: Optional[str] = None,
         pubmed_id: Optional[List[int]] = None,
     ) -> None:
@@ -53,7 +59,11 @@ class EnaStudy:
         self.new_study_type = new_study_type
         self.pubmed_id = pubmed_id
 
-    def __dict__(self):
+        self.samples = samples
+        self.experiments = experiments
+        self.runs = runs
+
+    def to_dict(self):
         return {
             "alias": self.alias,
             "title": self.title,
@@ -74,19 +84,27 @@ class EnaStudy:
         """
         [validate_dict(isa_json, key) for key in EnaStudy.mandatory_keys]
 
-        return [
-            EnaStudy(
-                alias=study_alias(study),
-                title=study["title"],
-                study_type="",  # TODO: Replace by Custom metadata of the Assay level
-                study_abstract=study["description"],
-                new_study_type=None,
-                pubmed_id=study_publication_ids(
-                    publication_isa_json=study["publications"]
-                ),
+        ena_studies = []
+
+        for study in isa_json["studies"]:
+            ena_samples = EnaSample.from_study_dict(study)
+
+            ena_studies.append(
+                EnaStudy(
+                    alias=study_alias(study),
+                    title=study["title"],
+                    study_type="",  # TODO: Replace by Custom metadata of the Assay level
+                    study_abstract=study["description"],
+                    new_study_type=None,
+                    samples=ena_samples,
+                    experiments=EnaExperiment,
+                    pubmed_id=study_publication_ids(
+                        publication_isa_json=study["publications"]
+                    ),
+                )
             )
-            for study in isa_json["studies"]
-        ]
+
+        return ena_studies
 
     def to_dataframe(self) -> DataFrame:
         """Dumps the study object in a pandas DataFrame of the object
@@ -94,4 +112,4 @@ class EnaStudy:
         Returns:
             DataFrame: Pandas DataFrame representation of the Study
         """
-        return DataFrame.from_dict(self.__dict__())
+        return DataFrame.from_dict(self.to_dict())

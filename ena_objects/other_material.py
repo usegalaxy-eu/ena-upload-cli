@@ -25,13 +25,14 @@ class OtherMaterial(IsaBase):
         self.type = type
         self.other_material_characteristics = other_material_characteristics
 
-    def from_dict(self, dict):
-        super().check_dict_keys(dict, self.mandatory_keys)
+    @classmethod
+    def from_dict(cls, dict, characteristics_categories):
         return OtherMaterial(
-            id=dict["id"],
+            id=dict["@id"],
             name=dict["name"],
             type=dict["type"],
-            other_material_characteristics=OtherMaterialCharacteristic.from_dict(
-                dict["other_material_characteristics"]
-            ),
+            other_material_characteristics=[
+                OtherMaterialCharacteristic.from_dict(char, characteristics_categories)
+                for char in dict["characteristics"]
+            ],
         )

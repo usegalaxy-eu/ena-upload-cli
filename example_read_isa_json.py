@@ -1,8 +1,9 @@
 import json
+from ena_objects.ena_experiment import export_experiments_to_dataframe
 
 from ena_objects.ena_sample import export_samples_to_dataframe
 
-from ena_objects.ena_study import EnaStudy, EnaSample
+from ena_objects.ena_study import EnaStudy, EnaSample, EnaExperiment
 
 # Read json file
 isa_json_file = open("tests/test_data/isa_json_test_investigation.json")
@@ -17,4 +18,8 @@ study_dict = isa_json["studies"][0]
 samples = EnaSample.from_study_dict(study_dict)
 samples_df = export_samples_to_dataframe(samples)
 print(samples_df)
+
+experiments = EnaExperiment.from_study_dict(study_dict, studies[0].alias)
+experiments_df = export_experiments_to_dataframe(experiments)
+print(experiments_df)
 print("Done!")
