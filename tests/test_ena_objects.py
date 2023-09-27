@@ -1,5 +1,5 @@
 import pytest
-from ena_objects.ena_study import EnaStudy
+from ena_objects.ena_study import EnaStudy, EnaSample, EnaExperiment, EnaRun
 
 
 class TestEnaStudy:
@@ -16,3 +16,15 @@ class TestEnaStudy:
             KeyError, match="description was not found in the provided ISA JSON."
         ):
             EnaStudy.from_isa_json(bad_dict)
+
+
+class TestEnaSample:
+    pass
+
+
+class TestEnaExperiment:
+    pass
+
+
+class TestEnaRun:
+    pass
