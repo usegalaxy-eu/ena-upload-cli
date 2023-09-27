@@ -1,13 +1,11 @@
 import json
 
-from ena_objects.ena_sample import EnaSample, export_samples_to_dataframe
+from ena_objects.ena_sample import export_samples_to_dataframe
 
-from ena_objects.ena_study import EnaStudy
+from ena_objects.ena_study import EnaStudy, EnaSample
 
 # Read json file
-isa_json_file = open(
-    "read-isa-json/test_isa_json_files/isa_json_test_investigation.json"
-)
+isa_json_file = open("tests/test_data/isa_json_test_investigation.json")
 isa_json = json.load(isa_json_file)
 
 studies = EnaStudy.from_isa_json(isa_json)
