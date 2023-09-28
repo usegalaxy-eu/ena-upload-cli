@@ -128,7 +128,7 @@ class EnaExperiment(IsaBase):
         "processSequence",
         "assays",
     ]
-    prefix = "https://datahub.elixir-belgium.org/assays/"  # TODO: Replace by something less hard-coded
+    prefix = "https://datahub.elixir-belgium.org/samples/"  # TODO: Replace by something less hard-coded
 
     def __init__(
         self,
