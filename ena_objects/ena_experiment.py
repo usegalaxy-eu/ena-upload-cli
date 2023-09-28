@@ -1,10 +1,9 @@
 import re
-from typing import List, Dict, Union, Optional
+from typing import List, Dict, Union
 
 from pandas import DataFrame
-from ena_objects import other_material_characteristic
 
-from ena_objects.ena_std_lib import filter_attribute_by, validate_dict
+from ena_objects.ena_std_lib import validate_dict
 from ena_objects.characteristic import IsaBase
 from ena_objects.ena_sample import EnaSample
 from ena_objects.other_material_characteristic import OtherMaterialCharacteristic
@@ -74,7 +73,9 @@ def get_sample_associations(assay_dict: Dict):
     return process_sequence
 
 
-def get_derived_sample_alias(other_material: OtherMaterial, study_dict: Dict) -> str:
+def get_derived_sample_alias(
+    other_material: OtherMaterial, study_dict: Dict, return_multiple: bool = False
+) -> str:
     assoc_sample_ids = []
     for assay in study_dict["assays"]:
         sample_associations = get_sample_associations(assay)
@@ -82,9 +83,13 @@ def get_derived_sample_alias(other_material: OtherMaterial, study_dict: Dict) ->
             if clip_off_prefix(other_material.id) in clip_off_prefix(sa["output"]):
                 # sa["output"] => '#sample/<id>'
                 # other_material.id => '#other_material/<id>'
-                for input in sa["input"]:
-                    alias = EnaSample.prefix + clip_off_prefix(input)
-                    assoc_sample_ids.append(alias)
+                if return_multiple:
+                    for input in sa["input"]:
+                        alias = EnaSample.prefix + clip_off_prefix(input)
+                        assoc_sample_ids.append(alias)
+                else:
+                    input = sa["input"][0]
+                    return EnaSample.prefix + clip_off_prefix(input)
     return assoc_sample_ids
 
 
@@ -158,8 +163,10 @@ class EnaExperiment(IsaBase):
             ],
         }
 
-    def from_study_dict(study_dict: Dict, study_alias):
-        [validate_dict(study_dict, key) for key in EnaExperiment.mandatory_keys]
+    @classmethod
+    def from_study_dict(self, study_dict: Dict, study_alias: str):
+        super().check_dict_keys(study_dict, self.mandatory_keys)
+        # [validate_dict(study_dict, key) for key in EnaExperiment.mandatory_keys]
 
         other_materials = get_other_materials(study_dict)
 
