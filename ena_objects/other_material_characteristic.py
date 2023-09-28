@@ -1,5 +1,5 @@
 from typing import Dict
-from ena_objects.characteristic import Category, Characteristic, Unit, Value
+from ena_objects.characteristic import Characteristic
 
 
 class OtherMaterialCharacteristic(Characteristic):
@@ -7,8 +7,8 @@ class OtherMaterialCharacteristic(Characteristic):
     This class represents the other material object.
     """
 
-    def __init__(self, category: Category, value: Value, unit: Unit) -> None:
-        super().__init__(category, value, unit)
+    def __init__(self, category: Dict, value: str) -> None:
+        super().__init__(category, value)
 
     @classmethod
     def from_dict(cls, dict: Dict, characteristics_categories: Dict):

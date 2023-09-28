@@ -1,5 +1,5 @@
 from typing import Dict
-from ena_objects.characteristic import Category, Characteristic, Unit, Value
+from ena_objects.characteristic import Characteristic
 
 
 class ParameterValue(Characteristic):
@@ -8,8 +8,8 @@ class ParameterValue(Characteristic):
     and is inherited from the Characteristic class
     """
 
-    def __init__(self, category: Category, value: Value, unit: Unit) -> None:
-        super().__init__(category, value, unit)
+    def __init__(self, category: Dict, value: str) -> None:
+        super().__init__(category, value)
 
     @classmethod
     def from_dict(self, dict: Dict, parameters: Dict):

@@ -12,16 +12,38 @@ from ena_objects.parameter_value import ParameterValue
 from ena_objects.other_material import OtherMaterial
 
 
+def clip_off_prefix(alias: Union[str, List[str]]) -> Union[str, List[str]]:
+    if isinstance(alias, str):
+        result = re.split("/", alias)[-1]
+    elif isinstance(alias, list):
+        result = []
+        for item in alias:
+            if isinstance(item, str):
+                result.append(re.split("/", item)[-1])
+            else:
+                raise TypeError(
+                    "The 'clip_off_prefix' function only accepts strings or a list of strings"
+                )
+    else:
+        raise TypeError(
+            "The 'clip_off_prefix' function only accepts strings or a list of strings"
+        )
+    return result
+
+
 def experiment_alias(other_material: OtherMaterial):
-    seek_assays_id: str = re.split("/", other_material.id)[1]
+    seek_assays_id: str = clip_off_prefix(other_material.id)
     return EnaExperiment.prefix + seek_assays_id
 
 
 def fetch_characteristic_categories(study_dict: Dict):
-    return [
-        {"id": cc["@id"], "value": cc["characteristicType"]["annotationValue"]}
-        for cc in study_dict["characteristicCategories"]
-    ]
+    categories = []
+    for assay in study_dict["assays"]:
+        for cc in assay["characteristicCategories"]:
+            categories.append(
+                {"id": cc["@id"], "value": cc["characteristicType"]["annotationValue"]}
+            )
+    return categories
 
 
 def get_other_materials(study_dict: Dict) -> List[OtherMaterial]:
@@ -42,7 +64,7 @@ def library_names(study_dict: Dict) -> List[str]:
     return [om["name"] for om in get_other_materials(study_dict)]
 
 
-def sample_associations(assay_dict: Dict):
+def get_sample_associations(assay_dict: Dict):
     process_sequence = []
     for process in assay_dict["processSequence"]:
         input_ids = [input["@id"] for input in process["inputs"]]
@@ -55,10 +77,13 @@ def sample_associations(assay_dict: Dict):
 def get_derived_sample_alias(other_material: OtherMaterial, study_dict: Dict) -> str:
     assoc_sample_ids = []
     for assay in study_dict["assays"]:
-        for sa in sample_associations(assay):
-            if other_material.id in sa["output"]:
+        sample_associations = get_sample_associations(assay)
+        for sa in sample_associations:
+            if clip_off_prefix(other_material.id) in clip_off_prefix(sa["output"]):
+                # sa["output"] => '#sample/<id>'
+                # other_material.id => '#other_material/<id>'
                 for input in sa["input"]:
-                    alias = EnaSample.prefix + re.split("/", input)[-1]
+                    alias = EnaSample.prefix + clip_off_prefix(input)
                     assoc_sample_ids.append(alias)
     return assoc_sample_ids
 
@@ -81,13 +106,13 @@ def get_parameter_values(study_dict: Dict) -> Dict:
     parameters = fetch_parameters(study_dict["protocols"])
     for assay in study_dict["assays"]:
         for ps in assay["processSequence"]:
-            sample_id = re.split("/", ps["@id"])[-1]
+            sample_id = clip_off_prefix(ps["@id"])
             parameter_values = [
                 ParameterValue.from_dict(parameter_value, parameters)
                 for parameter_value in ps["parameterValues"]
             ]
             param_vals.append(
-                {"sample_id": sample_id, "paramter_values": parameter_values}
+                {"sample_id": sample_id, "parameter_values": parameter_values}
             )
     return param_vals
 
@@ -127,7 +152,7 @@ class EnaExperiment(IsaBase):
             "study_alias": self.sample_alias,
             "sample_alias": self.sample_alias,
             "library_name": self.library_name,
-            "parameter_values": [pv for pv in self.parameter_values],
+            "parameter_values": [pv.to_dict() for pv in self.parameter_values],
             "other_material_characteristics": [
                 omc.to_dict() for omc in self.other_material_characteristics
             ],
@@ -143,16 +168,24 @@ class EnaExperiment(IsaBase):
 
         ena_experiments = []
         for om in other_materials:
-            om_id = re.split("/", om.id)[-1]
+            om_id = clip_off_prefix(om.id)
+            s_alias = get_derived_sample_alias(om, study_dict)
+            filtered_parameter_vals = list(
+                filter(lambda pv: pv["sample_id"] == om_id, parameter_values)
+            )
+
+            parameter_vals = []
+            for fpv in filtered_parameter_vals:
+                for pv in fpv["parameter_values"]:
+                    parameter_vals.append(pv)
+
             ena_experiments.append(
                 EnaExperiment(
                     alias=experiment_alias(om),
                     library_name=om.name,
                     study_alias=study_alias,
-                    sample_alias=get_derived_sample_alias(om, study_dict),
-                    parameter_values=list(
-                        filter(lambda pv: pv["sample_id"] == om_id, parameter_values)
-                    ),
+                    sample_alias=s_alias,
+                    parameter_values=parameter_vals,
                     other_material_characteristics=om.other_material_characteristics,
                 )
             )
@@ -166,14 +199,15 @@ def export_experiments_to_dataframe(experiments: List[EnaExperiment]) -> DataFra
         other_material_characteristics = experiment_dict.pop(
             "other_material_characteristics"
         )
-        # omc_dicts = [omc.to_dict() for omc in other_material_characteristics]
 
         parameter_values = experiment_dict.pop("parameter_values")
-        # pv_dicts = [pv.to_dict() for pv in parameter_values]
 
-        for omc in omc_dicts:
-            experiment_dict.update({omc["category"]: omc["value"]})
-        for pv in pv_dicts:
-            experiment_dict.update({pv["category"]: pv["value"]})
+        for omc in other_material_characteristics:
+            experiment_dict.update({omc["category"]["name"]: omc["value"]})
+
+        for pv in parameter_values:
+            experiment_dict.update({pv["category"]["name"]: pv["value"]})
+
         flat_dicts.append(experiment_dict)
+
     return DataFrame.from_dict(flat_dicts)
