@@ -111,7 +111,8 @@ class EnaSample:
             "characteristics": self.characteristics,
         }
 
-    def from_study_dict(study_dict: Dict) -> None:
+    @classmethod
+    def from_study_dict(self, study_dict: Dict) -> None:
         """Generate sample objects from a study dictionary
 
         Args:

@@ -1,5 +1,6 @@
 import json
 from ena_objects.ena_experiment import export_experiments_to_dataframe
+from ena_objects.ena_run import EnaRun, export_runs_to_dataframe
 
 from ena_objects.ena_sample import export_samples_to_dataframe
 
@@ -22,4 +23,8 @@ print(samples_df)
 experiments = EnaExperiment.from_study_dict(study_dict, study.alias)
 experiments_df = export_experiments_to_dataframe(experiments)
 print(experiments_df)
+
+runs = EnaRun.from_study_dict(study_dict)
+runs_df = export_runs_to_dataframe(runs)
+print(runs_df)
 print("Done!")

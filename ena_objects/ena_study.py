@@ -1,5 +1,6 @@
 from typing import List, Optional, Dict
 from pandas import DataFrame
+from ena_objects.characteristic import IsaBase
 from ena_objects.ena_experiment import EnaExperiment
 from ena_objects.ena_run import EnaRun
 from ena_objects.ena_sample import EnaSample
@@ -33,7 +34,7 @@ def study_alias(study_isa_json: str) -> str:
     return EnaStudy.prefix + seek_study_id
 
 
-class EnaStudy:
+class EnaStudy(IsaBase):
     """Generates a Study object, compliant to the requirements of ENA"""
 
     mandatory_keys = ["title", "description", "publications"]
@@ -73,7 +74,8 @@ class EnaStudy:
             "pubmed_id": self.pubmed_id,
         }
 
-    def from_isa_json(isa_json: Dict):
+    @classmethod
+    def from_isa_json(self, isa_json: Dict):
         """Method that creates an EnaStudy with params from ISA JSON Dictionary
 
         Args:
@@ -82,7 +84,7 @@ class EnaStudy:
         Returns:
             EnaStudy: EnaStudy object
         """
-        [validate_dict(isa_json, key) for key in EnaStudy.mandatory_keys]
+        super().check_dict_keys(isa_json, self.mandatory_keys)
 
         ena_studies = []
 

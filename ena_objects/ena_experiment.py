@@ -3,7 +3,7 @@ from typing import List, Dict, Union
 
 from pandas import DataFrame
 
-from ena_objects.ena_std_lib import validate_dict
+from ena_objects.ena_std_lib import get_assay_sample_associations
 from ena_objects.characteristic import IsaBase
 from ena_objects.ena_sample import EnaSample
 from ena_objects.other_material_characteristic import OtherMaterialCharacteristic
@@ -63,22 +63,12 @@ def library_names(study_dict: Dict) -> List[str]:
     return [om["name"] for om in get_other_materials(study_dict)]
 
 
-def get_sample_associations(assay_dict: Dict):
-    process_sequence = []
-    for process in assay_dict["processSequence"]:
-        input_ids = [input["@id"] for input in process["inputs"]]
-        output_ids = [output["@id"] for output in process["outputs"]]
-        process_sequence.append({"input": input_ids, "output": output_ids})
-
-    return process_sequence
-
-
 def get_derived_sample_alias(
     other_material: OtherMaterial, study_dict: Dict, return_multiple: bool = False
 ) -> str:
     assoc_sample_ids = []
     for assay in study_dict["assays"]:
-        sample_associations = get_sample_associations(assay)
+        sample_associations = get_assay_sample_associations(assay)
         for sa in sample_associations:
             if clip_off_prefix(other_material.id) in clip_off_prefix(sa["output"]):
                 # sa["output"] => '#sample/<id>'

@@ -38,3 +38,13 @@ def validate_dict(dict: Dict, key: str) -> None:
     """
     if key not in dict.keys():
         raise KeyError(f"{key} was not found in the provided ISA JSON.")
+
+
+def get_assay_sample_associations(assay_dict: Dict):
+    process_sequence = []
+    for process in assay_dict["processSequence"]:
+        input_ids = [input["@id"] for input in process["inputs"]]
+        output_ids = [output["@id"] for output in process["outputs"]]
+        process_sequence.append({"input": input_ids, "output": output_ids})
+
+    return process_sequence
