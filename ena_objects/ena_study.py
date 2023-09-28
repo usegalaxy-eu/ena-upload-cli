@@ -89,8 +89,6 @@ class EnaStudy(IsaBase):
         ena_studies = []
 
         for study in isa_json["studies"]:
-            ena_samples = EnaSample.from_study_dict(study)
-
             ena_studies.append(
                 EnaStudy(
                     alias=study_alias(study),
@@ -98,8 +96,11 @@ class EnaStudy(IsaBase):
                     study_type="",  # TODO: Replace by Custom metadata of the Assay level
                     study_abstract=study["description"],
                     new_study_type=None,
-                    samples=ena_samples,
-                    experiments=EnaExperiment,
+                    samples=EnaSample.from_study_dict(study),
+                    experiments=EnaExperiment.from_study_dict(
+                        study, study_alias(study)
+                    ),
+                    runs=EnaRun.from_study_dict(study),
                     pubmed_id=study_publication_ids(
                         publication_isa_json=study["publications"]
                     ),
