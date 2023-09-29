@@ -1,10 +1,11 @@
 import re
 from typing import List, Dict
+from ena_objects.characteristic import SampleCharacteristic
 
 from pandas import DataFrame
 
 
-def study_characteristic_category_name(study_dict: Dict, id: str) -> Dict:
+def fetch_characteristic_categories(study_dict: Dict) -> Dict:
     """Retrieves the name of a characteristic id
 
     Args:
@@ -14,14 +15,10 @@ def study_characteristic_category_name(study_dict: Dict, id: str) -> Dict:
     Returns:
         Dict: characteristic name corresponding with the ID
     """
-    char_cat_dicts = [
+    return [
         {"id": cc["@id"], "name": cc["characteristicType"]["annotationValue"]}
         for cc in study_dict["characteristicCategories"]
     ]
-
-    for ccd in char_cat_dicts:
-        if ccd["id"] == id:
-            return ccd["name"]
 
 
 def fetch_characteristics(sample_dict: Dict, study_dict: Dict) -> List[Dict]:
@@ -34,14 +31,16 @@ def fetch_characteristics(sample_dict: Dict, study_dict: Dict) -> List[Dict]:
     Returns:
         List[Dict]: List of characteristic dictionaries
     """
+    characteristic_categories = fetch_characteristic_categories(study_dict)
     return [
-        {
-            "category_id": char["category"]["@id"],
-            "category_name": study_characteristic_category_name(
-                study_dict, char["category"]["@id"]
-            ),
-            "value": char["value"]["annotationValue"],
-        }
+        SampleCharacteristic.from_dict(char, characteristic_categories)
+        # {
+        #     "category_id": char["category"]["@id"],
+        #     "category_name": study_characteristic_category_name(
+        #         study_dict, char["category"]["@id"]
+        #     ),
+        #     "value": char["value"]["annotationValue"],
+        # }
         for char in sample_dict["characteristics"]
     ]
 
@@ -101,14 +100,14 @@ class EnaSample:
 
     prefix: str = "https://datahub.elixir-belgium.org/samples/"  # TODO: Replace by something less hard-coded
 
-    def __init__(self, characteristics: Dict, alias: str) -> None:
+    def __init__(self, characteristics: List[SampleCharacteristic], alias: str) -> None:
         self.alias = alias
         self.characteristics = characteristics
 
     def to_dict(self) -> Dict:
         return {
             "alias": self.alias,
-            "characteristics": self.characteristics,
+            "characteristics": [char.to_dict() for char in self.characteristics],
         }
 
     @classmethod
@@ -167,7 +166,7 @@ def export_samples_to_dataframe(samples: List[EnaSample]):
         sample_dict = sample.to_dict()
         characteristics = sample_dict.pop("characteristics")
         for char in characteristics:
-            sample_dict.update({char["category_name"]: char["value"]})
+            sample_dict.update({char["category"]["name"]: char["value"]})
         flat_dicts.append(sample_dict)
 
     return DataFrame.from_dict(flat_dicts)
