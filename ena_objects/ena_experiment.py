@@ -1,9 +1,8 @@
-import re
-from typing import List, Dict, Union
+from typing import List, Dict
 
 from pandas import DataFrame
 
-from ena_objects.ena_std_lib import get_assay_sample_associations
+from ena_objects.ena_std_lib import get_assay_sample_associations, clip_off_prefix
 from ena_objects.characteristic import (
     IsaBase,
     OtherMaterialCharacteristic,
@@ -11,25 +10,6 @@ from ena_objects.characteristic import (
 )
 from ena_objects.ena_sample import EnaSample
 from ena_objects.other_material import OtherMaterial
-
-
-def clip_off_prefix(alias: Union[str, List[str]]) -> Union[str, List[str]]:
-    if isinstance(alias, str):
-        result = re.split("/", alias)[-1]
-    elif isinstance(alias, list):
-        result = []
-        for item in alias:
-            if isinstance(item, str):
-                result.append(re.split("/", item)[-1])
-            else:
-                raise TypeError(
-                    "The 'clip_off_prefix' function only accepts strings or a list of strings"
-                )
-    else:
-        raise TypeError(
-            "The 'clip_off_prefix' function only accepts strings or a list of strings"
-        )
-    return result
 
 
 def experiment_alias(other_material: OtherMaterial):
