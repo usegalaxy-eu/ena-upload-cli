@@ -4,10 +4,12 @@ from typing import List, Dict, Union
 from pandas import DataFrame
 
 from ena_objects.ena_std_lib import get_assay_sample_associations
-from ena_objects.characteristic import IsaBase
+from ena_objects.characteristic import (
+    IsaBase,
+    OtherMaterialCharacteristic,
+    ParameterValue,
+)
 from ena_objects.ena_sample import EnaSample
-from ena_objects.other_material_characteristic import OtherMaterialCharacteristic
-from ena_objects.parameter_value import ParameterValue
 from ena_objects.other_material import OtherMaterial
 
 
@@ -156,11 +158,8 @@ class EnaExperiment(IsaBase):
     @classmethod
     def from_study_dict(self, study_dict: Dict, study_alias: str):
         super().check_dict_keys(study_dict, self.mandatory_keys)
-        # [validate_dict(study_dict, key) for key in EnaExperiment.mandatory_keys]
 
         other_materials = get_other_materials(study_dict)
-
-        # protocol_parameters = protocol_parameters(study_dict["protocols"])
         parameter_values = get_parameter_values(study_dict)
 
         ena_experiments = []

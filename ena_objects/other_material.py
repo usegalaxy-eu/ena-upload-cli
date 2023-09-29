@@ -1,7 +1,9 @@
 from ena_objects.ena_std_lib import validate_dict
-from ena_objects.parameter_value import ParameterValue
-from ena_objects.other_material_characteristic import OtherMaterialCharacteristic
-from ena_objects.characteristic import IsaBase
+from ena_objects.characteristic import (
+    IsaBase,
+    ParameterValue,
+    OtherMaterialCharacteristic,
+)
 
 from typing import List, Dict
 
