@@ -24,7 +24,16 @@ def fetch_category_name(categories: Dict[str, str], name: str) -> str:
                 return cat["value"]
 
 
-def category_dict(dict: Dict[str, str], categories: Dict[str, str]):
+def category_dict(dict: Dict[str, str], categories: Dict[str, str]) -> Dict[str, str]:
+    """Matches the category ID to a category name and returns a dictionary of the category.
+
+    Args:
+        dict (Dict[str, str]): category dictionary
+        categories (Dict[str, str]): Dictionary of the characteristics to match
+
+    Returns:
+        Dict[str, str]: Modified category dictionary
+    """
     category_name = fetch_category_name(categories, dict)
     category_id = dict["@id"]
     return {"id": category_id, "name": category_name}
@@ -32,7 +41,7 @@ def category_dict(dict: Dict[str, str], categories: Dict[str, str]):
 
 class Characteristic(IsaBase):
     """
-    This is the base class of a characteristics object.
+    This is the generic base class of a characteristics object.
     """
 
     mandatory_keys = ["category", "value", "unit"]
@@ -43,7 +52,16 @@ class Characteristic(IsaBase):
         self.value = value
 
     @classmethod
-    def from_dict(self, dict: Dict[str, str], categories: Dict[str, str]):
+    def from_dict(self, dict: Dict[str, str], categories: List[Dict[str, str]]) -> None:
+        """Creates a characteristic object from a dictionary
+
+        Args:
+            dict (Dict[str, str]): Characteristics dictionary
+            categories (List[Dict[str, str]]): List of all characteristics categories
+
+        Returns:
+            Characteristic: _description_
+        """
         super().check_dict_keys(dict, self.mandatory_keys)
         return self(
             category=category_dict(dict["category"], categories),
@@ -59,7 +77,7 @@ class Characteristic(IsaBase):
 
 class OtherMaterialCharacteristic(Characteristic):
     """
-    This class represents the other material object.
+    This class represents a Characteristic for the other material object.
     """
 
     def __init__(self, category: Dict, value: str) -> None:
@@ -78,7 +96,7 @@ class OtherMaterialCharacteristic(Characteristic):
 class ParameterValue(Characteristic):
     """
     This class represents a paramenter value in the isa study
-    and is inherited from the Characteristic class
+    and extends the Characteristic class.
     """
 
     def __init__(self, category: Dict[str, str], value: str) -> None:
@@ -93,6 +111,11 @@ class ParameterValue(Characteristic):
 
 
 class SampleCharacteristic(Characteristic):
+    """
+    This class represents a Sample Characteristic in the isa study
+    and extends the Characteristic class.
+    """
+
     def __init__(self, category: Dict, value: str) -> None:
         super().__init__(category, value)
 

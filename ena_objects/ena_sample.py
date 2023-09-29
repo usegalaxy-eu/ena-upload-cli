@@ -34,13 +34,6 @@ def fetch_characteristics(sample_dict: Dict, study_dict: Dict) -> List[Dict]:
     characteristic_categories = fetch_characteristic_categories(study_dict)
     return [
         SampleCharacteristic.from_dict(char, characteristic_categories)
-        # {
-        #     "category_id": char["category"]["@id"],
-        #     "category_name": study_characteristic_category_name(
-        #         study_dict, char["category"]["@id"]
-        #     ),
-        #     "value": char["value"]["annotationValue"],
-        # }
         for char in sample_dict["characteristics"]
     ]
 

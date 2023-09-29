@@ -11,14 +11,23 @@ from ena_objects.ena_study import EnaStudy
 
 def merge_df_by_key(
     dataframe_dict_list: List[Dict[str, DataFrame]], key: str
-) -> Dict[str, DataFrame]:
+) -> DataFrame:
+    """Filters a list of pandas DataFrames on the provided key and merges them by row.
+
+    Args:
+        dataframe_dict_list (List[Dict[str, DataFrame]]): list of dictionary, containing the DataFrames
+        key (str): key to filter the list on
+
+    Returns:
+        DataFrame: resulting DataFrame
+    """
     filtered_list = list(map(lambda d: d[key], dataframe_dict_list))
     return pandas.concat(filtered_list)
 
 
 class EnaSubmission:
     """
-    Generates a Submission object, compliant to the requirements of ENA
+    Wrapper objects, holding a Study
     """
 
     def __init__(
@@ -27,12 +36,26 @@ class EnaSubmission:
     ) -> None:
         self.studies = studies
 
-    def from_isa_json(isa_json: Dict) -> None:
+    def from_isa_json(isa_json: Dict[str, str]) -> None:
+        """Generates an EnaSubmission from a ISA JSON dictionary.
+
+        Args:
+            isa_json (Dict[str, str]): ISA JSON dictionary
+
+        Returns:
+            EnaSubmission: resulting EnaSubmission
+        """
         return EnaSubmission(
             studies=EnaStudy.from_isa_json(isa_json),
         )
 
     def generate_dataframes(self) -> Dict[str, DataFrame]:
+        """Generates all necessary DataFrames for the ENA Upload tool
+        and returns them in a dictionary.
+
+        Returns:
+            Dict[str, DataFrame]: resulting dictionary of DataFrames
+        """
         dataframes = []
         for study in self.studies:
             study_df = EnaStudy.to_dataframe(study)

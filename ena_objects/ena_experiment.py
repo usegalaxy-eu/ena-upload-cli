@@ -1,4 +1,4 @@
-from typing import List, Dict
+from typing import List, Dict, Union
 
 from pandas import DataFrame
 
@@ -12,12 +12,30 @@ from ena_objects.ena_sample import EnaSample
 from ena_objects.other_material import OtherMaterial
 
 
-def experiment_alias(other_material: OtherMaterial):
+def experiment_alias(other_material: OtherMaterial) -> str:
+    """Generates an alias for the experiment, starting from an other_material
+    and the prefix specified in the class.
+
+    Args:
+        other_material (OtherMaterial): _description_
+
+    Returns:
+        str: _description_
+    """
     seek_assays_id: str = clip_off_prefix(other_material.id)
     return EnaExperiment.prefix + seek_assays_id
 
 
-def fetch_characteristic_categories(study_dict: Dict):
+def fetch_characteristic_categories(study_dict: Dict[str, str]) -> List[Dict[str, str]]:
+    """Fetches all characteristics categories from a provided study dictionary
+    and returns them as a list of characteristics categories.
+
+    Args:
+        study_dict (Dict[str, str]): Input study dictionary
+
+    Returns:
+        List[Dict[str, str]]: List of the characteristics categories
+    """
     categories = []
     for assay in study_dict["assays"]:
         for cc in assay["characteristicCategories"]:
@@ -27,10 +45,18 @@ def fetch_characteristic_categories(study_dict: Dict):
     return categories
 
 
-def get_other_materials(study_dict: Dict) -> List[OtherMaterial]:
+def get_other_materials(study_dict: Dict[str, str]) -> List[OtherMaterial]:
+    """Returns a List of 'other materials' from a study dictionary
+    and returns them as a list of OtherMaterial objects.
+
+    Args:
+        study_dict (Dict[str, str]): Input study dictionary
+
+    Returns:
+        List[OtherMaterial]: Resulting list of OtherMaterial objects
+    """
     other_materials = []
     characteristics_categories = fetch_characteristic_categories(study_dict)
-    # parameters = fetch_parameters()
     for assay in study_dict["assays"]:
         for om in assay["materials"]["otherMaterials"]:
             other_material = OtherMaterial.from_dict(
@@ -41,13 +67,33 @@ def get_other_materials(study_dict: Dict) -> List[OtherMaterial]:
     return other_materials
 
 
-def library_names(study_dict: Dict) -> List[str]:
+def library_names(study_dict: Dict[str, str]) -> List[str]:
+    """Returns a list of library names from a study dictionary.
+
+    Args:
+        study_dict (Dict[str, str]): Input study dictionary
+
+    Returns:
+        List[str]: Resulting list of library names
+    """
     return [om["name"] for om in get_other_materials(study_dict)]
 
 
 def get_derived_sample_alias(
-    other_material: OtherMaterial, study_dict: Dict, return_multiple: bool = False
-) -> str:
+    other_material: OtherMaterial,
+    study_dict: Dict[str, str],
+    return_multiple: bool = False,
+) -> Union[str, List[str]]:
+    """Gets Sample ids, an 'other material' is derived from.
+
+    Args:
+        other_material (OtherMaterial): other material
+        study_dict (Dict): Input study dictioary
+        return_multiple (bool, optional): Optional flag to return multiple sample ID's per 'other material'. Defaults to False.
+
+    Returns:
+        str: Resulting derived sample id or list of derived sample id's
+    """
     assoc_sample_ids = []
     for assay in study_dict["assays"]:
         sample_associations = get_assay_sample_associations(assay)
@@ -65,7 +111,15 @@ def get_derived_sample_alias(
     return assoc_sample_ids
 
 
-def fetch_parameters(protocol_dict: Dict):
+def fetch_parameters(protocol_dict: Dict[str, str]) -> List[Dict[str, str]]:
+    """Fetches the parameters from a protocol dictionary.
+
+    Args:
+        protocol_dict (Dict[str, str]): protocol dictionary
+
+    Returns:
+        List[Dict[str, str]]: Resulting list of parameters
+    """
     parameters = []
     for protocol in protocol_dict:
         for parameter in protocol["parameters"]:
@@ -78,7 +132,15 @@ def fetch_parameters(protocol_dict: Dict):
     return parameters
 
 
-def get_parameter_values(study_dict: Dict) -> Dict:
+def get_parameter_values(study_dict: Dict[str, str]) -> Dict[str, str]:
+    """Returns all parameter values from a study dictionary.
+
+    Args:
+        study_dict (Dict[str, str]): Input study dictionary
+
+    Returns:
+        Dict[str, str]: Resulting dictionary of parameter values.
+    """
     param_vals = []
     parameters = fetch_parameters(study_dict["protocols"])
     for assay in study_dict["assays"]:
@@ -123,7 +185,12 @@ class EnaExperiment(IsaBase):
         self.parameter_values = parameter_values
         self.other_material_characteristics = other_material_characteristics
 
-    def to_dict(self) -> Dict:
+    def to_dict(self) -> Dict[str, str]:
+        """Returns the EnaExperiment object as a dictionary.
+
+        Returns:
+            Dict[str, str]: Resulting dictionary with EnaExperiment information
+        """
         return {
             "alias": self.alias,
             "study_alias": self.sample_alias,
@@ -136,7 +203,16 @@ class EnaExperiment(IsaBase):
         }
 
     @classmethod
-    def from_study_dict(self, study_dict: Dict, study_alias: str):
+    def from_study_dict(self, study_dict: Dict[str, str], study_alias: str) -> None:
+        """Generates a EnaExperiment object from a study dictionary.
+
+        Args:
+            study_dict (Dict[str, str]): Input study dictionary
+            study_alias (str): Alias of the study associated with the experiments
+
+        Returns:
+            EnaExperiment: Resulting EnaExperiment object
+        """
         super().check_dict_keys(study_dict, self.mandatory_keys)
 
         other_materials = get_other_materials(study_dict)
@@ -169,6 +245,14 @@ class EnaExperiment(IsaBase):
 
 
 def export_experiments_to_dataframe(experiments: List[EnaExperiment]) -> DataFrame:
+    """Exports the information out of a list of EnaExperiment to a pandas DataFrame
+
+    Args:
+        experiments (List[EnaExperiment]): Input list of experiments
+
+    Returns:
+        DataFrame: Resulting DataFrame
+    """
     flat_dicts = []
     for experiment in experiments:
         experiment_dict = experiment.to_dict()
