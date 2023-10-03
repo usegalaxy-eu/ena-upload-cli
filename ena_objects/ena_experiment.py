@@ -193,7 +193,7 @@ class EnaExperiment(IsaBase):
         """
         return {
             "alias": self.alias,
-            "study_alias": self.sample_alias,
+            "study_alias": self.study_alias,
             "sample_alias": self.sample_alias,
             "library_name": self.library_name,
             "parameter_values": [pv.to_dict() for pv in self.parameter_values],
