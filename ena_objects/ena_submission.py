@@ -4,11 +4,12 @@ from numpy import append
 from pandas import DataFrame
 import pandas
 from ena_objects.characteristic import IsaBase
-from ena_objects.ena_experiment import export_experiments_to_dataframe
-from ena_objects.ena_run import export_runs_to_dataframe
-from ena_objects.ena_sample import export_samples_to_dataframe
+from ena_objects.ena_experiment import EnaExperiment, export_experiments_to_dataframe
+from ena_objects.ena_run import EnaRun, export_runs_to_dataframe
+from ena_objects.ena_sample import EnaSample, export_samples_to_dataframe
+from ena_objects.ena_std_lib import fetch_assay_streams, study_publication_ids
 
-from ena_objects.ena_study import EnaStudy
+from ena_objects.ena_study import EnaStudy, export_studies_to_dataframe
 
 
 def merge_df_by_key(
@@ -71,9 +72,15 @@ class EnaSubmission(IsaBase):
     def __init__(
         self,
         studies: List[EnaStudy] = [],
+        samples: List[EnaSample] = [],
+        experiments: List[EnaExperiment] = [],
+        runs: List[EnaRun] = [],
     ) -> None:
         super().__init__()
         self.studies = studies
+        self.samples = samples
+        self.experiments = experiments
+        self.runs = runs
 
     def from_isa_json(
         isa_json: Dict[str, str], required_assays: List[Dict[str, str]]
@@ -87,8 +94,34 @@ class EnaSubmission(IsaBase):
             EnaSubmission: resulting EnaSubmission
         """
         filtered_isa_json: Dict[str, str] = filter_assays(isa_json, required_assays)
+        samples = []
+        studies = []
+        experiments = []
+        runs = []
+        for study in filtered_isa_json["studies"]:
+            [samples.append(sample) for sample in EnaSample.from_study_dict(study)]
 
-        return EnaSubmission(studies=EnaStudy.from_isa_json(filtered_isa_json))
+            pubmed_ids = study_publication_ids(
+                publication_isa_json=study["publications"]
+            )
+            current_study_protocols_dict = study["protocols"]
+            assay_streams = fetch_assay_streams(study)
+            for assay_stream in assay_streams:
+                study = EnaStudy.from_assay_stream(assay_stream, pubmed_ids)
+                studies.append(study)
+
+                [
+                    experiments.append(experiment)
+                    for experiment in EnaExperiment.from_assay_stream(
+                        assay_stream, study.alias, current_study_protocols_dict
+                    )
+                ]
+
+                [runs.append(run) for run in EnaRun.from_assay_stream(assay_stream)]
+
+        return EnaSubmission(
+            studies=studies, samples=samples, experiments=experiments, runs=runs
+        )
 
     def generate_dataframes(self) -> Dict[str, DataFrame]:
         """Generates all necessary DataFrames for the ENA Upload tool
@@ -97,23 +130,9 @@ class EnaSubmission(IsaBase):
         Returns:
             Dict[str, DataFrame]: resulting dictionary of DataFrames
         """
-        dataframes = []
-        for study in self.studies:
-            study_df = EnaStudy.to_dataframe(study)
-            samples_df = export_samples_to_dataframe(study.samples)
-            experiments_df = export_experiments_to_dataframe(study.experiments)
-            runs_df = export_runs_to_dataframe(study.runs)
-            dataframes.append(
-                {
-                    "study_df": study_df,
-                    "samples_df": samples_df,
-                    "experiments_df": experiments_df,
-                    "runs_df": runs_df,
-                }
-            )
         return {
-            "study": merge_df_by_key(dataframes, "study_df"),
-            "samples": merge_df_by_key(dataframes, "samples_df"),
-            "experiments": merge_df_by_key(dataframes, "experiments_df"),
-            "runs": merge_df_by_key(dataframes, "runs_df"),
+            "study": export_studies_to_dataframe(self.studies),
+            "samples": export_samples_to_dataframe(self.samples),
+            "experiments": export_experiments_to_dataframe(self.experiments),
+            "runs": export_runs_to_dataframe(self.runs),
         }

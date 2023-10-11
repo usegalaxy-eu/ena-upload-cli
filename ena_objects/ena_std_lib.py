@@ -126,3 +126,13 @@ def fetch_assay_streams(study: Dict[str, str]) -> List[Dict[str, str]]:
 #     assay_ids = []
 #     for study in dataset["studies"]:
 #         assay_ids.append([assay["id"] for assay in study["assays"]])
+def study_publication_ids(publication_isa_json: Dict) -> List[int]:
+    """Retrieves the pubmed_ids from the ISA JSON
+
+    Args:
+        publication_isa_json (Dict): Publication part of the ISA JSON dictionary
+
+    Returns:
+        List[int]: List of pubmed ID's
+    """
+    return ",".join([str(pub["pubMedID"]) for pub in publication_isa_json])

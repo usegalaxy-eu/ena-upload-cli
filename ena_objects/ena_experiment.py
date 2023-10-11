@@ -26,7 +26,9 @@ def experiment_alias(other_material: OtherMaterial) -> str:
     return EnaExperiment.prefix + seek_assays_id
 
 
-def fetch_characteristic_categories(study_dict: Dict[str, str]) -> List[Dict[str, str]]:
+def fetch_characteristic_categories(
+    assay_stream: Dict[str, str]
+) -> List[Dict[str, str]]:
     """Fetches all characteristics categories from a provided study dictionary
     and returns them as a list of characteristics categories.
 
@@ -37,15 +39,14 @@ def fetch_characteristic_categories(study_dict: Dict[str, str]) -> List[Dict[str
         List[Dict[str, str]]: List of the characteristics categories
     """
     categories = []
-    for assay in study_dict["assays"]:
-        for cc in assay["characteristicCategories"]:
-            categories.append(
-                {"id": cc["@id"], "value": cc["characteristicType"]["annotationValue"]}
-            )
+    for cc in assay_stream["characteristicCategories"]:
+        categories.append(
+            {"id": cc["@id"], "value": cc["characteristicType"]["annotationValue"]}
+        )
     return categories
 
 
-def get_other_materials(study_dict: Dict[str, str]) -> List[OtherMaterial]:
+def get_other_materials(assay_stream: Dict[str, str]) -> List[OtherMaterial]:
     """Returns a List of 'other materials' from a study dictionary
     and returns them as a list of OtherMaterial objects.
 
@@ -56,13 +57,12 @@ def get_other_materials(study_dict: Dict[str, str]) -> List[OtherMaterial]:
         List[OtherMaterial]: Resulting list of OtherMaterial objects
     """
     other_materials = []
-    characteristics_categories = fetch_characteristic_categories(study_dict)
-    for assay in study_dict["assays"]:
-        for om in assay["materials"]["otherMaterials"]:
-            other_material = OtherMaterial.from_dict(
-                dict=om, characteristics_categories=characteristics_categories
-            )
-            other_materials.append(other_material)
+    characteristics_categories = fetch_characteristic_categories(assay_stream)
+    for om in assay_stream["materials"]["otherMaterials"]:
+        other_material = OtherMaterial.from_dict(
+            dict=om, characteristics_categories=characteristics_categories
+        )
+        other_materials.append(other_material)
 
     return other_materials
 
@@ -81,7 +81,7 @@ def library_names(study_dict: Dict[str, str]) -> List[str]:
 
 def get_derived_sample_alias(
     other_material: OtherMaterial,
-    study_dict: Dict[str, str],
+    assay_stream: Dict[str, str],
     return_multiple: bool = False,
 ) -> Union[str, List[str]]:
     """Gets Sample ids, an 'other material' is derived from.
@@ -95,19 +95,18 @@ def get_derived_sample_alias(
         str: Resulting derived sample id or list of derived sample id's
     """
     assoc_sample_ids = []
-    for assay in study_dict["assays"]:
-        sample_associations = get_assay_sample_associations(assay)
-        for sa in sample_associations:
-            if clip_off_prefix(other_material.id) in clip_off_prefix(sa["output"]):
-                # sa["output"] => '#sample/<id>'
-                # other_material.id => '#other_material/<id>'
-                if return_multiple:
-                    for input in sa["input"]:
-                        alias = EnaSample.prefix + clip_off_prefix(input)
-                        assoc_sample_ids.append(alias)
-                else:
-                    input = sa["input"][0]
-                    return EnaSample.prefix + clip_off_prefix(input)
+    sample_associations = get_assay_sample_associations(assay_stream)
+    for sa in sample_associations:
+        if clip_off_prefix(other_material.id) in clip_off_prefix(sa["output"]):
+            # sa["output"] => '#sample/<id>'
+            # other_material.id => '#other_material/<id>'
+            if return_multiple:
+                for input in sa["input"]:
+                    alias = EnaSample.prefix + clip_off_prefix(input)
+                    assoc_sample_ids.append(alias)
+            else:
+                input = sa["input"][0]
+                return EnaSample.prefix + clip_off_prefix(input)
     return assoc_sample_ids
 
 
@@ -132,7 +131,9 @@ def fetch_parameters(protocol_dict: Dict[str, str]) -> List[Dict[str, str]]:
     return parameters
 
 
-def get_parameter_values(study_dict: Dict[str, str]) -> Dict[str, str]:
+def get_parameter_values(
+    assay_stream: Dict[str, str], study_protocols_dict: Dict[str, str]
+) -> Dict[str, str]:
     """Returns all parameter values from a study dictionary.
 
     Args:
@@ -142,17 +143,16 @@ def get_parameter_values(study_dict: Dict[str, str]) -> Dict[str, str]:
         Dict[str, str]: Resulting dictionary of parameter values.
     """
     param_vals = []
-    parameters = fetch_parameters(study_dict["protocols"])
-    for assay in study_dict["assays"]:
-        for ps in assay["processSequence"]:
-            sample_id = clip_off_prefix(ps["@id"])
-            parameter_values = [
-                ParameterValue.from_dict(parameter_value, parameters)
-                for parameter_value in ps["parameterValues"]
-            ]
-            param_vals.append(
-                {"sample_id": sample_id, "parameter_values": parameter_values}
-            )
+    parameters = fetch_parameters(study_protocols_dict)
+    for ps in assay_stream["processSequence"]:
+        sample_id = clip_off_prefix(ps["@id"])
+        parameter_values = [
+            ParameterValue.from_dict(parameter_value, parameters)
+            for parameter_value in ps["parameterValues"]
+        ]
+        param_vals.append(
+            {"sample_id": sample_id, "parameter_values": parameter_values}
+        )
     return param_vals
 
 
@@ -162,10 +162,10 @@ class EnaExperiment(IsaBase):
     """
 
     mandatory_keys = [
-        "protocols",
-        "materials",
+        "filename",
+        "measurementType",
         "processSequence",
-        "assays",
+        "comments",
     ]
     prefix = "https://datahub.elixir-belgium.org/samples/"  # TODO: Replace by something less hard-coded
 
@@ -203,7 +203,12 @@ class EnaExperiment(IsaBase):
         }
 
     @classmethod
-    def from_study_dict(self, study_dict: Dict[str, str], study_alias: str) -> None:
+    def from_assay_stream(
+        self,
+        assay_stream: Dict[str, str],
+        study_alias: str,
+        protocols_dict: Dict[str, str],
+    ) -> None:
         """Generates a EnaExperiment object from a study dictionary.
 
         Args:
@@ -213,15 +218,15 @@ class EnaExperiment(IsaBase):
         Returns:
             EnaExperiment: Resulting EnaExperiment object
         """
-        super().check_dict_keys(study_dict, self.mandatory_keys)
+        super().check_dict_keys(assay_stream, self.mandatory_keys)
 
-        other_materials = get_other_materials(study_dict)
-        parameter_values = get_parameter_values(study_dict)
+        other_materials = get_other_materials(assay_stream)
+        parameter_values = get_parameter_values(assay_stream, protocols_dict)
 
         ena_experiments = []
         for om in other_materials:
             om_id = clip_off_prefix(om.id)
-            s_alias = get_derived_sample_alias(om, study_dict)
+            s_alias = get_derived_sample_alias(om, assay_stream)
             filtered_parameter_vals = list(
                 filter(lambda pv: pv["sample_id"] == om_id, parameter_values)
             )
