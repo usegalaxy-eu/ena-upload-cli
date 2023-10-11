@@ -1,10 +1,15 @@
+from operator import index
 from typing import List, Optional, Dict
 from pandas import DataFrame
 from ena_objects.characteristic import IsaBase
 from ena_objects.ena_experiment import EnaExperiment
 from ena_objects.ena_run import EnaRun
 from ena_objects.ena_sample import EnaSample
-from ena_objects.ena_std_lib import filter_attribute_by, validate_dict
+from ena_objects.ena_std_lib import (
+    fetch_assay_streams,
+    fetch_assay_comment_by_name,
+    get_study_id,
+)
 
 
 def study_publication_ids(publication_isa_json: Dict) -> List[int]:
@@ -16,29 +21,47 @@ def study_publication_ids(publication_isa_json: Dict) -> List[int]:
     Returns:
         List[int]: List of pubmed ID's
     """
-    return [pub["id"] for pub in publication_isa_json]
+    return ",".join([str(pub["pubMedID"]) for pub in publication_isa_json])
 
 
-def study_alias(study_isa_json: str) -> str:
-    """Creates a study_alias, based on information of the study part of the ISA JSON.
+def study_alias(assay_stream: Dict[str, str], seek_study_id) -> str:
+    """Creates a study_alias, based on information of the assay stream and study of the ISA JSON.
 
     Args:
-        study_isa_json (str): Study part of the ISA JSON
+        assay_stream Dict[str, str]: assay stream part of the ISA JSON
+        seek_study_id str: Study ID
 
     Returns:
         str: the study_alias
     """
-    seek_study_id: str = filter_attribute_by(
-        study_isa_json["comments"], key="name", value="SEEK Study ID"
-    )[0]["value"]
-    return EnaStudy.prefix + seek_study_id
+    prefix = fetch_assay_comment_by_name(assay_stream, EnaStudy.prefix)["value"]
+    return prefix + seek_study_id
+
+
+def study_title(assay_stream: Dict[str, str]) -> str:
+    return fetch_assay_comment_by_name(assay_stream, "ena_study_title")["value"]
+
+
+def study_type(assay_stream: Dict[str, str]) -> str:
+    return fetch_assay_comment_by_name(assay_stream, "study_type")["value"]
+
+
+def new_study_type(assay_stream: Dict[str, str]) -> str:
+    if study_type(assay_stream).lower() != "other":
+        return None
+
+    return fetch_assay_comment_by_name(assay_stream, "new_study_type")["value"]
+
+
+def study_abstract(assay_stream: Dict[str, str]) -> str:
+    return fetch_assay_comment_by_name(assay_stream, "ena_study_abstract")["value"]
 
 
 class EnaStudy(IsaBase):
     """Generates a Study object, compliant to the requirements of ENA"""
 
     mandatory_keys = ["title", "description", "publications"]
-    prefix = "https://datahub.elixir-belgium.org/studies/"  # TODO: Replace by something less hard-coded
+    prefix = "ena_study_alias_prefix"
 
     def __init__(
         self,
@@ -50,7 +73,7 @@ class EnaStudy(IsaBase):
         experiments: List[EnaExperiment] = [],
         runs: List[EnaRun] = [],
         new_study_type: Optional[str] = None,
-        pubmed_id: Optional[List[int]] = None,
+        pubmed_id: Optional[str] = None,
     ) -> None:
         self.alias = alias
         self.title = title
@@ -75,7 +98,7 @@ class EnaStudy(IsaBase):
         }
 
     @classmethod
-    def from_isa_json(self, isa_json: Dict):
+    def from_isa_json(self, isa_json: Dict[str, str]):
         """Method that creates an EnaStudy with params from ISA JSON Dictionary
 
         Args:
@@ -87,25 +110,28 @@ class EnaStudy(IsaBase):
         super().check_dict_keys(isa_json, self.mandatory_keys)
 
         ena_studies = []
-
         for study in isa_json["studies"]:
-            ena_studies.append(
-                EnaStudy(
-                    alias=study_alias(study),
-                    title=study["title"],
-                    study_type="",  # TODO: Replace by Custom metadata of the Assay level
-                    study_abstract=study["description"],
-                    new_study_type=None,
-                    samples=EnaSample.from_study_dict(study),
-                    experiments=EnaExperiment.from_study_dict(
-                        study, study_alias(study)
-                    ),
-                    runs=EnaRun.from_study_dict(study),
-                    pubmed_id=study_publication_ids(
-                        publication_isa_json=study["publications"]
-                    ),
+            assay_streams = fetch_assay_streams(study)
+            study_id = get_study_id(study)
+            for assay_stream in assay_streams:
+                current_study_alias = study_alias(assay_stream, study_id)
+                ena_studies.append(
+                    EnaStudy(
+                        alias=current_study_alias,
+                        title=study_title(assay_stream),
+                        study_type=study_type(assay_stream),
+                        study_abstract=study_abstract(assay_stream),
+                        new_study_type=new_study_type(assay_stream),
+                        samples=EnaSample.from_study_dict(study),
+                        experiments=EnaExperiment.from_study_dict(
+                            study, current_study_alias
+                        ),
+                        runs=EnaRun.from_study_dict(assay_stream),
+                        pubmed_id=study_publication_ids(
+                            publication_isa_json=study["publications"]
+                        ),
+                    )
                 )
-            )
 
         return ena_studies
 
@@ -115,4 +141,4 @@ class EnaStudy(IsaBase):
         Returns:
             DataFrame: Pandas DataFrame representation of the Study
         """
-        return DataFrame.from_dict(self.to_dict())
+        return DataFrame.from_dict([self.to_dict()])

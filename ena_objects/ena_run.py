@@ -156,7 +156,7 @@ class EnaRun(IsaBase):
         self.data_file = data_file
 
     @classmethod
-    def from_study_dict(self, study_dict: Dict[str, str]) -> None:
+    def from_assay_stream(self, assay_stream: Dict[str, str]) -> None:
         """Generates a EnaRun object from a study dictionary.
 
         Args:
@@ -167,20 +167,19 @@ class EnaRun(IsaBase):
         """
         ena_runs = []
 
-        for assay in study_dict["assays"]:
-            super().check_dict_keys(assay, self.mandatory_keys)
-            sample_datafile_associations = get_assay_sample_associations(assay)
-            for data_file in assay["dataFiles"]:
-                current_data_file = DataFile.from_data_file_dict(
-                    data_file, sample_datafile_associations
+        super().check_dict_keys(assay_stream, self.mandatory_keys)
+        sample_datafile_associations = get_assay_sample_associations(assay_stream)
+        for data_file in assay_stream["dataFiles"]:
+            current_data_file = DataFile.from_data_file_dict(
+                data_file, sample_datafile_associations
+            )
+            ena_runs.append(
+                EnaRun(
+                    alias=fetch_run_alias(data_file),
+                    experiment_alias=fetch_experiment_alias(current_data_file),
+                    data_file=current_data_file,
                 )
-                ena_runs.append(
-                    EnaRun(
-                        alias=fetch_run_alias(data_file),
-                        experiment_alias=fetch_experiment_alias(current_data_file),
-                        data_file=current_data_file,
-                    )
-                )
+            )
 
         return ena_runs
 

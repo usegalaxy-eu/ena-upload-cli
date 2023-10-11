@@ -2,30 +2,6 @@ from typing import Dict, List, Union
 import re
 
 
-def filter_attribute_by(attribute_list: str, key: str, value: str) -> Dict:
-    """Filters out the the attributes by key-value matching in the ISA JSON
-
-    Args:
-        element (str): _description_
-        key (str): _description_
-        value (str): _description_
-
-    Example:
-    my_element = {"comments": [
-        { "name": "SEEK Study ID", "value": "2" },
-        { "name": "SEEK creation date", "value": "2023-09-22T06:14:34Z" }
-      ]
-    }
-    filter_attribute_by(element = my_element, key = 'name', value= 'SEEK Study ID')
-
-    Output: { "name": "SEEK Study ID", "value": "2" }
-
-    Returns:
-        Dict: The Dict that matches the criteria
-    """
-    return [attribute for attribute in attribute_list if attribute[key] == value]
-
-
 def validate_dict(dict: Dict, key: str) -> None:
     """Raises an error if the structure of the ISA JSON Dict is not conform
 
@@ -88,3 +64,65 @@ def clip_off_prefix(alias: Union[str, List[str]]) -> Union[str, List[str]]:
             "The 'clip_off_prefix' function only accepts strings or a list of strings"
         )
     return result
+
+
+def get_study_id(study_dict: Dict[str, str]) -> str:
+    """Fetches the study ID from the comments of a provided study dictionary
+
+    Args:
+        study_dict (Dict[str, str]): study_dictionary
+
+    Raises:
+        KeyError: Raised when the 'SEEK Study ID' comment is not found
+
+    Returns:
+        str: Resulting identifier
+    """
+    comment_names = [comment["name"] for comment in study_dict["comments"]]
+    for study_comment in study_dict["comments"]:
+        if "SEEK Study ID" not in comment_names:
+            raise KeyError(
+                "Bad dictionary. 'SEEK Study ID' comment is mandatory in Study."
+            )
+        if study_comment["name"] == "SEEK Study ID":
+            return study_comment["value"]
+
+
+# def fetch_requested_studies(
+#     studies_isa_json: Dict[str, str], dataset: Dict[str, str]
+# ) -> List[Dict[str, str]]:
+#     """Fetches the requested studies by cross-matching the studies in the dataset
+
+#     Args:
+#         studies_isa_json (Dict[str, str]): studies dictionary
+#         dataset (Dict[str, str]): dataset dictionary
+
+#     Returns:
+#         List[Dict[str, str]]: Resulting list of study dictionaries
+#     """
+#     requested_study_ids = [study["id"] for study in dataset["studies"]]
+
+#     studies = []
+#     for study in studies_isa_json:
+#         if get_study_id(study) in requested_study_ids:
+#             studies.append(study)
+
+#     return studies
+
+
+def fetch_assay_comment_by_name(
+    assay_stream: Dict[str, str], comment_name: str
+) -> Dict[str, str]:
+    for comment in assay_stream["comments"]:
+        if comment["name"] == comment_name:
+            return comment
+
+
+def fetch_assay_streams(study: Dict[str, str]) -> List[Dict[str, str]]:
+    return [assay for assay in study["assays"]]
+
+
+# def fetch_requested_assay_ids(dataset: Dict[str, str]) -> List[str]:
+#     assay_ids = []
+#     for study in dataset["studies"]:
+#         assay_ids.append([assay["id"] for assay in study["assays"]])
