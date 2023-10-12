@@ -1,29 +1,25 @@
-from operator import index
 from typing import List, Optional, Dict
 from pandas import DataFrame
 from ena_objects.characteristic import IsaBase
-from ena_objects.ena_experiment import EnaExperiment
-from ena_objects.ena_run import EnaRun
-from ena_objects.ena_sample import EnaSample
 from ena_objects.ena_std_lib import (
-    fetch_assay_streams,
+    clip_off_prefix,
     fetch_assay_comment_by_name,
-    get_study_id,
 )
 
 
-# def study_alias(assay_stream: Dict[str, str]) -> str:
-#     """Creates a study_alias, based on information of the assay stream and study of the ISA JSON.
+def study_alias(assay_stream: Dict[str, str]) -> str:
+    """Creates a study_alias, based on information of the assay stream and study of the ISA JSON.
 
-#     Args:
-#         assay_stream Dict[str, str]: assay stream part of the ISA JSON
-#         seek_study_id str: Study ID
+    Args:
+        assay_stream Dict[str, str]: assay stream part of the ISA JSON
+        seek_study_id str: Study ID
 
-#     Returns:
-#         str: the study_alias
-#     """
-#     prefix = fetch_assay_comment_by_name(assay_stream, EnaStudy.prefix)["value"]
-#     return prefix + seek_study_id
+    Returns:
+        str: the study_alias
+    """
+    assay_stream_id = clip_off_prefix(assay_stream["@id"])
+    prefix = fetch_assay_comment_by_name(assay_stream, EnaStudy.prefix)["value"]
+    return prefix + assay_stream_id
 
 
 def study_title(assay_stream: Dict[str, str]) -> str:
@@ -91,7 +87,7 @@ class EnaStudy(IsaBase):
         super().check_dict_keys(assay_stream, self.mandatory_keys)
 
         return EnaStudy(
-            alias=assay_stream["@id"],
+            alias=study_alias(assay_stream),
             title=study_title(assay_stream),
             study_type=study_type(assay_stream),
             study_abstract=study_abstract(assay_stream),

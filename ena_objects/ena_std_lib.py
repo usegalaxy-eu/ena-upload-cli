@@ -118,6 +118,14 @@ def fetch_assay_comment_by_name(
             return comment
 
 
+def fetch_study_comment_by_name(
+    study_dict: Dict[str, str], comment_name: str
+) -> Dict[str, str]:
+    for comment in study_dict["comments"]:
+        if comment["name"] == comment_name:
+            return comment
+
+
 def fetch_assay_streams(study: Dict[str, str]) -> List[Dict[str, str]]:
     return [assay for assay in study["assays"]]
 

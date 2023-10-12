@@ -2,7 +2,11 @@ from typing import List, Dict, Union
 
 from pandas import DataFrame
 
-from ena_objects.ena_std_lib import get_assay_sample_associations, clip_off_prefix
+from ena_objects.ena_std_lib import (
+    fetch_assay_comment_by_name,
+    get_assay_sample_associations,
+    clip_off_prefix,
+)
 from ena_objects.characteristic import (
     IsaBase,
     OtherMaterialCharacteristic,
@@ -12,18 +16,19 @@ from ena_objects.ena_sample import EnaSample
 from ena_objects.other_material import OtherMaterial
 
 
-def experiment_alias(other_material: OtherMaterial) -> str:
+def experiment_alias(other_material: OtherMaterial, prefix: str) -> str:
     """Generates an alias for the experiment, starting from an other_material
-    and the prefix specified in the class.
+    and a prefix.
 
     Args:
-        other_material (OtherMaterial): _description_
+        other_material (OtherMaterial): OtherMaterial object
+        prefix (str): Prefix
 
     Returns:
-        str: _description_
+        str: experiment alias
     """
     seek_assays_id: str = clip_off_prefix(other_material.id)
-    return EnaExperiment.prefix + seek_assays_id
+    return prefix + seek_assays_id
 
 
 def fetch_characteristic_categories(
@@ -167,7 +172,7 @@ class EnaExperiment(IsaBase):
         "processSequence",
         "comments",
     ]
-    prefix = "https://datahub.elixir-belgium.org/samples/"  # TODO: Replace by something less hard-coded
+    prefix = "ena_experiment_alias_prefix"
 
     def __init__(
         self,
@@ -222,7 +227,9 @@ class EnaExperiment(IsaBase):
 
         other_materials = get_other_materials(assay_stream)
         parameter_values = get_parameter_values(assay_stream, protocols_dict)
-
+        prefix = fetch_assay_comment_by_name(assay_stream, EnaExperiment.prefix)[
+            "value"
+        ]
         ena_experiments = []
         for om in other_materials:
             om_id = clip_off_prefix(om.id)
@@ -238,7 +245,7 @@ class EnaExperiment(IsaBase):
 
             ena_experiments.append(
                 EnaExperiment(
-                    alias=experiment_alias(om),
+                    alias=experiment_alias(om, prefix),
                     library_name=om.name,
                     study_alias=study_alias,
                     sample_alias=s_alias,

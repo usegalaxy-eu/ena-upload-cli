@@ -1,5 +1,4 @@
 from typing import List, Dict
-from numpy import append
 
 from pandas import DataFrame
 import pandas
@@ -10,30 +9,6 @@ from ena_objects.ena_sample import EnaSample, export_samples_to_dataframe
 from ena_objects.ena_std_lib import fetch_assay_streams, study_publication_ids
 
 from ena_objects.ena_study import EnaStudy, export_studies_to_dataframe
-
-
-def merge_df_by_key(
-    dataframe_dict_list: List[Dict[str, DataFrame]], key: str
-) -> DataFrame:
-    """Filters a list of pandas DataFrames on the provided key and merges them by row.
-
-    Args:
-        dataframe_dict_list (List[Dict[str, DataFrame]]): list of dictionary, containing the DataFrames
-        key (str): key to filter the list on
-
-    Returns:
-        DataFrame: resulting DataFrame
-    """
-    filtered_list = list(map(lambda d: d[key], dataframe_dict_list))
-    return pandas.concat(filtered_list)
-
-
-def fetch_ena_studies(isa_json: Dict[str, str]) -> Dict[str, str]:
-    ena_studies = []
-    for study in isa_json["studies"]:
-        for assay in study["assays"]:
-            ena_studies.append(assay)
-    return ena_studies
 
 
 def fetch_assay(assay, required_assays):

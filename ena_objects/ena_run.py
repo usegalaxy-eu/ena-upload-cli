@@ -3,7 +3,11 @@ from typing import List, Dict
 from pandas import DataFrame
 
 from ena_objects.characteristic import IsaBase
-from ena_objects.ena_std_lib import get_assay_sample_associations, clip_off_prefix
+from ena_objects.ena_std_lib import (
+    fetch_assay_comment_by_name,
+    get_assay_sample_associations,
+    clip_off_prefix,
+)
 
 
 class DataFileComment(IsaBase):
@@ -94,17 +98,18 @@ class DataFile(IsaBase):
         }
 
 
-def fetch_run_alias(data_file: Dict[str, str]) -> str:
+def run_alias(data_file: Dict[str, str], prefix: str) -> str:
     """Generates an alias for the run, based on the data file dictionary
     and prefix specified in the Class
 
     Args:
         data_file (Dict[str, str]): Input data file dictionary
+        prefix (str): prefix for alias
 
     Returns:
         str: Resulting alias
     """
-    return EnaRun.prefix + clip_off_prefix(data_file["@id"])
+    return prefix + clip_off_prefix(data_file["@id"])
 
 
 def get_derived_expertiment_id(
@@ -142,7 +147,7 @@ class EnaRun(IsaBase):
     """
 
     mandatory_keys = ["dataFiles", "processSequence"]
-    prefix = "https://datahub.elixir-belgium.org/samples/"  # TODO: Replace by something less hard-coded
+    prefix = "ena_run_alias_prefix"
 
     def __init__(
         self,
@@ -169,13 +174,15 @@ class EnaRun(IsaBase):
 
         super().check_dict_keys(assay_stream, self.mandatory_keys)
         sample_datafile_associations = get_assay_sample_associations(assay_stream)
+        prefix = fetch_assay_comment_by_name(assay_stream, EnaRun.prefix)["value"]
+
         for data_file in assay_stream["dataFiles"]:
             current_data_file = DataFile.from_data_file_dict(
                 data_file, sample_datafile_associations
             )
             ena_runs.append(
                 EnaRun(
-                    alias=fetch_run_alias(data_file),
+                    alias=run_alias(data_file, prefix),
                     experiment_alias=fetch_experiment_alias(current_data_file),
                     data_file=current_data_file,
                 )

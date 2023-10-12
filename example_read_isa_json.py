@@ -9,12 +9,12 @@ isa_json_file = open(
 isa_json = json.load(isa_json_file)
 
 # Change this to 'True' if you want to export the resulting DataFrames to an xlsx.
-export_to_excel = False
+export_to_excel = True
 outputfolder = "./output_folder/"
 
 required_assays = [
-    {"assay_stream": "Assay Stream 1"},
-    {"ena_study_title": "ENA Study 2"},
+    {"assay_stream": "Ena stream 1"},
+    {"ena_study_title": "Ena Study 2"},
 ]
 
 submission = EnaSubmission.from_isa_json(isa_json, required_assays)

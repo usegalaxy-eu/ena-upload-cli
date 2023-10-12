@@ -1,8 +1,9 @@
-import re
 from typing import List, Dict
 from ena_objects.characteristic import SampleCharacteristic
 
 from pandas import DataFrame
+
+from ena_objects.ena_std_lib import clip_off_prefix, fetch_study_comment_by_name
 
 
 def fetch_characteristic_categories(study_dict: Dict) -> Dict:
@@ -72,7 +73,7 @@ def associated_source_characteristics(sources_data: Dict, ids: List[str]) -> Dic
             return sd["characteristics"]
 
 
-def sample_alias(id: str) -> str:
+def sample_alias(id: str, prefix) -> str:
     """Retrieves the sample's alias
 
     Args:
@@ -81,9 +82,7 @@ def sample_alias(id: str) -> str:
     Returns:
         str: Unique string representation of the alias
     """
-
-    sample_id = re.split("/", id)[1]
-    return EnaSample.prefix + sample_id
+    return prefix + clip_off_prefix(id)
 
 
 class EnaSample:
@@ -91,7 +90,7 @@ class EnaSample:
     Generates an Sample object, compliant to the requirements of ENA
     """
 
-    prefix: str = "https://datahub.elixir-belgium.org/samples/"  # TODO: Replace by something less hard-coded
+    prefix: str = "ena_sample_alias_prefix"
 
     def __init__(self, characteristics: List[SampleCharacteristic], alias: str) -> None:
         self.alias = alias
@@ -136,9 +135,12 @@ class EnaSample:
             for sc in associated_source_characteristics(sources_data, sd["source"]):
                 sd["characteristics"].append(sc)
 
+        study_alias_prefix = fetch_study_comment_by_name(study_dict, self.prefix)[
+            "value"
+        ]
         return [
             EnaSample(
-                alias=sample_alias(sd["id"]),
+                alias=sample_alias(sd["id"], study_alias_prefix),
                 characteristics=sd["characteristics"],
             )
             for sd in samples_data
