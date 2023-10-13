@@ -1,12 +1,18 @@
 from typing import List, Dict
 
 from pandas import DataFrame
-import pandas
 from ena_objects.characteristic import IsaBase
-from ena_objects.ena_experiment import EnaExperiment, export_experiments_to_dataframe
+from ena_objects.ena_experiment import (
+    EnaExperiment,
+    export_experiments_to_dataframe,
+)
 from ena_objects.ena_run import EnaRun, export_runs_to_dataframe
 from ena_objects.ena_sample import EnaSample, export_samples_to_dataframe
-from ena_objects.ena_std_lib import fetch_assay_streams, study_publication_ids
+from ena_objects.ena_std_lib import (
+    fetch_assay_streams,
+    fetch_study_comment_by_name,
+    study_publication_ids,
+)
 
 from ena_objects.ena_study import EnaStudy, export_studies_to_dataframe
 
@@ -81,6 +87,9 @@ class EnaSubmission(IsaBase):
             )
             current_study_protocols_dict = study["protocols"]
             assay_streams = fetch_assay_streams(study)
+            ena_sample_alias_prefix = fetch_study_comment_by_name(
+                study, EnaSample.prefix
+            )["value"]
             for assay_stream in assay_streams:
                 study = EnaStudy.from_assay_stream(assay_stream, pubmed_ids)
                 studies.append(study)
@@ -88,15 +97,34 @@ class EnaSubmission(IsaBase):
                 [
                     experiments.append(experiment)
                     for experiment in EnaExperiment.from_assay_stream(
-                        assay_stream, study.alias, current_study_protocols_dict
+                        assay_stream,
+                        study.alias,
+                        ena_sample_alias_prefix,
+                        current_study_protocols_dict,
                     )
                 ]
 
                 [runs.append(run) for run in EnaRun.from_assay_stream(assay_stream)]
 
-        return EnaSubmission(
+        ena_submission = EnaSubmission(
             studies=studies, samples=samples, experiments=experiments, runs=runs
         )
+        ena_submission.sanitize_samples()
+        return ena_submission
+
+    def sanitize_samples(self):
+        unused_samples = []
+
+        for sample in self.samples:
+            experiment_sample_aliases = [
+                experiment.sample_alias for experiment in self.experiments
+            ]
+            if sample.alias not in experiment_sample_aliases:
+                unused_samples.append(sample.alias)
+
+        self.samples = [
+            sample for sample in self.samples if sample.alias not in unused_samples
+        ]
 
     def generate_dataframes(self) -> Dict[str, DataFrame]:
         """Generates all necessary DataFrames for the ENA Upload tool

@@ -87,6 +87,7 @@ def library_names(study_dict: Dict[str, str]) -> List[str]:
 def get_derived_sample_alias(
     other_material: OtherMaterial,
     assay_stream: Dict[str, str],
+    sample_alias_prefix: str,
     return_multiple: bool = False,
 ) -> Union[str, List[str]]:
     """Gets Sample ids, an 'other material' is derived from.
@@ -107,11 +108,11 @@ def get_derived_sample_alias(
             # other_material.id => '#other_material/<id>'
             if return_multiple:
                 for input in sa["input"]:
-                    alias = EnaSample.prefix + clip_off_prefix(input)
+                    alias = sample_alias_prefix + clip_off_prefix(input)
                     assoc_sample_ids.append(alias)
             else:
                 input = sa["input"][0]
-                return EnaSample.prefix + clip_off_prefix(input)
+                return sample_alias_prefix + clip_off_prefix(input)
     return assoc_sample_ids
 
 
@@ -212,6 +213,7 @@ class EnaExperiment(IsaBase):
         self,
         assay_stream: Dict[str, str],
         study_alias: str,
+        sample_alias_prefix: str,
         protocols_dict: Dict[str, str],
     ) -> None:
         """Generates a EnaExperiment object from a study dictionary.
@@ -233,7 +235,7 @@ class EnaExperiment(IsaBase):
         ena_experiments = []
         for om in other_materials:
             om_id = clip_off_prefix(om.id)
-            s_alias = get_derived_sample_alias(om, assay_stream)
+            s_alias = get_derived_sample_alias(om, assay_stream, sample_alias_prefix)
             filtered_parameter_vals = list(
                 filter(lambda pv: pv["sample_id"] == om_id, parameter_values)
             )
