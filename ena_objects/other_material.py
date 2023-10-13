@@ -1,4 +1,3 @@
-from ena_objects.ena_std_lib import validate_dict
 from ena_objects.characteristic import (
     IsaBase,
     ParameterValue,
@@ -12,8 +11,6 @@ class OtherMaterial(IsaBase):
     """
     This Class represents an 'other_material' in the ISA JSON and extends the ISA Base class.
     """
-
-    mandatory_keys = ["id", "name", "type", "other_material_characteristics"]
 
     def __init__(
         self,

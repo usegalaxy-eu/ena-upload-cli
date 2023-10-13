@@ -2,20 +2,6 @@ from typing import Dict, List, Union
 import re
 
 
-def validate_dict(dict: Dict, key: str) -> None:
-    """Raises an error if the structure of the ISA JSON Dict is not conform
-
-    Args:
-        isa_json (Dict): The ISA JSON to validate
-        key (str): The key to check
-
-    Raises:
-        KeyError: Will display the missing key in the Dict
-    """
-    if key not in dict.keys():
-        raise KeyError(f"{key} was not found in the provided ISA JSON.")
-
-
 def get_assay_sample_associations(assay_dict: Dict[str, str]) -> List[Dict[str, str]]:
     """Fetches the list of sample assocations in a specified assay dictionary.
     Each dictionary contains a list of input ids and output ids.

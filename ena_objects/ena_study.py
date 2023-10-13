@@ -44,7 +44,6 @@ def study_abstract(assay_stream: Dict[str, str]) -> str:
 class EnaStudy(IsaBase):
     """Generates a Study object, compliant to the requirements of ENA"""
 
-    mandatory_keys = ["filename", "comments", "materials"]
     prefix = "ena_study_alias_prefix"
 
     def __init__(
@@ -84,8 +83,6 @@ class EnaStudy(IsaBase):
         Returns:
             EnaStudy: EnaStudy object
         """
-        super().check_dict_keys(assay_stream, self.mandatory_keys)
-
         return EnaStudy(
             alias=study_alias(assay_stream),
             title=study_title(assay_stream),

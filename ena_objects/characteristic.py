@@ -1,6 +1,7 @@
+import json
+import os
 from typing import List, Dict
-
-from ena_objects.ena_std_lib import validate_dict
+import jsonschema
 
 
 class IsaBase:
@@ -9,8 +10,16 @@ class IsaBase:
     """
 
     @classmethod
-    def check_dict_keys(self, dict: Dict[str, str], mandatory_keys):
-        [validate_dict(dict=dict, key=key) for key in mandatory_keys]
+    def validate_json(self, isa_json: Dict[str, str], schema):
+        schema_path = os.path.join(os.curdir, "ena_objects", "json_schemas", schema)
+
+        json_file = open(schema_path)
+        json_schema = json.load(json_file)
+
+        jsonschema.validate(
+            isa_json,
+            json_schema,
+        )
 
 
 def fetch_category_name(categories: Dict[str, str], name: str) -> str:
@@ -42,7 +51,6 @@ class Characteristic(IsaBase):
     This is the generic base class of a characteristics object.
     """
 
-    mandatory_keys = ["category", "value", "unit"]
     parameters = []
 
     def __init__(self, category: Dict, value: str) -> None:
@@ -60,7 +68,6 @@ class Characteristic(IsaBase):
         Returns:
             Characteristic: _description_
         """
-        super().check_dict_keys(dict, self.mandatory_keys)
         return self(
             category=category_dict(dict["category"], categories),
             value=dict["value"]["annotationValue"],

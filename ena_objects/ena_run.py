@@ -32,9 +32,6 @@ class DataFileComment(IsaBase):
         Returns:
             DataFileComment: Resulting DataFileComment
         """
-        for comment in comments_dict:
-            super().check_dict_keys(dict=comment, mandatory_keys=self.mandatory_keys)
-
         return [
             DataFileComment(name=comment["name"], value=comment["value"])
             for comment in comments_dict
@@ -48,8 +45,6 @@ class DataFile(IsaBase):
     """Object representation of a data file in the ISA JSON.
     Extends the IsaBase class.
     """
-
-    mandatory_keys = ["@id", "name", "type", "comments"]
 
     def __init__(self, id, name, type, comments, derived_experiment_id) -> None:
         super().__init__()
@@ -72,7 +67,6 @@ class DataFile(IsaBase):
         Returns:
             DataFile: Resulting DataFile
         """
-        super().check_dict_keys(data_file_dict, self.mandatory_keys)
         return DataFile(
             id=data_file_dict["@id"],
             name=data_file_dict["name"],
@@ -146,7 +140,6 @@ class EnaRun(IsaBase):
     Generates a Run object, compliant to the requirements of ENA.
     """
 
-    mandatory_keys = ["dataFiles", "processSequence"]
     prefix = "ena_run_alias_prefix"
 
     def __init__(
@@ -172,7 +165,6 @@ class EnaRun(IsaBase):
         """
         ena_runs = []
 
-        super().check_dict_keys(assay_stream, self.mandatory_keys)
         sample_datafile_associations = get_assay_sample_associations(assay_stream)
         prefix = fetch_assay_comment_by_name(assay_stream, EnaRun.prefix)["value"]
 

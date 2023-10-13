@@ -1,0 +1,55 @@
+{
+    "identifier": "",
+    "title": "Test Investigation original",
+    "description": "This investigation uses the Standard ENA templates.",
+    "submissionDate": "",
+    "publicReleaseDate": "",
+    "ontologySourceReferences": [],
+    "filename": "Test Investigation original.txt",
+    "comments": [
+        {
+            "name": "ISAjson export time",
+            "value": "2023-10-13T06:24:54Z"
+        },
+        {
+            "name": "SEEK Project name",
+            "value": "Test Project ENA upload Tool"
+        },
+        {
+            "name": "SEEK Project ID",
+            "value": "http://localhost:3000/single_pages/16"
+        },
+        {
+            "name": "SEEK Investigation ID",
+            "value": "19"
+        }
+    ],
+    "publications": [],
+    "people": [
+        {
+            "@id": "#people/4",
+            "lastName": "De Pelseneer",
+            "firstName": "Kevin",
+            "midInitials": "",
+            "email": "kevin.depelseneer@psb.ugent.be",
+            "phone": "",
+            "fax": "",
+            "address": "",
+            "affiliation": "",
+            "roles": [
+                {
+                    "termAccession": "",
+                    "termSource": "",
+                    "annotationValue": ""
+                }
+            ],
+            "comments": [
+                {
+                    "@id": "",
+                    "value": "",
+                    "name": ""
+                }
+            ]
+        }
+    ]
+}

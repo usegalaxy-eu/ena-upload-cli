@@ -45,10 +45,16 @@ def filter_assays(
     return new_isa_json
 
 
+def validate_isa_json(isa_json: Dict[str, str]):
+    IsaBase.validate_json(isa_json, EnaSubmission.investigation_schema)
+
+
 class EnaSubmission(IsaBase):
     """
     Wrapper objects, holding studies
     """
+
+    investigation_schema = "investigation_schema.json"
 
     def __init__(
         self,
@@ -74,6 +80,8 @@ class EnaSubmission(IsaBase):
         Returns:
             EnaSubmission: resulting EnaSubmission
         """
+        validate_isa_json(isa_json)
+
         filtered_isa_json: Dict[str, str] = filter_assays(isa_json, required_assays)
         samples = []
         studies = []

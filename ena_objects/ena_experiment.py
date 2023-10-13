@@ -167,12 +167,6 @@ class EnaExperiment(IsaBase):
     Generates an Experiment object, compliant to the requirements of ENA
     """
 
-    mandatory_keys = [
-        "filename",
-        "measurementType",
-        "processSequence",
-        "comments",
-    ]
     prefix = "ena_experiment_alias_prefix"
 
     def __init__(
@@ -225,7 +219,6 @@ class EnaExperiment(IsaBase):
         Returns:
             EnaExperiment: Resulting EnaExperiment object
         """
-        super().check_dict_keys(assay_stream, self.mandatory_keys)
 
         other_materials = get_other_materials(assay_stream)
         parameter_values = get_parameter_values(assay_stream, protocols_dict)
