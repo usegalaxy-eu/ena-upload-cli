@@ -88,28 +88,6 @@ def get_study_id(study_dict: Dict[str, str]) -> str:
             return study_comment["value"]
 
 
-# def fetch_requested_studies(
-#     studies_isa_json: Dict[str, str], dataset: Dict[str, str]
-# ) -> List[Dict[str, str]]:
-#     """Fetches the requested studies by cross-matching the studies in the dataset
-
-#     Args:
-#         studies_isa_json (Dict[str, str]): studies dictionary
-#         dataset (Dict[str, str]): dataset dictionary
-
-#     Returns:
-#         List[Dict[str, str]]: Resulting list of study dictionaries
-#     """
-#     requested_study_ids = [study["id"] for study in dataset["studies"]]
-
-#     studies = []
-#     for study in studies_isa_json:
-#         if get_study_id(study) in requested_study_ids:
-#             studies.append(study)
-
-#     return studies
-
-
 def fetch_assay_comment_by_name(
     assay_stream: Dict[str, str], comment_name: str
 ) -> Dict[str, str]:
@@ -130,10 +108,6 @@ def fetch_assay_streams(study: Dict[str, str]) -> List[Dict[str, str]]:
     return [assay for assay in study["assays"]]
 
 
-# def fetch_requested_assay_ids(dataset: Dict[str, str]) -> List[str]:
-#     assay_ids = []
-#     for study in dataset["studies"]:
-#         assay_ids.append([assay["id"] for assay in study["assays"]])
 def study_publication_ids(publication_isa_json: Dict) -> List[int]:
     """Retrieves the pubmed_ids from the ISA JSON
 
