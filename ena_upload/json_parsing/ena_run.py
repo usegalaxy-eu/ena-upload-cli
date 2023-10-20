@@ -3,6 +3,7 @@ from typing import List, Dict
 from pandas import DataFrame
 
 from ena_upload.json_parsing.characteristic import IsaBase
+from ena_upload.json_parsing.ena_experiment import EnaExperiment
 from ena_upload.json_parsing.ena_std_lib import (
     fetch_assay_comment_by_name,
     get_assay_sample_associations,
@@ -123,7 +124,7 @@ def get_derived_expertiment_id(
             return association["input"][0]
 
 
-def fetch_experiment_alias(data_file: DataFile) -> str:
+def fetch_experiment_alias(data_file: DataFile, prefix: str) -> str:
     """Generates the experiment alias from the information in the provided data file.
 
     Args:
@@ -132,7 +133,7 @@ def fetch_experiment_alias(data_file: DataFile) -> str:
     Returns:
         str: associated experiment alias
     """
-    return EnaRun.prefix + clip_off_prefix(data_file.derived_experiment_id)
+    return prefix + clip_off_prefix(data_file.derived_experiment_id)
 
 
 class EnaRun(IsaBase):
@@ -167,7 +168,9 @@ class EnaRun(IsaBase):
 
         sample_datafile_associations = get_assay_sample_associations(assay_stream)
         prefix = fetch_assay_comment_by_name(assay_stream, EnaRun.prefix)["value"]
-
+        ena_experiment_prefix = fetch_assay_comment_by_name(
+            assay_stream, EnaExperiment.prefix
+        )["value"]
         for data_file in assay_stream["dataFiles"]:
             current_data_file = DataFile.from_data_file_dict(
                 data_file, sample_datafile_associations
@@ -175,7 +178,9 @@ class EnaRun(IsaBase):
             ena_runs.append(
                 EnaRun(
                     alias=run_alias(data_file, prefix),
-                    experiment_alias=fetch_experiment_alias(current_data_file),
+                    experiment_alias=fetch_experiment_alias(
+                        current_data_file, ena_experiment_prefix
+                    ),
                     data_file=current_data_file,
                 )
             )
