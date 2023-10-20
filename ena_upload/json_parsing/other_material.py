@@ -1,4 +1,4 @@
-from ena_objects.characteristic import (
+from ena_upload.json_parsing.characteristic import (
     IsaBase,
     ParameterValue,
     OtherMaterialCharacteristic,

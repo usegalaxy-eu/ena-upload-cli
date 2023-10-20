@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="receipt.xsl"?>
+<RECEIPT receiptDate="2023-10-20T12:05:56.164+01:00" submissionFile="/tmp/submission_06332d0a-4cd1-4d55-8d0a-63b75fd3872a.xml" success="false">
+     <STUDY alias="https://datahub.elixir-belgium.org/studies/27_28" status="PRIVATE" holdUntilDate="2025-10-20+01:00"/>
+     <SUBMISSION alias="SUBMISSION-20-10-2023-12:05:56:153"/>
+     <MESSAGES>
+          <ERROR>In study, alias: "https://datahub.elixir-belgium.org/studies/27_28". The object being added already exists in the submission account with accession: "ERP152667".</ERROR>
+          <INFO>This submission is a TEST submission and will be discarded within 24 hours</INFO>
+     </MESSAGES>
+     <ACTIONS>ADD</ACTIONS>
+     <ACTIONS>HOLD</ACTIONS>
+</RECEIPT>

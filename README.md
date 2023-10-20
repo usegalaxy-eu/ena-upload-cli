@@ -94,13 +94,13 @@ You can specify ENA sample checklist using the `--checklist` parameter. By defau
 
 The command line tool will automatically fetch the correct scientific name based on the taxon ID or fetch the taxon ID based on the scientific name. Both can be given and no overwrite will be done.
 
-- Mandatory: *alias*, *title*, *sample_description* and either *scientific_name* or *taxon_id* (preferred)
-- Optional: *common_name*
+- Mandatory: *alias*, *title*, *sample_description*, *collection date*,	*geographic location (country and/or sea)* and either *scientific_name* or *taxon_id* (preferred)
+- Optional: *common_name*, *sample_description*
 
-| alias          | title          | taxon_id | scientific_name                                 | common_name | sample_description   |
-|----------------|----------------|----------|-------------------------------------------------|-------------|----------------------|
-| sample_alias_4 | sample_title_2 | 2697049  | Severe acute respiratory syndrome coronavirus 2 | covid-19    | sample_description_1 |
-| sample_alias_5 | sample_title_3 | 2697049  | Severe acute respiratory syndrome coronavirus 2 | covid-19    | sample_description_2 |
+| alias          | title          | taxon_id | scientific_name                                 | common_name | sample_description   | collection date | geographic location (country and/or sea) |
+|----------------|----------------|----------|-------------------------------------------------|-------------|----------------------|-----------------|------------------------------------------|
+| sample_alias_4 | sample_title_2 | 2697049  | Severe acute respiratory syndrome coronavirus 2 | covid-19    | sample_description_1 | 2020-10-11      | Argentina                                |
+| sample_alias_5 | sample_title_3 | 2697049  | Severe acute respiratory syndrome coronavirus 2 | covid-19    | sample_description_2 | 2008-01-24      | Belgium                                  |
 
 #### Viral submissions
 
@@ -133,13 +133,14 @@ Currently we refer to the [ENA Webin](https://wwwdev.ebi.ac.uk/ena/submit/webin/
 | sample_alias | mandatory | Pick a sample to associate this experiment with. The sample may be an individual or a pool, depending on how it is specified. |  |
 | design_description | mandatory | Goal and setup of the individual library including library was constructed. |  |
 | spot_descriptor | optional | The SPOT_DESCRIPTOR specifies how to decode the individual reads of interest from the monolithic spot sequence. The spot descriptor contains aspects of the experimental design, platform, and processing information. There will be two methods of specification: one will be an index into a table of typical decodings, the other being an exact specification. This construct is needed for loading data and for interpreting the loaded runs. It can be omitted if the loader can infer read layout (from multiple input files or from one input files). |  |
-| library_name | mandatory | The submitter's name for this library. |  |
+| library_name | optional | The submitter's name for this library. |  |
 | library_layout | mandatory | LIBRARY_LAYOUT specifies whether to expect single, paired, or other configuration of reads. In the case of paired reads, information about the relative distance and orientation is specified. | yes |
 | insert_size | mandatory | Relative distance. |  |
 | library_strategy | mandatory | Sequencing technique intended for this library | yes |
 | library_source | mandatory | The LIBRARY_SOURCE specifies the type of source material that is being sequenced. | yes |
 | library_selection | mandatory | Method used to enrich the target in the sequence library preparation | yes |
 | platform | mandatory | The PLATFORM record selects which sequencing platform and platform-specific runtime parameters. This will be determined by the Center. | yes |
+| instrument_model | mandatory | Model of the sequencing instrument. | yes |
 | library_construction_protocol | optional | Free form text describing the protocol by which the sequencing library was constructed. |  |
 
 

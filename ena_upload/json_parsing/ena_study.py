@@ -1,7 +1,7 @@
 from typing import List, Optional, Dict
 from pandas import DataFrame
-from ena_objects.characteristic import IsaBase
-from ena_objects.ena_std_lib import (
+from ena_upload.json_parsing.characteristic import IsaBase
+from ena_upload.json_parsing.ena_std_lib import (
     clip_off_prefix,
     fetch_assay_comment_by_name,
 )

@@ -1,13 +1,11 @@
-import os
 import jsonschema
 import pytest
 import json
 
-from rich import print_json
-from ena_objects.characteristic import IsaBase
-from ena_objects.ena_submission import EnaSubmission, EnaSample
-from ena_objects.ena_std_lib import fetch_assay_streams, study_publication_ids
-from ena_objects.ena_study import EnaStudy
+from ena_upload.json_parsing.characteristic import IsaBase
+from ena_upload.json_parsing.ena_submission import EnaSubmission, EnaSample
+from ena_upload.json_parsing.ena_std_lib import fetch_assay_streams, study_publication_ids
+from ena_upload.json_parsing.ena_study import EnaStudy
 
 test_isa_jsonfile = open(
     "tests/test_data/multi_study_multi_assay_stream_investigation.json"

@@ -30,5 +30,5 @@ setup(
     python_requires='>=3.5',
     entry_points={
       'console_scripts': ["ena-upload-cli=ena_upload.ena_upload:main"]
-  },
+    },
 )

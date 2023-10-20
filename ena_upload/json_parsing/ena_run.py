@@ -2,8 +2,8 @@ from typing import List, Dict
 
 from pandas import DataFrame
 
-from ena_objects.characteristic import IsaBase
-from ena_objects.ena_std_lib import (
+from ena_upload.json_parsing.characteristic import IsaBase
+from ena_upload.json_parsing.ena_std_lib import (
     fetch_assay_comment_by_name,
     get_assay_sample_associations,
     clip_off_prefix,
