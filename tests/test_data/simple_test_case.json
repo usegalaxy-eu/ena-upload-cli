@@ -9,7 +9,7 @@
     "comments": [
         {
             "name": "ISAjson export time",
-            "value": "2023-10-20T12:28:47Z"
+            "value": "2023-10-20T12:42:06Z"
         },
         {
             "name": "SEEK Project name",
@@ -67,12 +67,12 @@
                     "value": "sample_alias_"
                 },
                 {
-                    "@id": "#study_comment/25_23caf0e0-5172-013c-675f-7a163e608de1",
+                    "@id": "#study_comment/25_0051dc80-5174-013c-6763-7a163e608de1",
                     "name": "SEEK Study ID",
                     "value": "25"
                 },
                 {
-                    "@id": "#study_comment/25_23caf880-5172-013c-6760-7a163e608de1",
+                    "@id": "#study_comment/25_0051e690-5174-013c-6764-7a163e608de1",
                     "name": "SEEK creation date",
                     "value": "2023-10-20T11:12:23Z"
                 }
@@ -671,7 +671,7 @@
             "assays": [
                 {
                     "@id": "#assay/48_49",
-                    "filename": "a_assays_48_49.txt",
+                    "filename": "a_ena_stream_1.txt",
                     "measurementType": {
                         "annotationValue": "",
                         "termSource": "",
@@ -683,6 +683,46 @@
                         "termAccession": ""
                     },
                     "comments": [
+                        {
+                            "@id": "#assay_comment/25_48_49_14_50",
+                            "name": "ena_study_title",
+                            "value": "study_title_1"
+                        },
+                        {
+                            "@id": "#assay_comment/25_48_49_14_51",
+                            "name": "study_type",
+                            "value": "Transcriptome Analysis"
+                        },
+                        {
+                            "@id": "#assay_comment/25_48_49_14_52",
+                            "name": "new_study_type",
+                            "value": "This should not be submitted!"
+                        },
+                        {
+                            "@id": "#assay_comment/25_48_49_14_53",
+                            "name": "ena_study_abstract",
+                            "value": "study_abstract_1"
+                        },
+                        {
+                            "@id": "#assay_comment/25_48_49_14_54",
+                            "name": "assay_stream",
+                            "value": "Ena stream 1"
+                        },
+                        {
+                            "@id": "#assay_comment/25_48_49_14_55",
+                            "name": "ena_study_alias_prefix",
+                            "value": "study_alias_"
+                        },
+                        {
+                            "@id": "#assay_comment/25_48_49_14_56",
+                            "name": "ena_experiment_alias_prefix",
+                            "value": "experiment_alias_"
+                        },
+                        {
+                            "@id": "#assay_comment/25_48_49_14_57",
+                            "name": "ena_run_alias_prefix",
+                            "value": "run_alias_"
+                        },
                         {
                             "@id": "#assay_comment/48_49",
                             "name": "linked_assays",
