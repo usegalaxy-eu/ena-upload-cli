@@ -1107,7 +1107,7 @@
                     "@id": "#parameter/677"
                   },
                   "value": {
-                    "annotationValue": "SINGLE",
+                    "annotationValue": "PAIRED",
                     "termSource": "",
                     "termAccession": ""
                   },
