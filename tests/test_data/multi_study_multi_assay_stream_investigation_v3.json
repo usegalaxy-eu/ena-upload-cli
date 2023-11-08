@@ -9,7 +9,7 @@
     "comments": [
         {
             "name": "ISAjson export time",
-            "value": "2023-11-08T18:42:37Z"
+            "value": "2023-11-08T20:24:38Z"
         },
         {
             "name": "SEEK Project name",
@@ -67,12 +67,12 @@
                     "value": "https://datahub.elixir-belgium.org/samples/"
                 },
                 {
-                    "@id": "#study_comment/19_830dd160-6094-013c-9ed7-7a163e608de1",
+                    "@id": "#study_comment/19_c394a480-60a2-013c-9ee3-7a163e608de1",
                     "name": "SEEK Study ID",
                     "value": "19"
                 },
                 {
-                    "@id": "#study_comment/19_830dd890-6094-013c-9ed8-7a163e608de1",
+                    "@id": "#study_comment/19_c394aeb0-60a2-013c-9ee4-7a163e608de1",
                     "name": "SEEK creation date",
                     "value": "2023-10-09T13:39:46Z"
                 }
@@ -3744,12 +3744,12 @@
                     "value": "https://datahub.elixir-belgium.org/samples/"
                 },
                 {
-                    "@id": "#study_comment/20_836d8d10-6094-013c-9ed9-7a163e608de1",
+                    "@id": "#study_comment/20_c4042c90-60a2-013c-9ee5-7a163e608de1",
                     "name": "SEEK Study ID",
                     "value": "20"
                 },
                 {
-                    "@id": "#study_comment/20_836d93c0-6094-013c-9eda-7a163e608de1",
+                    "@id": "#study_comment/20_c40435b0-60a2-013c-9ee6-7a163e608de1",
                     "name": "SEEK creation date",
                     "value": "2023-10-09T14:34:40Z"
                 }
@@ -5032,6 +5032,2389 @@
                                 {
                                     "name": "file_name",
                                     "value": "data file 10.fastq"
+                                },
+                                {
+                                    "name": "file_type",
+                                    "value": "fastq"
+                                },
+                                {
+                                    "name": "file checksum",
+                                    "value": ""
+                                },
+                                {
+                                    "name": "accession",
+                                    "value": ""
+                                },
+                                {
+                                    "name": "submission date",
+                                    "value": ""
+                                },
+                                {
+                                    "name": "status",
+                                    "value": ""
+                                }
+                            ]
+                        }
+                    ],
+                    "unitCategories": []
+                }
+            ],
+            "factors": [],
+            "unitCategories": []
+        },
+        {
+            "identifier": "",
+            "title": "ENA Study 3",
+            "description": "",
+            "submissionDate": "",
+            "publicReleaseDate": "",
+            "filename": "ENA Study 3.txt",
+            "comments": [
+                {
+                    "@id": "#study_comment/27_16_49",
+                    "name": "ena_sample_alias_prefix",
+                    "value": "https://datahub.elixir-belgium.org/samples/"
+                },
+                {
+                    "@id": "#study_comment/27_c42d0d90-60a2-013c-9ee7-7a163e608de1",
+                    "name": "SEEK Study ID",
+                    "value": "27"
+                },
+                {
+                    "@id": "#study_comment/27_c42d1570-60a2-013c-9ee8-7a163e608de1",
+                    "name": "SEEK creation date",
+                    "value": "2023-11-08T20:00:56Z"
+                }
+            ],
+            "publications": [],
+            "people": [
+                {
+                    "@id": "#people/4",
+                    "lastName": "DP",
+                    "firstName": "Kevin",
+                    "midInitials": "",
+                    "email": "kevin.dp@mail.com",
+                    "phone": "",
+                    "fax": "",
+                    "address": "",
+                    "affiliation": "",
+                    "roles": [
+                        {
+                            "termAccession": "",
+                            "termSource": "",
+                            "annotationValue": ""
+                        }
+                    ],
+                    "comments": [
+                        {
+                            "@id": "",
+                            "value": "",
+                            "name": ""
+                        }
+                    ]
+                }
+            ],
+            "studyDesignDescriptors": [],
+            "characteristicCategories": [
+                {
+                    "@id": "#characteristic_category/geographic_location_(country_and/or_sea)_737",
+                    "characteristicType": {
+                        "annotationValue": "geographic location (country and/or sea)",
+                        "termAccession": "",
+                        "termSource": ""
+                    }
+                },
+                {
+                    "@id": "#characteristic_category/taxon_id_738",
+                    "characteristicType": {
+                        "annotationValue": "taxon_id",
+                        "termAccession": "",
+                        "termSource": ""
+                    }
+                },
+                {
+                    "@id": "#characteristic_category/title_742",
+                    "characteristicType": {
+                        "annotationValue": "title",
+                        "termAccession": "",
+                        "termSource": ""
+                    }
+                },
+                {
+                    "@id": "#characteristic_category/sample_description_743",
+                    "characteristicType": {
+                        "annotationValue": "sample_description",
+                        "termAccession": "",
+                        "termSource": ""
+                    }
+                },
+                {
+                    "@id": "#characteristic_category/collection_date_744",
+                    "characteristicType": {
+                        "annotationValue": "collection date",
+                        "termAccession": "",
+                        "termSource": ""
+                    }
+                },
+                {
+                    "@id": "#characteristic_category/accession_745",
+                    "characteristicType": {
+                        "annotationValue": "accession",
+                        "termAccession": "",
+                        "termSource": ""
+                    }
+                },
+                {
+                    "@id": "#characteristic_category/submission_date_746",
+                    "characteristicType": {
+                        "annotationValue": "submission date",
+                        "termAccession": "",
+                        "termSource": ""
+                    }
+                },
+                {
+                    "@id": "#characteristic_category/status_747",
+                    "characteristicType": {
+                        "annotationValue": "status",
+                        "termAccession": "",
+                        "termSource": ""
+                    }
+                }
+            ],
+            "materials": {
+                "sources": [
+                    {
+                        "@id": "#source/236",
+                        "name": "Source A",
+                        "characteristics": [
+                            {
+                                "category": {
+                                    "@id": "#characteristic_category/geographic_location_(country_and/or_sea)_737"
+                                },
+                                "value": {
+                                    "annotationValue": "Antarctica",
+                                    "termSource": "",
+                                    "termAccession": ""
+                                },
+                                "unit": {
+                                    "termSource": "",
+                                    "termAccession": "",
+                                    "comments": []
+                                }
+                            },
+                            {
+                                "category": {
+                                    "@id": "#characteristic_category/taxon_id_738"
+                                },
+                                "value": {
+                                    "annotationValue": "254564",
+                                    "termSource": "",
+                                    "termAccession": ""
+                                },
+                                "unit": {
+                                    "termSource": "",
+                                    "termAccession": "",
+                                    "comments": []
+                                }
+                            }
+                        ]
+                    }
+                ],
+                "samples": [
+                    {
+                        "@id": "#sample/237",
+                        "name": "Sample 1",
+                        "derivesFrom": [
+                            {
+                                "@id": "#source/236"
+                            }
+                        ],
+                        "characteristics": [
+                            {
+                                "category": {
+                                    "@id": "#characteristic_category/title_742"
+                                },
+                                "value": {
+                                    "annotationValue": "Sample title 1",
+                                    "termSource": "",
+                                    "termAccession": ""
+                                },
+                                "unit": {
+                                    "termSource": "",
+                                    "termAccession": "",
+                                    "comments": []
+                                }
+                            },
+                            {
+                                "category": {
+                                    "@id": "#characteristic_category/sample_description_743"
+                                },
+                                "value": {
+                                    "annotationValue": "This is sample 1",
+                                    "termSource": "",
+                                    "termAccession": ""
+                                },
+                                "unit": {
+                                    "termSource": "",
+                                    "termAccession": "",
+                                    "comments": []
+                                }
+                            },
+                            {
+                                "category": {
+                                    "@id": "#characteristic_category/collection_date_744"
+                                },
+                                "value": {
+                                    "annotationValue": "2001",
+                                    "termSource": "",
+                                    "termAccession": ""
+                                },
+                                "unit": {
+                                    "termSource": "",
+                                    "termAccession": "",
+                                    "comments": []
+                                }
+                            },
+                            {
+                                "category": {
+                                    "@id": "#characteristic_category/accession_745"
+                                },
+                                "value": {
+                                    "annotationValue": "",
+                                    "termSource": "",
+                                    "termAccession": ""
+                                },
+                                "unit": {
+                                    "termSource": "",
+                                    "termAccession": "",
+                                    "comments": []
+                                }
+                            },
+                            {
+                                "category": {
+                                    "@id": "#characteristic_category/submission_date_746"
+                                },
+                                "value": {
+                                    "annotationValue": "",
+                                    "termSource": "",
+                                    "termAccession": ""
+                                },
+                                "unit": {
+                                    "termSource": "",
+                                    "termAccession": "",
+                                    "comments": []
+                                }
+                            },
+                            {
+                                "category": {
+                                    "@id": "#characteristic_category/status_747"
+                                },
+                                "value": {
+                                    "annotationValue": "",
+                                    "termSource": "",
+                                    "termAccession": ""
+                                },
+                                "unit": {
+                                    "termSource": "",
+                                    "termAccession": "",
+                                    "comments": []
+                                }
+                            }
+                        ],
+                        "factorValues": [
+                            {
+                                "category": {
+                                    "@id": ""
+                                },
+                                "value": {
+                                    "annotationValue": "",
+                                    "termSource": "",
+                                    "termAccession": ""
+                                },
+                                "unit": {
+                                    "termSource": "",
+                                    "termAccession": "",
+                                    "comments": []
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "@id": "#sample/238",
+                        "name": "Sample 2",
+                        "derivesFrom": [
+                            {
+                                "@id": "#source/236"
+                            }
+                        ],
+                        "characteristics": [
+                            {
+                                "category": {
+                                    "@id": "#characteristic_category/title_742"
+                                },
+                                "value": {
+                                    "annotationValue": "Sample title 2",
+                                    "termSource": "",
+                                    "termAccession": ""
+                                },
+                                "unit": {
+                                    "termSource": "",
+                                    "termAccession": "",
+                                    "comments": []
+                                }
+                            },
+                            {
+                                "category": {
+                                    "@id": "#characteristic_category/sample_description_743"
+                                },
+                                "value": {
+                                    "annotationValue": "This is sample 2",
+                                    "termSource": "",
+                                    "termAccession": ""
+                                },
+                                "unit": {
+                                    "termSource": "",
+                                    "termAccession": "",
+                                    "comments": []
+                                }
+                            },
+                            {
+                                "category": {
+                                    "@id": "#characteristic_category/collection_date_744"
+                                },
+                                "value": {
+                                    "annotationValue": "2002",
+                                    "termSource": "",
+                                    "termAccession": ""
+                                },
+                                "unit": {
+                                    "termSource": "",
+                                    "termAccession": "",
+                                    "comments": []
+                                }
+                            },
+                            {
+                                "category": {
+                                    "@id": "#characteristic_category/accession_745"
+                                },
+                                "value": {
+                                    "annotationValue": "",
+                                    "termSource": "",
+                                    "termAccession": ""
+                                },
+                                "unit": {
+                                    "termSource": "",
+                                    "termAccession": "",
+                                    "comments": []
+                                }
+                            },
+                            {
+                                "category": {
+                                    "@id": "#characteristic_category/submission_date_746"
+                                },
+                                "value": {
+                                    "annotationValue": "",
+                                    "termSource": "",
+                                    "termAccession": ""
+                                },
+                                "unit": {
+                                    "termSource": "",
+                                    "termAccession": "",
+                                    "comments": []
+                                }
+                            },
+                            {
+                                "category": {
+                                    "@id": "#characteristic_category/status_747"
+                                },
+                                "value": {
+                                    "annotationValue": "",
+                                    "termSource": "",
+                                    "termAccession": ""
+                                },
+                                "unit": {
+                                    "termSource": "",
+                                    "termAccession": "",
+                                    "comments": []
+                                }
+                            }
+                        ],
+                        "factorValues": [
+                            {
+                                "category": {
+                                    "@id": ""
+                                },
+                                "value": {
+                                    "annotationValue": "",
+                                    "termSource": "",
+                                    "termAccession": ""
+                                },
+                                "unit": {
+                                    "termSource": "",
+                                    "termAccession": "",
+                                    "comments": []
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "@id": "#sample/239",
+                        "name": "Sample 3",
+                        "derivesFrom": [
+                            {
+                                "@id": "#source/236"
+                            }
+                        ],
+                        "characteristics": [
+                            {
+                                "category": {
+                                    "@id": "#characteristic_category/title_742"
+                                },
+                                "value": {
+                                    "annotationValue": "Sample title 3",
+                                    "termSource": "",
+                                    "termAccession": ""
+                                },
+                                "unit": {
+                                    "termSource": "",
+                                    "termAccession": "",
+                                    "comments": []
+                                }
+                            },
+                            {
+                                "category": {
+                                    "@id": "#characteristic_category/sample_description_743"
+                                },
+                                "value": {
+                                    "annotationValue": "This is sample 3",
+                                    "termSource": "",
+                                    "termAccession": ""
+                                },
+                                "unit": {
+                                    "termSource": "",
+                                    "termAccession": "",
+                                    "comments": []
+                                }
+                            },
+                            {
+                                "category": {
+                                    "@id": "#characteristic_category/collection_date_744"
+                                },
+                                "value": {
+                                    "annotationValue": "2003",
+                                    "termSource": "",
+                                    "termAccession": ""
+                                },
+                                "unit": {
+                                    "termSource": "",
+                                    "termAccession": "",
+                                    "comments": []
+                                }
+                            },
+                            {
+                                "category": {
+                                    "@id": "#characteristic_category/accession_745"
+                                },
+                                "value": {
+                                    "annotationValue": "",
+                                    "termSource": "",
+                                    "termAccession": ""
+                                },
+                                "unit": {
+                                    "termSource": "",
+                                    "termAccession": "",
+                                    "comments": []
+                                }
+                            },
+                            {
+                                "category": {
+                                    "@id": "#characteristic_category/submission_date_746"
+                                },
+                                "value": {
+                                    "annotationValue": "",
+                                    "termSource": "",
+                                    "termAccession": ""
+                                },
+                                "unit": {
+                                    "termSource": "",
+                                    "termAccession": "",
+                                    "comments": []
+                                }
+                            },
+                            {
+                                "category": {
+                                    "@id": "#characteristic_category/status_747"
+                                },
+                                "value": {
+                                    "annotationValue": "",
+                                    "termSource": "",
+                                    "termAccession": ""
+                                },
+                                "unit": {
+                                    "termSource": "",
+                                    "termAccession": "",
+                                    "comments": []
+                                }
+                            }
+                        ],
+                        "factorValues": [
+                            {
+                                "category": {
+                                    "@id": ""
+                                },
+                                "value": {
+                                    "annotationValue": "",
+                                    "termSource": "",
+                                    "termAccession": ""
+                                },
+                                "unit": {
+                                    "termSource": "",
+                                    "termAccession": "",
+                                    "comments": []
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "@id": "#sample/240",
+                        "name": "Sample 4",
+                        "derivesFrom": [
+                            {
+                                "@id": "#source/236"
+                            }
+                        ],
+                        "characteristics": [
+                            {
+                                "category": {
+                                    "@id": "#characteristic_category/title_742"
+                                },
+                                "value": {
+                                    "annotationValue": "Sample title 4",
+                                    "termSource": "",
+                                    "termAccession": ""
+                                },
+                                "unit": {
+                                    "termSource": "",
+                                    "termAccession": "",
+                                    "comments": []
+                                }
+                            },
+                            {
+                                "category": {
+                                    "@id": "#characteristic_category/sample_description_743"
+                                },
+                                "value": {
+                                    "annotationValue": "This is sample 4",
+                                    "termSource": "",
+                                    "termAccession": ""
+                                },
+                                "unit": {
+                                    "termSource": "",
+                                    "termAccession": "",
+                                    "comments": []
+                                }
+                            },
+                            {
+                                "category": {
+                                    "@id": "#characteristic_category/collection_date_744"
+                                },
+                                "value": {
+                                    "annotationValue": "2004",
+                                    "termSource": "",
+                                    "termAccession": ""
+                                },
+                                "unit": {
+                                    "termSource": "",
+                                    "termAccession": "",
+                                    "comments": []
+                                }
+                            },
+                            {
+                                "category": {
+                                    "@id": "#characteristic_category/accession_745"
+                                },
+                                "value": {
+                                    "annotationValue": "",
+                                    "termSource": "",
+                                    "termAccession": ""
+                                },
+                                "unit": {
+                                    "termSource": "",
+                                    "termAccession": "",
+                                    "comments": []
+                                }
+                            },
+                            {
+                                "category": {
+                                    "@id": "#characteristic_category/submission_date_746"
+                                },
+                                "value": {
+                                    "annotationValue": "",
+                                    "termSource": "",
+                                    "termAccession": ""
+                                },
+                                "unit": {
+                                    "termSource": "",
+                                    "termAccession": "",
+                                    "comments": []
+                                }
+                            },
+                            {
+                                "category": {
+                                    "@id": "#characteristic_category/status_747"
+                                },
+                                "value": {
+                                    "annotationValue": "",
+                                    "termSource": "",
+                                    "termAccession": ""
+                                },
+                                "unit": {
+                                    "termSource": "",
+                                    "termAccession": "",
+                                    "comments": []
+                                }
+                            }
+                        ],
+                        "factorValues": [
+                            {
+                                "category": {
+                                    "@id": ""
+                                },
+                                "value": {
+                                    "annotationValue": "",
+                                    "termSource": "",
+                                    "termAccession": ""
+                                },
+                                "unit": {
+                                    "termSource": "",
+                                    "termAccession": "",
+                                    "comments": []
+                                }
+                            }
+                        ]
+                    }
+                ]
+            },
+            "protocols": [
+                {
+                    "@id": "#protocol/_27",
+                    "name": "sample collection",
+                    "protocolType": {
+                        "annotationValue": "sample collection",
+                        "termAccession": "",
+                        "termSource": ""
+                    },
+                    "description": "",
+                    "uri": "",
+                    "version": "",
+                    "parameters": [
+                        {
+                            "@id": "#parameter/748",
+                            "parameterName": {
+                                "annotationValue": "Parameter Value 1",
+                                "termAccession": "",
+                                "termSource": ""
+                            }
+                        },
+                        {
+                            "@id": "#parameter/749",
+                            "parameterName": {
+                                "annotationValue": "Parameter Value 2",
+                                "termAccession": "",
+                                "termSource": ""
+                            }
+                        }
+                    ],
+                    "components": [
+                        {
+                            "componentName": "",
+                            "componentType": {
+                                "annotationValue": "",
+                                "termSource": "",
+                                "termAccession": ""
+                            }
+                        }
+                    ]
+                },
+                {
+                    "@id": "#protocol/_50",
+                    "name": "library construction",
+                    "protocolType": {
+                        "annotationValue": "library construction",
+                        "termAccession": "",
+                        "termSource": ""
+                    },
+                    "description": "",
+                    "uri": "",
+                    "version": "",
+                    "parameters": [
+                        {
+                            "@id": "#parameter/752",
+                            "parameterName": {
+                                "annotationValue": "library_construction_protocol",
+                                "termAccession": "",
+                                "termSource": ""
+                            }
+                        },
+                        {
+                            "@id": "#parameter/754",
+                            "parameterName": {
+                                "annotationValue": "design_description",
+                                "termAccession": "",
+                                "termSource": ""
+                            }
+                        },
+                        {
+                            "@id": "#parameter/756",
+                            "parameterName": {
+                                "annotationValue": "library_source",
+                                "termAccession": "",
+                                "termSource": ""
+                            }
+                        },
+                        {
+                            "@id": "#parameter/757",
+                            "parameterName": {
+                                "annotationValue": "library_strategy",
+                                "termAccession": "",
+                                "termSource": ""
+                            }
+                        },
+                        {
+                            "@id": "#parameter/758",
+                            "parameterName": {
+                                "annotationValue": "library_selection",
+                                "termAccession": "",
+                                "termSource": ""
+                            }
+                        },
+                        {
+                            "@id": "#parameter/759",
+                            "parameterName": {
+                                "annotationValue": "library_layout",
+                                "termAccession": "",
+                                "termSource": ""
+                            }
+                        },
+                        {
+                            "@id": "#parameter/760",
+                            "parameterName": {
+                                "annotationValue": "insert_size",
+                                "termAccession": "",
+                                "termSource": ""
+                            }
+                        },
+                        {
+                            "@id": "#parameter/761",
+                            "parameterName": {
+                                "annotationValue": "platform",
+                                "termAccession": "",
+                                "termSource": ""
+                            }
+                        },
+                        {
+                            "@id": "#parameter/762",
+                            "parameterName": {
+                                "annotationValue": "instrument_model",
+                                "termAccession": "",
+                                "termSource": ""
+                            }
+                        }
+                    ],
+                    "components": [
+                        {
+                            "componentName": "",
+                            "componentType": {
+                                "annotationValue": "",
+                                "termSource": "",
+                                "termAccession": ""
+                            }
+                        }
+                    ]
+                },
+                {
+                    "@id": "#protocol/_51",
+                    "name": "nucleic acid sequencing",
+                    "protocolType": {
+                        "annotationValue": "nucleic acid sequencing",
+                        "termAccession": "",
+                        "termSource": ""
+                    },
+                    "description": "",
+                    "uri": "",
+                    "version": "",
+                    "parameters": [],
+                    "components": [
+                        {
+                            "componentName": "",
+                            "componentType": {
+                                "annotationValue": "",
+                                "termSource": "",
+                                "termAccession": ""
+                            }
+                        }
+                    ]
+                }
+            ],
+            "processSequence": [
+                {
+                    "@id": "#process/sample_collection/237_238",
+                    "name": "",
+                    "executesProtocol": {
+                        "@id": "#protocol/_27"
+                    },
+                    "parameterValues": [
+                        {
+                            "category": {
+                                "@id": "#parameter/748"
+                            },
+                            "value": {
+                                "annotationValue": "A",
+                                "termSource": "",
+                                "termAccession": ""
+                            },
+                            "unit": {
+                                "termSource": "",
+                                "termAccession": "",
+                                "comments": []
+                            }
+                        },
+                        {
+                            "category": {
+                                "@id": "#parameter/749"
+                            },
+                            "value": {
+                                "annotationValue": "C",
+                                "termSource": "",
+                                "termAccession": ""
+                            },
+                            "unit": {
+                                "termSource": "",
+                                "termAccession": "",
+                                "comments": []
+                            }
+                        }
+                    ],
+                    "performer": "",
+                    "date": "",
+                    "inputs": [
+                        {
+                            "@id": "#source/236"
+                        }
+                    ],
+                    "outputs": [
+                        {
+                            "@id": "#sample/237"
+                        },
+                        {
+                            "@id": "#sample/238"
+                        }
+                    ]
+                },
+                {
+                    "@id": "#process/sample_collection/239",
+                    "name": "",
+                    "executesProtocol": {
+                        "@id": "#protocol/_27"
+                    },
+                    "parameterValues": [
+                        {
+                            "category": {
+                                "@id": "#parameter/748"
+                            },
+                            "value": {
+                                "annotationValue": "B",
+                                "termSource": "",
+                                "termAccession": ""
+                            },
+                            "unit": {
+                                "termSource": "",
+                                "termAccession": "",
+                                "comments": []
+                            }
+                        },
+                        {
+                            "category": {
+                                "@id": "#parameter/749"
+                            },
+                            "value": {
+                                "annotationValue": "C",
+                                "termSource": "",
+                                "termAccession": ""
+                            },
+                            "unit": {
+                                "termSource": "",
+                                "termAccession": "",
+                                "comments": []
+                            }
+                        }
+                    ],
+                    "performer": "",
+                    "date": "",
+                    "inputs": [
+                        {
+                            "@id": "#source/236"
+                        }
+                    ],
+                    "outputs": [
+                        {
+                            "@id": "#sample/239"
+                        }
+                    ]
+                },
+                {
+                    "@id": "#process/sample_collection/240",
+                    "name": "",
+                    "executesProtocol": {
+                        "@id": "#protocol/_27"
+                    },
+                    "parameterValues": [
+                        {
+                            "category": {
+                                "@id": "#parameter/748"
+                            },
+                            "value": {
+                                "annotationValue": "A",
+                                "termSource": "",
+                                "termAccession": ""
+                            },
+                            "unit": {
+                                "termSource": "",
+                                "termAccession": "",
+                                "comments": []
+                            }
+                        },
+                        {
+                            "category": {
+                                "@id": "#parameter/749"
+                            },
+                            "value": {
+                                "annotationValue": "D",
+                                "termSource": "",
+                                "termAccession": ""
+                            },
+                            "unit": {
+                                "termSource": "",
+                                "termAccession": "",
+                                "comments": []
+                            }
+                        }
+                    ],
+                    "performer": "",
+                    "date": "",
+                    "inputs": [
+                        {
+                            "@id": "#source/236"
+                        }
+                    ],
+                    "outputs": [
+                        {
+                            "@id": "#sample/240"
+                        }
+                    ]
+                }
+            ],
+            "assays": [
+                {
+                    "@id": "#assay/50_51",
+                    "filename": "a_extra_assay_stream.txt",
+                    "measurementType": {
+                        "annotationValue": "",
+                        "termSource": "",
+                        "termAccession": ""
+                    },
+                    "technologyType": {
+                        "annotationValue": "",
+                        "termSource": "",
+                        "termAccession": ""
+                    },
+                    "comments": [
+                        {
+                            "@id": "#assay_comment/27_50_51_17_50",
+                            "name": "ena_study_title",
+                            "value": "Extra study"
+                        },
+                        {
+                            "@id": "#assay_comment/27_50_51_17_51",
+                            "name": "study_type",
+                            "value": "Whole Genome Sequencing"
+                        },
+                        {
+                            "@id": "#assay_comment/27_50_51_17_52",
+                            "name": "new_study_type",
+                            "value": ""
+                        },
+                        {
+                            "@id": "#assay_comment/27_50_51_17_53",
+                            "name": "ena_study_abstract",
+                            "value": "blablabla"
+                        },
+                        {
+                            "@id": "#assay_comment/27_50_51_17_54",
+                            "name": "assay_stream",
+                            "value": "Extra assay stream"
+                        },
+                        {
+                            "@id": "#assay_comment/27_50_51_17_55",
+                            "name": "ena_study_alias_prefix",
+                            "value": "https://datahub.elixir-belgium.org/studies/"
+                        },
+                        {
+                            "@id": "#assay_comment/27_50_51_17_56",
+                            "name": "ena_experiment_alias_prefix",
+                            "value": "https://datahub.elixir-belgium.org/samples/"
+                        },
+                        {
+                            "@id": "#assay_comment/27_50_51_17_57",
+                            "name": "ena_run_alias_prefix",
+                            "value": "https://datahub.elixir-belgium.org/samples/"
+                        },
+                        {
+                            "@id": "#assay_comment/50_51",
+                            "name": "linked_assays",
+                            "value": "[{\"id\":50,\"title\":\"Assay 1\"},{\"id\":51,\"title\":\"Assay 2\"}]"
+                        }
+                    ],
+                    "technologyPlatform": "",
+                    "characteristicCategories": [
+                        {
+                            "@id": "#characteristic_category/title_753",
+                            "characteristicType": {
+                                "annotationValue": "title",
+                                "termAccession": "",
+                                "termSource": ""
+                            }
+                        },
+                        {
+                            "@id": "#characteristic_category/accession_763",
+                            "characteristicType": {
+                                "annotationValue": "accession",
+                                "termAccession": "",
+                                "termSource": ""
+                            }
+                        },
+                        {
+                            "@id": "#characteristic_category/submission_date_764",
+                            "characteristicType": {
+                                "annotationValue": "submission date",
+                                "termAccession": "",
+                                "termSource": ""
+                            }
+                        },
+                        {
+                            "@id": "#characteristic_category/status_765",
+                            "characteristicType": {
+                                "annotationValue": "status",
+                                "termAccession": "",
+                                "termSource": ""
+                            }
+                        }
+                    ],
+                    "materials": {
+                        "samples": [],
+                        "otherMaterials": [
+                            {
+                                "@id": "#other_material/241",
+                                "name": "Library 1",
+                                "type": "library_name",
+                                "characteristics": [
+                                    {
+                                        "category": {
+                                            "@id": "#characteristic_category/title_753"
+                                        },
+                                        "value": {
+                                            "annotationValue": "Library title 1",
+                                            "termSource": "",
+                                            "termAccession": ""
+                                        },
+                                        "unit": {
+                                            "termSource": "",
+                                            "termAccession": "",
+                                            "comments": []
+                                        }
+                                    },
+                                    {
+                                        "category": {
+                                            "@id": "#characteristic_category/accession_763"
+                                        },
+                                        "value": {
+                                            "annotationValue": "",
+                                            "termSource": "",
+                                            "termAccession": ""
+                                        },
+                                        "unit": {
+                                            "termSource": "",
+                                            "termAccession": "",
+                                            "comments": []
+                                        }
+                                    },
+                                    {
+                                        "category": {
+                                            "@id": "#characteristic_category/submission_date_764"
+                                        },
+                                        "value": {
+                                            "annotationValue": "",
+                                            "termSource": "",
+                                            "termAccession": ""
+                                        },
+                                        "unit": {
+                                            "termSource": "",
+                                            "termAccession": "",
+                                            "comments": []
+                                        }
+                                    },
+                                    {
+                                        "category": {
+                                            "@id": "#characteristic_category/status_765"
+                                        },
+                                        "value": {
+                                            "annotationValue": "",
+                                            "termSource": "",
+                                            "termAccession": ""
+                                        },
+                                        "unit": {
+                                            "termSource": "",
+                                            "termAccession": "",
+                                            "comments": []
+                                        }
+                                    }
+                                ],
+                                "derivesFrom": [
+                                    {
+                                        "@id": "#sample/237"
+                                    }
+                                ]
+                            },
+                            {
+                                "@id": "#other_material/242",
+                                "name": "Library 2",
+                                "type": "library_name",
+                                "characteristics": [
+                                    {
+                                        "category": {
+                                            "@id": "#characteristic_category/title_753"
+                                        },
+                                        "value": {
+                                            "annotationValue": "Library title 2",
+                                            "termSource": "",
+                                            "termAccession": ""
+                                        },
+                                        "unit": {
+                                            "termSource": "",
+                                            "termAccession": "",
+                                            "comments": []
+                                        }
+                                    },
+                                    {
+                                        "category": {
+                                            "@id": "#characteristic_category/accession_763"
+                                        },
+                                        "value": {
+                                            "annotationValue": "",
+                                            "termSource": "",
+                                            "termAccession": ""
+                                        },
+                                        "unit": {
+                                            "termSource": "",
+                                            "termAccession": "",
+                                            "comments": []
+                                        }
+                                    },
+                                    {
+                                        "category": {
+                                            "@id": "#characteristic_category/submission_date_764"
+                                        },
+                                        "value": {
+                                            "annotationValue": "",
+                                            "termSource": "",
+                                            "termAccession": ""
+                                        },
+                                        "unit": {
+                                            "termSource": "",
+                                            "termAccession": "",
+                                            "comments": []
+                                        }
+                                    },
+                                    {
+                                        "category": {
+                                            "@id": "#characteristic_category/status_765"
+                                        },
+                                        "value": {
+                                            "annotationValue": "",
+                                            "termSource": "",
+                                            "termAccession": ""
+                                        },
+                                        "unit": {
+                                            "termSource": "",
+                                            "termAccession": "",
+                                            "comments": []
+                                        }
+                                    }
+                                ],
+                                "derivesFrom": [
+                                    {
+                                        "@id": "#sample/238"
+                                    }
+                                ]
+                            },
+                            {
+                                "@id": "#other_material/243",
+                                "name": "Library 3",
+                                "type": "library_name",
+                                "characteristics": [
+                                    {
+                                        "category": {
+                                            "@id": "#characteristic_category/title_753"
+                                        },
+                                        "value": {
+                                            "annotationValue": "Library title 3",
+                                            "termSource": "",
+                                            "termAccession": ""
+                                        },
+                                        "unit": {
+                                            "termSource": "",
+                                            "termAccession": "",
+                                            "comments": []
+                                        }
+                                    },
+                                    {
+                                        "category": {
+                                            "@id": "#characteristic_category/accession_763"
+                                        },
+                                        "value": {
+                                            "annotationValue": "",
+                                            "termSource": "",
+                                            "termAccession": ""
+                                        },
+                                        "unit": {
+                                            "termSource": "",
+                                            "termAccession": "",
+                                            "comments": []
+                                        }
+                                    },
+                                    {
+                                        "category": {
+                                            "@id": "#characteristic_category/submission_date_764"
+                                        },
+                                        "value": {
+                                            "annotationValue": "",
+                                            "termSource": "",
+                                            "termAccession": ""
+                                        },
+                                        "unit": {
+                                            "termSource": "",
+                                            "termAccession": "",
+                                            "comments": []
+                                        }
+                                    },
+                                    {
+                                        "category": {
+                                            "@id": "#characteristic_category/status_765"
+                                        },
+                                        "value": {
+                                            "annotationValue": "",
+                                            "termSource": "",
+                                            "termAccession": ""
+                                        },
+                                        "unit": {
+                                            "termSource": "",
+                                            "termAccession": "",
+                                            "comments": []
+                                        }
+                                    }
+                                ],
+                                "derivesFrom": [
+                                    {
+                                        "@id": "#sample/239"
+                                    }
+                                ]
+                            },
+                            {
+                                "@id": "#other_material/244",
+                                "name": "Library 4",
+                                "type": "library_name",
+                                "characteristics": [
+                                    {
+                                        "category": {
+                                            "@id": "#characteristic_category/title_753"
+                                        },
+                                        "value": {
+                                            "annotationValue": "Library title 4",
+                                            "termSource": "",
+                                            "termAccession": ""
+                                        },
+                                        "unit": {
+                                            "termSource": "",
+                                            "termAccession": "",
+                                            "comments": []
+                                        }
+                                    },
+                                    {
+                                        "category": {
+                                            "@id": "#characteristic_category/accession_763"
+                                        },
+                                        "value": {
+                                            "annotationValue": "",
+                                            "termSource": "",
+                                            "termAccession": ""
+                                        },
+                                        "unit": {
+                                            "termSource": "",
+                                            "termAccession": "",
+                                            "comments": []
+                                        }
+                                    },
+                                    {
+                                        "category": {
+                                            "@id": "#characteristic_category/submission_date_764"
+                                        },
+                                        "value": {
+                                            "annotationValue": "",
+                                            "termSource": "",
+                                            "termAccession": ""
+                                        },
+                                        "unit": {
+                                            "termSource": "",
+                                            "termAccession": "",
+                                            "comments": []
+                                        }
+                                    },
+                                    {
+                                        "category": {
+                                            "@id": "#characteristic_category/status_765"
+                                        },
+                                        "value": {
+                                            "annotationValue": "",
+                                            "termSource": "",
+                                            "termAccession": ""
+                                        },
+                                        "unit": {
+                                            "termSource": "",
+                                            "termAccession": "",
+                                            "comments": []
+                                        }
+                                    }
+                                ],
+                                "derivesFrom": [
+                                    {
+                                        "@id": "#sample/240"
+                                    }
+                                ]
+                            },
+                            {
+                                "@id": "#other_material/245",
+                                "name": "Library 5",
+                                "type": "library_name",
+                                "characteristics": [
+                                    {
+                                        "category": {
+                                            "@id": "#characteristic_category/title_753"
+                                        },
+                                        "value": {
+                                            "annotationValue": "Library title 5",
+                                            "termSource": "",
+                                            "termAccession": ""
+                                        },
+                                        "unit": {
+                                            "termSource": "",
+                                            "termAccession": "",
+                                            "comments": []
+                                        }
+                                    },
+                                    {
+                                        "category": {
+                                            "@id": "#characteristic_category/accession_763"
+                                        },
+                                        "value": {
+                                            "annotationValue": "",
+                                            "termSource": "",
+                                            "termAccession": ""
+                                        },
+                                        "unit": {
+                                            "termSource": "",
+                                            "termAccession": "",
+                                            "comments": []
+                                        }
+                                    },
+                                    {
+                                        "category": {
+                                            "@id": "#characteristic_category/submission_date_764"
+                                        },
+                                        "value": {
+                                            "annotationValue": "",
+                                            "termSource": "",
+                                            "termAccession": ""
+                                        },
+                                        "unit": {
+                                            "termSource": "",
+                                            "termAccession": "",
+                                            "comments": []
+                                        }
+                                    },
+                                    {
+                                        "category": {
+                                            "@id": "#characteristic_category/status_765"
+                                        },
+                                        "value": {
+                                            "annotationValue": "",
+                                            "termSource": "",
+                                            "termAccession": ""
+                                        },
+                                        "unit": {
+                                            "termSource": "",
+                                            "termAccession": "",
+                                            "comments": []
+                                        }
+                                    }
+                                ],
+                                "derivesFrom": [
+                                    {
+                                        "@id": "#sample/240"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    "processSequence": [
+                        {
+                            "@id": "#process/library_construction/241",
+                            "name": "",
+                            "executesProtocol": {
+                                "@id": "#protocol/_50"
+                            },
+                            "parameterValues": [
+                                {
+                                    "category": {
+                                        "@id": "#parameter/752"
+                                    },
+                                    "value": {
+                                        "annotationValue": "My library construction protocol",
+                                        "termSource": "",
+                                        "termAccession": ""
+                                    },
+                                    "unit": {
+                                        "termSource": "",
+                                        "termAccession": "",
+                                        "comments": []
+                                    }
+                                },
+                                {
+                                    "category": {
+                                        "@id": "#parameter/754"
+                                    },
+                                    "value": {
+                                        "annotationValue": "",
+                                        "termSource": "",
+                                        "termAccession": ""
+                                    },
+                                    "unit": {
+                                        "termSource": "",
+                                        "termAccession": "",
+                                        "comments": []
+                                    }
+                                },
+                                {
+                                    "category": {
+                                        "@id": "#parameter/756"
+                                    },
+                                    "value": {
+                                        "annotationValue": "GENOMIC",
+                                        "termSource": "",
+                                        "termAccession": ""
+                                    },
+                                    "unit": {
+                                        "termSource": "",
+                                        "termAccession": "",
+                                        "comments": []
+                                    }
+                                },
+                                {
+                                    "category": {
+                                        "@id": "#parameter/757"
+                                    },
+                                    "value": {
+                                        "annotationValue": "WGS",
+                                        "termSource": "",
+                                        "termAccession": ""
+                                    },
+                                    "unit": {
+                                        "termSource": "",
+                                        "termAccession": "",
+                                        "comments": []
+                                    }
+                                },
+                                {
+                                    "category": {
+                                        "@id": "#parameter/758"
+                                    },
+                                    "value": {
+                                        "annotationValue": "PCR",
+                                        "termSource": "",
+                                        "termAccession": ""
+                                    },
+                                    "unit": {
+                                        "termSource": "",
+                                        "termAccession": "",
+                                        "comments": []
+                                    }
+                                },
+                                {
+                                    "category": {
+                                        "@id": "#parameter/759"
+                                    },
+                                    "value": {
+                                        "annotationValue": "PAIRED",
+                                        "termSource": "",
+                                        "termAccession": ""
+                                    },
+                                    "unit": {
+                                        "termSource": "",
+                                        "termAccession": "",
+                                        "comments": []
+                                    }
+                                },
+                                {
+                                    "category": {
+                                        "@id": "#parameter/760"
+                                    },
+                                    "value": {
+                                        "annotationValue": "1",
+                                        "termSource": "",
+                                        "termAccession": ""
+                                    },
+                                    "unit": {
+                                        "termSource": "",
+                                        "termAccession": "",
+                                        "comments": []
+                                    }
+                                },
+                                {
+                                    "category": {
+                                        "@id": "#parameter/761"
+                                    },
+                                    "value": {
+                                        "annotationValue": "LS454",
+                                        "termSource": "",
+                                        "termAccession": ""
+                                    },
+                                    "unit": {
+                                        "termSource": "",
+                                        "termAccession": "",
+                                        "comments": []
+                                    }
+                                },
+                                {
+                                    "category": {
+                                        "@id": "#parameter/762"
+                                    },
+                                    "value": {
+                                        "annotationValue": "454 GS",
+                                        "termSource": "",
+                                        "termAccession": ""
+                                    },
+                                    "unit": {
+                                        "termSource": "",
+                                        "termAccession": "",
+                                        "comments": []
+                                    }
+                                }
+                            ],
+                            "performer": "",
+                            "date": "",
+                            "inputs": [
+                                {
+                                    "@id": "#sample/237"
+                                }
+                            ],
+                            "outputs": [
+                                {
+                                    "@id": "#other_material/241"
+                                }
+                            ],
+                            "previousProcess": {
+                                "@id": "#process/sample_collection/241"
+                            },
+                            "nextProcess": {
+                                "@id": "#process/nucleic_acid_sequencing/241"
+                            }
+                        },
+                        {
+                            "@id": "#process/library_construction/242",
+                            "name": "",
+                            "executesProtocol": {
+                                "@id": "#protocol/_50"
+                            },
+                            "parameterValues": [
+                                {
+                                    "category": {
+                                        "@id": "#parameter/752"
+                                    },
+                                    "value": {
+                                        "annotationValue": "My library construction protocol",
+                                        "termSource": "",
+                                        "termAccession": ""
+                                    },
+                                    "unit": {
+                                        "termSource": "",
+                                        "termAccession": "",
+                                        "comments": []
+                                    }
+                                },
+                                {
+                                    "category": {
+                                        "@id": "#parameter/754"
+                                    },
+                                    "value": {
+                                        "annotationValue": "",
+                                        "termSource": "",
+                                        "termAccession": ""
+                                    },
+                                    "unit": {
+                                        "termSource": "",
+                                        "termAccession": "",
+                                        "comments": []
+                                    }
+                                },
+                                {
+                                    "category": {
+                                        "@id": "#parameter/756"
+                                    },
+                                    "value": {
+                                        "annotationValue": "GENOMIC",
+                                        "termSource": "",
+                                        "termAccession": ""
+                                    },
+                                    "unit": {
+                                        "termSource": "",
+                                        "termAccession": "",
+                                        "comments": []
+                                    }
+                                },
+                                {
+                                    "category": {
+                                        "@id": "#parameter/757"
+                                    },
+                                    "value": {
+                                        "annotationValue": "WGS",
+                                        "termSource": "",
+                                        "termAccession": ""
+                                    },
+                                    "unit": {
+                                        "termSource": "",
+                                        "termAccession": "",
+                                        "comments": []
+                                    }
+                                },
+                                {
+                                    "category": {
+                                        "@id": "#parameter/758"
+                                    },
+                                    "value": {
+                                        "annotationValue": "PCR",
+                                        "termSource": "",
+                                        "termAccession": ""
+                                    },
+                                    "unit": {
+                                        "termSource": "",
+                                        "termAccession": "",
+                                        "comments": []
+                                    }
+                                },
+                                {
+                                    "category": {
+                                        "@id": "#parameter/759"
+                                    },
+                                    "value": {
+                                        "annotationValue": "SINGLE",
+                                        "termSource": "",
+                                        "termAccession": ""
+                                    },
+                                    "unit": {
+                                        "termSource": "",
+                                        "termAccession": "",
+                                        "comments": []
+                                    }
+                                },
+                                {
+                                    "category": {
+                                        "@id": "#parameter/760"
+                                    },
+                                    "value": {
+                                        "annotationValue": "1",
+                                        "termSource": "",
+                                        "termAccession": ""
+                                    },
+                                    "unit": {
+                                        "termSource": "",
+                                        "termAccession": "",
+                                        "comments": []
+                                    }
+                                },
+                                {
+                                    "category": {
+                                        "@id": "#parameter/761"
+                                    },
+                                    "value": {
+                                        "annotationValue": "LS454",
+                                        "termSource": "",
+                                        "termAccession": ""
+                                    },
+                                    "unit": {
+                                        "termSource": "",
+                                        "termAccession": "",
+                                        "comments": []
+                                    }
+                                },
+                                {
+                                    "category": {
+                                        "@id": "#parameter/762"
+                                    },
+                                    "value": {
+                                        "annotationValue": "454 GS",
+                                        "termSource": "",
+                                        "termAccession": ""
+                                    },
+                                    "unit": {
+                                        "termSource": "",
+                                        "termAccession": "",
+                                        "comments": []
+                                    }
+                                }
+                            ],
+                            "performer": "",
+                            "date": "",
+                            "inputs": [
+                                {
+                                    "@id": "#sample/238"
+                                }
+                            ],
+                            "outputs": [
+                                {
+                                    "@id": "#other_material/242"
+                                }
+                            ],
+                            "previousProcess": {
+                                "@id": "#process/sample_collection/242"
+                            },
+                            "nextProcess": {
+                                "@id": "#process/nucleic_acid_sequencing/242"
+                            }
+                        },
+                        {
+                            "@id": "#process/library_construction/243",
+                            "name": "",
+                            "executesProtocol": {
+                                "@id": "#protocol/_50"
+                            },
+                            "parameterValues": [
+                                {
+                                    "category": {
+                                        "@id": "#parameter/752"
+                                    },
+                                    "value": {
+                                        "annotationValue": "My library construction protocol",
+                                        "termSource": "",
+                                        "termAccession": ""
+                                    },
+                                    "unit": {
+                                        "termSource": "",
+                                        "termAccession": "",
+                                        "comments": []
+                                    }
+                                },
+                                {
+                                    "category": {
+                                        "@id": "#parameter/754"
+                                    },
+                                    "value": {
+                                        "annotationValue": "",
+                                        "termSource": "",
+                                        "termAccession": ""
+                                    },
+                                    "unit": {
+                                        "termSource": "",
+                                        "termAccession": "",
+                                        "comments": []
+                                    }
+                                },
+                                {
+                                    "category": {
+                                        "@id": "#parameter/756"
+                                    },
+                                    "value": {
+                                        "annotationValue": "GENOMIC",
+                                        "termSource": "",
+                                        "termAccession": ""
+                                    },
+                                    "unit": {
+                                        "termSource": "",
+                                        "termAccession": "",
+                                        "comments": []
+                                    }
+                                },
+                                {
+                                    "category": {
+                                        "@id": "#parameter/757"
+                                    },
+                                    "value": {
+                                        "annotationValue": "WGS",
+                                        "termSource": "",
+                                        "termAccession": ""
+                                    },
+                                    "unit": {
+                                        "termSource": "",
+                                        "termAccession": "",
+                                        "comments": []
+                                    }
+                                },
+                                {
+                                    "category": {
+                                        "@id": "#parameter/758"
+                                    },
+                                    "value": {
+                                        "annotationValue": "PCR",
+                                        "termSource": "",
+                                        "termAccession": ""
+                                    },
+                                    "unit": {
+                                        "termSource": "",
+                                        "termAccession": "",
+                                        "comments": []
+                                    }
+                                },
+                                {
+                                    "category": {
+                                        "@id": "#parameter/759"
+                                    },
+                                    "value": {
+                                        "annotationValue": "SINGLE",
+                                        "termSource": "",
+                                        "termAccession": ""
+                                    },
+                                    "unit": {
+                                        "termSource": "",
+                                        "termAccession": "",
+                                        "comments": []
+                                    }
+                                },
+                                {
+                                    "category": {
+                                        "@id": "#parameter/760"
+                                    },
+                                    "value": {
+                                        "annotationValue": "1",
+                                        "termSource": "",
+                                        "termAccession": ""
+                                    },
+                                    "unit": {
+                                        "termSource": "",
+                                        "termAccession": "",
+                                        "comments": []
+                                    }
+                                },
+                                {
+                                    "category": {
+                                        "@id": "#parameter/761"
+                                    },
+                                    "value": {
+                                        "annotationValue": "LS454",
+                                        "termSource": "",
+                                        "termAccession": ""
+                                    },
+                                    "unit": {
+                                        "termSource": "",
+                                        "termAccession": "",
+                                        "comments": []
+                                    }
+                                },
+                                {
+                                    "category": {
+                                        "@id": "#parameter/762"
+                                    },
+                                    "value": {
+                                        "annotationValue": "454 GS",
+                                        "termSource": "",
+                                        "termAccession": ""
+                                    },
+                                    "unit": {
+                                        "termSource": "",
+                                        "termAccession": "",
+                                        "comments": []
+                                    }
+                                }
+                            ],
+                            "performer": "",
+                            "date": "",
+                            "inputs": [
+                                {
+                                    "@id": "#sample/239"
+                                }
+                            ],
+                            "outputs": [
+                                {
+                                    "@id": "#other_material/243"
+                                }
+                            ],
+                            "previousProcess": {
+                                "@id": "#process/sample_collection/243"
+                            },
+                            "nextProcess": {
+                                "@id": "#process/nucleic_acid_sequencing/243"
+                            }
+                        },
+                        {
+                            "@id": "#process/library_construction/244_245",
+                            "name": "",
+                            "executesProtocol": {
+                                "@id": "#protocol/_50"
+                            },
+                            "parameterValues": [
+                                {
+                                    "category": {
+                                        "@id": "#parameter/752"
+                                    },
+                                    "value": {
+                                        "annotationValue": "My library construction protocol",
+                                        "termSource": "",
+                                        "termAccession": ""
+                                    },
+                                    "unit": {
+                                        "termSource": "",
+                                        "termAccession": "",
+                                        "comments": []
+                                    }
+                                },
+                                {
+                                    "category": {
+                                        "@id": "#parameter/754"
+                                    },
+                                    "value": {
+                                        "annotationValue": "",
+                                        "termSource": "",
+                                        "termAccession": ""
+                                    },
+                                    "unit": {
+                                        "termSource": "",
+                                        "termAccession": "",
+                                        "comments": []
+                                    }
+                                },
+                                {
+                                    "category": {
+                                        "@id": "#parameter/756"
+                                    },
+                                    "value": {
+                                        "annotationValue": "METAGENOMIC",
+                                        "termSource": "",
+                                        "termAccession": ""
+                                    },
+                                    "unit": {
+                                        "termSource": "",
+                                        "termAccession": "",
+                                        "comments": []
+                                    }
+                                },
+                                {
+                                    "category": {
+                                        "@id": "#parameter/757"
+                                    },
+                                    "value": {
+                                        "annotationValue": "WGS",
+                                        "termSource": "",
+                                        "termAccession": ""
+                                    },
+                                    "unit": {
+                                        "termSource": "",
+                                        "termAccession": "",
+                                        "comments": []
+                                    }
+                                },
+                                {
+                                    "category": {
+                                        "@id": "#parameter/758"
+                                    },
+                                    "value": {
+                                        "annotationValue": "PCR",
+                                        "termSource": "",
+                                        "termAccession": ""
+                                    },
+                                    "unit": {
+                                        "termSource": "",
+                                        "termAccession": "",
+                                        "comments": []
+                                    }
+                                },
+                                {
+                                    "category": {
+                                        "@id": "#parameter/759"
+                                    },
+                                    "value": {
+                                        "annotationValue": "SINGLE",
+                                        "termSource": "",
+                                        "termAccession": ""
+                                    },
+                                    "unit": {
+                                        "termSource": "",
+                                        "termAccession": "",
+                                        "comments": []
+                                    }
+                                },
+                                {
+                                    "category": {
+                                        "@id": "#parameter/760"
+                                    },
+                                    "value": {
+                                        "annotationValue": "1",
+                                        "termSource": "",
+                                        "termAccession": ""
+                                    },
+                                    "unit": {
+                                        "termSource": "",
+                                        "termAccession": "",
+                                        "comments": []
+                                    }
+                                },
+                                {
+                                    "category": {
+                                        "@id": "#parameter/761"
+                                    },
+                                    "value": {
+                                        "annotationValue": "Illumina",
+                                        "termSource": "",
+                                        "termAccession": ""
+                                    },
+                                    "unit": {
+                                        "termSource": "",
+                                        "termAccession": "",
+                                        "comments": []
+                                    }
+                                },
+                                {
+                                    "category": {
+                                        "@id": "#parameter/762"
+                                    },
+                                    "value": {
+                                        "annotationValue": "Illumina Genome Analyzer II",
+                                        "termSource": "",
+                                        "termAccession": ""
+                                    },
+                                    "unit": {
+                                        "termSource": "",
+                                        "termAccession": "",
+                                        "comments": []
+                                    }
+                                }
+                            ],
+                            "performer": "",
+                            "date": "",
+                            "inputs": [
+                                {
+                                    "@id": "#sample/240"
+                                }
+                            ],
+                            "outputs": [
+                                {
+                                    "@id": "#other_material/244"
+                                },
+                                {
+                                    "@id": "#other_material/245"
+                                }
+                            ],
+                            "previousProcess": {
+                                "@id": "#process/sample_collection/244"
+                            },
+                            "nextProcess": {
+                                "@id": "#process/nucleic_acid_sequencing/244"
+                            }
+                        },
+                        {
+                            "@id": "#process/nucleic_acid_sequencing/246_247",
+                            "name": "",
+                            "executesProtocol": {
+                                "@id": "#protocol/_51"
+                            },
+                            "parameterValues": [],
+                            "performer": "",
+                            "date": "",
+                            "inputs": [
+                                {
+                                    "@id": "#other_material/241"
+                                }
+                            ],
+                            "outputs": [
+                                {
+                                    "@id": "#data_file/246"
+                                },
+                                {
+                                    "@id": "#data_file/247"
+                                }
+                            ],
+                            "previousProcess": {
+                                "@id": "#process/library_construction/246"
+                            },
+                            "nextProcess": {}
+                        },
+                        {
+                            "@id": "#process/nucleic_acid_sequencing/248",
+                            "name": "",
+                            "executesProtocol": {
+                                "@id": "#protocol/_51"
+                            },
+                            "parameterValues": [],
+                            "performer": "",
+                            "date": "",
+                            "inputs": [
+                                {
+                                    "@id": "#other_material/242"
+                                }
+                            ],
+                            "outputs": [
+                                {
+                                    "@id": "#data_file/248"
+                                }
+                            ],
+                            "previousProcess": {
+                                "@id": "#process/library_construction/248"
+                            },
+                            "nextProcess": {}
+                        },
+                        {
+                            "@id": "#process/nucleic_acid_sequencing/249",
+                            "name": "",
+                            "executesProtocol": {
+                                "@id": "#protocol/_51"
+                            },
+                            "parameterValues": [],
+                            "performer": "",
+                            "date": "",
+                            "inputs": [
+                                {
+                                    "@id": "#other_material/243"
+                                }
+                            ],
+                            "outputs": [
+                                {
+                                    "@id": "#data_file/249"
+                                }
+                            ],
+                            "previousProcess": {
+                                "@id": "#process/library_construction/249"
+                            },
+                            "nextProcess": {}
+                        },
+                        {
+                            "@id": "#process/nucleic_acid_sequencing/250",
+                            "name": "",
+                            "executesProtocol": {
+                                "@id": "#protocol/_51"
+                            },
+                            "parameterValues": [],
+                            "performer": "",
+                            "date": "",
+                            "inputs": [
+                                {
+                                    "@id": "#other_material/244"
+                                }
+                            ],
+                            "outputs": [
+                                {
+                                    "@id": "#data_file/250"
+                                }
+                            ],
+                            "previousProcess": {
+                                "@id": "#process/library_construction/250"
+                            },
+                            "nextProcess": {}
+                        },
+                        {
+                            "@id": "#process/nucleic_acid_sequencing/251",
+                            "name": "",
+                            "executesProtocol": {
+                                "@id": "#protocol/_51"
+                            },
+                            "parameterValues": [],
+                            "performer": "",
+                            "date": "",
+                            "inputs": [
+                                {
+                                    "@id": "#other_material/245"
+                                }
+                            ],
+                            "outputs": [
+                                {
+                                    "@id": "#data_file/251"
+                                }
+                            ],
+                            "previousProcess": {
+                                "@id": "#process/library_construction/251"
+                            },
+                            "nextProcess": {}
+                        }
+                    ],
+                    "dataFiles": [
+                        {
+                            "@id": "#data_file/246",
+                            "name": "data file 1",
+                            "type": "Raw Data File",
+                            "comments": [
+                                {
+                                    "name": "file_name",
+                                    "value": "data_file_1_A.fastq"
+                                },
+                                {
+                                    "name": "file_type",
+                                    "value": "fastq"
+                                },
+                                {
+                                    "name": "file checksum",
+                                    "value": ""
+                                },
+                                {
+                                    "name": "accession",
+                                    "value": ""
+                                },
+                                {
+                                    "name": "submission date",
+                                    "value": ""
+                                },
+                                {
+                                    "name": "status",
+                                    "value": ""
+                                }
+                            ]
+                        },
+                        {
+                            "@id": "#data_file/247",
+                            "name": "data file 2",
+                            "type": "Raw Data File",
+                            "comments": [
+                                {
+                                    "name": "file_name",
+                                    "value": "data_file_1_B.fastq"
+                                },
+                                {
+                                    "name": "file_type",
+                                    "value": "fastq"
+                                },
+                                {
+                                    "name": "file checksum",
+                                    "value": ""
+                                },
+                                {
+                                    "name": "accession",
+                                    "value": ""
+                                },
+                                {
+                                    "name": "submission date",
+                                    "value": ""
+                                },
+                                {
+                                    "name": "status",
+                                    "value": ""
+                                }
+                            ]
+                        },
+                        {
+                            "@id": "#data_file/248",
+                            "name": "data file 3",
+                            "type": "Raw Data File",
+                            "comments": [
+                                {
+                                    "name": "file_name",
+                                    "value": "data_file_3.fastq"
+                                },
+                                {
+                                    "name": "file_type",
+                                    "value": "fastq"
+                                },
+                                {
+                                    "name": "file checksum",
+                                    "value": ""
+                                },
+                                {
+                                    "name": "accession",
+                                    "value": ""
+                                },
+                                {
+                                    "name": "submission date",
+                                    "value": ""
+                                },
+                                {
+                                    "name": "status",
+                                    "value": ""
+                                }
+                            ]
+                        },
+                        {
+                            "@id": "#data_file/249",
+                            "name": "data file 4",
+                            "type": "Raw Data File",
+                            "comments": [
+                                {
+                                    "name": "file_name",
+                                    "value": "data_file_4.fastq"
+                                },
+                                {
+                                    "name": "file_type",
+                                    "value": "fastq"
+                                },
+                                {
+                                    "name": "file checksum",
+                                    "value": ""
+                                },
+                                {
+                                    "name": "accession",
+                                    "value": ""
+                                },
+                                {
+                                    "name": "submission date",
+                                    "value": ""
+                                },
+                                {
+                                    "name": "status",
+                                    "value": ""
+                                }
+                            ]
+                        },
+                        {
+                            "@id": "#data_file/250",
+                            "name": "data file 5",
+                            "type": "Raw Data File",
+                            "comments": [
+                                {
+                                    "name": "file_name",
+                                    "value": "data_file_5.fastq"
+                                },
+                                {
+                                    "name": "file_type",
+                                    "value": "fastq"
+                                },
+                                {
+                                    "name": "file checksum",
+                                    "value": ""
+                                },
+                                {
+                                    "name": "accession",
+                                    "value": ""
+                                },
+                                {
+                                    "name": "submission date",
+                                    "value": ""
+                                },
+                                {
+                                    "name": "status",
+                                    "value": ""
+                                }
+                            ]
+                        },
+                        {
+                            "@id": "#data_file/251",
+                            "name": "data file 6",
+                            "type": "Raw Data File",
+                            "comments": [
+                                {
+                                    "name": "file_name",
+                                    "value": "data_file_6.fastq"
                                 },
                                 {
                                     "name": "file_type",

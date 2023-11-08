@@ -6,6 +6,7 @@ from pandas import DataFrame
 from ena_upload.json_parsing.ena_std_lib import (
     clip_off_prefix,
     fetch_study_comment_by_name,
+    get_parameter_values,
 )
 
 
@@ -130,16 +131,33 @@ class EnaSample:
             }
             for source in study_dict["materials"]["sources"]
         ]
+        parameter_values = get_parameter_values(
+            process_sequence=study_dict["processSequence"],
+            study_protocols_dict=study_dict["protocols"],
+        )
 
-        samples_data = [
-            {
-                "id": sample["@id"],
-                "name": sample["name"],
-                "characteristics": fetch_characteristics(sample, study_dict),
-                "source": associated_source(sample, study_dict),
-            }
-            for sample in study_dict["materials"]["samples"]
-        ]
+        samples_data = []
+        for sample in study_dict["materials"]["samples"]:
+            filtered_parameter_vals = list(
+                filter(
+                    lambda pv: pv["sample_id"] == clip_off_prefix(sample["@id"]),
+                    parameter_values,
+                )
+            )
+            parameter_vals = []
+            for fpv in filtered_parameter_vals:
+                for pv in fpv["parameter_values"]:
+                    parameter_vals.append(pv)
+
+            samples_data.append(
+                {
+                    "id": sample["@id"],
+                    "name": sample["name"],
+                    "characteristics": fetch_characteristics(sample, study_dict),
+                    "parameter_values": parameter_vals,
+                    "source": associated_source(sample, study_dict),
+                }
+            )
 
         for sd in samples_data:
             for sc in associated_source_characteristics(sources_data, sd["source"]):
@@ -152,7 +170,7 @@ class EnaSample:
             EnaSample(
                 alias=sample_alias(sd["id"], study_alias_prefix),
                 characteristics=sd["characteristics"],
-                parameter_values=[],  # TODO Add functionality for parameter values in samples
+                parameter_values=sd["parameter_values"],
             )
             for sd in samples_data
         ]
