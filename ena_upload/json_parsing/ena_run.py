@@ -93,7 +93,16 @@ class DataFile(IsaBase):
         }
 
 
-def run_alias(data_file: Dict[str, str], prefix: str) -> str:
+def get_involved_process_id(id: str, process_sequence: List[Dict[str, str]]):
+    for process in process_sequence:
+        output_ids = [output["@id"] for output in process["outputs"]]
+        if id in output_ids:
+            return process["@id"]
+
+
+def run_alias(
+    data_file: Dict[str, str], process_sequence: List[Dict[str, str]], prefix: str
+) -> str:
     """Generates an alias for the run, based on the data file dictionary
     and prefix specified in the Class
 
@@ -104,7 +113,10 @@ def run_alias(data_file: Dict[str, str], prefix: str) -> str:
     Returns:
         str: Resulting alias
     """
-    return prefix + clip_off_prefix(data_file["@id"])
+
+    data_file_id = data_file["@id"]
+    process_id = get_involved_process_id(data_file_id, process_sequence)
+    return prefix + clip_off_prefix(process_id)
 
 
 def get_derived_expertiment_id(
@@ -177,7 +189,7 @@ class EnaRun(IsaBase):
             )
             ena_runs.append(
                 EnaRun(
-                    alias=run_alias(data_file, prefix),
+                    alias=run_alias(data_file, assay_stream["processSequence"], prefix),
                     experiment_alias=fetch_experiment_alias(
                         current_data_file, ena_experiment_prefix
                     ),
