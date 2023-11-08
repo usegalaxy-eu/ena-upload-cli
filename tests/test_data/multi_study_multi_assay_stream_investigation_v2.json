@@ -1,15 +1,15 @@
 {
     "identifier": "",
-    "title": "Test Investigation original",
-    "description": "This investigation uses the Standard ENA templates.",
+    "title": "Multi study - multi assay stream Investigation",
+    "description": "Investigation with multiple studies and assay streams.",
     "submissionDate": "",
     "publicReleaseDate": "",
     "ontologySourceReferences": [],
-    "filename": "Test Investigation original.txt",
+    "filename": "Multi study - multi assay stream Investigation.txt",
     "comments": [
         {
             "name": "ISAjson export time",
-            "value": "2023-10-13T06:24:54Z"
+            "value": "2023-11-08T18:42:37Z"
         },
         {
             "name": "SEEK Project name",
@@ -28,10 +28,10 @@
     "people": [
         {
             "@id": "#people/4",
-            "lastName": "De Pelseneer",
+            "lastName": "DP",
             "firstName": "Kevin",
             "midInitials": "",
-            "email": "kevin.depelseneer@psb.ugent.be",
+            "email": "kevin.dp@mail.com",
             "phone": "",
             "fax": "",
             "address": "",
@@ -67,12 +67,12 @@
                     "value": "https://datahub.elixir-belgium.org/samples/"
                 },
                 {
-                    "@id": "#study_comment/19_255b7d70-4bbf-013c-6732-7a163e608de1",
+                    "@id": "#study_comment/19_830dd160-6094-013c-9ed7-7a163e608de1",
                     "name": "SEEK Study ID",
                     "value": "19"
                 },
                 {
-                    "@id": "#study_comment/19_255b8560-4bbf-013c-6733-7a163e608de1",
+                    "@id": "#study_comment/19_830dd890-6094-013c-9ed8-7a163e608de1",
                     "name": "SEEK creation date",
                     "value": "2023-10-09T13:39:46Z"
                 }
@@ -128,10 +128,10 @@
             "people": [
                 {
                     "@id": "#people/4",
-                    "lastName": "De Pelseneer",
+                    "lastName": "DP",
                     "firstName": "Kevin",
                     "midInitials": "",
-                    "email": "kevin.depelseneer@psb.ugent.be",
+                    "email": "kevin.dp@mail.com",
                     "phone": "",
                     "fax": "",
                     "address": "",
@@ -1152,7 +1152,7 @@
             ],
             "processSequence": [
                 {
-                    "@id": "#process/sample_collection/142",
+                    "@id": "#process/sample_collection/142_143",
                     "name": "",
                     "executesProtocol": {
                         "@id": "#protocol/3_19"
@@ -1160,8 +1160,6 @@
                     "parameterValues": [],
                     "performer": "",
                     "date": "",
-                    "previousProcess": {},
-                    "nextProcess": {},
                     "inputs": [
                         {
                             "@id": "#source/140"
@@ -1170,33 +1168,14 @@
                     "outputs": [
                         {
                             "@id": "#sample/142"
-                        }
-                    ]
-                },
-                {
-                    "@id": "#process/sample_collection/143",
-                    "name": "",
-                    "executesProtocol": {
-                        "@id": "#protocol/3_19"
-                    },
-                    "parameterValues": [],
-                    "performer": "",
-                    "date": "",
-                    "previousProcess": {},
-                    "nextProcess": {},
-                    "inputs": [
-                        {
-                            "@id": "#source/140"
-                        }
-                    ],
-                    "outputs": [
+                        },
                         {
                             "@id": "#sample/143"
                         }
                     ]
                 },
                 {
-                    "@id": "#process/sample_collection/144",
+                    "@id": "#process/sample_collection/144_145_196",
                     "name": "",
                     "executesProtocol": {
                         "@id": "#protocol/3_19"
@@ -1204,8 +1183,6 @@
                     "parameterValues": [],
                     "performer": "",
                     "date": "",
-                    "previousProcess": {},
-                    "nextProcess": {},
                     "inputs": [
                         {
                             "@id": "#source/141"
@@ -1214,48 +1191,10 @@
                     "outputs": [
                         {
                             "@id": "#sample/144"
-                        }
-                    ]
-                },
-                {
-                    "@id": "#process/sample_collection/145",
-                    "name": "",
-                    "executesProtocol": {
-                        "@id": "#protocol/3_19"
-                    },
-                    "parameterValues": [],
-                    "performer": "",
-                    "date": "",
-                    "previousProcess": {},
-                    "nextProcess": {},
-                    "inputs": [
-                        {
-                            "@id": "#source/141"
-                        }
-                    ],
-                    "outputs": [
+                        },
                         {
                             "@id": "#sample/145"
-                        }
-                    ]
-                },
-                {
-                    "@id": "#process/sample_collection/196",
-                    "name": "",
-                    "executesProtocol": {
-                        "@id": "#protocol/3_19"
-                    },
-                    "parameterValues": [],
-                    "performer": "",
-                    "date": "",
-                    "previousProcess": {},
-                    "nextProcess": {},
-                    "inputs": [
-                        {
-                            "@id": "#source/141"
-                        }
-                    ],
-                    "outputs": [
+                        },
                         {
                             "@id": "#sample/196"
                         }
@@ -1797,12 +1736,6 @@
                             ],
                             "performer": "",
                             "date": "",
-                            "previousProcess": {
-                                "@id": "#process/sample_collection/146"
-                            },
-                            "nextProcess": {
-                                "@id": "#process/nucleic_acid_sequencing/146"
-                            },
                             "inputs": [
                                 {
                                     "@id": "#sample/142"
@@ -1810,9 +1743,15 @@
                             ],
                             "outputs": [
                                 {
-                                    "@id": "#sample/146"
+                                    "@id": "#other_material/146"
                                 }
-                            ]
+                            ],
+                            "previousProcess": {
+                                "@id": "#process/sample_collection/146"
+                            },
+                            "nextProcess": {
+                                "@id": "#process/nucleic_acid_sequencing/146"
+                            }
                         },
                         {
                             "@id": "#process/library_construction/147",
@@ -1959,12 +1898,6 @@
                             ],
                             "performer": "",
                             "date": "",
-                            "previousProcess": {
-                                "@id": "#process/sample_collection/147"
-                            },
-                            "nextProcess": {
-                                "@id": "#process/nucleic_acid_sequencing/147"
-                            },
                             "inputs": [
                                 {
                                     "@id": "#sample/143"
@@ -1972,9 +1905,15 @@
                             ],
                             "outputs": [
                                 {
-                                    "@id": "#sample/147"
+                                    "@id": "#other_material/147"
                                 }
-                            ]
+                            ],
+                            "previousProcess": {
+                                "@id": "#process/sample_collection/147"
+                            },
+                            "nextProcess": {
+                                "@id": "#process/nucleic_acid_sequencing/147"
+                            }
                         },
                         {
                             "@id": "#process/library_construction/148",
@@ -2121,12 +2060,6 @@
                             ],
                             "performer": "",
                             "date": "",
-                            "previousProcess": {
-                                "@id": "#process/sample_collection/148"
-                            },
-                            "nextProcess": {
-                                "@id": "#process/nucleic_acid_sequencing/148"
-                            },
                             "inputs": [
                                 {
                                     "@id": "#sample/144"
@@ -2134,9 +2067,15 @@
                             ],
                             "outputs": [
                                 {
-                                    "@id": "#sample/148"
+                                    "@id": "#other_material/148"
                                 }
-                            ]
+                            ],
+                            "previousProcess": {
+                                "@id": "#process/sample_collection/148"
+                            },
+                            "nextProcess": {
+                                "@id": "#process/nucleic_acid_sequencing/148"
+                            }
                         },
                         {
                             "@id": "#process/library_construction/149",
@@ -2283,12 +2222,6 @@
                             ],
                             "performer": "",
                             "date": "",
-                            "previousProcess": {
-                                "@id": "#process/sample_collection/149"
-                            },
-                            "nextProcess": {
-                                "@id": "#process/nucleic_acid_sequencing/149"
-                            },
                             "inputs": [
                                 {
                                     "@id": "#sample/145"
@@ -2296,9 +2229,15 @@
                             ],
                             "outputs": [
                                 {
-                                    "@id": "#sample/149"
+                                    "@id": "#other_material/149"
                                 }
-                            ]
+                            ],
+                            "previousProcess": {
+                                "@id": "#process/sample_collection/149"
+                            },
+                            "nextProcess": {
+                                "@id": "#process/nucleic_acid_sequencing/149"
+                            }
                         },
                         {
                             "@id": "#process/nucleic_acid_sequencing/150",
@@ -2309,10 +2248,6 @@
                             "parameterValues": [],
                             "performer": "",
                             "date": "",
-                            "previousProcess": {
-                                "@id": "#process/library_construction/150"
-                            },
-                            "nextProcess": {},
                             "inputs": [
                                 {
                                     "@id": "#other_material/146"
@@ -2320,9 +2255,13 @@
                             ],
                             "outputs": [
                                 {
-                                    "@id": "#sample/150"
+                                    "@id": "#data_file/150"
                                 }
-                            ]
+                            ],
+                            "previousProcess": {
+                                "@id": "#process/library_construction/150"
+                            },
+                            "nextProcess": {}
                         },
                         {
                             "@id": "#process/nucleic_acid_sequencing/151",
@@ -2333,10 +2272,6 @@
                             "parameterValues": [],
                             "performer": "",
                             "date": "",
-                            "previousProcess": {
-                                "@id": "#process/library_construction/151"
-                            },
-                            "nextProcess": {},
                             "inputs": [
                                 {
                                     "@id": "#other_material/147"
@@ -2344,9 +2279,13 @@
                             ],
                             "outputs": [
                                 {
-                                    "@id": "#sample/151"
+                                    "@id": "#data_file/151"
                                 }
-                            ]
+                            ],
+                            "previousProcess": {
+                                "@id": "#process/library_construction/151"
+                            },
+                            "nextProcess": {}
                         },
                         {
                             "@id": "#process/nucleic_acid_sequencing/152",
@@ -2357,10 +2296,6 @@
                             "parameterValues": [],
                             "performer": "",
                             "date": "",
-                            "previousProcess": {
-                                "@id": "#process/library_construction/152"
-                            },
-                            "nextProcess": {},
                             "inputs": [
                                 {
                                     "@id": "#other_material/148"
@@ -2368,9 +2303,13 @@
                             ],
                             "outputs": [
                                 {
-                                    "@id": "#sample/152"
+                                    "@id": "#data_file/152"
                                 }
-                            ]
+                            ],
+                            "previousProcess": {
+                                "@id": "#process/library_construction/152"
+                            },
+                            "nextProcess": {}
                         },
                         {
                             "@id": "#process/nucleic_acid_sequencing/153",
@@ -2381,10 +2320,6 @@
                             "parameterValues": [],
                             "performer": "",
                             "date": "",
-                            "previousProcess": {
-                                "@id": "#process/library_construction/153"
-                            },
-                            "nextProcess": {},
                             "inputs": [
                                 {
                                     "@id": "#other_material/149"
@@ -2392,9 +2327,13 @@
                             ],
                             "outputs": [
                                 {
-                                    "@id": "#sample/153"
+                                    "@id": "#data_file/153"
                                 }
-                            ]
+                            ],
+                            "previousProcess": {
+                                "@id": "#process/library_construction/153"
+                            },
+                            "nextProcess": {}
                         }
                     ],
                     "dataFiles": [
@@ -3059,12 +2998,6 @@
                             ],
                             "performer": "",
                             "date": "",
-                            "previousProcess": {
-                                "@id": "#process/sample_collection/154"
-                            },
-                            "nextProcess": {
-                                "@id": "#process/nucleic_acid_sequencing/154"
-                            },
                             "inputs": [
                                 {
                                     "@id": "#sample/142"
@@ -3072,9 +3005,15 @@
                             ],
                             "outputs": [
                                 {
-                                    "@id": "#sample/154"
+                                    "@id": "#other_material/154"
                                 }
-                            ]
+                            ],
+                            "previousProcess": {
+                                "@id": "#process/sample_collection/154"
+                            },
+                            "nextProcess": {
+                                "@id": "#process/nucleic_acid_sequencing/154"
+                            }
                         },
                         {
                             "@id": "#process/library_construction/155",
@@ -3221,12 +3160,6 @@
                             ],
                             "performer": "",
                             "date": "",
-                            "previousProcess": {
-                                "@id": "#process/sample_collection/155"
-                            },
-                            "nextProcess": {
-                                "@id": "#process/nucleic_acid_sequencing/155"
-                            },
                             "inputs": [
                                 {
                                     "@id": "#sample/143"
@@ -3234,9 +3167,15 @@
                             ],
                             "outputs": [
                                 {
-                                    "@id": "#sample/155"
+                                    "@id": "#other_material/155"
                                 }
-                            ]
+                            ],
+                            "previousProcess": {
+                                "@id": "#process/sample_collection/155"
+                            },
+                            "nextProcess": {
+                                "@id": "#process/nucleic_acid_sequencing/155"
+                            }
                         },
                         {
                             "@id": "#process/library_construction/156",
@@ -3383,12 +3322,6 @@
                             ],
                             "performer": "",
                             "date": "",
-                            "previousProcess": {
-                                "@id": "#process/sample_collection/156"
-                            },
-                            "nextProcess": {
-                                "@id": "#process/nucleic_acid_sequencing/156"
-                            },
                             "inputs": [
                                 {
                                     "@id": "#sample/144"
@@ -3396,9 +3329,15 @@
                             ],
                             "outputs": [
                                 {
-                                    "@id": "#sample/156"
+                                    "@id": "#other_material/156"
                                 }
-                            ]
+                            ],
+                            "previousProcess": {
+                                "@id": "#process/sample_collection/156"
+                            },
+                            "nextProcess": {
+                                "@id": "#process/nucleic_acid_sequencing/156"
+                            }
                         },
                         {
                             "@id": "#process/library_construction/157",
@@ -3545,12 +3484,6 @@
                             ],
                             "performer": "",
                             "date": "",
-                            "previousProcess": {
-                                "@id": "#process/sample_collection/157"
-                            },
-                            "nextProcess": {
-                                "@id": "#process/nucleic_acid_sequencing/157"
-                            },
                             "inputs": [
                                 {
                                     "@id": "#sample/145"
@@ -3558,9 +3491,15 @@
                             ],
                             "outputs": [
                                 {
-                                    "@id": "#sample/157"
+                                    "@id": "#other_material/157"
                                 }
-                            ]
+                            ],
+                            "previousProcess": {
+                                "@id": "#process/sample_collection/157"
+                            },
+                            "nextProcess": {
+                                "@id": "#process/nucleic_acid_sequencing/157"
+                            }
                         },
                         {
                             "@id": "#process/nucleic_acid_sequencing/158",
@@ -3571,10 +3510,6 @@
                             "parameterValues": [],
                             "performer": "",
                             "date": "",
-                            "previousProcess": {
-                                "@id": "#process/library_construction/158"
-                            },
-                            "nextProcess": {},
                             "inputs": [
                                 {
                                     "@id": "#other_material/154"
@@ -3582,9 +3517,13 @@
                             ],
                             "outputs": [
                                 {
-                                    "@id": "#sample/158"
+                                    "@id": "#data_file/158"
                                 }
-                            ]
+                            ],
+                            "previousProcess": {
+                                "@id": "#process/library_construction/158"
+                            },
+                            "nextProcess": {}
                         },
                         {
                             "@id": "#process/nucleic_acid_sequencing/159",
@@ -3595,10 +3534,6 @@
                             "parameterValues": [],
                             "performer": "",
                             "date": "",
-                            "previousProcess": {
-                                "@id": "#process/library_construction/159"
-                            },
-                            "nextProcess": {},
                             "inputs": [
                                 {
                                     "@id": "#other_material/155"
@@ -3606,9 +3541,13 @@
                             ],
                             "outputs": [
                                 {
-                                    "@id": "#sample/159"
+                                    "@id": "#data_file/159"
                                 }
-                            ]
+                            ],
+                            "previousProcess": {
+                                "@id": "#process/library_construction/159"
+                            },
+                            "nextProcess": {}
                         },
                         {
                             "@id": "#process/nucleic_acid_sequencing/160",
@@ -3619,10 +3558,6 @@
                             "parameterValues": [],
                             "performer": "",
                             "date": "",
-                            "previousProcess": {
-                                "@id": "#process/library_construction/160"
-                            },
-                            "nextProcess": {},
                             "inputs": [
                                 {
                                     "@id": "#other_material/156"
@@ -3630,9 +3565,13 @@
                             ],
                             "outputs": [
                                 {
-                                    "@id": "#sample/160"
+                                    "@id": "#data_file/160"
                                 }
-                            ]
+                            ],
+                            "previousProcess": {
+                                "@id": "#process/library_construction/160"
+                            },
+                            "nextProcess": {}
                         },
                         {
                             "@id": "#process/nucleic_acid_sequencing/161",
@@ -3643,10 +3582,6 @@
                             "parameterValues": [],
                             "performer": "",
                             "date": "",
-                            "previousProcess": {
-                                "@id": "#process/library_construction/161"
-                            },
-                            "nextProcess": {},
                             "inputs": [
                                 {
                                     "@id": "#other_material/157"
@@ -3654,9 +3589,13 @@
                             ],
                             "outputs": [
                                 {
-                                    "@id": "#sample/161"
+                                    "@id": "#data_file/161"
                                 }
-                            ]
+                            ],
+                            "previousProcess": {
+                                "@id": "#process/library_construction/161"
+                            },
+                            "nextProcess": {}
                         }
                     ],
                     "dataFiles": [
@@ -3805,12 +3744,12 @@
                     "value": "https://datahub.elixir-belgium.org/samples/"
                 },
                 {
-                    "@id": "#study_comment/20_259d4380-4bbf-013c-6734-7a163e608de1",
+                    "@id": "#study_comment/20_836d8d10-6094-013c-9ed9-7a163e608de1",
                     "name": "SEEK Study ID",
                     "value": "20"
                 },
                 {
-                    "@id": "#study_comment/20_259d4a20-4bbf-013c-6735-7a163e608de1",
+                    "@id": "#study_comment/20_836d93c0-6094-013c-9eda-7a163e608de1",
                     "name": "SEEK creation date",
                     "value": "2023-10-09T14:34:40Z"
                 }
@@ -3843,10 +3782,10 @@
             "people": [
                 {
                     "@id": "#people/4",
-                    "lastName": "De Pelseneer",
+                    "lastName": "DP",
                     "firstName": "Kevin",
                     "midInitials": "",
-                    "email": "kevin.depelseneer@psb.ugent.be",
+                    "email": "kevin.dp@mail.com",
                     "phone": "",
                     "fax": "",
                     "address": "",
@@ -4402,8 +4341,6 @@
                     "parameterValues": [],
                     "performer": "",
                     "date": "",
-                    "previousProcess": {},
-                    "nextProcess": {},
                     "inputs": [
                         {
                             "@id": "#source/162"
@@ -4424,8 +4361,6 @@
                     "parameterValues": [],
                     "performer": "",
                     "date": "",
-                    "previousProcess": {},
-                    "nextProcess": {},
                     "inputs": [
                         {
                             "@id": "#source/163"
@@ -4829,12 +4764,6 @@
                             ],
                             "performer": "",
                             "date": "",
-                            "previousProcess": {
-                                "@id": "#process/sample_collection/166"
-                            },
-                            "nextProcess": {
-                                "@id": "#process/nucleic_acid_sequencing/166"
-                            },
                             "inputs": [
                                 {
                                     "@id": "#sample/164"
@@ -4842,9 +4771,15 @@
                             ],
                             "outputs": [
                                 {
-                                    "@id": "#sample/166"
+                                    "@id": "#other_material/166"
                                 }
-                            ]
+                            ],
+                            "previousProcess": {
+                                "@id": "#process/sample_collection/166"
+                            },
+                            "nextProcess": {
+                                "@id": "#process/nucleic_acid_sequencing/166"
+                            }
                         },
                         {
                             "@id": "#process/library_construction/167",
@@ -4991,12 +4926,6 @@
                             ],
                             "performer": "",
                             "date": "",
-                            "previousProcess": {
-                                "@id": "#process/sample_collection/167"
-                            },
-                            "nextProcess": {
-                                "@id": "#process/nucleic_acid_sequencing/167"
-                            },
                             "inputs": [
                                 {
                                     "@id": "#sample/165"
@@ -5004,9 +4933,15 @@
                             ],
                             "outputs": [
                                 {
-                                    "@id": "#sample/167"
+                                    "@id": "#other_material/167"
                                 }
-                            ]
+                            ],
+                            "previousProcess": {
+                                "@id": "#process/sample_collection/167"
+                            },
+                            "nextProcess": {
+                                "@id": "#process/nucleic_acid_sequencing/167"
+                            }
                         },
                         {
                             "@id": "#process/nucleic_acid_sequencing/168",
@@ -5017,10 +4952,6 @@
                             "parameterValues": [],
                             "performer": "",
                             "date": "",
-                            "previousProcess": {
-                                "@id": "#process/library_construction/168"
-                            },
-                            "nextProcess": {},
                             "inputs": [
                                 {
                                     "@id": "#other_material/166"
@@ -5028,9 +4959,13 @@
                             ],
                             "outputs": [
                                 {
-                                    "@id": "#sample/168"
+                                    "@id": "#data_file/168"
                                 }
-                            ]
+                            ],
+                            "previousProcess": {
+                                "@id": "#process/library_construction/168"
+                            },
+                            "nextProcess": {}
                         },
                         {
                             "@id": "#process/nucleic_acid_sequencing/169",
@@ -5041,10 +4976,6 @@
                             "parameterValues": [],
                             "performer": "",
                             "date": "",
-                            "previousProcess": {
-                                "@id": "#process/library_construction/169"
-                            },
-                            "nextProcess": {},
                             "inputs": [
                                 {
                                     "@id": "#other_material/167"
@@ -5052,9 +4983,13 @@
                             ],
                             "outputs": [
                                 {
-                                    "@id": "#sample/169"
+                                    "@id": "#data_file/169"
                                 }
-                            ]
+                            ],
+                            "previousProcess": {
+                                "@id": "#process/library_construction/169"
+                            },
+                            "nextProcess": {}
                         }
                     ],
                     "dataFiles": [

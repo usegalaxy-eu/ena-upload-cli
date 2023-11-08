@@ -150,15 +150,16 @@ def get_parameter_values(
     """
     param_vals = []
     parameters = fetch_parameters(study_protocols_dict)
-    for ps in assay_stream["processSequence"]:
-        sample_id = clip_off_prefix(ps["@id"])
+    for process in assay_stream["processSequence"]:
+        sample_ids = [clip_off_prefix(output["@id"]) for output in process["outputs"]]
         parameter_values = [
             ParameterValue.from_dict(parameter_value, parameters)
-            for parameter_value in ps["parameterValues"]
+            for parameter_value in process["parameterValues"]
         ]
-        param_vals.append(
-            {"sample_id": sample_id, "parameter_values": parameter_values}
-        )
+        for sample_id in sample_ids:
+            param_vals.append(
+                {"sample_id": sample_id, "parameter_values": parameter_values}
+            )
     return param_vals
 
 

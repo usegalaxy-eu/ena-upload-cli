@@ -1,9 +1,12 @@
 from typing import List, Dict
-from ena_upload.json_parsing.characteristic import SampleCharacteristic
+from ena_upload.json_parsing.characteristic import SampleCharacteristic, ParameterValue
 
 from pandas import DataFrame
 
-from ena_upload.json_parsing.ena_std_lib import clip_off_prefix, fetch_study_comment_by_name
+from ena_upload.json_parsing.ena_std_lib import (
+    clip_off_prefix,
+    fetch_study_comment_by_name,
+)
 
 
 def fetch_characteristic_categories(study_dict: Dict) -> Dict:
@@ -92,14 +95,21 @@ class EnaSample:
 
     prefix: str = "ena_sample_alias_prefix"
 
-    def __init__(self, characteristics: List[SampleCharacteristic], alias: str) -> None:
+    def __init__(
+        self,
+        characteristics: List[SampleCharacteristic],
+        parameter_values: List[ParameterValue],
+        alias: str,
+    ) -> None:
         self.alias = alias
         self.characteristics = characteristics
+        self.parameter_values = parameter_values
 
     def to_dict(self) -> Dict:
         return {
             "alias": self.alias,
             "characteristics": [char.to_dict() for char in self.characteristics],
+            "parameter_values": [pv.to_dict() for pv in self.parameter_values],
         }
 
     @classmethod
@@ -142,6 +152,7 @@ class EnaSample:
             EnaSample(
                 alias=sample_alias(sd["id"], study_alias_prefix),
                 characteristics=sd["characteristics"],
+                parameter_values=[],  # TODO Add functionality for parameter values in samples
             )
             for sd in samples_data
         ]
@@ -162,6 +173,9 @@ def export_samples_to_dataframe(samples: List[EnaSample]):
         characteristics = sample_dict.pop("characteristics")
         for char in characteristics:
             sample_dict.update({char["category"]["name"]: char["value"]})
+        parameter_values = sample_dict.pop("parameter_values")
+        for pv in parameter_values:
+            sample_dict.update({pv["category"]["name"]: pv["value"]})
         flat_dicts.append(sample_dict)
 
     return DataFrame.from_dict(flat_dicts)
