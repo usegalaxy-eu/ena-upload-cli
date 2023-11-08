@@ -1,5 +1,53 @@
 from typing import Dict, List, Union
 import re
+from ena_upload.json_parsing.characteristic import ParameterValue
+
+
+def fetch_parameters(protocol_dict: Dict[str, str]) -> List[Dict[str, str]]:
+    """Fetches the parameters from a protocol dictionary.
+
+    Args:
+        protocol_dict (Dict[str, str]): protocol dictionary
+
+    Returns:
+        List[Dict[str, str]]: Resulting list of parameters
+    """
+    parameters = []
+    for protocol in protocol_dict:
+        for parameter in protocol["parameters"]:
+            parameters.append(
+                {
+                    "id": parameter["@id"],
+                    "name": parameter["parameterName"]["annotationValue"],
+                }
+            )
+    return parameters
+
+
+def get_parameter_values(
+    process_sequence: Dict[str, str], study_protocols_dict: Dict[str, str]
+) -> Dict[str, str]:
+    """Returns all parameter values from a study dictionary.
+
+    Args:
+        study_dict (Dict[str, str]): Input study dictionary
+
+    Returns:
+        Dict[str, str]: Resulting dictionary of parameter values.
+    """
+    param_vals = []
+    parameters = fetch_parameters(study_protocols_dict)
+    for process in process_sequence:
+        sample_ids = [clip_off_prefix(output["@id"]) for output in process["outputs"]]
+        parameter_values = [
+            ParameterValue.from_dict(parameter_value, parameters)
+            for parameter_value in process["parameterValues"]
+        ]
+        for sample_id in sample_ids:
+            param_vals.append(
+                {"sample_id": sample_id, "parameter_values": parameter_values}
+            )
+    return param_vals
 
 
 def get_assay_sample_associations(assay_dict: Dict[str, str]) -> List[Dict[str, str]]:

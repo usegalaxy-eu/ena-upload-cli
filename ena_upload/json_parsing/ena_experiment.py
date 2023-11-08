@@ -6,13 +6,13 @@ from ena_upload.json_parsing.ena_std_lib import (
     fetch_assay_comment_by_name,
     get_assay_sample_associations,
     clip_off_prefix,
+    get_parameter_values,
 )
 from ena_upload.json_parsing.characteristic import (
     IsaBase,
     OtherMaterialCharacteristic,
     ParameterValue,
 )
-from ena_upload.json_parsing.ena_sample import EnaSample
 from ena_upload.json_parsing.other_material import OtherMaterial
 
 
@@ -116,53 +116,6 @@ def get_derived_sample_alias(
     return assoc_sample_ids
 
 
-def fetch_parameters(protocol_dict: Dict[str, str]) -> List[Dict[str, str]]:
-    """Fetches the parameters from a protocol dictionary.
-
-    Args:
-        protocol_dict (Dict[str, str]): protocol dictionary
-
-    Returns:
-        List[Dict[str, str]]: Resulting list of parameters
-    """
-    parameters = []
-    for protocol in protocol_dict:
-        for parameter in protocol["parameters"]:
-            parameters.append(
-                {
-                    "id": parameter["@id"],
-                    "name": parameter["parameterName"]["annotationValue"],
-                }
-            )
-    return parameters
-
-
-def get_parameter_values(
-    assay_stream: Dict[str, str], study_protocols_dict: Dict[str, str]
-) -> Dict[str, str]:
-    """Returns all parameter values from a study dictionary.
-
-    Args:
-        study_dict (Dict[str, str]): Input study dictionary
-
-    Returns:
-        Dict[str, str]: Resulting dictionary of parameter values.
-    """
-    param_vals = []
-    parameters = fetch_parameters(study_protocols_dict)
-    for process in assay_stream["processSequence"]:
-        sample_ids = [clip_off_prefix(output["@id"]) for output in process["outputs"]]
-        parameter_values = [
-            ParameterValue.from_dict(parameter_value, parameters)
-            for parameter_value in process["parameterValues"]
-        ]
-        for sample_id in sample_ids:
-            param_vals.append(
-                {"sample_id": sample_id, "parameter_values": parameter_values}
-            )
-    return param_vals
-
-
 class EnaExperiment(IsaBase):
     """
     Generates an Experiment object, compliant to the requirements of ENA
@@ -222,7 +175,9 @@ class EnaExperiment(IsaBase):
         """
 
         other_materials = get_other_materials(assay_stream)
-        parameter_values = get_parameter_values(assay_stream, protocols_dict)
+        parameter_values = get_parameter_values(
+            assay_stream["processSequence"], protocols_dict
+        )
         prefix = fetch_assay_comment_by_name(assay_stream, EnaExperiment.prefix)[
             "value"
         ]
