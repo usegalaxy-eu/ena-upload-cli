@@ -142,8 +142,8 @@ class EnaSubmission(IsaBase):
             Dict[str, DataFrame]: resulting dictionary of DataFrames
         """
         return {
-            "study": export_studies_to_dataframe(self.studies),
-            "sample": export_samples_to_dataframe(self.samples),
-            "experiment": export_experiments_to_dataframe(self.experiments),
-            "run": export_runs_to_dataframe(self.runs),
+            "study": export_studies_to_dataframe(self.studies).fillna(""),
+            "sample": export_samples_to_dataframe(self.samples).fillna(""),
+            "experiment": export_experiments_to_dataframe(self.experiments).fillna(""),
+            "run": export_runs_to_dataframe(self.runs).fillna(""),
         }
