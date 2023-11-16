@@ -69,6 +69,15 @@ class EnaSubmission(IsaBase):
         self.experiments = experiments
         self.runs = runs
 
+    def to_dict(self) -> Dict:
+        return {
+            "study": [study.to_dict() for study in self.studies],
+            "sample": [sample.to_dict() for sample in self.samples],
+            "experiment": [experiment.to_dict() for experiment in self.experiments],
+            "run": [run.to_dict() for run in self.runs],
+        }
+
+
     def from_isa_json(
         isa_json: Dict[str, str], required_assays: List[Dict[str, str]]
     ) -> None:
@@ -87,6 +96,12 @@ class EnaSubmission(IsaBase):
         studies = []
         experiments = []
         runs = []
+        
+        assay_stream_names = [a_stream['assay_stream'] for a_stream in required_assays]
+        
+        if filtered_isa_json["studies"] == []:
+            raise ValueError(f"No studies found with isa_assay_stream {assay_stream_names}")
+        
         for study in filtered_isa_json["studies"]:
             [samples.append(sample) for sample in EnaSample.from_study_dict(study)]
 
