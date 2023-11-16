@@ -374,7 +374,7 @@ def get_taxon_id(scientific_name):
         taxon_id = r.json()[0]['taxId']
         return taxon_id
     except ValueError:
-        msg = f'Oops, no taxon ID avaible for {scientific_name}. Is it a valid scientific name?'
+        msg = f'Oops, no taxon ID available for {scientific_name}. Is it a valid scientific name?'
         sys.exit(msg)
 
 
@@ -393,7 +393,7 @@ def get_scientific_name(taxon_id):
         taxon_id = r.json()['scientificName']
         return taxon_id
     except ValueError:
-        msg = f'Oops, no scientific name avaible for {taxon_id}. Is it a valid taxon_id?'
+        msg = f'Oops, no scientific name available for {taxon_id}. Is it a valid taxon_id?'
         sys.exit(msg)
 
 
@@ -416,9 +416,8 @@ def submit_data(file_paths, password, webin_id):
 
     except IOError as ioe:
         print(ioe)
-        print("ERROR: could not connect to the ftp server.\
+        sys.exit("ERROR: could not connect to the ftp server.\
                Please check your login details.")
-        sys.exit()
     for filename, path in file_paths.items():
         print(f'uploading {path}')
         try:
