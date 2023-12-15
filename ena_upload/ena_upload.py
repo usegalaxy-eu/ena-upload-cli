@@ -424,7 +424,7 @@ def submit_data(file_paths, password, webin_id):
             print(ftps.storbinary(f'STOR {filename}', open(path, 'rb')))
         except BaseException as err:
             print(f"ERROR: {err}")
-            print("ERROR: If your connection times out at this stage, it propably is because of a firewall that is in place. FTP is used in passive mode and connection will be opened to one of the ports: 40000 and 50000.")
+            print("ERROR: If your connection times out at this stage, it probably is because of a firewall that is in place. FTP is used in passive mode and connection will be opened to one of the ports: 40000 and 50000.")
             raise
     print(ftps.quit())
 
@@ -701,7 +701,7 @@ def process_args():
 
     parser.add_argument('--data',
                         nargs='*',
-                        help='data for submission',
+                        help='data for submission, this can be a list of files',
                         metavar='FILE')
 
     parser.add_argument('--center',
@@ -716,10 +716,11 @@ def process_args():
                         help='filled in excel template with metadata')
     
     parser.add_argument('--isa_json',
-                        help='ISA json describing describing the ENA objects')
+                        help='BETA: ISA json describing describing the ENA objects')
     
     parser.add_argument('--isa_assay_stream',
-                        help='specify the assay stream that holds the ENA information')
+                        nargs='*',
+                        help='BETA: specify the assay stream(s) that holds the ENA information, this can be a list of assay streams')
 
     parser.add_argument('--auto_action',
                         action="store_true",
@@ -881,7 +882,9 @@ def main():
 
         schema_tables = {}
         schema_dataframe = {}
-        required_assays = [{"assay_stream": isa_assay_stream}]
+        required_assays = []
+        for stream in isa_assay_stream:
+            required_assays.append({"assay_stream": stream})
         submission = EnaSubmission.from_isa_json(isa_json, required_assays)
         submission_dataframes = submission.generate_dataframes()
         for schema, df in submission_dataframes.items():

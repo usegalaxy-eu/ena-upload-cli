@@ -69,9 +69,9 @@ All supported arguments:
   --checklist CHECKLIST
                         specify the sample checklist with following pattern: ERC0000XX, Default: ERC000011
   --xlsx XLSX           filled in excel template with metadata
-  --isa_json ISA_JSON   ISA json describing describing the ENA objects
+  --isa_json ISA_JSON   BETA: ISA json describing describing the ENA objects
   --isa_assay_stream ISA_ASSAY_STREAM
-                        specify the assay stream that holds the ENA information
+                        BETA: specify the assay stream(s) that holds the ENA information, this can be a list of assay streams
   --auto_action         BETA: detect automatically which action (add or modify) to apply when the action column is not given
   --tool TOOL_NAME      specify the name of the tool this submission is done with. Default: ena-upload-cli
   --tool_version TOOL_VERSION
