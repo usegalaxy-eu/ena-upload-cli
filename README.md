@@ -177,7 +177,7 @@ By default the updated tables after submission will have the action `added` in t
 ## Tool overview
 
 **inputs**:
-* metadata tables/excelsheet
+* metadata tables/excelsheet/isa_json
   * examples in `example_table` and on this [template repo](https://github.com/ELIXIR-Belgium/ENA-metadata-templates) for excel sheets
   * (optional) define actions in **status** column e.g. `add`, `modify`, `cancel`, `release` (when not given the whole table is submitted)
   * to perform bulk submission of all objects, the `aliases ids` in different ENA objects should be in the association where alias ids in experiment object link all objects together
