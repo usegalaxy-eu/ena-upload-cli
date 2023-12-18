@@ -27,7 +27,7 @@ setup(
     classifiers=[
         "Operating System :: OS Independent"
     ],
-    python_requires='>=3.5',
+    python_requires='>=3.7',
     entry_points={
       'console_scripts': ["ena-upload-cli=ena_upload.ena_upload:main"]
     },
