@@ -1,0 +1,31 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema",
+    "title": "ISA investigation schema",
+    "name": "ISA investigation schema",
+    "description": "JSON-schema representing an investigation in the ISA model",
+    "type": "object",
+    "properties": {
+        "pubMedID": {
+            "type": "string"
+        },
+        "doi": {
+            "type": "string"
+        },
+        "authorList": {
+            "type": "string"
+        },
+        "title": {
+            "type": "string"
+        },
+        "status": {
+            "$dynamicRef": "ontology_annotation_schema.json#"
+        },
+        "comments": {
+            "type": "array",
+            "items": {
+                "$dynamicRef": "comment_schema.json#"
+            }
+        }
+    },
+    "additionalProperties": false
+}

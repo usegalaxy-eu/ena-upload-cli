@@ -2,4 +2,4 @@
 .secret.yml
 build/
 ena_upload_cli.egg-info/
-ena_upload/__pycache__/
+__pycache__/

@@ -15,10 +15,10 @@ setup(
     author="Dilmurat Yusuf",
     author_email="bjoern.gruening@gmail.com",
     long_description_content_type='text/markdown',
-    packages=['ena_upload'],
+    packages=['ena_upload', 'ena_upload.json_parsing'],
     package_dir={'ena_upload': 'ena_upload'},
     package_data={
-        'ena_upload': ['templates/*.xml', 'templates/*.xsd']
+        'ena_upload': ['templates/*.xml', 'templates/*.xsd', 'json_parsing/json_schemas/*.json']
     },
     long_description=long_description,
     url="https://github.com/usegalaxy-eu/ena-upload-cli",

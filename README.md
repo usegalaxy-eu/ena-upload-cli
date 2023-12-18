@@ -7,18 +7,18 @@
 
 # ENA upload tool
 
-This command line tool (CLI) allows easy submission of experimental data and respective metadata to the European Nucleotide Archive (ENA) using tabular files or one of the excel spreadsheets that can be found on this [template repo](https://github.com/ELIXIR-Belgium/ENA-metadata-templates). The supported metadata that can be submitted includes study, sample, run and experiment info so you can use the tool for programatic submission of everything ENA needs without the need of logging in to the Webin interface. This also includes client side validation using ENA checklists and releasing the ENA objects. This command line tool is also available as a [Galaxy tool](https://toolshed.g2.bx.psu.edu/view/iuc/ena_upload/) and can be added to you own Galaxy instance or you can make use of one of the existing Galaxy instances, like [usegalaxy.eu](https://usegalaxy.eu/root?tool_id=toolshed.g2.bx.psu.edu/repos/iuc/ena_upload/ena_upload).
+This command line tool (CLI) allows easy submission of experimental data and respective metadata to the European Nucleotide Archive (ENA) using tabular files or one of the excel spreadsheets that can be found on this [template repo](https://github.com/ELIXIR-Belgium/ENA-metadata-templates). The supported metadata that can be submitted includes study, sample, run and experiment info so you can use the tool for programmatic submission of everything ENA needs without the need of logging in to the Webin interface. This also includes client side validation using ENA checklists and releasing the ENA objects. This command line tool is also available as a [Galaxy tool](https://toolshed.g2.bx.psu.edu/view/iuc/ena_upload/) and can be added to you own Galaxy instance or you can make use of one of the existing Galaxy instances, like [usegalaxy.eu](https://usegalaxy.eu/root?tool_id=toolshed.g2.bx.psu.edu/repos/iuc/ena_upload/ena_upload).
 
 ## Overview
 
-The metadata should be provided in separate tables corresponding to the following ENA objects:
+The metadata should be provided in separate tables or files carrying similar information corresponding to the following ENA objects:
 
 * STUDY
 * SAMPLE
 * EXPERIMENT
 * RUN
 
-The program to perform the following actions:
+You can set the tool to perform the following actions:
 
 * add: add an object to the archive
 * modify: modify an object in the archive
@@ -29,11 +29,15 @@ After a successful submission, new tsv tables will be generated with the ENA acc
 
 ## Tool dependencies
 
-* python 3.5+ including following packages:
+* python 3.7+ including following packages:
   * Genshi
   * lxml
   * pandas
   * requests
+  * pyyaml
+  * openpyxl
+  * jsonschema
+
 
 ## Installation
 
@@ -60,12 +64,14 @@ All supported arguments:
   --experiment EXPERIMENT
                         table of EXPERIMENT object
   --run RUN             table of RUN object
-  --data [FILE [FILE ...]]
-                        data for submission
+  --data [FILE ...]     data for submission
   --center CENTER_NAME  specific to your Webin account
   --checklist CHECKLIST
                         specify the sample checklist with following pattern: ERC0000XX, Default: ERC000011
   --xlsx XLSX           filled in excel template with metadata
+  --isa_json ISA_JSON   BETA: ISA json describing describing the ENA objects
+  --isa_assay_stream ISA_ASSAY_STREAM
+                        BETA: specify the assay stream(s) that holds the ENA information, this can be a list of assay streams
   --auto_action         BETA: detect automatically which action (add or modify) to apply when the action column is not given
   --tool TOOL_NAME      specify the name of the tool this submission is done with. Default: ena-upload-cli
   --tool_version TOOL_VERSION
@@ -88,7 +94,7 @@ To avoid exposing your credentials through the terminal history, it is recommend
 
 ### ENA sample checklists
 
-You can specify ENA sample checklist using the `--checklist` parameter. By default the ENA default sample checklist is used supporting the minimum information required for the sample (ERC000011). The supported checklists are listed on the [ENA website](https://www.ebi.ac.uk/ena/browser/checklists). This website will also describe which Field Names you have to use in the header of your sample tsv table. The Field Names will be automatically mapped in the outputted xml if the correct `--checklist` parameter is given.
+You can specify ENA sample checklist using the `--checklist` parameter. By default the ENA default sample checklist is used supporting the minimum information required for the sample (ERC000011). The supported checklists are listed on our [template repo](https://github.com/ELIXIR-Belgium/ENA-metadata-templates).  
 
 #### Fixed sample columns
 
@@ -104,55 +110,11 @@ The command line tool will automatically fetch the correct scientific name based
 
 #### Viral submissions
 
-If you want to submit viral samples you can use the [ENA virus pathogen](https://www.ebi.ac.uk/ena/browser/view/ERC000033) checklist by adding `ERC000033` to the checklist parameter. Check out our [viral example command](#test-the-tool) as demonstration. Please use the [ENA virus pathogen](https://www.ebi.ac.uk/ena/browser/view/ERC000033) checklist on the website of ENA to know which values are allowed/possible in the `restricted text` and `text choice` fields.
+If you want to submit viral samples you can use the [ENA virus pathogen](https://www.ebi.ac.uk/ena/browser/view/ERC000033) checklist by adding `ERC000033` to the checklist parameter. Check out our [viral example command](#test-the-tool) as demonstration. Please use the [ENA virus pathogen](https://github.com/ELIXIR-Belgium/ENA-metadata-templates/tree/main/templates/ERC000033) checklist in our template repo to know what is allowed/possible in the `Controlled vocabulary`fields.
 
 ### ENA study, experiment and run tables
 
-Here we list all the possible columns one can have in its study, experiment or run table along with its cardinality and controlled vocabulary (CV).
-Currently we refer to the [ENA Webin](https://wwwdev.ebi.ac.uk/ena/submit/webin/) to discover which values are allowed when a controlled vocabulary is used, but this will change in the future.
-
-#### Study tsv table
-
-| Name of column | Cardinality | Documentation | CV |
-|---|---|---|---|
-| alias | mandatory | Submitter designated name for the object. The name must be unique within the submission account. |  |
-| title | mandatory | Title of the study as would be used in a publication. |  |
-| study_type | mandatory | The STUDY_TYPE presents a controlled vocabulary for expressing the overall purpose of the study. | yes |
-| study_abstract | mandatory | Briefly describes the goals, purpose, and scope of the Study.  This need not be listed if it can be inherited from a referenced publication. |  |
-| center_project_name | optional | Submitter defined project name.  This field is intended for backward tracking of the study record to the submitter's LIMS. |  |
-| study_description | optional | More extensive free-form description of the study. |  |
-| pubmed_id | optional | Link to publication related to this study. |  |
-
-#### Experiment tsv table
-
-| Name of column | Cardinality | Documentation | CV |
-|---|---|---|---|
-| alias | mandatory | Submitter designated name for the object. The name must be unique within the submission account. |  |
-| title | mandatory | Short text that can be used to call out experiment records in searches or in displays. |  |
-| study_alias | mandatory | Identifies the parent study. |  |
-| sample_alias | mandatory | Pick a sample to associate this experiment with. The sample may be an individual or a pool, depending on how it is specified. |  |
-| design_description | mandatory | Goal and setup of the individual library including library was constructed. |  |
-| spot_descriptor | optional | The SPOT_DESCRIPTOR specifies how to decode the individual reads of interest from the monolithic spot sequence. The spot descriptor contains aspects of the experimental design, platform, and processing information. There will be two methods of specification: one will be an index into a table of typical decodings, the other being an exact specification. This construct is needed for loading data and for interpreting the loaded runs. It can be omitted if the loader can infer read layout (from multiple input files or from one input files). |  |
-| library_name | optional | The submitter's name for this library. |  |
-| library_layout | mandatory | LIBRARY_LAYOUT specifies whether to expect single, paired, or other configuration of reads. In the case of paired reads, information about the relative distance and orientation is specified. | yes |
-| insert_size | mandatory | Relative distance. |  |
-| library_strategy | mandatory | Sequencing technique intended for this library | yes |
-| library_source | mandatory | The LIBRARY_SOURCE specifies the type of source material that is being sequenced. | yes |
-| library_selection | mandatory | Method used to enrich the target in the sequence library preparation | yes |
-| platform | mandatory | The PLATFORM record selects which sequencing platform and platform-specific runtime parameters. This will be determined by the Center. | yes |
-| instrument_model | mandatory | Model of the sequencing instrument. | yes |
-| library_construction_protocol | optional | Free form text describing the protocol by which the sequencing library was constructed. |  |
-
-
-#### Run tsv table
-
-| Name of column | Cardinality | Documentation | CV |
-|---|---|---|---|
-| alias | mandatory | Submitter designated name for the object. The name must be unique within the submission account. |  |
-| experiment_alias | mandatory | Identifies the parent experiment. |  |
-| file_name | mandatory | The name or relative pathname of a run data file. |  |
-| file_type | mandatory | The run data file model. | yes |
-| file_checksum | optional | Checksum of uncompressed file. If not given, the checksum will be calculated based on the data files specified in the --data option |  |
+Please check out the [template](https://github.com/ELIXIR-Belgium/ENA-metadata-templates) of your checklist to discover which attributes are mandatory for the study, experiment and run ENA object.
 
 
 ### Dev instance
@@ -176,7 +138,7 @@ There are two ways of submitting only a selection of objects to ENA. This is han
 | sample_alias_5 |        | sample_title_2 | 2697049  | sample_description_2 |
 
 
-> IMPORTANT: if the status column is given but not filled in, or filled in with a different action from the one in the `--action` parameter, not rows will be submitted! Either leave out the column or add to every row the corect action.
+> IMPORTANT: if the status column is given but not filled in, or filled in with a different action from the one in the `--action` parameter, no rows will be submitted! Either leave out the column or add to every row you want to submit the correct action.
 
 
 ### Using Excel templates
@@ -215,7 +177,7 @@ By default the updated tables after submission will have the action `added` in t
 ## Tool overview
 
 **inputs**:
-* metadata tables/excelsheet
+* metadata tables/excelsheet/isa_json
   * examples in `example_table` and on this [template repo](https://github.com/ELIXIR-Belgium/ENA-metadata-templates) for excel sheets
   * (optional) define actions in **status** column e.g. `add`, `modify`, `cancel`, `release` (when not given the whole table is submitted)
   * to perform bulk submission of all objects, the `aliases ids` in different ENA objects should be in the association where alias ids in experiment object link all objects together
@@ -260,6 +222,11 @@ By default the updated tables after submission will have the action `added` in t
 * **Using an Excel template**
   ```
   ena-upload-cli --action add --center 'your_center_name' --data example_data/*gz --dev --checklist ERC000033 --secret .secret.yml --xlsx example_tables/ENA_excel_example_ERC000033.xlsx 
+  ```
+
+* **Using an ISA JSON**
+  ```
+  ena-upload-cli --action add --center 'your_center_name' --data example_data/*gz --dev --secret .secret.yml --isa_json tests/test_data/simple_test_case_v2.json --isa_assay_stream "Ena stream 1"
   ```
 
 * **Release submission**

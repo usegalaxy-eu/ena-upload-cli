@@ -12,6 +12,7 @@ import yaml
 import hashlib
 import ftplib
 import requests
+import json
 import uuid
 import numpy as np
 import re
@@ -21,6 +22,8 @@ import pandas as pd
 import tempfile
 from ena_upload._version import __version__
 from ena_upload.check_remote import remote_check
+from ena_upload.json_parsing.ena_submission import EnaSubmission
+
 
 SCHEMA_TYPES = ['study', 'experiment', 'run', 'sample']
 
@@ -371,7 +374,7 @@ def get_taxon_id(scientific_name):
         taxon_id = r.json()[0]['taxId']
         return taxon_id
     except ValueError:
-        msg = f'Oops, no taxon ID avaible for {scientific_name}. Is it a valid scientific name?'
+        msg = f'Oops, no taxon ID available for {scientific_name}. Is it a valid scientific name?'
         sys.exit(msg)
 
 
@@ -390,7 +393,7 @@ def get_scientific_name(taxon_id):
         taxon_id = r.json()['scientificName']
         return taxon_id
     except ValueError:
-        msg = f'Oops, no scientific name avaible for {taxon_id}. Is it a valid taxon_id?'
+        msg = f'Oops, no scientific name available for {taxon_id}. Is it a valid taxon_id?'
         sys.exit(msg)
 
 
@@ -413,16 +416,15 @@ def submit_data(file_paths, password, webin_id):
 
     except IOError as ioe:
         print(ioe)
-        print("ERROR: could not connect to the ftp server.\
+        sys.exit("ERROR: could not connect to the ftp server.\
                Please check your login details.")
-        sys.exit()
     for filename, path in file_paths.items():
         print(f'uploading {path}')
         try:
             print(ftps.storbinary(f'STOR {filename}', open(path, 'rb')))
         except BaseException as err:
             print(f"ERROR: {err}")
-            print("ERROR: If your connection times out at this stage, it propably is because of a firewall that is in place. FTP is used in passive mode and connection will be opened to one of the ports: 40000 and 50000.")
+            print("ERROR: If your connection times out at this stage, it probably is because of a firewall that is in place. FTP is used in passive mode and connection will be opened to one of the ports: 40000 and 50000.")
             raise
     print(ftps.quit())
 
@@ -699,7 +701,7 @@ def process_args():
 
     parser.add_argument('--data',
                         nargs='*',
-                        help='data for submission',
+                        help='data for submission, this can be a list of files',
                         metavar='FILE')
 
     parser.add_argument('--center',
@@ -712,6 +714,13 @@ def process_args():
 
     parser.add_argument('--xlsx',
                         help='filled in excel template with metadata')
+    
+    parser.add_argument('--isa_json',
+                        help='BETA: ISA json describing describing the ENA objects')
+    
+    parser.add_argument('--isa_assay_stream',
+                        nargs='*',
+                        help='BETA: specify the assay stream(s) that holds the ENA information, this can be a list of assay streams')
 
     parser.add_argument('--auto_action',
                         action="store_true",
@@ -749,7 +758,7 @@ def process_args():
 
     # check if any table is given
     tables = set([args.study, args.sample, args.experiment, args.run])
-    if tables == {None} and not args.xlsx:
+    if tables == {None} and not args.xlsx and not args.isa_json:
         parser.error('Requires at least one table for submission')
 
     # check if .secret file exists
@@ -763,6 +772,14 @@ def process_args():
         if not os.path.isfile(args.xlsx):
             msg = f"Oops, the file {args.xlsx} does not exist"
             parser.error(msg)
+
+    # check if ISA json file exists
+    if args.isa_json:
+        if not os.path.isfile(args.isa_json):
+            msg = f"Oops, the file {args.isa_json} does not exist"
+            parser.error(msg)
+        if args.isa_assay_stream is None :
+            parser.error("--isa_json requires --isa_assay_stream")
 
     # check if data is given when adding a 'run' table
     if (not args.no_data_upload and args.run and args.action.upper() not in ['RELEASE', 'CANCEL']) or (not args.no_data_upload and args.xlsx and args.action.upper() not in ['RELEASE', 'CANCEL']):
@@ -816,6 +833,8 @@ def main():
     secret = args.secret
     draft = args.draft
     xlsx = args.xlsx
+    isa_json_file = args.isa_json
+    isa_assay_stream = args.isa_assay_stream
     auto_action = args.auto_action
 
     with open(secret, 'r') as secret_file:
@@ -857,6 +876,25 @@ def main():
             schema_dataframe[schema] = xl_sheet
             path = os.path.dirname(os.path.abspath(xlsx))
             schema_tables[schema] = f"{path}/ENA_template_{schema}.tsv"
+    elif isa_json_file:
+        # Read json file
+        with open(isa_json_file, 'r') as json_file:
+            isa_json = json.load(json_file)
+
+        schema_tables = {}
+        schema_dataframe = {}
+        required_assays = []
+        for stream in isa_assay_stream:
+            required_assays.append({"assay_stream": stream})
+        submission = EnaSubmission.from_isa_json(isa_json, required_assays)
+        submission_dataframes = submission.generate_dataframes()
+        for schema, df in submission_dataframes.items():
+            schema_dataframe[schema] = check_columns(
+                df, schema, action, dev, auto_action)
+            path = os.path.dirname(os.path.abspath(isa_json_file))
+            schema_tables[schema] = f"{path}/ENA_template_{schema}.tsv"
+
+
     else:
         # collect the schema with table input from command-line
         schema_tables = collect_tables(args)
