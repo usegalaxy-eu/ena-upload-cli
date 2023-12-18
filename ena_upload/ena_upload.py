@@ -878,7 +878,8 @@ def main():
             schema_tables[schema] = f"{path}/ENA_template_{schema}.tsv"
     elif isa_json_file:
         # Read json file
-        isa_json = json.load(open(isa_json_file))
+        with open(isa_json_file, 'r') as json_file:
+            isa_json = json.load(json_file)
 
         schema_tables = {}
         schema_dataframe = {}
