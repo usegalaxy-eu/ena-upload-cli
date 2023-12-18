@@ -226,7 +226,7 @@ By default the updated tables after submission will have the action `added` in t
 
 * **Using an ISA JSON**
   ```
-  ena-upload-cli --action add --center 'your_center_name' --data example_data/*gz --dev --checklist ERC000033 --secret .secret.yml --isa_json tests/test_data/simple_test_case_v2.json --isa_assay_stream "Ena stream 1"
+  ena-upload-cli --action add --center 'your_center_name' --data example_data/*gz --dev --secret .secret.yml --isa_json tests/test_data/simple_test_case_v2.json --isa_assay_stream "Ena stream 1"
   ```
 
 * **Release submission**
