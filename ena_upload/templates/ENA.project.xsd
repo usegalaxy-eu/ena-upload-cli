@@ -157,15 +157,7 @@
                         </xs:annotation>
                         <xs:complexType>
                             <xs:sequence maxOccurs="unbounded" minOccurs="1">
-                                <xs:element name="PROJECT_LINK">
-                                    <xs:complexType>
-                                        <xs:choice>
-                                            <xs:element name="XREF_LINK" type="com:XRefType"/>
-                                            <xs:element name="URL_LINK" type="com:URLType">
-                                            </xs:element>
-                                        </xs:choice>
-                                    </xs:complexType>
-                                </xs:element>
+                                <xs:element name="PROJECT_LINK" type="com:LinkType" />
                             </xs:sequence>
                         </xs:complexType>
                     </xs:element>
