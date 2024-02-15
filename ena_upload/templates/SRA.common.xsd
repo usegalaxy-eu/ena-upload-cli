@@ -10,8 +10,7 @@
   ~ specific language governing permissions and limitations under the License.
   -->
 
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:com="SRA.common"
-    targetNamespace="SRA.common">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:com="SRA.common" targetNamespace="SRA.common">
 
     <xs:complexType name="ObjectType">
         <xs:sequence>
@@ -192,6 +191,7 @@
             </xs:element>
         </xs:sequence>
     </xs:complexType>
+
     <xs:complexType name="XRefType">
         <xs:all>
             <xs:element name="DB" type="xs:string" minOccurs="1" maxOccurs="1">
@@ -235,6 +235,7 @@
             </xs:element>
         </xs:all>
     </xs:complexType>
+
     <xs:complexType name="AttributeType">
         <xs:annotation>
             <xs:documentation>
@@ -273,25 +274,8 @@
             </xs:documentation>
         </xs:annotation>
         <xs:choice>
-            <xs:element name="URL_LINK">
-                <xs:complexType>
-                    <xs:all>
-                        <xs:element name="LABEL" type="xs:string" minOccurs="1" maxOccurs="1">
-                            <xs:annotation>
-                                <xs:documentation>
-                                    Text label to display for the link.
-                                </xs:documentation>
-                            </xs:annotation>
-                        </xs:element>
-                        <xs:element name="URL" minOccurs="1" maxOccurs="1" type="xs:anyURI">
-                            <xs:annotation>
-                                <xs:documentation> The internet service link (file:, http:, ftp: etc). </xs:documentation>
-                            </xs:annotation>
-                        </xs:element>
-                    </xs:all>
-                </xs:complexType>
-            </xs:element>
-            <xs:element name="XREF_LINK" type="com:XRefType"/>
+            <xs:element name="URL_LINK" type="com:URLType" />
+            <xs:element name="XREF_LINK" type="com:XRefType" />
 
             <xs:element name="ENTREZ_LINK">
                 <xs:complexType>
@@ -333,7 +317,6 @@
 
         </xs:choice>
     </xs:complexType>
-
 
     <xs:complexType name="SpotDescriptorType">
         <xs:annotation>
@@ -689,8 +672,41 @@
                     </xs:sequence>
                 </xs:complexType>
             </xs:element>
+            <xs:element name="VELA_DIAGNOSTICS">
+                <xs:annotation>
+                    <xs:documentation> semi-conductor based sequencing technology. </xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="INSTRUMENT_MODEL" maxOccurs="1" minOccurs="1" type="com:typeVelaDiagnosticsModel"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="GENAPSYS">
+                <xs:annotation>
+                    <xs:documentation> Chip based electronic sensing of polymerase extension reaction </xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="INSTRUMENT_MODEL" maxOccurs="1" minOccurs="1" type="com:typeGenapsysModel"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="GENEMIND">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="INSTRUMENT_MODEL" maxOccurs="1" minOccurs="1" type="com:typeGeneMindModel"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="TAPESTRI">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="INSTRUMENT_MODEL" maxOccurs="1" minOccurs="1" type="com:typeTapestriModel"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
         </xs:choice>
-
     </xs:complexType>
 
     <xs:complexType name="SequencingDirectivesType">
@@ -724,7 +740,6 @@
             </xs:element>
         </xs:all>
     </xs:complexType>
-
 
     <xs:complexType name="PipelineType">
         <xs:annotation>
@@ -785,6 +800,7 @@
             </xs:element>
         </xs:sequence>
     </xs:complexType>
+
     <xs:complexType name="ReferenceAssemblyType">
         <xs:annotation>
             <xs:documentation>Reference assembly details.</xs:documentation>
@@ -852,6 +868,7 @@
             </xs:element>
         </xs:choice>
     </xs:complexType>
+
     <xs:complexType name="ReferenceSequenceType">
         <xs:annotation>
             <xs:documentation>Reference assembly and sequence details.                              </xs:documentation>
@@ -897,6 +914,7 @@
             </xs:element>
         </xs:sequence>
     </xs:complexType>
+
     <xs:complexType name="ProcessingType">
         <xs:sequence>
             <xs:element name="PIPELINE" type="com:PipelineType" minOccurs="0" maxOccurs="1">
@@ -915,6 +933,9 @@
     </xs:complexType>
 
     <!-- STRING ENUMERATIONS BEGIN -->
+
+    <!-- Update InstrumentModelEnumFixer and PlatformEnumFixer classes whenever a model is added or removed. -->
+
     <xs:simpleType name="type454Model">
         <xs:restriction base="xs:string">
             <xs:enumeration value="454 GS"/>
@@ -1066,6 +1087,38 @@
     <xs:simpleType name="typeUltimaModel">
         <xs:restriction base="xs:string">
             <xs:enumeration value="UG 100"/>
+            <xs:enumeration value="unspecified"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="typeVelaDiagnosticsModel">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="Sentosa SQ301"/>
+            <xs:enumeration value="unspecified"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="typeGenapsysModel">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="GENIUS"/>
+            <xs:enumeration value="Genapsys Sequencer"/>
+            <xs:enumeration value="GS111"/>
+            <xs:enumeration value="unspecified"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="typeGeneMindModel">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="GenoCare 1600"/>
+            <xs:enumeration value="GenoLab M"/>
+            <xs:enumeration value="FASTASeq 300"/>
+            <xs:enumeration value="unspecified"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="typeTapestriModel">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="Tapestri"/>
             <xs:enumeration value="unspecified"/>
         </xs:restriction>
     </xs:simpleType>
