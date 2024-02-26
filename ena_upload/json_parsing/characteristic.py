@@ -11,8 +11,8 @@ class IsaBase:
 
     @classmethod
     def validate_json(self, isa_json: Dict[str, str], schema):
-        schema_path = os.path.join(os.curdir, "ena_upload", "json_parsing", "json_schemas", schema)
-
+        base_path = os.path.abspath(os.path.dirname(__file__))
+        schema_path = os.path.join(base_path, 'json_schemas', schema)
         json_file = open(schema_path)
         json_schema = json.load(json_file)
 
