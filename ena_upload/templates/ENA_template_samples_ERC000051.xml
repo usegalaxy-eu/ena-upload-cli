@@ -33,6 +33,36 @@ def mandatorytest(row, column, index):
         <DESCRIPTION>${row.sample_description}</DESCRIPTION>
         </py:if>
         <SAMPLE_ATTRIBUTES>
+            <py:if test="mandatorytest(row, 'sample origin', index)">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>sample origin</TAG>
+                <VALUE>${row['sample origin']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="mandatorytest(row, 'sample material', index)">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>sample material</TAG>
+                <VALUE>${row['sample material']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="mandatorytest(row, 'sample taxon name', index)">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>sample taxon name</TAG>
+                <VALUE>${row['sample taxon name']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="mandatorytest(row, 'sample unique ID', index)">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>sample unique ID</TAG>
+                <VALUE>${row['sample unique ID']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="mandatorytest(row, 'patient tumor type', index)">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>patient tumor type</TAG>
+                <VALUE>${row['patient tumor type']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
             <py:if test="mandatorytest(row, 'collection date', index)">
             <SAMPLE_ATTRIBUTE>
                 <TAG>collection date</TAG>
@@ -43,24 +73,6 @@ def mandatorytest(row, column, index):
             <SAMPLE_ATTRIBUTE>
                 <TAG>geographic location (country and/or sea)</TAG>
                 <VALUE>${row['geographic location (country and/or sea)']}</VALUE>
-            </SAMPLE_ATTRIBUTE>
-            </py:if>
-            <py:if test="mandatorytest(row, 'sample origin', index)">
-            <SAMPLE_ATTRIBUTE>
-                <TAG>sample origin</TAG>
-                <VALUE>${row['sample origin']}</VALUE>
-            </SAMPLE_ATTRIBUTE>
-            </py:if>
-            <py:if test="mandatorytest(row, 'sample taxon name', index)">
-            <SAMPLE_ATTRIBUTE>
-                <TAG>sample taxon name</TAG>
-                <VALUE>${row['sample taxon name']}</VALUE>
-            </SAMPLE_ATTRIBUTE>
-            </py:if>
-            <py:if test="mandatorytest(row, 'sample material', index)">
-            <SAMPLE_ATTRIBUTE>
-                <TAG>sample material</TAG>
-                <VALUE>${row['sample material']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="mandatorytest(row, 'engrafted tumor sample passage', index)">
@@ -79,18 +91,6 @@ def mandatorytest(row, column, index):
             <SAMPLE_ATTRIBUTE>
                 <TAG>patient tumor site of collection</TAG>
                 <VALUE>${row['patient tumor site of collection']}</VALUE>
-            </SAMPLE_ATTRIBUTE>
-            </py:if>
-            <py:if test="mandatorytest(row, 'patient tumor type', index)">
-            <SAMPLE_ATTRIBUTE>
-                <TAG>patient tumor type</TAG>
-                <VALUE>${row['patient tumor type']}</VALUE>
-            </SAMPLE_ATTRIBUTE>
-            </py:if>
-            <py:if test="mandatorytest(row, 'sample unique ID', index)">
-            <SAMPLE_ATTRIBUTE>
-                <TAG>sample unique ID</TAG>
-                <VALUE>${row['sample unique ID']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'engraftment host strain name')">

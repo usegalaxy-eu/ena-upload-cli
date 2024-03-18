@@ -73,22 +73,64 @@ def mandatorytest(row, column, index):
                 <VALUE>${row['lifestage']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
+            <py:if test="attributetest(row, 'relationship')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>relationship</TAG>
+                <VALUE>${row['relationship']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="attributetest(row, 'sample symbiont of')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>sample symbiont of</TAG>
+                <VALUE>${row['sample symbiont of']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="attributetest(row, 'symbiont')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>symbiont</TAG>
+                <VALUE>${row['symbiont']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="attributetest(row, 'sample collection method')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>sample collection method</TAG>
+                <VALUE>${row['sample collection method']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="attributetest(row, 'sample coordinator affiliation')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>sample coordinator affiliation</TAG>
+                <VALUE>${row['sample coordinator affiliation']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="attributetest(row, 'sample same as')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>sample same as</TAG>
+                <VALUE>${row['sample same as']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="attributetest(row, 'sample derived from')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>sample derived from</TAG>
+                <VALUE>${row['sample derived from']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
             <py:if test="mandatorytest(row, 'project name', index)">
             <SAMPLE_ATTRIBUTE>
                 <TAG>project name</TAG>
                 <VALUE>${row['project name']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'tolid')">
-            <SAMPLE_ATTRIBUTE>
-                <TAG>tolid</TAG>
-                <VALUE>${row['tolid']}</VALUE>
-            </SAMPLE_ATTRIBUTE>
-            </py:if>
             <py:if test="attributetest(row, 'barcoding center')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>barcoding center</TAG>
                 <VALUE>${row['barcoding center']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="attributetest(row, 'tolid')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>tolid</TAG>
+                <VALUE>${row['tolid']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="mandatorytest(row, 'collected_by', index)">
@@ -133,13 +175,6 @@ def mandatorytest(row, column, index):
             <SAMPLE_ATTRIBUTE>
                 <TAG>identified_by</TAG>
                 <VALUE>${row['identified_by']}</VALUE>
-            </SAMPLE_ATTRIBUTE>
-            </py:if>
-            <py:if test="attributetest(row, 'depth')">
-            <SAMPLE_ATTRIBUTE>
-                <TAG>depth</TAG>
-                <VALUE>${row['depth']}</VALUE>
-                <UNITS>m</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'elevation')">
@@ -187,58 +222,16 @@ def mandatorytest(row, column, index):
                 <UNITS>DD</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'sample collection device or method')">
-            <SAMPLE_ATTRIBUTE>
-                <TAG>sample collection device or method</TAG>
-                <VALUE>${row['sample collection device or method']}</VALUE>
-            </SAMPLE_ATTRIBUTE>
-            </py:if>
-            <py:if test="attributetest(row, 'sample derived from')">
-            <SAMPLE_ATTRIBUTE>
-                <TAG>sample derived from</TAG>
-                <VALUE>${row['sample derived from']}</VALUE>
-            </SAMPLE_ATTRIBUTE>
-            </py:if>
-            <py:if test="attributetest(row, 'sample same as')">
-            <SAMPLE_ATTRIBUTE>
-                <TAG>sample same as</TAG>
-                <VALUE>${row['sample same as']}</VALUE>
-            </SAMPLE_ATTRIBUTE>
-            </py:if>
-            <py:if test="attributetest(row, 'sample symbiont of')">
-            <SAMPLE_ATTRIBUTE>
-                <TAG>sample symbiont of</TAG>
-                <VALUE>${row['sample symbiont of']}</VALUE>
-            </SAMPLE_ATTRIBUTE>
-            </py:if>
             <py:if test="attributetest(row, 'sample coordinator')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>sample coordinator</TAG>
                 <VALUE>${row['sample coordinator']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'sample coordinator affiliation')">
-            <SAMPLE_ATTRIBUTE>
-                <TAG>sample coordinator affiliation</TAG>
-                <VALUE>${row['sample coordinator affiliation']}</VALUE>
-            </SAMPLE_ATTRIBUTE>
-            </py:if>
             <py:if test="mandatorytest(row, 'sex', index)">
             <SAMPLE_ATTRIBUTE>
                 <TAG>sex</TAG>
                 <VALUE>${row['sex']}</VALUE>
-            </SAMPLE_ATTRIBUTE>
-            </py:if>
-            <py:if test="attributetest(row, 'relationship')">
-            <SAMPLE_ATTRIBUTE>
-                <TAG>relationship</TAG>
-                <VALUE>${row['relationship']}</VALUE>
-            </SAMPLE_ATTRIBUTE>
-            </py:if>
-            <py:if test="attributetest(row, 'symbiont')">
-            <SAMPLE_ATTRIBUTE>
-                <TAG>symbiont</TAG>
-                <VALUE>${row['symbiont']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="mandatorytest(row, 'collecting institution', index)">
@@ -293,6 +286,13 @@ def mandatorytest(row, column, index):
             <SAMPLE_ATTRIBUTE>
                 <TAG>culture_or_strain_id</TAG>
                 <VALUE>${row['culture_or_strain_id']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="attributetest(row, 'depth')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>depth</TAG>
+                <VALUE>${row['depth']}</VALUE>
+                <UNITS>mm</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <SAMPLE_ATTRIBUTE>
