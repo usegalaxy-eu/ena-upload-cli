@@ -79,35 +79,10 @@ def mandatorytest(row, column, index):
                 <UNITS>DD</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="mandatorytest(row, 'Depth', index)">
-            <SAMPLE_ATTRIBUTE>
-                <TAG>Depth</TAG>
-                <VALUE>${row['Depth']}</VALUE>
-                <UNITS>m</UNITS>
-            </SAMPLE_ATTRIBUTE>
-            </py:if>
-            <py:if test="attributetest(row, 'Sample Collection Device')">
-            <SAMPLE_ATTRIBUTE>
-                <TAG>Sample Collection Device</TAG>
-                <VALUE>${row['Sample Collection Device']}</VALUE>
-            </SAMPLE_ATTRIBUTE>
-            </py:if>
             <py:if test="mandatorytest(row, 'Protocol Label', index)">
             <SAMPLE_ATTRIBUTE>
                 <TAG>Protocol Label</TAG>
                 <VALUE>${row['Protocol Label']}</VALUE>
-            </SAMPLE_ATTRIBUTE>
-            </py:if>
-            <py:if test="attributetest(row, 'Size Fraction Lower Threshold')">
-            <SAMPLE_ATTRIBUTE>
-                <TAG>Size Fraction Lower Threshold</TAG>
-                <VALUE>${row['Size Fraction Lower Threshold']}</VALUE>
-            </SAMPLE_ATTRIBUTE>
-            </py:if>
-            <py:if test="attributetest(row, 'Size Fraction Upper Threshold')">
-            <SAMPLE_ATTRIBUTE>
-                <TAG>Size Fraction Upper Threshold</TAG>
-                <VALUE>${row['Size Fraction Upper Threshold']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'Sample Status')">
@@ -120,6 +95,32 @@ def mandatorytest(row, column, index):
             <SAMPLE_ATTRIBUTE>
                 <TAG>Last Update Date</TAG>
                 <VALUE>${row['Last Update Date']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="attributetest(row, 'sample collection device')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>sample collection device</TAG>
+                <VALUE>${row['sample collection device']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="attributetest(row, 'sample storage device')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>sample storage device</TAG>
+                <VALUE>${row['sample storage device']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="attributetest(row, 'size-fraction lower threshold')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>size-fraction lower threshold</TAG>
+                <VALUE>${row['size-fraction lower threshold']}</VALUE>
+                <UNITS>µm</UNITS>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="attributetest(row, 'size-fraction upper threshold')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>size-fraction upper threshold</TAG>
+                <VALUE>${row['size-fraction upper threshold']}</VALUE>
+                <UNITS>µm</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="mandatorytest(row, 'project name', index)">
@@ -209,10 +210,10 @@ def mandatorytest(row, column, index):
                 <UNITS>µmol/L</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="mandatorytest(row, 'Temperature', index)">
+            <py:if test="mandatorytest(row, 'water temperature', index)">
             <SAMPLE_ATTRIBUTE>
-                <TAG>Temperature</TAG>
-                <VALUE>${row['Temperature']}</VALUE>
+                <TAG>water temperature</TAG>
+                <VALUE>${row['water temperature']}</VALUE>
                 <UNITS>ºC</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
@@ -233,6 +234,13 @@ def mandatorytest(row, column, index):
             <SAMPLE_ATTRIBUTE>
                 <TAG>Further Details</TAG>
                 <VALUE>${row['Further Details']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="attributetest(row, 'depth')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>depth</TAG>
+                <VALUE>${row['depth']}</VALUE>
+                <UNITS>mm</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <SAMPLE_ATTRIBUTE>

@@ -63,12 +63,6 @@ def mandatorytest(row, column, index):
                 <VALUE>${row['infect']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'protocol')">
-            <SAMPLE_ATTRIBUTE>
-                <TAG>protocol</TAG>
-                <VALUE>${row['protocol']}</VALUE>
-            </SAMPLE_ATTRIBUTE>
-            </py:if>
             <py:if test="mandatorytest(row, 'collection date', index)">
             <SAMPLE_ATTRIBUTE>
                 <TAG>collection date</TAG>
@@ -93,18 +87,6 @@ def mandatorytest(row, column, index):
                 <VALUE>${row['initial time point']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'growth condition')">
-            <SAMPLE_ATTRIBUTE>
-                <TAG>growth condition</TAG>
-                <VALUE>${row['growth condition']}</VALUE>
-            </SAMPLE_ATTRIBUTE>
-            </py:if>
-            <py:if test="attributetest(row, 'genotype')">
-            <SAMPLE_ATTRIBUTE>
-                <TAG>genotype</TAG>
-                <VALUE>${row['genotype']}</VALUE>
-            </SAMPLE_ATTRIBUTE>
-            </py:if>
             <py:if test="attributetest(row, 'sex')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>sex</TAG>
@@ -115,12 +97,6 @@ def mandatorytest(row, column, index):
             <SAMPLE_ATTRIBUTE>
                 <TAG>age</TAG>
                 <VALUE>${row['age']}</VALUE>
-            </SAMPLE_ATTRIBUTE>
-            </py:if>
-            <py:if test="attributetest(row, 'genetic modification')">
-            <SAMPLE_ATTRIBUTE>
-                <TAG>genetic modification</TAG>
-                <VALUE>${row['genetic modification']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'phenotype')">
@@ -237,6 +213,24 @@ def mandatorytest(row, column, index):
                 <VALUE>${row['block']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
+            <py:if test="attributetest(row, 'genotype')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>genotype</TAG>
+                <VALUE>${row['genotype']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="attributetest(row, 'genetic modification')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>genetic modification</TAG>
+                <VALUE>${row['genetic modification']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="attributetest(row, 'protocol')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>protocol</TAG>
+                <VALUE>${row['protocol']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
             <py:if test="attributetest(row, 'environmental stress')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>environmental stress</TAG>
@@ -247,6 +241,12 @@ def mandatorytest(row, column, index):
             <SAMPLE_ATTRIBUTE>
                 <TAG>environmental history</TAG>
                 <VALUE>${row['environmental history']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="attributetest(row, 'growth condition')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>growth condition</TAG>
+                <VALUE>${row['growth condition']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <SAMPLE_ATTRIBUTE>
