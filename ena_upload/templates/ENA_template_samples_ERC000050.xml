@@ -174,7 +174,7 @@ def mandatorytest(row, column, index):
                 <VALUE>${row['assembly quality']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="mandatorytest(row, 'investigation type', index)">
+            <py:if test="attributetest(row, 'investigation type')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>investigation type</TAG>
                 <VALUE>${row['investigation type']}</VALUE>
@@ -345,12 +345,6 @@ def mandatorytest(row, column, index):
             <SAMPLE_ATTRIBUTE>
                 <TAG>adapters</TAG>
                 <VALUE>${row['adapters']}</VALUE>
-            </SAMPLE_ATTRIBUTE>
-            </py:if>
-            <py:if test="mandatorytest(row, 'sequencing method', index)">
-            <SAMPLE_ATTRIBUTE>
-                <TAG>sequencing method</TAG>
-                <VALUE>${row['sequencing method']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'depth')">
