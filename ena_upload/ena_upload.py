@@ -39,6 +39,12 @@ class MyFTP_TLS(ftplib.FTP_TLS):
             conn = self.context.wrap_socket(conn,
                                             server_hostname=self.host,
                                             session=self.sock.session)
+            # fix reuse of ssl socket:
+            # https://stackoverflow.com/a/53456626/10971151 and
+            # https://stackoverflow.com/a/70830916/10971151
+            def custom_unwrap():
+                pass
+            conn.unwrap = custom_unwrap
         return conn, size
 
 
@@ -407,7 +413,7 @@ def submit_data(file_paths, password, webin_id):
 
     print("\nConnecting to ftp.webin2.ebi.ac.uk....")
     try:
-        ftps = MyFTP_TLS(timeout=10)
+        ftps = MyFTP_TLS(timeout=120)
         ftps.context.set_ciphers('HIGH:!DH:!aNULL')
         ftps.connect(ftp_host, port=21)
         ftps.auth()
