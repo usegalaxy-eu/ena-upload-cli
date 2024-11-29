@@ -29,7 +29,7 @@ After a successful submission, new tsv tables will be generated with the ENA acc
 
 ## Tool dependencies
 
-* python 3.7+ including following packages:
+* python 3.8+ including following packages:
   * Genshi
   * lxml
   * pandas
