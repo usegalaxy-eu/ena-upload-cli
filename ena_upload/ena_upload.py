@@ -941,6 +941,7 @@ def main():
                 # SettingWithCopyWarning causes false positive
                 # e.g at df.loc[:, 'file_checksum'] = md5
                 pd.options.mode.chained_assignment = None
+                df['file_checksum'] = df['file_checksum'].astype('string')
                 df.loc[:, 'file_checksum'] = md5
                 print("done.")
             elif check_file_checksum(df):
@@ -969,10 +970,12 @@ def main():
                 if pd.notna(row['scientific_name']) and pd.isna(row['taxon_id']):
                     # retrieve taxon id using scientific name
                     taxonID = get_taxon_id(row['scientific_name'])
+                    df['taxon_id'] = df['taxon_id'].astype('string')
                     df.loc[index, 'taxon_id'] = taxonID
                 elif pd.notna(row['taxon_id']) and pd.isna(row['scientific_name']):
                     # retrieve scientific name using taxon id
                     scientificName = get_scientific_name(row['taxon_id'])
+                    df['scientific_name'] = df['scientific_name'].astype('string')
                     df.loc[index, 'scientific_name'] = scientificName
                 elif pd.isna(row['taxon_id']) and pd.isna(row['scientific_name']):
                     sys.exit(
