@@ -111,4 +111,24 @@
     <INSTRUMENT_MODEL py:when="row.instrument_model.lower().strip() == 'ug 100'">UG 100</INSTRUMENT_MODEL>
     <INSTRUMENT_MODEL py:when="row.instrument_model.lower().strip() == 'unspecified'">unspecified</INSTRUMENT_MODEL>
 </ULTIMA>
+<VELA_DIAGNOSTICS py:when="row.platform.lower().strip() == 'vela_diagnostics'" py:choose="">
+    <INSTRUMENT_MODEL py:when="row.instrument_model.lower().strip() == 'sentosa sq301'">Sentosa SQ301</INSTRUMENT_MODEL>
+    <INSTRUMENT_MODEL py:when="row.instrument_model.lower().strip() == 'unspecified'">unspecified</INSTRUMENT_MODEL>
+</VELA_DIAGNOSTICS>
+<GENAPSYS py:when="row.platform.lower().strip() == 'genapsys'" py:choose="">
+    <INSTRUMENT_MODEL py:when="row.instrument_model.lower().strip() == 'genius'">GENIUS</INSTRUMENT_MODEL>
+    <INSTRUMENT_MODEL py:when="row.instrument_model.lower().strip() == 'genapsys sequencer'">Genapsys Sequencer</INSTRUMENT_MODEL>
+    <INSTRUMENT_MODEL py:when="row.instrument_model.lower().strip() == 'gs111'">GS111</INSTRUMENT_MODEL>
+    <INSTRUMENT_MODEL py:when="row.instrument_model.lower().strip() == 'unspecified'">unspecified</INSTRUMENT_MODEL>
+</GENAPSYS>
+<GENEMIND py:when="row.platform.lower().strip() == 'genemind'" py:choose="">
+    <INSTRUMENT_MODEL py:when="row.instrument_model.lower().strip() == 'genocare 1600'">GenoCare 1600</INSTRUMENT_MODEL>
+    <INSTRUMENT_MODEL py:when="row.instrument_model.lower().strip() == 'genolab m'">GenoLab M</INSTRUMENT_MODEL>
+    <INSTRUMENT_MODEL py:when="row.instrument_model.lower().strip() == 'fastaseq 300'">FASTASeq 300</INSTRUMENT_MODEL>
+    <INSTRUMENT_MODEL py:when="row.instrument_model.lower().strip() == 'unspecified'">unspecified</INSTRUMENT_MODEL>
+</GENEMIND>
+<TAPESTRI py:when="row.platform.lower().strip() == 'tapestri'" py:choose="">
+    <INSTRUMENT_MODEL py:when="row.instrument_model.lower().strip() == 'tapestri'">Tapestri</INSTRUMENT_MODEL>
+    <INSTRUMENT_MODEL py:when="row.instrument_model.lower().strip() == 'unspecified'">unspecified</INSTRUMENT_MODEL>
+</TAPESTRI>
 </PLATFORM>

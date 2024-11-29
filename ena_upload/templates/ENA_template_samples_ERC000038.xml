@@ -47,23 +47,69 @@ def mandatorytest(row, column, index):
                 <UNITS>DD</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="mandatorytest(row, 'Depth', index)">
-            <SAMPLE_ATTRIBUTE>
-                <TAG>Depth</TAG>
-                <VALUE>${row['Depth']}</VALUE>
-                <UNITS>m</UNITS>
-            </SAMPLE_ATTRIBUTE>
-            </py:if>
-            <py:if test="attributetest(row, 'Sample Collection Device')">
-            <SAMPLE_ATTRIBUTE>
-                <TAG>Sample Collection Device</TAG>
-                <VALUE>${row['Sample Collection Device']}</VALUE>
-            </SAMPLE_ATTRIBUTE>
-            </py:if>
             <py:if test="mandatorytest(row, 'Protocol Label', index)">
             <SAMPLE_ATTRIBUTE>
                 <TAG>Protocol Label</TAG>
                 <VALUE>${row['Protocol Label']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="attributetest(row, 'sample storage conditions')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>sample storage conditions</TAG>
+                <VALUE>${row['sample storage conditions']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="mandatorytest(row, 'aquaculture origin', index)">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>aquaculture origin</TAG>
+                <VALUE>${row['aquaculture origin']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="mandatorytest(row, 'shellfish total weight', index)">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>shellfish total weight</TAG>
+                <VALUE>${row['shellfish total weight']}</VALUE>
+                <UNITS>g</UNITS>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="mandatorytest(row, 'shellfish soft tissue weight', index)">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>shellfish soft tissue weight</TAG>
+                <VALUE>${row['shellfish soft tissue weight']}</VALUE>
+                <UNITS>g</UNITS>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="mandatorytest(row, 'shell length', index)">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>shell length</TAG>
+                <VALUE>${row['shell length']}</VALUE>
+                <UNITS>g</UNITS>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="mandatorytest(row, 'shell width', index)">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>shell width</TAG>
+                <VALUE>${row['shell width']}</VALUE>
+                <UNITS>g</UNITS>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="attributetest(row, 'shell markings')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>shell markings</TAG>
+                <VALUE>${row['shell markings']}</VALUE>
+                <UNITS>g</UNITS>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="attributetest(row, 'sample health state')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>sample health state</TAG>
+                <VALUE>${row['sample health state']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="attributetest(row, 'sample disease status')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>sample disease status</TAG>
+                <VALUE>${row['sample disease status']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="mandatorytest(row, 'collection date', index)">
@@ -114,24 +160,6 @@ def mandatorytest(row, column, index):
                 <VALUE>${row['Sampling Platform']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'storage conditions (fresh/frozen/other)')">
-            <SAMPLE_ATTRIBUTE>
-                <TAG>storage conditions (fresh/frozen/other)</TAG>
-                <VALUE>${row['storage conditions (fresh/frozen/other)']}</VALUE>
-            </SAMPLE_ATTRIBUTE>
-            </py:if>
-            <py:if test="attributetest(row, 'sample health state')">
-            <SAMPLE_ATTRIBUTE>
-                <TAG>sample health state</TAG>
-                <VALUE>${row['sample health state']}</VALUE>
-            </SAMPLE_ATTRIBUTE>
-            </py:if>
-            <py:if test="attributetest(row, 'sample disease status')">
-            <SAMPLE_ATTRIBUTE>
-                <TAG>sample disease status</TAG>
-                <VALUE>${row['sample disease status']}</VALUE>
-            </SAMPLE_ATTRIBUTE>
-            </py:if>
             <py:if test="attributetest(row, 'Marine Region')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>Marine Region</TAG>
@@ -150,40 +178,6 @@ def mandatorytest(row, column, index):
                 <VALUE>${row['age']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="mandatorytest(row, 'aquaculture origin', index)">
-            <SAMPLE_ATTRIBUTE>
-                <TAG>aquaculture origin</TAG>
-                <VALUE>${row['aquaculture origin']}</VALUE>
-            </SAMPLE_ATTRIBUTE>
-            </py:if>
-            <py:if test="mandatorytest(row, 'shellfish total weight', index)">
-            <SAMPLE_ATTRIBUTE>
-                <TAG>shellfish total weight</TAG>
-                <VALUE>${row['shellfish total weight']}</VALUE>
-                <UNITS>g</UNITS>
-            </SAMPLE_ATTRIBUTE>
-            </py:if>
-            <py:if test="mandatorytest(row, 'shellfish soft tissue weight', index)">
-            <SAMPLE_ATTRIBUTE>
-                <TAG>shellfish soft tissue weight</TAG>
-                <VALUE>${row['shellfish soft tissue weight']}</VALUE>
-                <UNITS>g</UNITS>
-            </SAMPLE_ATTRIBUTE>
-            </py:if>
-            <py:if test="mandatorytest(row, 'shell length', index)">
-            <SAMPLE_ATTRIBUTE>
-                <TAG>shell length</TAG>
-                <VALUE>${row['shell length']}</VALUE>
-                <UNITS>g</UNITS>
-            </SAMPLE_ATTRIBUTE>
-            </py:if>
-            <py:if test="mandatorytest(row, 'shell width', index)">
-            <SAMPLE_ATTRIBUTE>
-                <TAG>shell width</TAG>
-                <VALUE>${row['shell width']}</VALUE>
-                <UNITS>g</UNITS>
-            </SAMPLE_ATTRIBUTE>
-            </py:if>
             <py:if test="attributetest(row, 'adductor weight')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>adductor weight</TAG>
@@ -195,13 +189,6 @@ def mandatorytest(row, column, index):
             <SAMPLE_ATTRIBUTE>
                 <TAG>gonad weight</TAG>
                 <VALUE>${row['gonad weight']}</VALUE>
-                <UNITS>g</UNITS>
-            </SAMPLE_ATTRIBUTE>
-            </py:if>
-            <py:if test="attributetest(row, 'shell markings')">
-            <SAMPLE_ATTRIBUTE>
-                <TAG>shell markings</TAG>
-                <VALUE>${row['shell markings']}</VALUE>
                 <UNITS>g</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
@@ -222,6 +209,13 @@ def mandatorytest(row, column, index):
             <SAMPLE_ATTRIBUTE>
                 <TAG>chemical compound</TAG>
                 <VALUE>${row['chemical compound']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="mandatorytest(row, 'depth', index)">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>depth</TAG>
+                <VALUE>${row['depth']}</VALUE>
+                <UNITS>mm</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <SAMPLE_ATTRIBUTE>

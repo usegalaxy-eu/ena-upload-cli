@@ -39,16 +39,22 @@ def mandatorytest(row, column, index):
                 <VALUE>${row['dev_stage']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
+            <py:if test="attributetest(row, 'known pathogenicity')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>known pathogenicity</TAG>
+                <VALUE>${row['known pathogenicity']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="attributetest(row, 'sample storage conditions')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>sample storage conditions</TAG>
+                <VALUE>${row['sample storage conditions']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
             <py:if test="attributetest(row, 'subject exposure')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>subject exposure</TAG>
                 <VALUE>${row['subject exposure']}</VALUE>
-            </SAMPLE_ATTRIBUTE>
-            </py:if>
-            <py:if test="attributetest(row, 'subject exposure duration')">
-            <SAMPLE_ATTRIBUTE>
-                <TAG>subject exposure duration</TAG>
-                <VALUE>${row['subject exposure duration']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'travel-relation')">
@@ -101,10 +107,11 @@ def mandatorytest(row, column, index):
                 <VALUE>${row['geographic location (region and locality)']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'genotype')">
+            <py:if test="attributetest(row, 'subject exposure duration')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>genotype</TAG>
-                <VALUE>${row['genotype']}</VALUE>
+                <TAG>subject exposure duration</TAG>
+                <VALUE>${row['subject exposure duration']}</VALUE>
+                <UNITS>year</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'host disease outcome')">
@@ -162,12 +169,6 @@ def mandatorytest(row, column, index):
                 <VALUE>${row['collecting institution']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'sample storage conditions')">
-            <SAMPLE_ATTRIBUTE>
-                <TAG>sample storage conditions</TAG>
-                <VALUE>${row['sample storage conditions']}</VALUE>
-            </SAMPLE_ATTRIBUTE>
-            </py:if>
             <py:if test="mandatorytest(row, 'isolate', index)">
             <SAMPLE_ATTRIBUTE>
                 <TAG>isolate</TAG>
@@ -192,10 +193,10 @@ def mandatorytest(row, column, index):
                 <VALUE>${row['diagnostic method']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'known pathogenicity')">
+            <py:if test="attributetest(row, 'genotype')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>known pathogenicity</TAG>
-                <VALUE>${row['known pathogenicity']}</VALUE>
+                <TAG>genotype</TAG>
+                <VALUE>${row['genotype']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'isolation source non-host-associated')">

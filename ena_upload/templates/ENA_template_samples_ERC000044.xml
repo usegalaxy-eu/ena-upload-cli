@@ -39,12 +39,6 @@ def mandatorytest(row, column, index):
                 <VALUE>${row['subject exposure']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'subject exposure duration')">
-            <SAMPLE_ATTRIBUTE>
-                <TAG>subject exposure duration</TAG>
-                <VALUE>${row['subject exposure duration']}</VALUE>
-            </SAMPLE_ATTRIBUTE>
-            </py:if>
             <py:if test="attributetest(row, 'travel-relation')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>travel-relation</TAG>
@@ -85,6 +79,13 @@ def mandatorytest(row, column, index):
             <SAMPLE_ATTRIBUTE>
                 <TAG>geographic location (region and locality)</TAG>
                 <VALUE>${row['geographic location (region and locality)']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="attributetest(row, 'subject exposure duration')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>subject exposure duration</TAG>
+                <VALUE>${row['subject exposure duration']}</VALUE>
+                <UNITS>year</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'host disease status')">
