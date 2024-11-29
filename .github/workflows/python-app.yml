@@ -36,4 +36,4 @@ jobs:
         echo "password: ${{ secrets.ENA_PASSWORD }}" >> .secrets.yml
     - name: Test submission in --draft mode
       run: |
-        ena-upload-cli --action add --draft --dev --center ${{ secrets.ENA_CENTER }} --data ENA_TEST1.R1.fastq.gz ENA_TEST2.R1.fastq.gz ENA_TEST2.R2.fastq.gz --checklist ERC000033 --secret .secret.yml --xlsx example_tables/ENA_excel_example_ERC000033.xlsx 
+        ena-upload-cli --action add --draft --dev --center ${{ secrets.ENA_CENTER }} --data example_data/ENA_TEST1.R1.fastq.gz example_data/ENA_TEST2.R1.fastq.gz example_data/ENA_TEST2.R2.fastq.gz --checklist ERC000033 --secret .secret.yml --xlsx example_tables/ENA_excel_example_ERC000033.xlsx 
