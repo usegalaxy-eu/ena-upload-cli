@@ -18,7 +18,7 @@ def mandatorytest(row, column, index):
         <EXPERIMENT_REF refname="${experiment_alias}"/>
         <DATA_BLOCK>
             <FILES>
-                <py:for each="index, row in file_groups.get_group(alias).iterrows()">
+                <py:for each="index, row in file_groups.get_group((alias,)).iterrows()">
                 <py:if test="mandatorytest(row, 'file_type', index)">
                 <xi:include href="ENA_template_FILE.xml" />
                 </py:if>
