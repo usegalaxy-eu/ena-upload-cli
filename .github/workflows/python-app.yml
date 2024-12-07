@@ -40,5 +40,5 @@ jobs:
     - uses: actions/upload-artifact@v4
       name: Output XMLs for ${{ matrix.os }} Python ${{ matrix.os }}
       with:
-        name: ena-upload-cli_output_${{ matrix.os }}_python_${{ matrix.os }}
+        name: ena-upload-cli_output_${{ matrix.os }}_python_${{ matrix.version }}
         path: /tmp/*.xml
