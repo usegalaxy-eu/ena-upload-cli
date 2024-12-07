@@ -41,4 +41,4 @@ jobs:
       name: Output XMLs for ${{ matrix.os }} Python ${{ matrix.os }}
       with:
         name: ena-upload-cli_output_${{ matrix.os }}_python_${{ matrix.version }}
-        path: /tmp/*.xml
+        path: ${{ runner.temp }}/*.xml
