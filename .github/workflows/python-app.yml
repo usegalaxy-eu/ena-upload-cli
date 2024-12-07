@@ -37,3 +37,7 @@ jobs:
     - name: Test submission in --draft mode
       run: |
         ena-upload-cli --action add --draft --dev --center ${{ secrets.ENA_CENTER }} --data example_data/ENA_TEST1.R1.fastq.gz example_data/ENA_TEST2.R1.fastq.gz example_data/ENA_TEST2.R2.fastq.gz --checklist ERC000033 --secret .secret.yml --xlsx example_tables/ENA_excel_example_ERC000033.xlsx 
+    - uses: actions/upload-artifact@v4
+      with:
+        name: Output XMLs for ${{ matrix.os }} Python ${{ matrix.os }}
+        path: /tmp/*.xml
