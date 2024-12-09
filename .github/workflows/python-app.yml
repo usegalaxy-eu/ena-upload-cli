@@ -40,6 +40,7 @@ jobs:
     - name: Run Python to get temp directory
       run: |
         echo "TEMP_DIR=$(python -c 'import tempfile; print(tempfile.gettempdir())')" >> $GITHUB_ENV
+        echo ${{ env.TEMP_DIR}}
     - uses: actions/upload-artifact@v4
       name: Output XMLs for ${{ matrix.os }} Python ${{ matrix.os }}
       with:
