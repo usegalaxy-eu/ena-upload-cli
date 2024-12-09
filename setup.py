@@ -1,4 +1,5 @@
 from setuptools import setup
+from setuptools import find_packages
 from ena_upload._version import __version__
 
 with open("README.md", 'r') as f:
@@ -15,7 +16,7 @@ setup(
     author="Dilmurat Yusuf",
     author_email="bjoern.gruening@gmail.com",
     long_description_content_type='text/markdown',
-    packages=['ena_upload', 'ena_upload.json_parsing'],
+    packages= find_packages(),
     package_dir={'ena_upload': 'ena_upload'},
     package_data={
         'ena_upload': ['templates/*.xml', 'templates/*.xsd', 'json_parsing/json_schemas/*.json']
@@ -27,7 +28,7 @@ setup(
     classifiers=[
         "Operating System :: OS Independent"
     ],
-    python_requires='>=3.7',
+    python_requires='>=3.8',
     entry_points={
       'console_scripts': ["ena-upload-cli=ena_upload.ena_upload:main"]
     },

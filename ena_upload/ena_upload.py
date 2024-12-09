@@ -2,7 +2,7 @@
 __authors__ = ["Dilmurat Yusuf", "Bert Droesbeke"]
 __copyright__ = "Copyright 2020, Dilmurat Yusuf"
 __maintainer__ = "Bert Droesbeke"
-__email__ = "bedro@psb.vib-ugent.be"
+__email__ = "bert.droesbeke@vib.be"
 __license__ = "MIT"
 
 import os
@@ -64,13 +64,14 @@ def create_dataframe(schema_tables, action, dev, auto_action):
     schema_dataframe = {}
 
     for schema, table in schema_tables.items():
-        df = pd.read_csv(table, sep='\t', comment='#', dtype=str, na_values=["NA", "Na", "na", "NaN"])
+        # Read with string dtype for specific columns
+        dtype_dict = {'scientific_name': 'str', 'file_checksum': 'str'}
+        df = pd.read_csv(table, sep='\t', comment='#', dtype=dtype_dict, na_values=["NA", "Na", "na", "NaN"])
         df = df.dropna(how='all')
         df = check_columns(df, schema, action, dev, auto_action)
         schema_dataframe[schema] = df
 
     return schema_dataframe
-
 
 def extract_targets(action, schema_dataframe):
     ''' extract targeted rows in dataframe tagged by action and
@@ -97,15 +98,21 @@ def check_columns(df, schema, action, dev, auto_action):
     print(f"Check if all required columns are present in the {schema} table.")
     if schema == 'sample':
         optional_columns = ['accession', 'submission_date',
-                            'status', 'scientific_name', 'taxon_id']
+                          'status', 'scientific_name', 'taxon_id']
+        # Ensure string dtype for scientific_name
+        if 'scientific_name' not in df.columns:
+            df['scientific_name'] = pd.Series(dtype='str')
     elif schema == 'run':
         optional_columns = ['accession',
-                            'submission_date', 'status', 'file_checksum']
+                          'submission_date', 'status', 'file_checksum']
+        # Ensure string dtype for file_checksum
+        if 'file_checksum' not in df.columns:
+            df['file_checksum'] = pd.Series(dtype='str')
     else:
         optional_columns = ['accession', 'submission_date', 'status']
 
     for header in optional_columns:
-        if not header in df.columns:
+        if header not in df.columns:
             if header == 'status':
                 if auto_action:
                     for index, row in df.iterrows():
@@ -137,7 +144,7 @@ def check_columns(df, schema, action, dev, auto_action):
                     # according to scheme definition of submission
                     df[header] = str(action).upper()
             else:
-                df[header] = np.nan
+                df[header] = pd.Series(dtype='str')  # Initialize as string type
         else:
             if header == 'status':
                 df[header] = df[header].str.upper()
@@ -215,8 +222,8 @@ def generate_stream(schema, targets, Template, center, tool):
             targets.rename(columns={'file_format': 'file_type'}, inplace=True)
         file_attrib = ['file_name', 'file_type', 'file_checksum']
         other_attrib = ['alias', 'experiment_alias']
-        run_groups = targets[other_attrib].groupby(targets['alias'])
-        run_groups = run_groups.experiment_alias.unique()
+        # Create groups with alias as index
+        run_groups = targets[other_attrib].groupby('alias')['experiment_alias'].first().to_dict()
         file_groups = targets[file_attrib].groupby(targets['alias'])
 
         # param in generate() determined by the setup in template
