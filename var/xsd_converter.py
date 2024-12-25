@@ -73,7 +73,7 @@ def findkeys(node, query):
                 yield x
     
 def main():
-    mapping = { "run":["FILE"], "experiment":["LIBRARY_SELECTION", "LIBRARY_SOURCE", "LIBRARY_STRATEGY"], "common":["PLATFORM"]}
+    mapping = { "run":["FILE", "READ_TYPE"], "experiment":["LIBRARY_SELECTION", "LIBRARY_SOURCE", "LIBRARY_STRATEGY"], "common":["PLATFORM"]}
     template_names= ["ENA.project", "SRA.common", "SRA.experiment", "SRA.run", "SRA.sample", "SRA.study", "SRA.submission"]
     
     for template_name in template_names:
@@ -102,6 +102,9 @@ def main():
                 if template_block == "FILE":
                     query_dict = (list(findkeys(xsd_dict, 'filetype')))[0]
                     xml_tree = query_dict['simpleType']['restriction']['enumeration']
+                elif template_block == "READ_TYPE":
+                    query_dict = (list(findkeys(xsd_dict, 'READ_TYPE')))[0]
+                    xml_tree = query_dict['simpleType']['restriction']['enumeration']
                 elif template_block == "LIBRARY_SELECTION":
                     query_dict = (list(findkeys(xsd_dict, 'typeLibrarySelection')))[0]
                     xml_tree = query_dict['restriction']['enumeration']
@@ -120,8 +123,7 @@ def main():
 
                 else:
                     break
-                
-                
+
                 print(f"Parsed values: {xml_tree}")
 
                 # Loading the xml jinja2 template for samples
@@ -133,7 +135,6 @@ def main():
                 # Saving new xml template file
                 with open(f"ena_upload/templates/ENA_template_{template_block}.xml", "w") as fh:
                     fh.write(output_from_parsed_template)
-
 
 
 if __name__ == "__main__":
