@@ -1,9 +1,15 @@
+import argparse
+import os
+
 from lxml import etree
 from jinja2 import Environment, FileSystemLoader
 import requests
 from requests.adapters import HTTPAdapter
 from urllib3.util.retry import Retry
 import time
+
+from ena_upload.ena_upload import SmartFormatter
+
 
 def fetch_object(url):
     """
@@ -71,8 +77,13 @@ def findkeys(node, query):
         for j in node.values():
             for x in findkeys(j, query):
                 yield x
-    
+
+
 def main():
+    # turn to True to export in tests folder
+    is_test = False
+    export_path_prefix = 'tests/' if is_test else ''
+
     mapping = { "run":["FILE", "READ_TYPE"], "experiment":["LIBRARY_SELECTION", "LIBRARY_SOURCE", "LIBRARY_STRATEGY"], "common":["PLATFORM"]}
     template_names= ["ENA.project", "SRA.common", "SRA.experiment", "SRA.run", "SRA.sample", "SRA.study", "SRA.submission"]
     
@@ -83,7 +94,11 @@ def main():
         url = f"https://raw.githubusercontent.com/enasequence/webin-xml/master/src/main/resources/uk/ac/ebi/ena/sra/schema/{template_name}.xsd"
         response = fetch_object(url)
 
-        open(f'ena_upload/templates/{template_name}.xsd', 'wb').write(response)
+        if is_test:
+            os.makedirs(f'{export_path_prefix}ena_upload/templates', exist_ok=True)
+            open(f'{export_path_prefix}ena_upload/templates/{template_name}.xsd', 'wb').write(response)
+        else:
+            open(f'ena_upload/templates/{template_name}.xsd', 'wb').write(response)
     
         if template_name_sm in mapping.keys():
 
@@ -133,7 +148,7 @@ def main():
                 output_from_parsed_template = t.render(attributes=xml_tree)
 
                 # Saving new xml template file
-                with open(f"ena_upload/templates/ENA_template_{template_block}.xml", "w") as fh:
+                with open(f"{export_path_prefix}ena_upload/templates/ENA_template_{template_block}.xml", "w") as fh:
                     fh.write(output_from_parsed_template)
 
 
