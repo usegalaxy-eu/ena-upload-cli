@@ -57,12 +57,6 @@ def mandatorytest(row, column, index):
                 <VALUE>${row['collection date']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="mandatorytest(row, 'geographic location (country and/or sea)', index)">
-            <SAMPLE_ATTRIBUTE>
-                <TAG>geographic location (country and/or sea)</TAG>
-                <VALUE>${row['geographic location (country and/or sea)']}</VALUE>
-            </SAMPLE_ATTRIBUTE>
-            </py:if>
             <py:if test="attributetest(row, 'geographic location (region and locality)')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>geographic location (region and locality)</TAG>
@@ -85,6 +79,12 @@ def mandatorytest(row, column, index):
             <SAMPLE_ATTRIBUTE>
                 <TAG>mating_type</TAG>
                 <VALUE>${row['mating_type']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="mandatorytest(row, 'geographic location (country and/or sea)', index)">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>geographic location (country and/or sea)</TAG>
+                <VALUE>${row['geographic location (country and/or sea)']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="mandatorytest(row, 'host health state', index)">
@@ -153,6 +153,14 @@ def mandatorytest(row, column, index):
                 <VALUE>${row['strain']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
+            <py:for each="header, tag in extra_attributes.items()">
+            <py:if test="attributetest(row, header)">
+                <SAMPLE_ATTRIBUTE>
+                    <TAG>${tag}</TAG>
+                    <VALUE>${row[header]}</VALUE>
+                </SAMPLE_ATTRIBUTE>
+            </py:if>
+            </py:for>
             <SAMPLE_ATTRIBUTE>
                 <TAG>SUBMISSION_TOOL</TAG>
                 <VALUE>${tool_name}</VALUE>

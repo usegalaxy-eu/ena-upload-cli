@@ -257,7 +257,7 @@ def mandatorytest(row, column, index):
                 <VALUE>${row['field name']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'collection date')">
+            <py:if test="mandatorytest(row, 'collection date', index)">
             <SAMPLE_ATTRIBUTE>
                 <TAG>collection date</TAG>
                 <VALUE>${row['collection date']}</VALUE>
@@ -268,12 +268,6 @@ def mandatorytest(row, column, index):
                 <TAG>altitude</TAG>
                 <VALUE>${row['altitude']}</VALUE>
                 <UNITS>m</UNITS>
-            </SAMPLE_ATTRIBUTE>
-            </py:if>
-            <py:if test="attributetest(row, 'geographic location (country and/or sea)')">
-            <SAMPLE_ATTRIBUTE>
-                <TAG>geographic location (country and/or sea)</TAG>
-                <VALUE>${row['geographic location (country and/or sea)']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'geographic location (latitude)')">
@@ -365,6 +359,12 @@ def mandatorytest(row, column, index):
             <SAMPLE_ATTRIBUTE>
                 <TAG>sample storage duration</TAG>
                 <VALUE>${row['sample storage duration']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="mandatorytest(row, 'geographic location (country and/or sea)', index)">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>geographic location (country and/or sea)</TAG>
+                <VALUE>${row['geographic location (country and/or sea)']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'host disease status')">
@@ -995,6 +995,14 @@ def mandatorytest(row, column, index):
                 <UNITS>%</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
+            <py:for each="header, tag in extra_attributes.items()">
+            <py:if test="attributetest(row, header)">
+                <SAMPLE_ATTRIBUTE>
+                    <TAG>${tag}</TAG>
+                    <VALUE>${row[header]}</VALUE>
+                </SAMPLE_ATTRIBUTE>
+            </py:if>
+            </py:for>
             <SAMPLE_ATTRIBUTE>
                 <TAG>SUBMISSION_TOOL</TAG>
                 <VALUE>${tool_name}</VALUE>

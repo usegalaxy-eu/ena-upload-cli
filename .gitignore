@@ -3,3 +3,5 @@
 build/
 ena_upload_cli.egg-info/
 __pycache__/
+tests/ena_upload/
+.idea/
