@@ -223,12 +223,6 @@ def mandatorytest(row, column, index):
                 <UNITS>m</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="mandatorytest(row, 'geographic location (country and/or sea)', index)">
-            <SAMPLE_ATTRIBUTE>
-                <TAG>geographic location (country and/or sea)</TAG>
-                <VALUE>${row['geographic location (country and/or sea)']}</VALUE>
-            </SAMPLE_ATTRIBUTE>
-            </py:if>
             <py:if test="mandatorytest(row, 'geographic location (latitude)', index)">
             <SAMPLE_ATTRIBUTE>
                 <TAG>geographic location (latitude)</TAG>
@@ -285,6 +279,12 @@ def mandatorytest(row, column, index):
             <SAMPLE_ATTRIBUTE>
                 <TAG>size fraction selected</TAG>
                 <VALUE>${row['size fraction selected']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="mandatorytest(row, 'geographic location (country and/or sea)', index)">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>geographic location (country and/or sea)</TAG>
+                <VALUE>${row['geographic location (country and/or sea)']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'source material identifiers')">
@@ -384,6 +384,14 @@ def mandatorytest(row, column, index):
                 <UNITS>mm</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
+            <py:for each="header, tag in extra_attributes.items()">
+            <py:if test="attributetest(row, header)">
+                <SAMPLE_ATTRIBUTE>
+                    <TAG>${tag}</TAG>
+                    <VALUE>${row[header]}</VALUE>
+                </SAMPLE_ATTRIBUTE>
+            </py:if>
+            </py:for>
             <SAMPLE_ATTRIBUTE>
                 <TAG>SUBMISSION_TOOL</TAG>
                 <VALUE>${tool_name}</VALUE>
