@@ -17,70 +17,70 @@ def mandatorytest(row, column, index):
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:noNamespaceSchemaLocation="ftp://ftp.sra.ebi.ac.uk/meta/xsd/sra_1_6/SRA.experiment.xsd">
     <py:for each="index, row in df.iterrows()">
-        <EXPERIMENT alias="${row.alias}" center_name="${center}">
-            <py:if test="mandatorytest(row, 'title', index)">
-            <TITLE>${row.title}</TITLE>
+    <EXPERIMENT alias="${row.alias}" center_name="${center}">
+        <py:if test="mandatorytest(row, 'title', index)">
+        <TITLE>${row.title}</TITLE>
+        </py:if>
+        <py:if test="mandatorytest(row, 'study_alias', index)">
+        <STUDY_REF refname="${row.study_alias}"/>
+        </py:if>
+        <DESIGN>
+            <py:if test="mandatorytest(row, 'design_description', index)">
+            <DESIGN_DESCRIPTION>${row.design_description}</DESIGN_DESCRIPTION>
             </py:if>
-            <py:if test="mandatorytest(row, 'study_alias', index)">
-            <STUDY_REF refname="${row.study_alias}"/>
+            <py:if test="attributetest(row, 'spot_descriptor')">
+            <SPOT_DESCRIPTOR>${row.spot_descriptor}</SPOT_DESCRIPTOR>
             </py:if>
-            <DESIGN>
-                <py:if test="mandatorytest(row, 'design_description', index)">
-                <DESIGN_DESCRIPTION>${row.design_description}</DESIGN_DESCRIPTION>
-                </py:if>
-                <py:if test="attributetest(row, 'spot_descriptor')">
-                <SPOT_DESCRIPTOR>${row.spot_descriptor}</SPOT_DESCRIPTOR>
-                </py:if>
-                <py:if test="mandatorytest(row, 'sample_alias', index)">
-                <SAMPLE_DESCRIPTOR refname="${row.sample_alias}"/>
-                </py:if>
-                <LIBRARY_DESCRIPTOR>
-                    <py:if test="attributetest(row, 'library_name')">
-                    <LIBRARY_NAME>${row.library_name}</LIBRARY_NAME>
-                    </py:if>
-                    <py:if test="mandatorytest(row, 'library_strategy', index)">
-                    <xi:include href="ENA_template_LIBRARY_STRATEGY.xml" />
-                    </py:if>
-                    <py:if test="mandatorytest(row, 'library_source', index)">
-                    <xi:include href="ENA_template_LIBRARY_SOURCE.xml" />
-                    </py:if>
-                    <py:if test="mandatorytest(row, 'library_selection', index)">
-                    <xi:include href="ENA_template_LIBRARY_SELECTION.xml" />
-                    </py:if>
-                    <py:if test="mandatorytest(row, 'library_layout', index)">
-                    <LIBRARY_LAYOUT py:choose="">
-                        <PAIRED py:when="row.library_layout.lower().strip() == 'paired'" NOMINAL_LENGTH="${int(row.insert_size)}" />
-                        <SINGLE py:when="row.library_layout.lower().strip() == 'single'" />
-                    </LIBRARY_LAYOUT>
-                    </py:if>
-                    <py:if test="attributetest(row, 'library_construction_protocol')">
-                    <LIBRARY_CONSTRUCTION_PROTOCOL>${row.library_construction_protocol}</LIBRARY_CONSTRUCTION_PROTOCOL>
-                    </py:if>
-                </LIBRARY_DESCRIPTOR>
-            </DESIGN>
-            <py:if test="mandatorytest(row, 'platform', index)">
-            <py:if test="mandatorytest(row, 'instrument_model', index)">
-            <xi:include href="ENA_template_PLATFORM.xml" />
+            <py:if test="mandatorytest(row, 'sample_alias', index)">
+            <SAMPLE_DESCRIPTOR refname="${row.sample_alias}"/>
             </py:if>
-            </py:if>
-            <EXPERIMENT_ATTRIBUTES>
-                <py:for each="header, tag in extra_attributes.items()">
-                <py:if test="attributetest(row, header)">
-                <EXPERIMENT_ATTRIBUTE>
-                        <TAG>${tag}</TAG>
-                        <VALUE>${row[header]}</VALUE>
-                </EXPERIMENT_ATTRIBUTE>
+            <LIBRARY_DESCRIPTOR>
+                <py:if test="attributetest(row, 'library_name')">
+                <LIBRARY_NAME>${row.library_name}</LIBRARY_NAME>
                 </py:if>
-                </py:for>
-                <EXPERIMENT_ATTRIBUTE>
-                    <TAG>SUBMISSION_TOOL</TAG>
-                    <VALUE>${tool_name}</VALUE>
-                </EXPERIMENT_ATTRIBUTE>
-                <EXPERIMENT_ATTRIBUTE>
-                    <TAG>SUBMISSION_TOOL_VERSION</TAG>
-                    <VALUE>${tool_version}</VALUE>
-                </EXPERIMENT_ATTRIBUTE>
-            </EXPERIMENT_ATTRIBUTES>
-        </EXPERIMENT>
+                <py:if test="mandatorytest(row, 'library_strategy', index)">
+                <xi:include href="ENA_template_LIBRARY_STRATEGY.xml" />
+                </py:if>
+                <py:if test="mandatorytest(row, 'library_source', index)">
+                <xi:include href="ENA_template_LIBRARY_SOURCE.xml" />
+                </py:if>
+                <py:if test="mandatorytest(row, 'library_selection', index)">
+                <xi:include href="ENA_template_LIBRARY_SELECTION.xml" />
+                </py:if>
+                <py:if test="mandatorytest(row, 'library_layout', index)">
+                <LIBRARY_LAYOUT py:choose="">
+                    <PAIRED py:when="row.library_layout.lower().strip() == 'paired'" NOMINAL_LENGTH="${int(row.insert_size)}" />
+                    <SINGLE py:when="row.library_layout.lower().strip() == 'single'" />
+                </LIBRARY_LAYOUT>
+                </py:if>
+                <py:if test="attributetest(row, 'library_construction_protocol')">
+                <LIBRARY_CONSTRUCTION_PROTOCOL>${row.library_construction_protocol}</LIBRARY_CONSTRUCTION_PROTOCOL>
+                </py:if>
+            </LIBRARY_DESCRIPTOR>
+        </DESIGN>
+        <py:if test="mandatorytest(row, 'platform', index)">
+        <py:if test="mandatorytest(row, 'instrument_model', index)">
+        <xi:include href="ENA_template_PLATFORM.xml" />
+        </py:if>
+        </py:if>
+        <EXPERIMENT_ATTRIBUTES>
+            <py:for each="header, tag in extra_attributes.items()">
+            <py:if test="attributetest(row, header)">
+            <EXPERIMENT_ATTRIBUTE>
+                <TAG>${tag}</TAG>
+                <VALUE>${row[header]}</VALUE>
+            </EXPERIMENT_ATTRIBUTE>
+            </py:if>
+            </py:for>
+            <EXPERIMENT_ATTRIBUTE>
+                <TAG>SUBMISSION_TOOL</TAG>
+                <VALUE>${tool_name}</VALUE>
+            </EXPERIMENT_ATTRIBUTE>
+            <EXPERIMENT_ATTRIBUTE>
+                <TAG>SUBMISSION_TOOL_VERSION</TAG>
+                <VALUE>${tool_version}</VALUE>
+            </EXPERIMENT_ATTRIBUTE>
+        </EXPERIMENT_ATTRIBUTES>
+    </EXPERIMENT>
     </py:for>
 </EXPERIMENT_SET>
