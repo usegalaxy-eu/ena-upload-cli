@@ -109,6 +109,7 @@ The command line tool will automatically fetch the correct scientific name based
 | sample_alias_5 | sample_title_3 | 2697049  | Severe acute respiratory syndrome coronavirus 2 | covid-19    | sample_description_2 | 2008-01-24      | Belgium                                  |
 
 #### Custom attributes
+
 Additional custom attributes (i.e. attributes not specified in the ERC checklist) can be added to the sample table by adding columns which headers are named like `sample_attribute[attribute_name]`; for example `sample_attribute[treatment]`, `sample_attribute[age]`... 
 
 | alias          | ...            | sample_attribute[treatment] | sample_attribute[age]
@@ -125,6 +126,7 @@ If you want to submit viral samples you can use the [ENA virus pathogen](https:/
 Please check out the [template](https://github.com/ELIXIR-Belgium/ENA-metadata-templates) of your checklist to discover which attributes are mandatory for the study, experiment and run ENA object.
 
 #### Study and Experiment custom attributes
+
 Similarly to samples, additional custom attributes can be added to the experiment and study tables by adding columns which headers are named like `experiment_attribute[attribute_name]` and `study_attribute[attribute_name]` in the experiment and study tables, respectively.
 
 ### Dev instance
@@ -241,7 +243,7 @@ By default the updated tables after submission will have the action `added` in t
 
 * **Release submission**
   ```
-  ena-upload-cli --action release --center'your_center_name' --study example_tables/ENA_template_studies_release.tsv --dev --secret .secret.yml 
+  ena-upload-cli --action release --center 'your_center_name' --study example_tables/ENA_template_studies_release.tsv --dev --secret .secret.yml 
   ```
 
 > **Note for Windows users:** Windows, by default, does not support wildcard expansion in command-line arguments.
