@@ -163,10 +163,10 @@ def mandatorytest(row, column, index):
             </py:if>
             <py:for each="header, tag in extra_attributes.items()">
             <py:if test="attributetest(row, header)">
-                <SAMPLE_ATTRIBUTE>
-                    <TAG>${tag}</TAG>
-                    <VALUE>${row[header]}</VALUE>
-                </SAMPLE_ATTRIBUTE>
+            <SAMPLE_ATTRIBUTE>
+                <TAG>${tag}</TAG>
+                <VALUE>${row[header]}</VALUE>
+            </SAMPLE_ATTRIBUTE>
             </py:if>
             </py:for>
             <SAMPLE_ATTRIBUTE>
