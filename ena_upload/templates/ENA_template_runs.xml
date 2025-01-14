@@ -47,14 +47,6 @@ def mandatorytest(row, column, index):
             </FILES>
         </DATA_BLOCK>
         <RUN_ATTRIBUTES>
-            <py:for each="header, tag in extra_attributes.items()">
-                <py:if test="attributetest(row, header)">
-                <RUN_ATTRIBUTE>
-                    <TAG>${tag}</TAG>
-                    <VALUE>${row[header]}</VALUE>
-                </RUN_ATTRIBUTE>
-                </py:if>
-            </py:for>
             <RUN_ATTRIBUTE>
                 <TAG>SUBMISSION_TOOL</TAG>
                 <VALUE>${tool_name}</VALUE>
