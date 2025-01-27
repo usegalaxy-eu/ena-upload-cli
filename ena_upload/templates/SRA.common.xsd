@@ -967,6 +967,7 @@
             <xs:enumeration value="Illumina MiSeq"/>
             <xs:enumeration value="Illumina MiniSeq"/>
             <xs:enumeration value="Illumina NovaSeq X"/>
+            <xs:enumeration value="Illumina NovaSeq X Plus"/>
             <xs:enumeration value="Illumina NovaSeq 6000"/>          
             <xs:enumeration value="NextSeq 500"/>  
             <xs:enumeration value="NextSeq 550"/>
@@ -1064,6 +1065,7 @@
             <xs:enumeration value="DNBSEQ-G400"/>
             <xs:enumeration value="DNBSEQ-G50"/>
             <xs:enumeration value="DNBSEQ-G400 FAST"/>
+            <xs:enumeration value="DNBSEQ-T10x4RS"/>
             <xs:enumeration value="unspecified"/>
         </xs:restriction>
     </xs:simpleType>
