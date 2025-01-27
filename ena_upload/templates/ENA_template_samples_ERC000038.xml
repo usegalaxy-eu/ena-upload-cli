@@ -118,12 +118,6 @@ def mandatorytest(row, column, index):
                 <VALUE>${row['collection date']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="mandatorytest(row, 'geographic location (country and/or sea)', index)">
-            <SAMPLE_ATTRIBUTE>
-                <TAG>geographic location (country and/or sea)</TAG>
-                <VALUE>${row['geographic location (country and/or sea)']}</VALUE>
-            </SAMPLE_ATTRIBUTE>
-            </py:if>
             <py:if test="mandatorytest(row, 'broad-scale environmental context', index)">
             <SAMPLE_ATTRIBUTE>
                 <TAG>broad-scale environmental context</TAG>
@@ -197,6 +191,12 @@ def mandatorytest(row, column, index):
                 <TAG>toxin burden</TAG>
                 <VALUE>${row['toxin burden']}</VALUE>
                 <UNITS>mg</UNITS>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="mandatorytest(row, 'geographic location (country and/or sea)', index)">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>geographic location (country and/or sea)</TAG>
+                <VALUE>${row['geographic location (country and/or sea)']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'treatment agent')">

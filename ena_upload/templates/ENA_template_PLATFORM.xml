@@ -26,6 +26,7 @@
     <INSTRUMENT_MODEL py:when="row.instrument_model.lower().strip() == 'illumina miseq'">Illumina MiSeq</INSTRUMENT_MODEL>
     <INSTRUMENT_MODEL py:when="row.instrument_model.lower().strip() == 'illumina miniseq'">Illumina MiniSeq</INSTRUMENT_MODEL>
     <INSTRUMENT_MODEL py:when="row.instrument_model.lower().strip() == 'illumina novaseq x'">Illumina NovaSeq X</INSTRUMENT_MODEL>
+    <INSTRUMENT_MODEL py:when="row.instrument_model.lower().strip() == 'illumina novaseq x plus'">Illumina NovaSeq X Plus</INSTRUMENT_MODEL>
     <INSTRUMENT_MODEL py:when="row.instrument_model.lower().strip() == 'illumina novaseq 6000'">Illumina NovaSeq 6000</INSTRUMENT_MODEL>
     <INSTRUMENT_MODEL py:when="row.instrument_model.lower().strip() == 'nextseq 500'">NextSeq 500</INSTRUMENT_MODEL>
     <INSTRUMENT_MODEL py:when="row.instrument_model.lower().strip() == 'nextseq 550'">NextSeq 550</INSTRUMENT_MODEL>
@@ -101,6 +102,7 @@
     <INSTRUMENT_MODEL py:when="row.instrument_model.lower().strip() == 'dnbseq-g400'">DNBSEQ-G400</INSTRUMENT_MODEL>
     <INSTRUMENT_MODEL py:when="row.instrument_model.lower().strip() == 'dnbseq-g50'">DNBSEQ-G50</INSTRUMENT_MODEL>
     <INSTRUMENT_MODEL py:when="row.instrument_model.lower().strip() == 'dnbseq-g400 fast'">DNBSEQ-G400 FAST</INSTRUMENT_MODEL>
+    <INSTRUMENT_MODEL py:when="row.instrument_model.lower().strip() == 'dnbseq-t10x4rs'">DNBSEQ-T10x4RS</INSTRUMENT_MODEL>
     <INSTRUMENT_MODEL py:when="row.instrument_model.lower().strip() == 'unspecified'">unspecified</INSTRUMENT_MODEL>
 </DNBSEQ>
 <ELEMENT py:when="row.platform.lower().strip() == 'element'" py:choose="">
