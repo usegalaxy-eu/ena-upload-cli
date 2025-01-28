@@ -1,4 +1,4 @@
-alias	experiment_alias	file_name	file_type read_type
+alias	experiment_alias	file_name	file_type	read_type
 run_alias_1a	experiment_alias_7a	ENA_TEST2.R1.fastq.gz	fastq	paired
 run_alias_1a	experiment_alias_7a	ENA_TEST2.R2.fastq.gz	fastq	paired
 run_alias_1a	experiment_alias_7a	ENA_TEST2.I1.fastq.gz	fastq	umi_barcode,cell_barcode
