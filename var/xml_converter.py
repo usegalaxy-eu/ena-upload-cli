@@ -34,6 +34,9 @@ def fetching_checklists():
 
 
 def main():
+    is_test = False
+    export_path_prefix = 'tests/' if is_test else ''
+
     for response_object in fetching_checklists():
         checklist = response_object['accession']
         print(f"Parsing {checklist}")
@@ -74,7 +77,8 @@ def main():
         output_from_parsed_template = t.render(attributes=xml_tree)
 
         # Saving new xml template file
-        with open(f"ena_upload/templates/ENA_template_samples_{checklist}.xml", "wb") as fh:
+
+        with open(f"{export_path_prefix}ena_upload/templates/ENA_template_samples_{checklist}.xml", "wb") as fh:
             fh.write(output_from_parsed_template.encode('utf-8'))
 
 

@@ -1,0 +1,9 @@
+<py:choose xmlns:py="http://genshi.edgewall.org/" test="">
+<READ_TYPE py:when="rtype.strip().lower() == 'single'">single</READ_TYPE>
+<READ_TYPE py:when="rtype.strip().lower() == 'paired'">paired</READ_TYPE>
+<READ_TYPE py:when="rtype.strip().lower() == 'cell_barcode'">cell_barcode</READ_TYPE>
+<READ_TYPE py:when="rtype.strip().lower() == 'umi_barcode'">umi_barcode</READ_TYPE>
+<READ_TYPE py:when="rtype.strip().lower() == 'feature_barcode'">feature_barcode</READ_TYPE>
+<READ_TYPE py:when="rtype.strip().lower() == 'sample_barcode'">sample_barcode</READ_TYPE>
+<READ_TYPE py:when="rtype.strip().lower() == 'spatial_barcode'">spatial_barcode</READ_TYPE>
+</py:choose>
