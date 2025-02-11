@@ -243,6 +243,14 @@ def mandatorytest(row, column, index):
                 <UNITS>mm</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
+            <py:for each="header, tag in extra_attributes.items()">
+            <py:if test="attributetest(row, header)">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>${tag}</TAG>
+                <VALUE>${row[header]}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            </py:for>
             <SAMPLE_ATTRIBUTE>
                 <TAG>SUBMISSION_TOOL</TAG>
                 <VALUE>${tool_name}</VALUE>

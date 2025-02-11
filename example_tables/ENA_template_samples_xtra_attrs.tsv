@@ -1,0 +1,3 @@
+alias	title	scientific_name	sample_description	collection date	geographic location (country and/or sea)	sample_attribute[age]	sample_attribute[treatment]
+sample_alias_4	sample_title_1	homo sapiens	sample_description_1	2020-10-11	Argentina	2 days	treated
+sample_alias_5	sample_title_2	human metagenome	sample_description_2	2008-01-24	Belgium	2 days	untreated

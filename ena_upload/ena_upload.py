@@ -214,6 +214,16 @@ def generate_stream(schema, targets, Template, center, tool):
     :return: stream
     '''
 
+    # find all columns in targets which column header matches the pattern attribute[(.*)], extract the group
+    # and return a dict[header] = group
+    # eg for header run_attribute[sex] => {'run_attribute[sex]': 'sex'}
+    pattern = re.compile(rf"{schema}_attribute\[(.*)\]")
+    extra_attributes = {}
+    for column in targets.columns:
+        match = re.match(pattern, column)
+        if match:
+            extra_attributes[column] = match.group(1)
+
     if schema == 'run':
         # These attributes are required for rendering
         # the run xml templates
@@ -221,6 +231,11 @@ def generate_stream(schema, targets, Template, center, tool):
         if 'file_format' in targets:
             targets.rename(columns={'file_format': 'file_type'}, inplace=True)
         file_attrib = ['file_name', 'file_type', 'file_checksum']
+        if 'read_type' in targets:
+            file_attrib.append('read_type')
+        if 'read_label' in targets:
+            file_attrib.append('read_label')
+
         other_attrib = ['alias', 'experiment_alias']
         # Create groups with alias as index
         run_groups = targets[other_attrib].groupby('alias')['experiment_alias'].first().to_dict()
@@ -230,11 +245,14 @@ def generate_stream(schema, targets, Template, center, tool):
         stream = Template.generate(run_groups=run_groups,
                                    file_groups=file_groups,
                                    center=center,
+                                   extra_attributes=extra_attributes,
                                    tool_name=tool['tool_name'],
                                    tool_version=tool['tool_version'])
     else:
         stream = Template.generate(
-            df=targets, center=center, tool_name=tool['tool_name'], tool_version=tool['tool_version'])
+            df=targets, center=center, extra_attributes=extra_attributes,
+            tool_name=tool['tool_name'], tool_version=tool['tool_version']
+        )
 
     return stream
 
@@ -982,7 +1000,7 @@ def main():
                 if pd.notna(row['scientific_name']) and pd.isna(row['taxon_id']):
                     # retrieve taxon id using scientific name
                     taxonID = get_taxon_id(row['scientific_name'])
-                    df.loc[index, 'taxon_id'] = taxonID
+                    df.loc[index, 'taxon_id'] = int(taxonID)
                 elif pd.notna(row['taxon_id']) and pd.isna(row['scientific_name']):
                     # retrieve scientific name using taxon id
                     scientificName = get_scientific_name(row['taxon_id'])

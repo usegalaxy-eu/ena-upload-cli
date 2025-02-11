@@ -1,0 +1,7 @@
+<py:choose xmlns:py="http://genshi.edgewall.org/" test="">
+{%- for value in attributes %}
+{%- if value != '' %}
+<READ_TYPE py:when="rtype.strip().lower() == '{{value | lower}}'">{{value}}</READ_TYPE>
+{%- endif %}
+{%- endfor %}
+</py:choose>

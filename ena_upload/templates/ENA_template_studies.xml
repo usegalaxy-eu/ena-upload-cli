@@ -45,6 +45,14 @@ def mandatorytest(row, column, index):
         </STUDY_LINKS>
         </py:if>
         <STUDY_ATTRIBUTES>
+            <py:for each="header, tag in extra_attributes.items()">
+            <py:if test="attributetest(row, header)">
+            <STUDY_ATTRIBUTE>
+                <TAG>${tag}</TAG>
+                <VALUE>${row[header]}</VALUE>
+            </STUDY_ATTRIBUTE>
+            </py:if>
+            </py:for>
             <STUDY_ATTRIBUTE>
                 <TAG>SUBMISSION_TOOL</TAG>
                 <VALUE>${tool_name}</VALUE>

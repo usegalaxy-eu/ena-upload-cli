@@ -108,6 +108,15 @@ The command line tool will automatically fetch the correct scientific name based
 | sample_alias_4 | sample_title_2 | 2697049  | Severe acute respiratory syndrome coronavirus 2 | covid-19    | sample_description_1 | 2020-10-11      | Argentina                                |
 | sample_alias_5 | sample_title_3 | 2697049  | Severe acute respiratory syndrome coronavirus 2 | covid-19    | sample_description_2 | 2008-01-24      | Belgium                                  |
 
+#### Custom attributes
+
+Additional custom attributes (i.e. attributes not specified in the ERC checklist) can be added to the sample table by adding columns which headers are named like `sample_attribute[attribute_name]`; for example `sample_attribute[treatment]`, `sample_attribute[age]`... An example tsv file using custom attributes can be found in [example_tables/ENA_template_samples_xtra_attrs.tsv](/example_tables/ENA_template_samples_xtra_attrs.tsv). The same syntax is also applicable for xlsx input files.
+
+| alias          | ...            | sample_attribute[treatment] | sample_attribute[age]
+|----------------|----------------|---------------------|------------------------|
+| sample_alias_4 | ...            | treated             | 2 days
+| sample_alias_5 | ...            | untreated           | 2 days
+
 #### Viral submissions
 
 If you want to submit viral samples you can use the [ENA virus pathogen](https://www.ebi.ac.uk/ena/browser/view/ERC000033) checklist by adding `ERC000033` to the checklist parameter. Check out our [viral example command](#test-the-tool) as demonstration. Please use the [ENA virus pathogen](https://github.com/ELIXIR-Belgium/ENA-metadata-templates/tree/main/templates/ERC000033) checklist in our template repo to know what is allowed/possible in the `Controlled vocabulary`fields.
@@ -116,6 +125,13 @@ If you want to submit viral samples you can use the [ENA virus pathogen](https:/
 
 Please check out the [template](https://github.com/ELIXIR-Belgium/ENA-metadata-templates) of your checklist to discover which attributes are mandatory for the study, experiment and run ENA object.
 
+#### Read info run attributes
+
+Using `read_type`	and `read_label` as header in the columns of ENA run objects will allow you to set information about reads. Values are listed in a comma separated way, without spaces. `read_type` has a controlled vocabulary, which can be found in the [ENA Documentation](https://ena-docs.readthedocs.io/en/latest/submit/reads/webin-cli.html#json-manifest-file-format). An example tsv file using these attributes can be found in [example_tables/ENA_template_runs_read_info.tsv](/example_tables/ENA_template_runs_read_info.tsv). The same syntax is also applicable for xlsx input files.
+
+#### Study and experiment custom attributes
+
+Similarly to samples, additional custom attributes can be added to the experiment and study tables by adding columns which headers are named like `experiment_attribute[attribute_name]` and `study_attribute[attribute_name]` in the experiment and study tables, respectively.
 
 ### Dev instance
 
@@ -231,7 +247,7 @@ By default the updated tables after submission will have the action `added` in t
 
 * **Release submission**
   ```
-  ena-upload-cli --action release --center'your_center_name' --study example_tables/ENA_template_studies_release.tsv --dev --secret .secret.yml 
+  ena-upload-cli --action release --center 'your_center_name' --study example_tables/ENA_template_studies_release.tsv --dev --secret .secret.yml 
   ```
 
 > **Note for Windows users:** Windows, by default, does not support wildcard expansion in command-line arguments.
