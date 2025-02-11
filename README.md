@@ -110,7 +110,7 @@ The command line tool will automatically fetch the correct scientific name based
 
 #### Custom attributes
 
-Additional custom attributes (i.e. attributes not specified in the ERC checklist) can be added to the sample table by adding columns which headers are named like `sample_attribute[attribute_name]`; for example `sample_attribute[treatment]`, `sample_attribute[age]`... 
+Additional custom attributes (i.e. attributes not specified in the ERC checklist) can be added to the sample table by adding columns which headers are named like `sample_attribute[attribute_name]`; for example `sample_attribute[treatment]`, `sample_attribute[age]`... An example tsv file using custom attributes can be found in [example_tables/ENA_template_samples_xtra_attrs.tsv](/example_tables/ENA_template_samples_xtra_attrs.tsv). The same syntax is also applicable for xlsx input files.
 
 | alias          | ...            | sample_attribute[treatment] | sample_attribute[age]
 |----------------|----------------|---------------------|------------------------|
@@ -125,7 +125,11 @@ If you want to submit viral samples you can use the [ENA virus pathogen](https:/
 
 Please check out the [template](https://github.com/ELIXIR-Belgium/ENA-metadata-templates) of your checklist to discover which attributes are mandatory for the study, experiment and run ENA object.
 
-#### Study and Experiment custom attributes
+#### Read info run attributes
+
+Using `read_type`	and `read_label` as header in the columns of ENA run objects will allow you to set information about reads. Values are listed in a comma separated way, without spaces. `read_type` has a controlled vocabulary, which can be found in the [ENA Documentation](https://ena-docs.readthedocs.io/en/latest/submit/reads/webin-cli.html#json-manifest-file-format). An example tsv file using these attributes can be found in [example_tables/ENA_template_runs_read_info.tsv](/example_tables/ENA_template_runs_read_info.tsv). The same syntax is also applicable for xlsx input files.
+
+#### Study and experiment custom attributes
 
 Similarly to samples, additional custom attributes can be added to the experiment and study tables by adding columns which headers are named like `experiment_attribute[attribute_name]` and `study_attribute[attribute_name]` in the experiment and study tables, respectively.
 
