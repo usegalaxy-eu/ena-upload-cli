@@ -8,9 +8,6 @@ from requests.adapters import HTTPAdapter
 from urllib3.util.retry import Retry
 import time
 
-from ena_upload.ena_upload import SmartFormatter
-
-
 def fetch_object(url):
     """
     Fetch single BrAPI object by path
