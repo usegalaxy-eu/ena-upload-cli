@@ -702,10 +702,8 @@ def process_args():
     parser = argparse.ArgumentParser(prog='ena-upoad-cli',
                                      description='''The program makes submission
                                      of data and respective metadata to European
-                                     Nucleotide Archive (ENA). The metadate
-                                     should be provided in separate tables
-                                     corresponding the ENA objects -- STUDY,
-                                     SAMPLE, EXPERIMENT and RUN.''',
+                                     Nucleotide Archive (ENA) easy. The metadata
+                                     can be provided in a xlsx spreadsheet or tsv tables.''',
                                      formatter_class=SmartFormatter)
     parser.add_argument('--version', action='version',
                         version='%(prog)s '+__version__)
