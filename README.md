@@ -129,6 +129,11 @@ Please check out the [template](https://github.com/ELIXIR-Belgium/ENA-metadata-t
 
 Using `read_type`	and `read_label` as header in the columns of ENA run objects will allow you to set information about reads. Values are listed in a comma separated way, without spaces. `read_type` has a controlled vocabulary, which can be found in the [ENA Documentation](https://ena-docs.readthedocs.io/en/latest/submit/reads/webin-cli.html#json-manifest-file-format). An example tsv file using these attributes can be found in [example_tables/ENA_template_runs_read_info.tsv](/example_tables/ENA_template_runs_read_info.tsv). The same syntax is also applicable for xlsx input files.
 
+#### Encrypted files
+
+When transferring encrypted files, an additional `unencrypted_checksum` column can be added in the run table. This column should contain the md5 checksum of the unencrypted file, and note that no check is performed on this value.
+This feature is currently limited to FastQ files.
+
 #### Study and experiment custom attributes
 
 Similarly to samples, additional custom attributes can be added to the experiment and study tables by adding columns which headers are named like `experiment_attribute[attribute_name]` and `study_attribute[attribute_name]` in the experiment and study tables, respectively.

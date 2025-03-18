@@ -24,19 +24,8 @@ def mandatorytest(row, column, index):
                 <py:for each="index, row in file_groups.get_group(alias).iterrows()">
                 <py:if test="mandatorytest(row, 'file_type', index)">
                 <py:choose xmlns:py="http://genshi.edgewall.org/" test="">
-                <py:when test="row.file_type.lower().strip() == 'fastq'">
-                    <FILE filename="${row.file_name}" filetype="fastq" checksum_method="MD5" checksum="${row.file_checksum}">
-                        <py:if test="attributetest(row, 'read_label')">
-                        <py:for each="rlabel in row.read_label.split(',')">
-                        <READ_LABEL>${rlabel.strip()}</READ_LABEL>
-                        </py:for>
-                        </py:if>
-                        <py:if test="attributetest(row, 'read_type')">
-                        <py:for each="rtype in row.read_type.split(',')">
-                        <xi:include href="ENA_template_READ_TYPE.xml" />
-                        </py:for>
-                        </py:if>
-                    </FILE>
+                    <py:when test="row.file_type.lower().strip() == 'fastq'">
+                         <xi:include href="ENA_template_FASTQFILE.xml" />
                     </py:when>
                     <py:otherwise>
                         <xi:include href="ENA_template_FILE.xml" />

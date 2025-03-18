@@ -104,7 +104,7 @@ def check_columns(df, schema, action, dev, auto_action):
             df['scientific_name'] = pd.Series(dtype='str')
     elif schema == 'run':
         optional_columns = ['accession',
-                          'submission_date', 'status', 'file_checksum']
+                          'submission_date', 'status', 'file_checksum', 'unencrypted_checksum']
         # Ensure string dtype for file_checksum
         if 'file_checksum' not in df.columns:
             df['file_checksum'] = pd.Series(dtype='str')
@@ -235,6 +235,8 @@ def generate_stream(schema, targets, Template, center, tool):
             file_attrib.append('read_type')
         if 'read_label' in targets:
             file_attrib.append('read_label')
+        if 'unencrypted_checksum' in targets:
+            file_attrib.append('unencrypted_checksum')
 
         other_attrib = ['alias', 'experiment_alias']
         # Create groups with alias as index
