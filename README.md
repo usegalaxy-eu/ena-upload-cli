@@ -128,6 +128,7 @@ Please check out the [template](https://github.com/ELIXIR-Belgium/ENA-metadata-t
 #### Read info run attributes
 
 Using `read_type`	and `read_label` as header in the columns of ENA run objects will allow you to set information about reads. Values are listed in a comma separated way, without spaces. `read_type` has a controlled vocabulary, which can be found in the [ENA Documentation](https://ena-docs.readthedocs.io/en/latest/submit/reads/webin-cli.html#json-manifest-file-format). An example tsv file using these attributes can be found in [example_tables/ENA_template_runs_read_info.tsv](/example_tables/ENA_template_runs_read_info.tsv). The same syntax is also applicable for xlsx input files.
+This feature is currently limited to FastQ files.
 
 #### Encrypted files
 
