@@ -104,7 +104,7 @@ def check_columns(df, schema, action, dev, auto_action):
             df['scientific_name'] = pd.Series(dtype='str')
     elif schema == 'run':
         optional_columns = ['accession',
-                          'submission_date', 'status', 'file_checksum', 'unencrypted_checksum']
+                          'submission_date', 'status', 'file_checksum']
         # Ensure string dtype for file_checksum
         if 'file_checksum' not in df.columns:
             df['file_checksum'] = pd.Series(dtype='str')
