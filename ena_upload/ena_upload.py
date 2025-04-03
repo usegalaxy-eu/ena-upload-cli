@@ -235,6 +235,8 @@ def generate_stream(schema, targets, Template, center, tool):
             file_attrib.append('read_type')
         if 'read_label' in targets:
             file_attrib.append('read_label')
+        if 'unencrypted_checksum' in targets:
+            file_attrib.append('unencrypted_checksum')
 
         other_attrib = ['alias', 'experiment_alias']
         # Create groups with alias as index
