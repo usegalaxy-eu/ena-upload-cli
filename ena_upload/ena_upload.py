@@ -1040,9 +1040,9 @@ def main():
         print("No submission will be performed, remove `--draft' argument to perform submission.")
     else:
         if dev:
-            url = 'https://wwwdev.ebi.ac.uk/ena/submit/drop-box/submit/?auth=ENA'
+            url = 'https://wwwdev.ebi.ac.uk/ena/submit/drop-box/submit/'
         else:
-            url = 'https://www.ebi.ac.uk/ena/submit/drop-box/submit/?auth=ENA'
+            url = 'https://www.ebi.ac.uk/ena/submit/drop-box/submit/'
 
         print(f'\nSubmitting XMLs to ENA server: {url}')
         receipt = send_schemas(schema_xmls, url, webin_id, password).text
