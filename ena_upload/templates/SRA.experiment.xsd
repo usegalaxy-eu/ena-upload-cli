@@ -92,7 +92,11 @@
           <xs:documentation> Random sequencing of a whole chromosome or other replicon isolated from a genome. </xs:documentation>
         </xs:annotation>
       </xs:enumeration>
-      <xs:enumeration value="RAD-Seq"/>
+      <xs:enumeration value="RAD-Seq">
+        <xs:annotation>
+          <xs:documentation> Restriction site associated DNA marker. </xs:documentation>
+        </xs:annotation>
+      </xs:enumeration> 
       <xs:enumeration value="CLONE">
         <xs:annotation>
           <xs:documentation> Genomic clone based (hierarchical) sequencing. </xs:documentation>
@@ -202,7 +206,11 @@
           <xs:documentation>Enrichment of a targeted subset of loci.</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
-      <xs:enumeration value="Tethered Chromatin Conformation Capture"/>
+      <xs:enumeration value="Tethered Chromatin Conformation Capture">
+        <xs:annotation>
+          <xs:documentation> Tethered Chromatin Conformation Capture. </xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
       <xs:enumeration value="NOMe-Seq">
         <xs:annotation>
           <xs:documentation>Nucleosome Occupancy and Methylome sequencing.</xs:documentation>
