@@ -249,13 +249,21 @@
           <xs:documentation> Genomic DNA (includes PCR products from genomic DNA). </xs:documentation>
         </xs:annotation>
       </xs:enumeration>
-      <xs:enumeration value="GENOMIC SINGLE CELL"/>
+      <xs:enumeration value="GENOMIC SINGLE CELL">
+        <xs:annotation>
+          <xs:documentation> Genomic DNA from a single cell. </xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
       <xs:enumeration value="TRANSCRIPTOMIC">
         <xs:annotation>
           <xs:documentation> Transcription products or non genomic DNA (EST, cDNA, RT-PCR, screened libraries). </xs:documentation>
         </xs:annotation>
       </xs:enumeration>
-      <xs:enumeration value="TRANSCRIPTOMIC SINGLE CELL"/>
+      <xs:enumeration value="TRANSCRIPTOMIC SINGLE CELL">
+        <xs:annotation>
+          <xs:documentation> Transcriptomic products from a single cell. </xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
       <xs:enumeration value="METAGENOMIC">
         <xs:annotation>
           <xs:documentation> Mixed material from metagenome. </xs:documentation>
@@ -340,8 +348,16 @@
           <xs:documentation>PolyA selection or enrichment for messenger RNA (mRNA); synonymize with PolyA </xs:documentation>
         </xs:annotation>
       </xs:enumeration>
-      <xs:enumeration value="cDNA_randomPriming"/>
-      <xs:enumeration value="cDNA_oligo_dT"/>
+      <xs:enumeration value="cDNA_randomPriming">
+        <xs:annotation>
+          <xs:documentation>random primers typically used to prime mRNAs. </xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="cDNA_oligo_dT">
+        <xs:annotation>
+          <xs:documentation>priming by annealing to PolyA tails of eukaryotic mRNAs. </xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
       <xs:enumeration value="PolyA">
         <xs:annotation>
           <xs:documentation>PolyA selection or enrichment for messenger RNA (mRNA); should replace cDNA enumeration. </xs:documentation>

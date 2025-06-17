@@ -1028,6 +1028,7 @@
             <xs:enumeration value="Sequel"/>
             <xs:enumeration value="Sequel II"/>
             <xs:enumeration value="Sequel IIe"/>
+            <xs:enumeration value="Vega"/>
             <xs:enumeration value="unspecified"/>
         </xs:restriction>
     </xs:simpleType>
