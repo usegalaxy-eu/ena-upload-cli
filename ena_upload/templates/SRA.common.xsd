@@ -1064,6 +1064,7 @@
         <xs:restriction base="xs:string">
             <xs:enumeration value="DNBSEQ-T7"/>
             <xs:enumeration value="DNBSEQ-G400"/>
+            <xs:enumeration value="DNBSEQ-G800"/>
             <xs:enumeration value="DNBSEQ-G50"/>
             <xs:enumeration value="DNBSEQ-G400 FAST"/>
             <xs:enumeration value="DNBSEQ-T10x4RS"/>
