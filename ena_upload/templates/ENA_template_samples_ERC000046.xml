@@ -33,52 +33,64 @@ def mandatorytest(row, column, index):
         <DESCRIPTION>${row.sample_description}</DESCRIPTION>
         </py:if>
         <SAMPLE_ATTRIBUTES>
-            <py:if test="mandatorytest(row, 'isolation_source', index)">
+            <py:if test="attributetest(row, 'project_name')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>isolation_source</TAG>
-                <VALUE>${row['isolation_source']}</VALUE>
+                <TAG>project_name</TAG>
+                <VALUE>${row['project_name']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'collected_by')">
+            <py:if test="mandatorytest(row, 'subject_id', index)">
             <SAMPLE_ATTRIBUTE>
-                <TAG>collected_by</TAG>
-                <VALUE>${row['collected_by']}</VALUE>
+                <TAG>subject_id</TAG>
+                <VALUE>${row['subject_id']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="mandatorytest(row, 'collection_date', index)">
+            <py:if test="mandatorytest(row, 'gender', index)">
             <SAMPLE_ATTRIBUTE>
-                <TAG>collection_date</TAG>
-                <VALUE>${row['collection_date']}</VALUE>
+                <TAG>gender</TAG>
+                <VALUE>${row['gender']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'geographic_location_region_and_locality')">
+            <py:if test="mandatorytest(row, 'phenotype', index)">
             <SAMPLE_ATTRIBUTE>
-                <TAG>geographic_location_region_and_locality</TAG>
-                <VALUE>${row['geographic_location_region_and_locality']}</VALUE>
+                <TAG>phenotype</TAG>
+                <VALUE>${row['phenotype']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="mandatorytest(row, 'geographic_location_country_andor_sea', index)">
+            <py:if test="mandatorytest(row, 'sample_type', index)">
             <SAMPLE_ATTRIBUTE>
-                <TAG>geographic_location_country_andor_sea</TAG>
-                <VALUE>${row['geographic_location_country_andor_sea']}</VALUE>
+                <TAG>sample_type</TAG>
+                <VALUE>${row['sample_type']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'receipt_date')">
+            <py:if test="mandatorytest(row, 'ppcg_id', index)">
             <SAMPLE_ATTRIBUTE>
-                <TAG>receipt_date</TAG>
-                <VALUE>${row['receipt_date']}</VALUE>
+                <TAG>ppcg_id</TAG>
+                <VALUE>${row['ppcg_id']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="mandatorytest(row, 'isolate', index)">
+            <py:if test="mandatorytest(row, 'ppcg_sample_id', index)">
             <SAMPLE_ATTRIBUTE>
-                <TAG>isolate</TAG>
-                <VALUE>${row['isolate']}</VALUE>
+                <TAG>ppcg_sample_id</TAG>
+                <VALUE>${row['ppcg_sample_id']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'serotype')">
+            <py:if test="mandatorytest(row, 'pipelineuuid', index)">
             <SAMPLE_ATTRIBUTE>
-                <TAG>serotype</TAG>
-                <VALUE>${row['serotype']}</VALUE>
+                <TAG>pipelineuuid</TAG>
+                <VALUE>${row['pipelineuuid']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="mandatorytest(row, 'preservation', index)">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>preservation</TAG>
+                <VALUE>${row['preservation']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="mandatorytest(row, 'xenograft', index)">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>xenograft</TAG>
+                <VALUE>${row['xenograft']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:for each="header, tag in extra_attributes.items()">
