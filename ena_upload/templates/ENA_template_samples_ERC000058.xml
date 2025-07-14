@@ -33,34 +33,34 @@ def mandatorytest(row, column, index):
         <DESCRIPTION>${row.sample_description}</DESCRIPTION>
         </py:if>
         <SAMPLE_ATTRIBUTES>
-            <py:if test="attributetest(row, 'sample true vertical depth subsea')">
+            <py:if test="attributetest(row, 'sample_true_vertical_depth_subsea')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>sample true vertical depth subsea</TAG>
-                <VALUE>${row['sample true vertical depth subsea']}</VALUE>
+                <TAG>sample_true_vertical_depth_subsea</TAG>
+                <VALUE>${row['sample_true_vertical_depth_subsea']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'trophic level')">
+            <py:if test="attributetest(row, 'trophic_level')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>trophic level</TAG>
-                <VALUE>${row['trophic level']}</VALUE>
+                <TAG>trophic_level</TAG>
+                <VALUE>${row['trophic_level']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'observed biotic relationship')">
+            <py:if test="attributetest(row, 'observed_biotic_relationship')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>observed biotic relationship</TAG>
-                <VALUE>${row['observed biotic relationship']}</VALUE>
+                <TAG>observed_biotic_relationship</TAG>
+                <VALUE>${row['observed_biotic_relationship']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'known pathogenicity')">
+            <py:if test="attributetest(row, 'known_pathogenicity')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>known pathogenicity</TAG>
-                <VALUE>${row['known pathogenicity']}</VALUE>
+                <TAG>known_pathogenicity</TAG>
+                <VALUE>${row['known_pathogenicity']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'relationship to oxygen')">
+            <py:if test="attributetest(row, 'relationship_to_oxygen')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>relationship to oxygen</TAG>
-                <VALUE>${row['relationship to oxygen']}</VALUE>
+                <TAG>relationship_to_oxygen</TAG>
+                <VALUE>${row['relationship_to_oxygen']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'propagation')">
@@ -69,74 +69,74 @@ def mandatorytest(row, column, index):
                 <VALUE>${row['propagation']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'sample transport conditions')">
+            <py:if test="attributetest(row, 'sample_transport_conditions')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>sample transport conditions</TAG>
-                <VALUE>${row['sample transport conditions']}</VALUE>
-                <UNITS>m2</UNITS>
+                <TAG>sample_transport_conditions</TAG>
+                <VALUE>${row['sample_transport_conditions']}</VALUE>
+                <UNITS>ha</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'sample collection device')">
+            <py:if test="attributetest(row, 'sample_collection_device')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>sample collection device</TAG>
-                <VALUE>${row['sample collection device']}</VALUE>
+                <TAG>sample_collection_device</TAG>
+                <VALUE>${row['sample_collection_device']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'sample collection method')">
+            <py:if test="attributetest(row, 'sample_collection_method')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>sample collection method</TAG>
-                <VALUE>${row['sample collection method']}</VALUE>
+                <TAG>sample_collection_method</TAG>
+                <VALUE>${row['sample_collection_method']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'sample storage temperature')">
+            <py:if test="attributetest(row, 'sample_storage_temperature')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>sample storage temperature</TAG>
-                <VALUE>${row['sample storage temperature']}</VALUE>
+                <TAG>sample_storage_temperature</TAG>
+                <VALUE>${row['sample_storage_temperature']}</VALUE>
                 <UNITS>°C</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'sample storage location')">
+            <py:if test="attributetest(row, 'sample_storage_location')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>sample storage location</TAG>
-                <VALUE>${row['sample storage location']}</VALUE>
+                <TAG>sample_storage_location</TAG>
+                <VALUE>${row['sample_storage_location']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'source rock depositional environment')">
+            <py:if test="attributetest(row, 'source_rock_depositional_environment')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>source rock depositional environment</TAG>
-                <VALUE>${row['source rock depositional environment']}</VALUE>
+                <TAG>source_rock_depositional_environment</TAG>
+                <VALUE>${row['source_rock_depositional_environment']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'sample measured depth')">
+            <py:if test="attributetest(row, 'sample_measured_depth')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>sample measured depth</TAG>
-                <VALUE>${row['sample measured depth']}</VALUE>
-                <UNITS>mm</UNITS>
-            </SAMPLE_ATTRIBUTE>
-            </py:if>
-            <py:if test="attributetest(row, 'corrosion rate at sample location')">
-            <SAMPLE_ATTRIBUTE>
-                <TAG>corrosion rate at sample location</TAG>
-                <VALUE>${row['corrosion rate at sample location']}</VALUE>
-            </SAMPLE_ATTRIBUTE>
-            </py:if>
-            <py:if test="attributetest(row, 'sample collection point')">
-            <SAMPLE_ATTRIBUTE>
-                <TAG>sample collection point</TAG>
-                <VALUE>${row['sample collection point']}</VALUE>
-            </SAMPLE_ATTRIBUTE>
-            </py:if>
-            <py:if test="attributetest(row, 'depth (tvdss) of hydrocarbon resource temperature')">
-            <SAMPLE_ATTRIBUTE>
-                <TAG>depth (tvdss) of hydrocarbon resource temperature</TAG>
-                <VALUE>${row['depth (tvdss) of hydrocarbon resource temperature']}</VALUE>
+                <TAG>sample_measured_depth</TAG>
+                <VALUE>${row['sample_measured_depth']}</VALUE>
                 <UNITS>m</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'oxygenation status of sample')">
+            <py:if test="attributetest(row, 'corrosion_rate_at_sample_location')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>oxygenation status of sample</TAG>
-                <VALUE>${row['oxygenation status of sample']}</VALUE>
+                <TAG>corrosion_rate_at_sample_location</TAG>
+                <VALUE>${row['corrosion_rate_at_sample_location']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="attributetest(row, 'sample_collection_point')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>sample_collection_point</TAG>
+                <VALUE>${row['sample_collection_point']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="attributetest(row, 'depth_tvdss_of_hydrocarbon_resource_temperature')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>depth_tvdss_of_hydrocarbon_resource_temperature</TAG>
+                <VALUE>${row['depth_tvdss_of_hydrocarbon_resource_temperature']}</VALUE>
+                <UNITS>m</UNITS>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="attributetest(row, 'oxygenation_status_of_sample')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>oxygenation_status_of_sample</TAG>
+                <VALUE>${row['oxygenation_status_of_sample']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'density')">
@@ -146,16 +146,16 @@ def mandatorytest(row, column, index):
                 <UNITS>g/m3</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'sample well name')">
+            <py:if test="attributetest(row, 'sample_well_name')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>sample well name</TAG>
-                <VALUE>${row['sample well name']}</VALUE>
+                <TAG>sample_well_name</TAG>
+                <VALUE>${row['sample_well_name']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'project name')">
+            <py:if test="attributetest(row, 'project_name')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>project name</TAG>
-                <VALUE>${row['project name']}</VALUE>
+                <TAG>project_name</TAG>
+                <VALUE>${row['project_name']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'ploidy')">
@@ -164,103 +164,103 @@ def mandatorytest(row, column, index):
                 <VALUE>${row['ploidy']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'number of replicons')">
+            <py:if test="attributetest(row, 'number_of_replicons')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>number of replicons</TAG>
-                <VALUE>${row['number of replicons']}</VALUE>
+                <TAG>number_of_replicons</TAG>
+                <VALUE>${row['number_of_replicons']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'extrachromosomal elements')">
+            <py:if test="attributetest(row, 'extrachromosomal_elements')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>extrachromosomal elements</TAG>
-                <VALUE>${row['extrachromosomal elements']}</VALUE>
+                <TAG>extrachromosomal_elements</TAG>
+                <VALUE>${row['extrachromosomal_elements']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'estimated size')">
+            <py:if test="attributetest(row, 'estimated_size')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>estimated size</TAG>
-                <VALUE>${row['estimated size']}</VALUE>
+                <TAG>estimated_size</TAG>
+                <VALUE>${row['estimated_size']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'target gene')">
+            <py:if test="attributetest(row, 'target_gene')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>target gene</TAG>
-                <VALUE>${row['target gene']}</VALUE>
+                <TAG>target_gene</TAG>
+                <VALUE>${row['target_gene']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'target subfragment')">
+            <py:if test="attributetest(row, 'target_subfragment')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>target subfragment</TAG>
-                <VALUE>${row['target subfragment']}</VALUE>
+                <TAG>target_subfragment</TAG>
+                <VALUE>${row['target_subfragment']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'multiplex identifiers')">
+            <py:if test="attributetest(row, 'multiplex_identifiers')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>multiplex identifiers</TAG>
-                <VALUE>${row['multiplex identifiers']}</VALUE>
+                <TAG>multiplex_identifiers</TAG>
+                <VALUE>${row['multiplex_identifiers']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'sequence quality check')">
+            <py:if test="attributetest(row, 'sequence_quality_check')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>sequence quality check</TAG>
-                <VALUE>${row['sequence quality check']}</VALUE>
+                <TAG>sequence_quality_check</TAG>
+                <VALUE>${row['sequence_quality_check']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'chimera check software')">
+            <py:if test="attributetest(row, 'chimera_check_software')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>chimera check software</TAG>
-                <VALUE>${row['chimera check software']}</VALUE>
+                <TAG>chimera_check_software</TAG>
+                <VALUE>${row['chimera_check_software']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'relevant electronic resources')">
+            <py:if test="attributetest(row, 'relevant_electronic_resources')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>relevant electronic resources</TAG>
-                <VALUE>${row['relevant electronic resources']}</VALUE>
+                <TAG>relevant_electronic_resources</TAG>
+                <VALUE>${row['relevant_electronic_resources']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'relevant standard operating procedures')">
+            <py:if test="attributetest(row, 'relevant_standard_operating_procedures')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>relevant standard operating procedures</TAG>
-                <VALUE>${row['relevant standard operating procedures']}</VALUE>
+                <TAG>relevant_standard_operating_procedures</TAG>
+                <VALUE>${row['relevant_standard_operating_procedures']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, '16s recovered')">
+            <py:if test="attributetest(row, '_16s_recovered')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>16s recovered</TAG>
-                <VALUE>${row['16s recovered']}</VALUE>
+                <TAG>_16s_recovered</TAG>
+                <VALUE>${row['_16s_recovered']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'well identification number')">
+            <py:if test="attributetest(row, 'well_identification_number')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>well identification number</TAG>
-                <VALUE>${row['well identification number']}</VALUE>
-                <UNITS>year</UNITS>
+                <TAG>well_identification_number</TAG>
+                <VALUE>${row['well_identification_number']}</VALUE>
+                <UNITS>minute</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'water cut')">
+            <py:if test="attributetest(row, 'water_cut')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>water cut</TAG>
-                <VALUE>${row['water cut']}</VALUE>
-                <UNITS>year</UNITS>
+                <TAG>water_cut</TAG>
+                <VALUE>${row['water_cut']}</VALUE>
+                <UNITS>minute</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'production rate')">
+            <py:if test="attributetest(row, 'production_rate')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>production rate</TAG>
-                <VALUE>${row['production rate']}</VALUE>
+                <TAG>production_rate</TAG>
+                <VALUE>${row['production_rate']}</VALUE>
                 <UNITS>°C</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'field name')">
+            <py:if test="attributetest(row, 'field_name')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>field name</TAG>
-                <VALUE>${row['field name']}</VALUE>
+                <TAG>field_name</TAG>
+                <VALUE>${row['field_name']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="mandatorytest(row, 'collection date', index)">
+            <py:if test="mandatorytest(row, 'collection_date', index)">
             <SAMPLE_ATTRIBUTE>
-                <TAG>collection date</TAG>
-                <VALUE>${row['collection date']}</VALUE>
+                <TAG>collection_date</TAG>
+                <VALUE>${row['collection_date']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'altitude')">
@@ -270,42 +270,42 @@ def mandatorytest(row, column, index):
                 <UNITS>m</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'geographic location (latitude)')">
+            <py:if test="attributetest(row, 'geographic_location_latitude')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>geographic location (latitude)</TAG>
-                <VALUE>${row['geographic location (latitude)']}</VALUE>
+                <TAG>geographic_location_latitude</TAG>
+                <VALUE>${row['geographic_location_latitude']}</VALUE>
                 <UNITS>DD</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'geographic location (longitude)')">
+            <py:if test="attributetest(row, 'geographic_location_longitude')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>geographic location (longitude)</TAG>
-                <VALUE>${row['geographic location (longitude)']}</VALUE>
+                <TAG>geographic_location_longitude</TAG>
+                <VALUE>${row['geographic_location_longitude']}</VALUE>
                 <UNITS>DD</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'geographic location (region and locality)')">
+            <py:if test="attributetest(row, 'geographic_location_region_and_locality')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>geographic location (region and locality)</TAG>
-                <VALUE>${row['geographic location (region and locality)']}</VALUE>
+                <TAG>geographic_location_region_and_locality</TAG>
+                <VALUE>${row['geographic_location_region_and_locality']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'broad-scale environmental context')">
+            <py:if test="attributetest(row, 'broadscale_environmental_context')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>broad-scale environmental context</TAG>
-                <VALUE>${row['broad-scale environmental context']}</VALUE>
+                <TAG>broadscale_environmental_context</TAG>
+                <VALUE>${row['broadscale_environmental_context']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'local environmental context')">
+            <py:if test="attributetest(row, 'local_environmental_context')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>local environmental context</TAG>
-                <VALUE>${row['local environmental context']}</VALUE>
+                <TAG>local_environmental_context</TAG>
+                <VALUE>${row['local_environmental_context']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'environmental medium')">
+            <py:if test="attributetest(row, 'environmental_medium')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>environmental medium</TAG>
-                <VALUE>${row['environmental medium']}</VALUE>
+                <TAG>environmental_medium</TAG>
+                <VALUE>${row['environmental_medium']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'elevation')">
@@ -315,75 +315,75 @@ def mandatorytest(row, column, index):
                 <UNITS>m</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'secondary and tertiary recovery methods and start date')">
+            <py:if test="attributetest(row, 'secondary_and_tertiary_recovery_methods_and_start_date')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>secondary and tertiary recovery methods and start date</TAG>
-                <VALUE>${row['secondary and tertiary recovery methods and start date']}</VALUE>
+                <TAG>secondary_and_tertiary_recovery_methods_and_start_date</TAG>
+                <VALUE>${row['secondary_and_tertiary_recovery_methods_and_start_date']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'amount or size of sample collected')">
+            <py:if test="attributetest(row, 'amount_or_size_of_sample_collected')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>amount or size of sample collected</TAG>
-                <VALUE>${row['amount or size of sample collected']}</VALUE>
-                <UNITS>m3</UNITS>
+                <TAG>amount_or_size_of_sample_collected</TAG>
+                <VALUE>${row['amount_or_size_of_sample_collected']}</VALUE>
+                <UNITS>kg</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'organism count')">
+            <py:if test="attributetest(row, 'organism_count')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>organism count</TAG>
-                <VALUE>${row['organism count']}</VALUE>
+                <TAG>organism_count</TAG>
+                <VALUE>${row['organism_count']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'organism count qpcr information')">
+            <py:if test="attributetest(row, 'organism_count_qpcr_information')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>organism count qpcr information</TAG>
-                <VALUE>${row['organism count qpcr information']}</VALUE>
+                <TAG>organism_count_qpcr_information</TAG>
+                <VALUE>${row['organism_count_qpcr_information']}</VALUE>
                 <UNITS>year</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'hydrocarbon type produced')">
+            <py:if test="attributetest(row, 'hydrocarbon_type_produced')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>hydrocarbon type produced</TAG>
-                <VALUE>${row['hydrocarbon type produced']}</VALUE>
-                <UNITS>year</UNITS>
+                <TAG>hydrocarbon_type_produced</TAG>
+                <VALUE>${row['hydrocarbon_type_produced']}</VALUE>
+                <UNITS>minute</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'api gravity')">
+            <py:if test="attributetest(row, 'api_gravity')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>api gravity</TAG>
-                <VALUE>${row['api gravity']}</VALUE>
+                <TAG>api_gravity</TAG>
+                <VALUE>${row['api_gravity']}</VALUE>
                 <UNITS>°C</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'sample storage duration')">
+            <py:if test="attributetest(row, 'sample_storage_duration')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>sample storage duration</TAG>
-                <VALUE>${row['sample storage duration']}</VALUE>
+                <TAG>sample_storage_duration</TAG>
+                <VALUE>${row['sample_storage_duration']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="mandatorytest(row, 'geographic location (country and/or sea)', index)">
+            <py:if test="mandatorytest(row, 'geographic_location_country_andor_sea', index)">
             <SAMPLE_ATTRIBUTE>
-                <TAG>geographic location (country and/or sea)</TAG>
-                <VALUE>${row['geographic location (country and/or sea)']}</VALUE>
+                <TAG>geographic_location_country_andor_sea</TAG>
+                <VALUE>${row['geographic_location_country_andor_sea']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'host disease status')">
+            <py:if test="attributetest(row, 'host_disease_status')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>host disease status</TAG>
-                <VALUE>${row['host disease status']}</VALUE>
+                <TAG>host_disease_status</TAG>
+                <VALUE>${row['host_disease_status']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'host scientific name')">
+            <py:if test="attributetest(row, 'host_scientific_name')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>host scientific name</TAG>
-                <VALUE>${row['host scientific name']}</VALUE>
+                <TAG>host_scientific_name</TAG>
+                <VALUE>${row['host_scientific_name']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'pressure')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>pressure</TAG>
                 <VALUE>${row['pressure']}</VALUE>
-                <UNITS>bar</UNITS>
+                <UNITS>atm</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'temperature')">
@@ -393,10 +393,10 @@ def mandatorytest(row, column, index):
                 <UNITS>ºC</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'pH')">
+            <py:if test="attributetest(row, 'ph')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>pH</TAG>
-                <VALUE>${row['pH']}</VALUE>
+                <TAG>ph</TAG>
+                <VALUE>${row['ph']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'viscosity')">
@@ -409,27 +409,27 @@ def mandatorytest(row, column, index):
             <SAMPLE_ATTRIBUTE>
                 <TAG>permeability</TAG>
                 <VALUE>${row['permeability']}</VALUE>
-                <UNITS>mm</UNITS>
-            </SAMPLE_ATTRIBUTE>
-            </py:if>
-            <py:if test="attributetest(row, 'oil water contact depth')">
-            <SAMPLE_ATTRIBUTE>
-                <TAG>oil water contact depth</TAG>
-                <VALUE>${row['oil water contact depth']}</VALUE>
                 <UNITS>m</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'hydrocarbon resource original pressure')">
+            <py:if test="attributetest(row, 'oil_water_contact_depth')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>hydrocarbon resource original pressure</TAG>
-                <VALUE>${row['hydrocarbon resource original pressure']}</VALUE>
-                <UNITS>Pa</UNITS>
+                <TAG>oil_water_contact_depth</TAG>
+                <VALUE>${row['oil_water_contact_depth']}</VALUE>
+                <UNITS>m</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'source rock geological age')">
+            <py:if test="attributetest(row, 'hydrocarbon_resource_original_pressure')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>source rock geological age</TAG>
-                <VALUE>${row['source rock geological age']}</VALUE>
+                <TAG>hydrocarbon_resource_original_pressure</TAG>
+                <VALUE>${row['hydrocarbon_resource_original_pressure']}</VALUE>
+                <UNITS>N/m2</UNITS>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="attributetest(row, 'source_rock_geological_age')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>source_rock_geological_age</TAG>
+                <VALUE>${row['source_rock_geological_age']}</VALUE>
                 <UNITS>°C</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
@@ -440,10 +440,10 @@ def mandatorytest(row, column, index):
                 <UNITS>µmol/L</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'sample salinity')">
+            <py:if test="attributetest(row, 'sample_salinity')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>sample salinity</TAG>
-                <VALUE>${row['sample salinity']}</VALUE>
+                <TAG>sample_salinity</TAG>
+                <VALUE>${row['sample_salinity']}</VALUE>
                 <UNITS>psu</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
@@ -451,7 +451,7 @@ def mandatorytest(row, column, index):
             <SAMPLE_ATTRIBUTE>
                 <TAG>calcium</TAG>
                 <VALUE>${row['calcium']}</VALUE>
-                <UNITS>µmol/L</UNITS>
+                <UNITS>mg/L</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'chloride')">
@@ -461,38 +461,38 @@ def mandatorytest(row, column, index):
                 <UNITS>mg/L</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'suspended solids')">
+            <py:if test="attributetest(row, 'suspended_solids')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>suspended solids</TAG>
-                <VALUE>${row['suspended solids']}</VALUE>
-                <UNITS>parts/million</UNITS>
+                <TAG>suspended_solids</TAG>
+                <VALUE>${row['suspended_solids']}</VALUE>
+                <UNITS>g/L</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'dissolved carbon dioxide')">
+            <py:if test="attributetest(row, 'dissolved_carbon_dioxide')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>dissolved carbon dioxide</TAG>
-                <VALUE>${row['dissolved carbon dioxide']}</VALUE>
+                <TAG>dissolved_carbon_dioxide</TAG>
+                <VALUE>${row['dissolved_carbon_dioxide']}</VALUE>
                 <UNITS>µmol/L</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'dissolved inorganic carbon')">
+            <py:if test="attributetest(row, 'dissolved_inorganic_carbon')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>dissolved inorganic carbon</TAG>
-                <VALUE>${row['dissolved inorganic carbon']}</VALUE>
+                <TAG>dissolved_inorganic_carbon</TAG>
+                <VALUE>${row['dissolved_inorganic_carbon']}</VALUE>
                 <UNITS>µg/L</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'dissolved inorganic phosphorus')">
+            <py:if test="attributetest(row, 'dissolved_inorganic_phosphorus')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>dissolved inorganic phosphorus</TAG>
-                <VALUE>${row['dissolved inorganic phosphorus']}</VALUE>
+                <TAG>dissolved_inorganic_phosphorus</TAG>
+                <VALUE>${row['dissolved_inorganic_phosphorus']}</VALUE>
                 <UNITS>µg/L</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'dissolved organic carbon')">
+            <py:if test="attributetest(row, 'dissolved_organic_carbon')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>dissolved organic carbon</TAG>
-                <VALUE>${row['dissolved organic carbon']}</VALUE>
+                <TAG>dissolved_organic_carbon</TAG>
+                <VALUE>${row['dissolved_organic_carbon']}</VALUE>
                 <UNITS>µmol/L</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
@@ -500,7 +500,7 @@ def mandatorytest(row, column, index):
             <SAMPLE_ATTRIBUTE>
                 <TAG>magnesium</TAG>
                 <VALUE>${row['magnesium']}</VALUE>
-                <UNITS>parts/million</UNITS>
+                <UNITS>mg/L</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'nitrate')">
@@ -517,10 +517,10 @@ def mandatorytest(row, column, index):
                 <UNITS>µmol/L</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'total nitrogen concentration')">
+            <py:if test="attributetest(row, 'total_nitrogen_concentration')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>total nitrogen concentration</TAG>
-                <VALUE>${row['total nitrogen concentration']}</VALUE>
+                <TAG>total_nitrogen_concentration</TAG>
+                <VALUE>${row['total_nitrogen_concentration']}</VALUE>
                 <UNITS>µmol/L</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
@@ -549,66 +549,66 @@ def mandatorytest(row, column, index):
             <SAMPLE_ATTRIBUTE>
                 <TAG>sulfate</TAG>
                 <VALUE>${row['sulfate']}</VALUE>
-                <UNITS>µmol/L</UNITS>
+                <UNITS>mg/L</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'sulfide')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>sulfide</TAG>
                 <VALUE>${row['sulfide']}</VALUE>
+                <UNITS>mg/L</UNITS>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="attributetest(row, 'total_phosphorus')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>total_phosphorus</TAG>
+                <VALUE>${row['total_phosphorus']}</VALUE>
                 <UNITS>µmol/L</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'total phosphorus')">
+            <py:if test="attributetest(row, 'total_iron')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>total phosphorus</TAG>
-                <VALUE>${row['total phosphorus']}</VALUE>
-                <UNITS>µmol/L</UNITS>
+                <TAG>total_iron</TAG>
+                <VALUE>${row['total_iron']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'total iron')">
+            <py:if test="attributetest(row, 'volatile_fatty_acids')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>total iron</TAG>
-                <VALUE>${row['total iron']}</VALUE>
+                <TAG>volatile_fatty_acids</TAG>
+                <VALUE>${row['volatile_fatty_acids']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'volatile fatty acids')">
+            <py:if test="attributetest(row, 'dissolved_iron')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>volatile fatty acids</TAG>
-                <VALUE>${row['volatile fatty acids']}</VALUE>
-            </SAMPLE_ATTRIBUTE>
-            </py:if>
-            <py:if test="attributetest(row, 'dissolved iron')">
-            <SAMPLE_ATTRIBUTE>
-                <TAG>dissolved iron</TAG>
-                <VALUE>${row['dissolved iron']}</VALUE>
+                <TAG>dissolved_iron</TAG>
+                <VALUE>${row['dissolved_iron']}</VALUE>
                 <UNITS>µl/L</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'resins wt%')">
+            <py:if test="attributetest(row, 'resins_wt')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>resins wt%</TAG>
-                <VALUE>${row['resins wt%']}</VALUE>
+                <TAG>resins_wt</TAG>
+                <VALUE>${row['resins_wt']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'dissolved oxygen in fluids')">
+            <py:if test="attributetest(row, 'dissolved_oxygen_in_fluids')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>dissolved oxygen in fluids</TAG>
-                <VALUE>${row['dissolved oxygen in fluids']}</VALUE>
-                <UNITS>µmol/kg</UNITS>
+                <TAG>dissolved_oxygen_in_fluids</TAG>
+                <VALUE>${row['dissolved_oxygen_in_fluids']}</VALUE>
+                <UNITS>µg/L</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'total sulfur')">
+            <py:if test="attributetest(row, 'total_sulfur')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>total sulfur</TAG>
-                <VALUE>${row['total sulfur']}</VALUE>
-                <UNITS>µmol/L</UNITS>
+                <TAG>total_sulfur</TAG>
+                <VALUE>${row['total_sulfur']}</VALUE>
+                <UNITS>µg/L</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'injection water fraction')">
+            <py:if test="attributetest(row, 'injection_water_fraction')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>injection water fraction</TAG>
-                <VALUE>${row['injection water fraction']}</VALUE>
+                <TAG>injection_water_fraction</TAG>
+                <VALUE>${row['injection_water_fraction']}</VALUE>
                 <UNITS>%</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
@@ -616,40 +616,40 @@ def mandatorytest(row, column, index):
             <SAMPLE_ATTRIBUTE>
                 <TAG>ethylbenzene</TAG>
                 <VALUE>${row['ethylbenzene']}</VALUE>
-                <UNITS>µmol/L</UNITS>
+                <UNITS>µg/L</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'vfa in formation water')">
+            <py:if test="attributetest(row, 'vfa_in_formation_water')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>vfa in formation water</TAG>
-                <VALUE>${row['vfa in formation water']}</VALUE>
+                <TAG>vfa_in_formation_water</TAG>
+                <VALUE>${row['vfa_in_formation_water']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'total acid number')">
+            <py:if test="attributetest(row, 'total_acid_number')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>total acid number</TAG>
-                <VALUE>${row['total acid number']}</VALUE>
+                <TAG>total_acid_number</TAG>
+                <VALUE>${row['total_acid_number']}</VALUE>
                 <UNITS>year</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'sulfate in formation water')">
+            <py:if test="attributetest(row, 'sulfate_in_formation_water')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>sulfate in formation water</TAG>
-                <VALUE>${row['sulfate in formation water']}</VALUE>
-                <UNITS>year</UNITS>
+                <TAG>sulfate_in_formation_water</TAG>
+                <VALUE>${row['sulfate_in_formation_water']}</VALUE>
+                <UNITS>minute</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'toluene')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>toluene</TAG>
                 <VALUE>${row['toluene']}</VALUE>
-                <UNITS>year</UNITS>
+                <UNITS>minute</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'asphaltenes wt%')">
+            <py:if test="attributetest(row, 'asphaltenes_wt')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>asphaltenes wt%</TAG>
-                <VALUE>${row['asphaltenes wt%']}</VALUE>
+                <TAG>asphaltenes_wt</TAG>
+                <VALUE>${row['asphaltenes_wt']}</VALUE>
                 <UNITS>%</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
@@ -660,10 +660,10 @@ def mandatorytest(row, column, index):
                 <UNITS>m2</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'alkalinity method')">
+            <py:if test="attributetest(row, 'alkalinity_method')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>alkalinity method</TAG>
-                <VALUE>${row['alkalinity method']}</VALUE>
+                <TAG>alkalinity_method</TAG>
+                <VALUE>${row['alkalinity_method']}</VALUE>
                 <UNITS>m2</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
@@ -681,195 +681,195 @@ def mandatorytest(row, column, index):
                 <UNITS>mEq/L</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'source material identifiers')">
+            <py:if test="attributetest(row, 'source_material_identifiers')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>source material identifiers</TAG>
-                <VALUE>${row['source material identifiers']}</VALUE>
+                <TAG>source_material_identifiers</TAG>
+                <VALUE>${row['source_material_identifiers']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'source rock lithology')">
+            <py:if test="attributetest(row, 'source_rock_lithology')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>source rock lithology</TAG>
-                <VALUE>${row['source rock lithology']}</VALUE>
-                <UNITS>year</UNITS>
+                <TAG>source_rock_lithology</TAG>
+                <VALUE>${row['source_rock_lithology']}</VALUE>
+                <UNITS>minute</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'sample material type')">
+            <py:if test="attributetest(row, 'sample_material_type')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>sample material type</TAG>
-                <VALUE>${row['sample material type']}</VALUE>
+                <TAG>sample_material_type</TAG>
+                <VALUE>${row['sample_material_type']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'host of the symbiotic host phenotype')">
+            <py:if test="attributetest(row, 'host_of_the_symbiotic_host_phenotype')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>host of the symbiotic host phenotype</TAG>
-                <VALUE>${row['host of the symbiotic host phenotype']}</VALUE>
+                <TAG>host_of_the_symbiotic_host_phenotype</TAG>
+                <VALUE>${row['host_of_the_symbiotic_host_phenotype']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'biocide administration method')">
+            <py:if test="attributetest(row, 'biocide_administration_method')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>biocide administration method</TAG>
-                <VALUE>${row['biocide administration method']}</VALUE>
+                <TAG>biocide_administration_method</TAG>
+                <VALUE>${row['biocide_administration_method']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'chemical treatment')">
+            <py:if test="attributetest(row, 'chemical_treatment')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>chemical treatment</TAG>
-                <VALUE>${row['chemical treatment']}</VALUE>
+                <TAG>chemical_treatment</TAG>
+                <VALUE>${row['chemical_treatment']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'biocide administration')">
+            <py:if test="attributetest(row, 'biocide_administration')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>biocide administration</TAG>
-                <VALUE>${row['biocide administration']}</VALUE>
-                <UNITS>year</UNITS>
+                <TAG>biocide_administration</TAG>
+                <VALUE>${row['biocide_administration']}</VALUE>
+                <UNITS>minute</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'chemical treatment method')">
+            <py:if test="attributetest(row, 'chemical_treatment_method')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>chemical treatment method</TAG>
-                <VALUE>${row['chemical treatment method']}</VALUE>
+                <TAG>chemical_treatment_method</TAG>
+                <VALUE>${row['chemical_treatment_method']}</VALUE>
                 <UNITS>J/K</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'negative control type')">
+            <py:if test="attributetest(row, 'negative_control_type')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>negative control type</TAG>
-                <VALUE>${row['negative control type']}</VALUE>
+                <TAG>negative_control_type</TAG>
+                <VALUE>${row['negative_control_type']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'positive control type')">
+            <py:if test="attributetest(row, 'positive_control_type')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>positive control type</TAG>
-                <VALUE>${row['positive control type']}</VALUE>
+                <TAG>positive_control_type</TAG>
+                <VALUE>${row['positive_control_type']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'experimental factor')">
+            <py:if test="attributetest(row, 'experimental_factor')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>experimental factor</TAG>
-                <VALUE>${row['experimental factor']}</VALUE>
+                <TAG>experimental_factor</TAG>
+                <VALUE>${row['experimental_factor']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'encoded traits')">
+            <py:if test="attributetest(row, 'encoded_traits')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>encoded traits</TAG>
-                <VALUE>${row['encoded traits']}</VALUE>
+                <TAG>encoded_traits</TAG>
+                <VALUE>${row['encoded_traits']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'subspecific genetic lineage')">
+            <py:if test="attributetest(row, 'subspecific_genetic_lineage')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>subspecific genetic lineage</TAG>
-                <VALUE>${row['subspecific genetic lineage']}</VALUE>
+                <TAG>subspecific_genetic_lineage</TAG>
+                <VALUE>${row['subspecific_genetic_lineage']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'taxonomic classification')">
+            <py:if test="attributetest(row, 'taxonomic_classification')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>taxonomic classification</TAG>
-                <VALUE>${row['taxonomic classification']}</VALUE>
+                <TAG>taxonomic_classification</TAG>
+                <VALUE>${row['taxonomic_classification']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'isolation and growth condition')">
+            <py:if test="attributetest(row, 'isolation_and_growth_condition')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>isolation and growth condition</TAG>
-                <VALUE>${row['isolation and growth condition']}</VALUE>
+                <TAG>isolation_and_growth_condition</TAG>
+                <VALUE>${row['isolation_and_growth_condition']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'annotation source')">
+            <py:if test="attributetest(row, 'annotation_source')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>annotation source</TAG>
-                <VALUE>${row['annotation source']}</VALUE>
+                <TAG>annotation_source</TAG>
+                <VALUE>${row['annotation_source']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'reference for biomaterial')">
+            <py:if test="attributetest(row, 'reference_for_biomaterial')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>reference for biomaterial</TAG>
-                <VALUE>${row['reference for biomaterial']}</VALUE>
+                <TAG>reference_for_biomaterial</TAG>
+                <VALUE>${row['reference_for_biomaterial']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'sample subtype')">
+            <py:if test="attributetest(row, 'sample_subtype')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>sample subtype</TAG>
-                <VALUE>${row['sample subtype']}</VALUE>
+                <TAG>sample_subtype</TAG>
+                <VALUE>${row['sample_subtype']}</VALUE>
                 <UNITS>m2</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'preservative added to sample')">
+            <py:if test="attributetest(row, 'preservative_added_to_sample')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>preservative added to sample</TAG>
-                <VALUE>${row['preservative added to sample']}</VALUE>
+                <TAG>preservative_added_to_sample</TAG>
+                <VALUE>${row['preservative_added_to_sample']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'single cell or viral particle lysis approach')">
+            <py:if test="attributetest(row, 'single_cell_or_viral_particle_lysis_approach')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>single cell or viral particle lysis approach</TAG>
-                <VALUE>${row['single cell or viral particle lysis approach']}</VALUE>
+                <TAG>single_cell_or_viral_particle_lysis_approach</TAG>
+                <VALUE>${row['single_cell_or_viral_particle_lysis_approach']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'single cell or viral particle lysis kit protocol')">
+            <py:if test="attributetest(row, 'single_cell_or_viral_particle_lysis_kit_protocol')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>single cell or viral particle lysis kit protocol</TAG>
-                <VALUE>${row['single cell or viral particle lysis kit protocol']}</VALUE>
+                <TAG>single_cell_or_viral_particle_lysis_kit_protocol</TAG>
+                <VALUE>${row['single_cell_or_viral_particle_lysis_kit_protocol']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'sample material processing')">
+            <py:if test="attributetest(row, 'sample_material_processing')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>sample material processing</TAG>
-                <VALUE>${row['sample material processing']}</VALUE>
+                <TAG>sample_material_processing</TAG>
+                <VALUE>${row['sample_material_processing']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'sample volume or weight for DNA extraction')">
+            <py:if test="attributetest(row, 'sample_volume_or_weight_for_dna_extraction')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>sample volume or weight for DNA extraction</TAG>
-                <VALUE>${row['sample volume or weight for DNA extraction']}</VALUE>
-                <UNITS>ng</UNITS>
+                <TAG>sample_volume_or_weight_for_dna_extraction</TAG>
+                <VALUE>${row['sample_volume_or_weight_for_dna_extraction']}</VALUE>
+                <UNITS>mL</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'nucleic acid extraction')">
+            <py:if test="attributetest(row, 'nucleic_acid_extraction')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>nucleic acid extraction</TAG>
-                <VALUE>${row['nucleic acid extraction']}</VALUE>
+                <TAG>nucleic_acid_extraction</TAG>
+                <VALUE>${row['nucleic_acid_extraction']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'nucleic acid amplification')">
+            <py:if test="attributetest(row, 'nucleic_acid_amplification')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>nucleic acid amplification</TAG>
-                <VALUE>${row['nucleic acid amplification']}</VALUE>
+                <TAG>nucleic_acid_amplification</TAG>
+                <VALUE>${row['nucleic_acid_amplification']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'library size')">
+            <py:if test="attributetest(row, 'library_size')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>library size</TAG>
-                <VALUE>${row['library size']}</VALUE>
+                <TAG>library_size</TAG>
+                <VALUE>${row['library_size']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'library reads sequenced')">
+            <py:if test="attributetest(row, 'library_reads_sequenced')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>library reads sequenced</TAG>
-                <VALUE>${row['library reads sequenced']}</VALUE>
+                <TAG>library_reads_sequenced</TAG>
+                <VALUE>${row['library_reads_sequenced']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'library vector')">
+            <py:if test="attributetest(row, 'library_vector')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>library vector</TAG>
-                <VALUE>${row['library vector']}</VALUE>
+                <TAG>library_vector</TAG>
+                <VALUE>${row['library_vector']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'library screening strategy')">
+            <py:if test="attributetest(row, 'library_screening_strategy')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>library screening strategy</TAG>
-                <VALUE>${row['library screening strategy']}</VALUE>
+                <TAG>library_screening_strategy</TAG>
+                <VALUE>${row['library_screening_strategy']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'pcr conditions')">
+            <py:if test="attributetest(row, 'pcr_conditions')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>pcr conditions</TAG>
-                <VALUE>${row['pcr conditions']}</VALUE>
+                <TAG>pcr_conditions</TAG>
+                <VALUE>${row['pcr_conditions']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'pcr primers')">
+            <py:if test="attributetest(row, 'pcr_primers')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>pcr primers</TAG>
-                <VALUE>${row['pcr primers']}</VALUE>
+                <TAG>pcr_primers</TAG>
+                <VALUE>${row['pcr_primers']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'adapters')">
@@ -878,24 +878,24 @@ def mandatorytest(row, column, index):
                 <VALUE>${row['adapters']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'production start date')">
+            <py:if test="attributetest(row, 'production_start_date')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>production start date</TAG>
-                <VALUE>${row['production start date']}</VALUE>
+                <TAG>production_start_date</TAG>
+                <VALUE>${row['production_start_date']}</VALUE>
                 <UNITS>m</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'aromatics wt%')">
+            <py:if test="attributetest(row, 'aromatics_wt')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>aromatics wt%</TAG>
-                <VALUE>${row['aromatics wt%']}</VALUE>
+                <TAG>aromatics_wt</TAG>
+                <VALUE>${row['aromatics_wt']}</VALUE>
                 <UNITS>%</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'saturates wt%')">
+            <py:if test="attributetest(row, 'saturates_wt')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>saturates wt%</TAG>
-                <VALUE>${row['saturates wt%']}</VALUE>
+                <TAG>saturates_wt</TAG>
+                <VALUE>${row['saturates_wt']}</VALUE>
                 <UNITS>%</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
@@ -905,65 +905,65 @@ def mandatorytest(row, column, index):
                 <VALUE>${row['porosity']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'formation water salinity')">
+            <py:if test="attributetest(row, 'formation_water_salinity')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>formation water salinity</TAG>
-                <VALUE>${row['formation water salinity']}</VALUE>
+                <TAG>formation_water_salinity</TAG>
+                <VALUE>${row['formation_water_salinity']}</VALUE>
                 <UNITS>ppm</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'basin name')">
+            <py:if test="attributetest(row, 'basin_name')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>basin name</TAG>
-                <VALUE>${row['basin name']}</VALUE>
-                <UNITS>g/m3</UNITS>
+                <TAG>basin_name</TAG>
+                <VALUE>${row['basin_name']}</VALUE>
+                <UNITS>%</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'pour point')">
+            <py:if test="attributetest(row, 'pour_point')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>pour point</TAG>
-                <VALUE>${row['pour point']}</VALUE>
+                <TAG>pour_point</TAG>
+                <VALUE>${row['pour_point']}</VALUE>
                 <UNITS>°C</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'reservoir name')">
+            <py:if test="attributetest(row, 'reservoir_name')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>reservoir name</TAG>
-                <VALUE>${row['reservoir name']}</VALUE>
+                <TAG>reservoir_name</TAG>
+                <VALUE>${row['reservoir_name']}</VALUE>
                 <UNITS>°C</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'hydrocarbon resource geological age')">
+            <py:if test="attributetest(row, 'hydrocarbon_resource_geological_age')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>hydrocarbon resource geological age</TAG>
-                <VALUE>${row['hydrocarbon resource geological age']}</VALUE>
+                <TAG>hydrocarbon_resource_geological_age</TAG>
+                <VALUE>${row['hydrocarbon_resource_geological_age']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'depositional environment')">
+            <py:if test="attributetest(row, 'depositional_environment')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>depositional environment</TAG>
-                <VALUE>${row['depositional environment']}</VALUE>
+                <TAG>depositional_environment</TAG>
+                <VALUE>${row['depositional_environment']}</VALUE>
                 <UNITS>m</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'source rock kerogen type')">
+            <py:if test="attributetest(row, 'source_rock_kerogen_type')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>source rock kerogen type</TAG>
-                <VALUE>${row['source rock kerogen type']}</VALUE>
+                <TAG>source_rock_kerogen_type</TAG>
+                <VALUE>${row['source_rock_kerogen_type']}</VALUE>
                 <UNITS>year</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'hydrocarbon resource type')">
+            <py:if test="attributetest(row, 'hydrocarbon_resource_type')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>hydrocarbon resource type</TAG>
-                <VALUE>${row['hydrocarbon resource type']}</VALUE>
+                <TAG>hydrocarbon_resource_type</TAG>
+                <VALUE>${row['hydrocarbon_resource_type']}</VALUE>
                 <UNITS>year</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'water production rate')">
+            <py:if test="attributetest(row, 'water_production_rate')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>water production rate</TAG>
-                <VALUE>${row['water production rate']}</VALUE>
+                <TAG>water_production_rate</TAG>
+                <VALUE>${row['water_production_rate']}</VALUE>
                 <UNITS>m3/day</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
@@ -971,13 +971,13 @@ def mandatorytest(row, column, index):
             <SAMPLE_ATTRIBUTE>
                 <TAG>lithology</TAG>
                 <VALUE>${row['lithology']}</VALUE>
-                <UNITS>year</UNITS>
+                <UNITS>minute</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'hydrocarbon resource original temperature')">
+            <py:if test="attributetest(row, 'hydrocarbon_resource_original_temperature')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>hydrocarbon resource original temperature</TAG>
-                <VALUE>${row['hydrocarbon resource original temperature']}</VALUE>
+                <TAG>hydrocarbon_resource_original_temperature</TAG>
+                <VALUE>${row['hydrocarbon_resource_original_temperature']}</VALUE>
                 <UNITS>°C</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
@@ -985,13 +985,13 @@ def mandatorytest(row, column, index):
             <SAMPLE_ATTRIBUTE>
                 <TAG>depth</TAG>
                 <VALUE>${row['depth']}</VALUE>
-                <UNITS>mm</UNITS>
+                <UNITS>m</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'injection water breakthrough date of specific well')">
+            <py:if test="attributetest(row, 'injection_water_breakthrough_date_of_specific_well')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>injection water breakthrough date of specific well</TAG>
-                <VALUE>${row['injection water breakthrough date of specific well']}</VALUE>
+                <TAG>injection_water_breakthrough_date_of_specific_well</TAG>
+                <VALUE>${row['injection_water_breakthrough_date_of_specific_well']}</VALUE>
                 <UNITS>%</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>

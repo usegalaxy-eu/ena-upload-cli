@@ -33,100 +33,100 @@ def mandatorytest(row, column, index):
         <DESCRIPTION>${row.sample_description}</DESCRIPTION>
         </py:if>
         <SAMPLE_ATTRIBUTES>
-            <py:if test="mandatorytest(row, 'sample origin', index)">
+            <py:if test="mandatorytest(row, 'sample_origin', index)">
             <SAMPLE_ATTRIBUTE>
-                <TAG>sample origin</TAG>
-                <VALUE>${row['sample origin']}</VALUE>
+                <TAG>sample_origin</TAG>
+                <VALUE>${row['sample_origin']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="mandatorytest(row, 'sample material', index)">
+            <py:if test="mandatorytest(row, 'sample_material', index)">
             <SAMPLE_ATTRIBUTE>
-                <TAG>sample material</TAG>
-                <VALUE>${row['sample material']}</VALUE>
+                <TAG>sample_material</TAG>
+                <VALUE>${row['sample_material']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="mandatorytest(row, 'sample taxon name', index)">
+            <py:if test="mandatorytest(row, 'sample_taxon_name', index)">
             <SAMPLE_ATTRIBUTE>
-                <TAG>sample taxon name</TAG>
-                <VALUE>${row['sample taxon name']}</VALUE>
+                <TAG>sample_taxon_name</TAG>
+                <VALUE>${row['sample_taxon_name']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="mandatorytest(row, 'sample unique ID', index)">
+            <py:if test="mandatorytest(row, 'sample_unique_id', index)">
             <SAMPLE_ATTRIBUTE>
-                <TAG>sample unique ID</TAG>
-                <VALUE>${row['sample unique ID']}</VALUE>
+                <TAG>sample_unique_id</TAG>
+                <VALUE>${row['sample_unique_id']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="mandatorytest(row, 'patient tumor type', index)">
+            <py:if test="mandatorytest(row, 'patient_tumor_type', index)">
             <SAMPLE_ATTRIBUTE>
-                <TAG>patient tumor type</TAG>
-                <VALUE>${row['patient tumor type']}</VALUE>
+                <TAG>patient_tumor_type</TAG>
+                <VALUE>${row['patient_tumor_type']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="mandatorytest(row, 'collection date', index)">
+            <py:if test="mandatorytest(row, 'collection_date', index)">
             <SAMPLE_ATTRIBUTE>
-                <TAG>collection date</TAG>
-                <VALUE>${row['collection date']}</VALUE>
+                <TAG>collection_date</TAG>
+                <VALUE>${row['collection_date']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="mandatorytest(row, 'engrafted tumor sample passage', index)">
+            <py:if test="mandatorytest(row, 'engrafted_tumor_sample_passage', index)">
             <SAMPLE_ATTRIBUTE>
-                <TAG>engrafted tumor sample passage</TAG>
-                <VALUE>${row['engrafted tumor sample passage']}</VALUE>
+                <TAG>engrafted_tumor_sample_passage</TAG>
+                <VALUE>${row['engrafted_tumor_sample_passage']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'engrafted tumor collection site')">
+            <py:if test="attributetest(row, 'engrafted_tumor_collection_site')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>engrafted tumor collection site</TAG>
-                <VALUE>${row['engrafted tumor collection site']}</VALUE>
+                <TAG>engrafted_tumor_collection_site</TAG>
+                <VALUE>${row['engrafted_tumor_collection_site']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="mandatorytest(row, 'patient tumor site of collection', index)">
+            <py:if test="mandatorytest(row, 'patient_tumor_site_of_collection', index)">
             <SAMPLE_ATTRIBUTE>
-                <TAG>patient tumor site of collection</TAG>
-                <VALUE>${row['patient tumor site of collection']}</VALUE>
+                <TAG>patient_tumor_site_of_collection</TAG>
+                <VALUE>${row['patient_tumor_site_of_collection']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="mandatorytest(row, 'geographic location (country and/or sea)', index)">
+            <py:if test="mandatorytest(row, 'geographic_location_country_andor_sea', index)">
             <SAMPLE_ATTRIBUTE>
-                <TAG>geographic location (country and/or sea)</TAG>
-                <VALUE>${row['geographic location (country and/or sea)']}</VALUE>
+                <TAG>geographic_location_country_andor_sea</TAG>
+                <VALUE>${row['geographic_location_country_andor_sea']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'engraftment host strain name')">
+            <py:if test="attributetest(row, 'engraftment_host_strain_name')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>engraftment host strain name</TAG>
-                <VALUE>${row['engraftment host strain name']}</VALUE>
+                <TAG>engraftment_host_strain_name</TAG>
+                <VALUE>${row['engraftment_host_strain_name']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="mandatorytest(row, 'patient age at collection of tumor', index)">
+            <py:if test="mandatorytest(row, 'patient_age_at_collection_of_tumor', index)">
             <SAMPLE_ATTRIBUTE>
-                <TAG>patient age at collection of tumor</TAG>
-                <VALUE>${row['patient age at collection of tumor']}</VALUE>
+                <TAG>patient_age_at_collection_of_tumor</TAG>
+                <VALUE>${row['patient_age_at_collection_of_tumor']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="mandatorytest(row, 'patient tumor diagnosis at time of collection', index)">
+            <py:if test="mandatorytest(row, 'patient_tumor_diagnosis_at_time_of_collection', index)">
             <SAMPLE_ATTRIBUTE>
-                <TAG>patient tumor diagnosis at time of collection</TAG>
-                <VALUE>${row['patient tumor diagnosis at time of collection']}</VALUE>
+                <TAG>patient_tumor_diagnosis_at_time_of_collection</TAG>
+                <VALUE>${row['patient_tumor_diagnosis_at_time_of_collection']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="mandatorytest(row, 'patient tumor primary site', index)">
+            <py:if test="mandatorytest(row, 'patient_tumor_primary_site', index)">
             <SAMPLE_ATTRIBUTE>
-                <TAG>patient tumor primary site</TAG>
-                <VALUE>${row['patient tumor primary site']}</VALUE>
+                <TAG>patient_tumor_primary_site</TAG>
+                <VALUE>${row['patient_tumor_primary_site']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'was the PDX model humanised?')">
+            <py:if test="attributetest(row, 'was_the_pdx_model_humanised')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>was the PDX model humanised?</TAG>
-                <VALUE>${row['was the PDX model humanised?']}</VALUE>
+                <TAG>was_the_pdx_model_humanised</TAG>
+                <VALUE>${row['was_the_pdx_model_humanised']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="mandatorytest(row, 'patient sex', index)">
+            <py:if test="mandatorytest(row, 'patient_sex', index)">
             <SAMPLE_ATTRIBUTE>
-                <TAG>patient sex</TAG>
-                <VALUE>${row['patient sex']}</VALUE>
+                <TAG>patient_sex</TAG>
+                <VALUE>${row['patient_sex']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:for each="header, tag in extra_attributes.items()">
