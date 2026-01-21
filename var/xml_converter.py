@@ -60,7 +60,7 @@ def main():
             cardinality = ''
             units = ''
             for sub_attr in attribute:
-                if sub_attr.tag == 'NAME':
+                if sub_attr.tag == 'LABEL':
                     name = sub_attr.text
                 elif sub_attr.tag == 'MANDATORY':
                     cardinality = sub_attr.text
