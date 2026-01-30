@@ -780,7 +780,7 @@ def process_args():
 
     parser.add_argument('--secret',
                         required=False,
-                        help='.secret.yml file containing the password and Webin ID of your ENA account OR set ENA_WEBIN_USERNAME and ENA_WEBIN_PASSWORD env variables')
+                        help='.secret.yml file containing the password and Webin ID of your ENA account OR set ENA_USER and ENA_PASS env variables')
 
     parser.add_argument(
         '-d', '--dev', help="flag to use the dev/sandbox endpoint of ENA", action="store_true")
@@ -888,7 +888,7 @@ def main():
     if not password or not webin_id:
         sys.exit(
             "Oops, missing ENA credentials (username or password). "
-            "Provide --secret or set ENA_WEBIN_USERNAME and ENA_WEBIN_PASSWORD."
+            "Provide --secret or set ENA_USER and ENA_PASS."
         )
 
 
