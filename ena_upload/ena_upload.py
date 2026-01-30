@@ -794,10 +794,10 @@ def process_args():
 
     # check credentials source
     if not args.secret:
-        if not (os.environ.get('ENA_USER_ENV') and os.environ.get('ENA_PASS_ENV')):
+        if not (os.environ.get('ENA_USER') and os.environ.get('ENA_PASS')):
             parser.error(
                 f"Credentials required: provide --secret or set "
-                f"ENA_USER_ENV and ENA_PASS_ENV environment variables"
+                f"ENA_USER and ENA_PASS environment variables"
             )
     else:
         if not os.path.isfile(args.secret):
@@ -881,8 +881,8 @@ def main():
         webin_id = credentials.get('username', '').strip()
     else:
         print("NOT SECRET FILE")
-        webin_id = os.environ.get('ENA_USER_ENV', '').strip()
-        password = os.environ.get('ENA_PASS_ENV', '').strip()
+        webin_id = os.environ.get('ENA_USER', '').strip()
+        password = os.environ.get('ENA_PASS', '').strip()
 
 
     if not password or not webin_id:
