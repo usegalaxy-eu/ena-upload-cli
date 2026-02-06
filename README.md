@@ -95,7 +95,7 @@ There are two supported ways to provide your ENA credentials.
 
 To avoid exposing your credentials through the terminal history, it is recommended to make use of a `.secret.yml` file, containing your password and username keywords. An example is given in the root of this directory.
 
-#### Environment variable
+#### Environment variables
 
 Alternatively, credentials can be provided via environment variables. Set the variables ENA_USER and ENA_PASS in your environment and run the tool without the --secret option.
 
