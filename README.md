@@ -78,7 +78,7 @@ All supported arguments:
                         specify the version of the tool this submission is done with
   --no_data_upload      indicate if no upload should be performed and you like to submit a RUN object (e.g. if uploaded was done separately).
   --draft               indicate if no submission should be performed
-  --secret SECRET       .secret.yml file containing the password and Webin ID of your ENA account
+  --secret SECRET       .secret.yml file containing the password and Webin ID of your ENA account OR set ENA_USER and ENA_PASS env variables
   -d, --dev             flag to use the dev/sandbox endpoint of ENA
 ```
 
@@ -88,9 +88,16 @@ Mandatory arguments: --action, --center and --secret.
 
 A Webin can be made [here](https://www.ebi.ac.uk/ena/submit/sra/#home) if you don't have one already. The Webin ID makes use of the full username looking like: `Webin-XXXXX`. Visit [Webin online](https://www.ebi.ac.uk/ena/submit/webin) to check on your submissions or [dev Webin](https://wwwdev.ebi.ac.uk/ena/submit/webin) to check on test submissions.
 
-### The .secret.yml file
+### Credentials
+There are two supported ways to provide your ENA credentials.
+
+#### The .secret.yml file
 
 To avoid exposing your credentials through the terminal history, it is recommended to make use of a `.secret.yml` file, containing your password and username keywords. An example is given in the root of this directory.
+
+#### Environment variable
+
+Alternatively, credentials can be provided via environment variables. Set the variables ENA_USER and ENA_PASS in your environment and run the tool without the --secret option.
 
 ### ENA sample checklists
 
