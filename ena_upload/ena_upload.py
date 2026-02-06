@@ -880,7 +880,6 @@ def main():
         password = credentials.get('password', '').strip()
         webin_id = credentials.get('username', '').strip()
     else:
-        print("NOT SECRET FILE")
         webin_id = os.environ.get('ENA_USER', '').strip()
         password = os.environ.get('ENA_PASS', '').strip()
 
