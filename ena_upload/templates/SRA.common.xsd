@@ -665,6 +665,13 @@
                     </xs:sequence>
                 </xs:complexType>
             </xs:element>
+            <xs:element name="AVITI">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="INSTRUMENT_MODEL" maxOccurs="1" minOccurs="1" type="com:typeAVITIModel"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
             <xs:element name="ULTIMA">
                 <xs:complexType>
                     <xs:sequence>
@@ -1084,6 +1091,12 @@
     <xs:simpleType name="typeElementModel">
         <xs:restriction base="xs:string">
             <xs:enumeration value="Element AVITI"/>
+            <xs:enumeration value="unspecified"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="typeAVITIModel">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="AVITI 24"/>
             <xs:enumeration value="unspecified"/>
         </xs:restriction>
     </xs:simpleType>
