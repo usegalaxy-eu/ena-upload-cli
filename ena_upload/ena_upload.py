@@ -779,8 +779,8 @@ def process_args():
                         help='indicate if no submission should be performed')
 
     parser.add_argument('--secret',
-                        required=True,
-                        help='.secret.yml file containing the password and Webin ID of your ENA account')
+                        required=False,
+                        help='.secret.yml file containing the password and Webin ID of your ENA account OR set ENA_USERNAME and ENA_PASSWORD env variables')
 
     parser.add_argument(
         '-d', '--dev', help="flag to use the dev/sandbox endpoint of ENA", action="store_true")
@@ -792,8 +792,14 @@ def process_args():
     if tables == {None} and not args.xlsx and not args.isa_json:
         parser.error('Requires at least one table for submission')
 
-    # check if .secret file exists
-    if args.secret:
+    # check credentials source
+    if not args.secret:
+        if not (os.environ.get('ENA_USERNAME') and os.environ.get('ENA_PASSWORD')):
+            parser.error(
+                f"Credentials required: provide --secret or set "
+                f"ENA_USERNAME and ENA_PASSWORD environment variables"
+            )
+    else:
         if not os.path.isfile(args.secret):
             msg = f"Oops, the file {args.secret} does not exist"
             parser.error(msg)
@@ -868,16 +874,22 @@ def main():
     isa_assay_stream = args.isa_assay_stream
     auto_action = args.auto_action
 
-    with open(secret, 'r') as secret_file:
-        credentials = yaml.load(secret_file, Loader=yaml.FullLoader)
+    if secret:
+        with open(secret, 'r') as secret_file:
+            credentials = yaml.load(secret_file, Loader=yaml.FullLoader)
+        password = credentials.get('password', '').strip()
+        webin_id = credentials.get('username', '').strip()
+    else:
+        webin_id = os.environ.get('ENA_USERNAME', '').strip()
+        password = os.environ.get('ENA_PASSWORD', '').strip()
 
-    password = credentials['password'].strip()
-    webin_id = credentials['username'].strip()
 
     if not password or not webin_id:
-        print(
-            f"Oops, file {args.secret} does not contain a password or username")
-    secret_file.close()
+        sys.exit(
+            "Oops, missing ENA credentials (username or password). "
+            "Provide --secret or set ENA_USERNAME and ENA_PASSWORD."
+        )
+
 
     if xlsx:
         # create dataframe from xlsx table
