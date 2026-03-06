@@ -1287,7 +1287,6 @@ def mandatorytest(row, column, index):
             <SAMPLE_ATTRIBUTE>
                 <TAG>nucleic acid extraction kit</TAG>
                 <VALUE>${row['nucleic acid extraction kit']}</VALUE>
-                <UNITS>ppm</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'sample pooling')">

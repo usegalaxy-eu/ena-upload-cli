@@ -33,10 +33,10 @@ def mandatorytest(row, column, index):
         <DESCRIPTION>${row.sample_description}</DESCRIPTION>
         </py:if>
         <SAMPLE_ATTRIBUTES>
-            <py:if test="attributetest(row, 'project_name')">
+            <py:if test="attributetest(row, 'project name')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>project_name</TAG>
-                <VALUE>${row['project_name']}</VALUE>
+                <TAG>project name</TAG>
+                <VALUE>${row['project name']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="mandatorytest(row, 'subject_id', index)">
@@ -57,28 +57,28 @@ def mandatorytest(row, column, index):
                 <VALUE>${row['phenotype']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="mandatorytest(row, 'sample_type', index)">
+            <py:if test="mandatorytest(row, 'sample type', index)">
             <SAMPLE_ATTRIBUTE>
-                <TAG>sample_type</TAG>
-                <VALUE>${row['sample_type']}</VALUE>
+                <TAG>sample type</TAG>
+                <VALUE>${row['sample type']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="mandatorytest(row, 'ppcg_id', index)">
+            <py:if test="mandatorytest(row, 'PPCG ID', index)">
             <SAMPLE_ATTRIBUTE>
-                <TAG>ppcg_id</TAG>
-                <VALUE>${row['ppcg_id']}</VALUE>
+                <TAG>PPCG ID</TAG>
+                <VALUE>${row['PPCG ID']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="mandatorytest(row, 'ppcg_sample_id', index)">
+            <py:if test="mandatorytest(row, 'PPCG sample ID', index)">
             <SAMPLE_ATTRIBUTE>
-                <TAG>ppcg_sample_id</TAG>
-                <VALUE>${row['ppcg_sample_id']}</VALUE>
+                <TAG>PPCG sample ID</TAG>
+                <VALUE>${row['PPCG sample ID']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="mandatorytest(row, 'pipelineuuid', index)">
+            <py:if test="mandatorytest(row, 'Pipeline/UUID', index)">
             <SAMPLE_ATTRIBUTE>
-                <TAG>pipelineuuid</TAG>
-                <VALUE>${row['pipelineuuid']}</VALUE>
+                <TAG>Pipeline/UUID</TAG>
+                <VALUE>${row['Pipeline/UUID']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="mandatorytest(row, 'preservation', index)">

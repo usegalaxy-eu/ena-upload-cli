@@ -1,0 +1,357 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?python
+import pandas as pd
+import sys
+def attributetest(row, column):
+    if hasattr(row, column) and pd.notna(row[column]) and not str(row[column]).isspace():
+        return True 
+def mandatorytest(row, column, index):
+    if hasattr(row, column) and pd.notna(row[column]) and not str(row[column]).isspace():
+        return True 
+    else:
+        print("MISSING VALUE ERROR: The mandatory column '"+ str(column) + "' is not filled in at row '" + str(index) + "'" + "\n")
+        sys.exit("This process is terminated")
+?>
+<SAMPLE_SET xmlns:py="http://genshi.edgewall.org/"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="ftp://ftp.sra.ebi.ac.uk/meta/xsd/sra_1_6/SRA.sample.xsd">
+    <py:for each="index, row in df.iterrows()">
+    <SAMPLE alias="${row.alias}" center_name="${center}">
+        <py:if test="mandatorytest(row, 'title', index)">
+        <TITLE>${row.title}</TITLE>
+        </py:if>
+        <SAMPLE_NAME>
+            <py:if test="mandatorytest(row, 'taxon_id', index)">
+            <TAXON_ID>${row.taxon_id}</TAXON_ID>
+            </py:if>
+            <SCIENTIFIC_NAME>${row.scientific_name}</SCIENTIFIC_NAME>
+            <py:if test="attributetest(row, 'common_name')">
+            <COMMON_NAME>${row.common_name}</COMMON_NAME>
+            </py:if>
+        </SAMPLE_NAME>
+        <py:if test="attributetest(row, 'sample_description')">
+        <DESCRIPTION>${row.sample_description}</DESCRIPTION>
+        </py:if>
+        <SAMPLE_ATTRIBUTES>
+            <py:if test="mandatorytest(row, 'project name', index)">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>project name</TAG>
+                <VALUE>${row['project name']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="attributetest(row, 'sample collection device')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>sample collection device</TAG>
+                <VALUE>${row['sample collection device']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="attributetest(row, 'sample collection method')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>sample collection method</TAG>
+                <VALUE>${row['sample collection method']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="attributetest(row, 'sample storage location')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>sample storage location</TAG>
+                <VALUE>${row['sample storage location']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="attributetest(row, 'sample storage device')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>sample storage device</TAG>
+                <VALUE>${row['sample storage device']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="attributetest(row, 'sample storage conditions')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>sample storage conditions</TAG>
+                <VALUE>${row['sample storage conditions']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="mandatorytest(row, 'collection date', index)">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>collection date</TAG>
+                <VALUE>${row['collection date']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="attributetest(row, 'geographic location (region and locality)')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>geographic location (region and locality)</TAG>
+                <VALUE>${row['geographic location (region and locality)']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="mandatorytest(row, 'geographic location (latitude)', index)">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>geographic location (latitude)</TAG>
+                <VALUE>${row['geographic location (latitude)']}</VALUE>
+                <UNITS>DD</UNITS>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="mandatorytest(row, 'geographic location (longitude)', index)">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>geographic location (longitude)</TAG>
+                <VALUE>${row['geographic location (longitude)']}</VALUE>
+                <UNITS>DD</UNITS>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="mandatorytest(row, 'broad-scale environmental context', index)">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>broad-scale environmental context</TAG>
+                <VALUE>${row['broad-scale environmental context']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="mandatorytest(row, 'local environmental context', index)">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>local environmental context</TAG>
+                <VALUE>${row['local environmental context']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="mandatorytest(row, 'environmental medium', index)">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>environmental medium</TAG>
+                <VALUE>${row['environmental medium']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="attributetest(row, 'elevation')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>elevation</TAG>
+                <VALUE>${row['elevation']}</VALUE>
+                <UNITS>m</UNITS>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="attributetest(row, 'collected_by')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>collected_by</TAG>
+                <VALUE>${row['collected_by']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="mandatorytest(row, 'geographic location (country and/or sea)', index)">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>geographic location (country and/or sea)</TAG>
+                <VALUE>${row['geographic location (country and/or sea)']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="mandatorytest(row, 'depth', index)">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>depth</TAG>
+                <VALUE>${row['depth']}</VALUE>
+                <UNITS>m</UNITS>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="attributetest(row, 'depth inference method')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>depth inference method</TAG>
+                <VALUE>${row['depth inference method']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="attributetest(row, 'sample coordinator affiliation')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>sample coordinator affiliation</TAG>
+                <VALUE>${row['sample coordinator affiliation']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="attributetest(row, 'total depth of water column')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>total depth of water column</TAG>
+                <VALUE>${row['total depth of water column']}</VALUE>
+                <UNITS>m</UNITS>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="attributetest(row, 'source material identifiers')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>source material identifiers</TAG>
+                <VALUE>${row['source material identifiers']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="attributetest(row, 'negative control status')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>negative control status</TAG>
+                <VALUE>${row['negative control status']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="attributetest(row, 'negative control of')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>negative control of</TAG>
+                <VALUE>${row['negative control of']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="attributetest(row, 'negative control type')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>negative control type</TAG>
+                <VALUE>${row['negative control type']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="attributetest(row, 'sample volume or weight for DNA extraction')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>sample volume or weight for DNA extraction</TAG>
+                <VALUE>${row['sample volume or weight for DNA extraction']}</VALUE>
+                <UNITS>mL</UNITS>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="attributetest(row, 'nucleic acid extraction')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>nucleic acid extraction</TAG>
+                <VALUE>${row['nucleic acid extraction']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="attributetest(row, 'nucleic acid extraction kit')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>nucleic acid extraction kit</TAG>
+                <VALUE>${row['nucleic acid extraction kit']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="attributetest(row, 'nucleic acid extraction date')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>nucleic acid extraction date</TAG>
+                <VALUE>${row['nucleic acid extraction date']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="attributetest(row, 'damage treatment')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>damage treatment</TAG>
+                <VALUE>${row['damage treatment']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="attributetest(row, 'master core sample id')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>master core sample id</TAG>
+                <VALUE>${row['master core sample id']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="mandatorytest(row, 'sample age range youngest limit', index)">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>sample age range youngest limit</TAG>
+                <VALUE>${row['sample age range youngest limit']}</VALUE>
+                <UNITS>Ka</UNITS>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="mandatorytest(row, 'sample age range oldest limit', index)">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>sample age range oldest limit</TAG>
+                <VALUE>${row['sample age range oldest limit']}</VALUE>
+                <UNITS>Ka</UNITS>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="mandatorytest(row, 'sample age inference method', index)">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>sample age inference method</TAG>
+                <VALUE>${row['sample age inference method']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="attributetest(row, 'sample age inference description')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>sample age inference description</TAG>
+                <VALUE>${row['sample age inference description']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="attributetest(row, 'host body preservation state')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>host body preservation state</TAG>
+                <VALUE>${row['host body preservation state']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="attributetest(row, 'cultural era')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>cultural era</TAG>
+                <VALUE>${row['cultural era']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="attributetest(row, 'palaeopathology status')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>palaeopathology status</TAG>
+                <VALUE>${row['palaeopathology status']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="attributetest(row, 'sample decontamination pretreatment')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>sample decontamination pretreatment</TAG>
+                <VALUE>${row['sample decontamination pretreatment']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="attributetest(row, 'geological epoch')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>geological epoch</TAG>
+                <VALUE>${row['geological epoch']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="attributetest(row, 'past broad-scale environmental context')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>past broad-scale environmental context</TAG>
+                <VALUE>${row['past broad-scale environmental context']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="attributetest(row, 'recovery date')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>recovery date</TAG>
+                <VALUE>${row['recovery date']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="attributetest(row, 'preservational treatment')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>preservational treatment</TAG>
+                <VALUE>${row['preservational treatment']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="attributetest(row, 'sample composed of')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>sample composed of</TAG>
+                <VALUE>${row['sample composed of']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="mandatorytest(row, 'collecting institution', index)">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>collecting institution</TAG>
+                <VALUE>${row['collecting institution']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="attributetest(row, 'past local environmental context')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>past local environmental context</TAG>
+                <VALUE>${row['past local environmental context']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="attributetest(row, 'sample same as')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>sample same as</TAG>
+                <VALUE>${row['sample same as']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="attributetest(row, 'sample derived from')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>sample derived from</TAG>
+                <VALUE>${row['sample derived from']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="attributetest(row, 'sample coordinator')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>sample coordinator</TAG>
+                <VALUE>${row['sample coordinator']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:if test="attributetest(row, 'sample material type')">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>sample material type</TAG>
+                <VALUE>${row['sample material type']}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            <py:for each="header, tag in extra_attributes.items()">
+            <py:if test="attributetest(row, header)">
+            <SAMPLE_ATTRIBUTE>
+                <TAG>${tag}</TAG>
+                <VALUE>${row[header]}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            </py:if>
+            </py:for>
+            <SAMPLE_ATTRIBUTE>
+                <TAG>SUBMISSION_TOOL</TAG>
+                <VALUE>${tool_name}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+            <SAMPLE_ATTRIBUTE>
+                <TAG>SUBMISSION_TOOL_VERSION</TAG>
+                <VALUE>${tool_version}</VALUE>
+            </SAMPLE_ATTRIBUTE>
+        </SAMPLE_ATTRIBUTES>
+    </SAMPLE>
+    </py:for>
+</SAMPLE_SET>

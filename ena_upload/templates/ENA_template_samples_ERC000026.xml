@@ -63,10 +63,10 @@ def mandatorytest(row, column, index):
                 <VALUE>${row['disease_site']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="attributetest(row, 'sample_type')">
+            <py:if test="attributetest(row, 'sample type')">
             <SAMPLE_ATTRIBUTE>
-                <TAG>sample_type</TAG>
-                <VALUE>${row['sample_type']}</VALUE>
+                <TAG>sample type</TAG>
+                <VALUE>${row['sample type']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'donor_id')">
