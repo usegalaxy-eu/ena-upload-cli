@@ -111,6 +111,10 @@
     <INSTRUMENT_MODEL py:when="row.instrument_model.lower().strip() == 'element aviti'">Element AVITI</INSTRUMENT_MODEL>
     <INSTRUMENT_MODEL py:when="row.instrument_model.lower().strip() == 'unspecified'">unspecified</INSTRUMENT_MODEL>
 </ELEMENT>
+<AVITI py:when="row.platform.lower().strip() == 'aviti'" py:choose="">
+    <INSTRUMENT_MODEL py:when="row.instrument_model.lower().strip() == 'aviti 24'">AVITI 24</INSTRUMENT_MODEL>
+    <INSTRUMENT_MODEL py:when="row.instrument_model.lower().strip() == 'unspecified'">unspecified</INSTRUMENT_MODEL>
+</AVITI>
 <ULTIMA py:when="row.platform.lower().strip() == 'ultima'" py:choose="">
     <INSTRUMENT_MODEL py:when="row.instrument_model.lower().strip() == 'ug 100'">UG 100</INSTRUMENT_MODEL>
     <INSTRUMENT_MODEL py:when="row.instrument_model.lower().strip() == 'unspecified'">unspecified</INSTRUMENT_MODEL>
