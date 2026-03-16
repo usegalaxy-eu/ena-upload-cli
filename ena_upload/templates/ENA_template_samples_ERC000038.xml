@@ -83,21 +83,18 @@ def mandatorytest(row, column, index):
             <SAMPLE_ATTRIBUTE>
                 <TAG>shell length</TAG>
                 <VALUE>${row['shell length']}</VALUE>
-                <UNITS>g</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="mandatorytest(row, 'shell width', index)">
             <SAMPLE_ATTRIBUTE>
                 <TAG>shell width</TAG>
                 <VALUE>${row['shell width']}</VALUE>
-                <UNITS>g</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'shell markings')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>shell markings</TAG>
                 <VALUE>${row['shell markings']}</VALUE>
-                <UNITS>g</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'sample health state')">
@@ -190,7 +187,6 @@ def mandatorytest(row, column, index):
             <SAMPLE_ATTRIBUTE>
                 <TAG>toxin burden</TAG>
                 <VALUE>${row['toxin burden']}</VALUE>
-                <UNITS>mg</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="mandatorytest(row, 'geographic location (country and/or sea)', index)">

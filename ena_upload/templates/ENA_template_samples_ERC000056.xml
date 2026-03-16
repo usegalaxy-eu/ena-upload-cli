@@ -43,7 +43,6 @@ def mandatorytest(row, column, index):
             <SAMPLE_ATTRIBUTE>
                 <TAG>culture result organism</TAG>
                 <VALUE>${row['culture result organism']}</VALUE>
-                <UNITS>m2</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'culture target microbial analyte')">
@@ -56,7 +55,6 @@ def mandatorytest(row, column, index):
             <SAMPLE_ATTRIBUTE>
                 <TAG>biological sample replicate</TAG>
                 <VALUE>${row['biological sample replicate']}</VALUE>
-                <UNITS>year</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'technical sample replicate')">
@@ -112,7 +110,6 @@ def mandatorytest(row, column, index):
             <SAMPLE_ATTRIBUTE>
                 <TAG>sample transport container</TAG>
                 <VALUE>${row['sample transport container']}</VALUE>
-                <UNITS>J/°C</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'sample transport duration')">
@@ -201,7 +198,6 @@ def mandatorytest(row, column, index):
             <SAMPLE_ATTRIBUTE>
                 <TAG>soil texture classification</TAG>
                 <VALUE>${row['soil texture classification']}</VALUE>
-                <UNITS>°C</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'soil sediment porosity')">
@@ -226,7 +222,6 @@ def mandatorytest(row, column, index):
             <SAMPLE_ATTRIBUTE>
                 <TAG>collection site geographic feature</TAG>
                 <VALUE>${row['collection site geographic feature']}</VALUE>
-                <UNITS>m2</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'area sampled size')">
@@ -246,7 +241,6 @@ def mandatorytest(row, column, index):
             <SAMPLE_ATTRIBUTE>
                 <TAG>study design</TAG>
                 <VALUE>${row['study design']}</VALUE>
-                <UNITS>kg s−3</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'project name')">
@@ -277,7 +271,6 @@ def mandatorytest(row, column, index):
             <SAMPLE_ATTRIBUTE>
                 <TAG>farm equipment sanitization frequency</TAG>
                 <VALUE>${row['farm equipment sanitization frequency']}</VALUE>
-                <UNITS>m2</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'farm watering water source')">
@@ -320,14 +313,12 @@ def mandatorytest(row, column, index):
             <SAMPLE_ATTRIBUTE>
                 <TAG>food production characteristics</TAG>
                 <VALUE>${row['food production characteristics']}</VALUE>
-                <UNITS>°C</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'food animal group size')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>food animal group size</TAG>
                 <VALUE>${row['food animal group size']}</VALUE>
-                <UNITS>year</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'fertilizer administration date')">
@@ -587,28 +578,24 @@ def mandatorytest(row, column, index):
             <SAMPLE_ATTRIBUTE>
                 <TAG>sampling floor</TAG>
                 <VALUE>${row['sampling floor']}</VALUE>
-                <UNITS>°C</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'average daily occupancy')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>average daily occupancy</TAG>
                 <VALUE>${row['average daily occupancy']}</VALUE>
-                <UNITS>°C</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'sample surface moisture')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>sample surface moisture</TAG>
                 <VALUE>${row['sample surface moisture']}</VALUE>
-                <UNITS>year</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'sampling room id or name')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>sampling room id or name</TAG>
                 <VALUE>${row['sampling room id or name']}</VALUE>
-                <UNITS>year</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'fermentation relative humidity')">
@@ -951,14 +938,12 @@ def mandatorytest(row, column, index):
             <SAMPLE_ATTRIBUTE>
                 <TAG>extreme weather date</TAG>
                 <VALUE>${row['extreme weather date']}</VALUE>
-                <UNITS>J/°C</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'extreme weather event')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>extreme weather event</TAG>
                 <VALUE>${row['extreme weather event']}</VALUE>
-                <UNITS>m</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'season')">
@@ -1008,7 +993,6 @@ def mandatorytest(row, column, index):
             <SAMPLE_ATTRIBUTE>
                 <TAG>fermentation chemical additives</TAG>
                 <VALUE>${row['fermentation chemical additives']}</VALUE>
-                <UNITS>J/°C</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'fermentation chemical additives percentage')">
@@ -1022,21 +1006,18 @@ def mandatorytest(row, column, index):
             <SAMPLE_ATTRIBUTE>
                 <TAG>study treatment</TAG>
                 <VALUE>${row['study treatment']}</VALUE>
-                <UNITS>%</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'spike-in organism')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>spike-in organism</TAG>
                 <VALUE>${row['spike-in organism']}</VALUE>
-                <UNITS>g/m3</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'spike-in organism count')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>spike-in organism count</TAG>
                 <VALUE>${row['spike-in organism count']}</VALUE>
-                <UNITS>mm</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'fermentation temperature')">
@@ -1050,35 +1031,30 @@ def mandatorytest(row, column, index):
             <SAMPLE_ATTRIBUTE>
                 <TAG>spike-in with heavy metals</TAG>
                 <VALUE>${row['spike-in with heavy metals']}</VALUE>
-                <UNITS>year</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'microbial starter inoculation')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>microbial starter inoculation</TAG>
                 <VALUE>${row['microbial starter inoculation']}</VALUE>
-                <UNITS>m3/day</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'microbial starter source')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>microbial starter source</TAG>
                 <VALUE>${row['microbial starter source']}</VALUE>
-                <UNITS>year</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'microbial starter preparation')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>microbial starter preparation</TAG>
                 <VALUE>${row['microbial starter preparation']}</VALUE>
-                <UNITS>year</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'spike-in bacterial serovar or serotype')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>spike-in bacterial serovar or serotype</TAG>
                 <VALUE>${row['spike-in bacterial serovar or serotype']}</VALUE>
-                <UNITS>year</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'antimicrobial phenotype of spike-in bacteria')">
@@ -1098,14 +1074,12 @@ def mandatorytest(row, column, index):
             <SAMPLE_ATTRIBUTE>
                 <TAG>microbial starter organism count</TAG>
                 <VALUE>${row['microbial starter organism count']}</VALUE>
-                <UNITS>m2</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'spike-in with antibiotics')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>spike-in with antibiotics</TAG>
                 <VALUE>${row['spike-in with antibiotics']}</VALUE>
-                <UNITS>m2</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'study incubation temperature')">
@@ -1132,7 +1106,6 @@ def mandatorytest(row, column, index):
             <SAMPLE_ATTRIBUTE>
                 <TAG>biocide</TAG>
                 <VALUE>${row['biocide']}</VALUE>
-                <UNITS>°C</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'negative control type')">
@@ -1223,28 +1196,24 @@ def mandatorytest(row, column, index):
             <SAMPLE_ATTRIBUTE>
                 <TAG>microbiological culture medium</TAG>
                 <VALUE>${row['microbiological culture medium']}</VALUE>
-                <UNITS>Pa</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'spike-in growth medium')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>spike-in growth medium</TAG>
                 <VALUE>${row['spike-in growth medium']}</VALUE>
-                <UNITS>W/m2</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'fermentation medium')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>fermentation medium</TAG>
                 <VALUE>${row['fermentation medium']}</VALUE>
-                <UNITS>m</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'growth medium')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>growth medium</TAG>
                 <VALUE>${row['growth medium']}</VALUE>
-                <UNITS>year</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'isolation and growth condition')">
@@ -1299,7 +1268,6 @@ def mandatorytest(row, column, index):
             <SAMPLE_ATTRIBUTE>
                 <TAG>lot number</TAG>
                 <VALUE>${row['lot number']}</VALUE>
-                <UNITS>%</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'single cell or viral particle lysis approach')">
@@ -1445,7 +1413,6 @@ def mandatorytest(row, column, index):
             <SAMPLE_ATTRIBUTE>
                 <TAG>food cleaning process</TAG>
                 <VALUE>${row['food cleaning process']}</VALUE>
-                <UNITS>m</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'hygienic food production area')">
@@ -1459,35 +1426,30 @@ def mandatorytest(row, column, index):
             <SAMPLE_ATTRIBUTE>
                 <TAG>food contact surface</TAG>
                 <VALUE>${row['food contact surface']}</VALUE>
-                <UNITS>J/°C</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'food cooking process')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>food cooking process</TAG>
                 <VALUE>${row['food cooking process']}</VALUE>
-                <UNITS>%</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'food product by quality')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>food product by quality</TAG>
                 <VALUE>${row['food product by quality']}</VALUE>
-                <UNITS>year</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'food animal antimicrobial route of administration')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>food animal antimicrobial route of administration</TAG>
                 <VALUE>${row['food animal antimicrobial route of administration']}</VALUE>
-                <UNITS>m2</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'food allergen labeling')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>food allergen labeling</TAG>
                 <VALUE>${row['food allergen labeling']}</VALUE>
-                <UNITS>W/m2</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'food product type')">
@@ -1500,28 +1462,24 @@ def mandatorytest(row, column, index):
             <SAMPLE_ATTRIBUTE>
                 <TAG>food animal source sex category</TAG>
                 <VALUE>${row['food animal source sex category']}</VALUE>
-                <UNITS>°C</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'animal intrusion near sample source')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>animal intrusion near sample source</TAG>
                 <VALUE>${row['animal intrusion near sample source']}</VALUE>
-                <UNITS>°C</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'food packing medium integrity')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>food packing medium integrity</TAG>
                 <VALUE>${row['food packing medium integrity']}</VALUE>
-                <UNITS>°C</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'microbial starter')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>microbial starter</TAG>
                 <VALUE>${row['microbial starter']}</VALUE>
-                <UNITS>°C</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'food treatment process')">
@@ -1534,7 +1492,6 @@ def mandatorytest(row, column, index):
             <SAMPLE_ATTRIBUTE>
                 <TAG>food preservation process</TAG>
                 <VALUE>${row['food preservation process']}</VALUE>
-                <UNITS>J/°C</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'microbial starter ncbi taxonomy id')">
@@ -1565,7 +1522,6 @@ def mandatorytest(row, column, index):
             <SAMPLE_ATTRIBUTE>
                 <TAG>food ingredient</TAG>
                 <VALUE>${row['food ingredient']}</VALUE>
-                <UNITS>year</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'food stored by consumer (storage duration)')">
@@ -1586,14 +1542,12 @@ def mandatorytest(row, column, index):
             <SAMPLE_ATTRIBUTE>
                 <TAG>part of plant or animal</TAG>
                 <VALUE>${row['part of plant or animal']}</VALUE>
-                <UNITS>year</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'hazard analysis critical control points (haccp) guide food safety term')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>hazard analysis critical control points (haccp) guide food safety term</TAG>
                 <VALUE>${row['hazard analysis critical control points (haccp) guide food safety term']}</VALUE>
-                <UNITS>year</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'dietary claim or use')">
@@ -1606,7 +1560,6 @@ def mandatorytest(row, column, index):
             <SAMPLE_ATTRIBUTE>
                 <TAG>degree of plant part maturity</TAG>
                 <VALUE>${row['degree of plant part maturity']}</VALUE>
-                <UNITS>year</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'food production environmental monitoring zone')">
@@ -1625,21 +1578,19 @@ def mandatorytest(row, column, index):
             <SAMPLE_ATTRIBUTE>
                 <TAG>food traceability list category</TAG>
                 <VALUE>${row['food traceability list category']}</VALUE>
-                <UNITS>mm</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'food animal antimicrobial frequency')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>food animal antimicrobial frequency</TAG>
                 <VALUE>${row['food animal antimicrobial frequency']}</VALUE>
-                <UNITS>m2</UNITS>
+                <UNITS>day</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'intended consumer')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>intended consumer</TAG>
                 <VALUE>${row['intended consumer']}</VALUE>
-                <UNITS>m2</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'quantity purchased')">
@@ -1652,14 +1603,12 @@ def mandatorytest(row, column, index):
             <SAMPLE_ATTRIBUTE>
                 <TAG>food container or wrapping</TAG>
                 <VALUE>${row['food container or wrapping']}</VALUE>
-                <UNITS>°C</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'food additive')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>food additive</TAG>
                 <VALUE>${row['food additive']}</VALUE>
-                <UNITS>g/m3</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'food source age')">
@@ -1673,28 +1622,24 @@ def mandatorytest(row, column, index):
             <SAMPLE_ATTRIBUTE>
                 <TAG>food animal antimicrobial intended use</TAG>
                 <VALUE>${row['food animal antimicrobial intended use']}</VALUE>
-                <UNITS>year</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'food packing medium')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>food packing medium</TAG>
                 <VALUE>${row['food packing medium']}</VALUE>
-                <UNITS>m2</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'specific intended consumer')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>specific intended consumer</TAG>
                 <VALUE>${row['specific intended consumer']}</VALUE>
-                <UNITS>m2</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'purchase date')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>purchase date</TAG>
                 <VALUE>${row['purchase date']}</VALUE>
-                <UNITS>m2</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'food stored by consumer (storage temperature)')">
@@ -1708,7 +1653,6 @@ def mandatorytest(row, column, index):
             <SAMPLE_ATTRIBUTE>
                 <TAG>food package capacity</TAG>
                 <VALUE>${row['food package capacity']}</VALUE>
-                <UNITS>year</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'food distribution point geographic location (city)')">
@@ -1721,14 +1665,12 @@ def mandatorytest(row, column, index):
             <SAMPLE_ATTRIBUTE>
                 <TAG>food product origin geographic location</TAG>
                 <VALUE>${row['food product origin geographic location']}</VALUE>
-                <UNITS>m</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'food distribution point geographic location')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>food distribution point geographic location</TAG>
                 <VALUE>${row['food distribution point geographic location']}</VALUE>
-                <UNITS>m</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'production labeling claims')">
