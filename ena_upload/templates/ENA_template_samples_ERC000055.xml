@@ -234,7 +234,6 @@ def mandatorytest(row, column, index):
             <SAMPLE_ATTRIBUTE>
                 <TAG>food production characteristics</TAG>
                 <VALUE>${row['food production characteristics']}</VALUE>
-                <UNITS>°C</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'fertilizer administration date')">
@@ -911,7 +910,6 @@ def mandatorytest(row, column, index):
             <SAMPLE_ATTRIBUTE>
                 <TAG>lot number</TAG>
                 <VALUE>${row['lot number']}</VALUE>
-                <UNITS>%</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'single cell or viral particle lysis approach')">

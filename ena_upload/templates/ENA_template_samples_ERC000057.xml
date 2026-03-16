@@ -407,7 +407,6 @@ def mandatorytest(row, column, index):
             <SAMPLE_ATTRIBUTE>
                 <TAG>host of the symbiotic host subject id</TAG>
                 <VALUE>${row['host of the symbiotic host subject id']}</VALUE>
-                <UNITS>year</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'host of the symbiotic host taxon id')">
@@ -501,35 +500,30 @@ def mandatorytest(row, column, index):
             <SAMPLE_ATTRIBUTE>
                 <TAG>host cellular location</TAG>
                 <VALUE>${row['host cellular location']}</VALUE>
-                <UNITS>%</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'host of the symbiotic host infra-specific rank')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>host of the symbiotic host infra-specific rank</TAG>
                 <VALUE>${row['host of the symbiotic host infra-specific rank']}</VALUE>
-                <UNITS>°C</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'type of symbiosis')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>type of symbiosis</TAG>
                 <VALUE>${row['type of symbiosis']}</VALUE>
-                <UNITS>°C</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'observed coinfecting organisms in host of host')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>observed coinfecting organisms in host of host</TAG>
                 <VALUE>${row['observed coinfecting organisms in host of host']}</VALUE>
-                <UNITS>year</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'host of the symbiotic host infra-specific name')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>host of the symbiotic host infra-specific name</TAG>
                 <VALUE>${row['host of the symbiotic host infra-specific name']}</VALUE>
-                <UNITS>year</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'host of the symbiotic host total mass')">
@@ -543,28 +537,24 @@ def mandatorytest(row, column, index):
             <SAMPLE_ATTRIBUTE>
                 <TAG>host of the symbiotic host local environmental context</TAG>
                 <VALUE>${row['host of the symbiotic host local environmental context']}</VALUE>
-                <UNITS>g/m3</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'host of the symbiotic host common name')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>host of the symbiotic host common name</TAG>
                 <VALUE>${row['host of the symbiotic host common name']}</VALUE>
-                <UNITS>°C</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'host of the symbiotic host genotype')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>host of the symbiotic host genotype</TAG>
                 <VALUE>${row['host of the symbiotic host genotype']}</VALUE>
-                <UNITS>year</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'route of transmission')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>route of transmission</TAG>
                 <VALUE>${row['route of transmission']}</VALUE>
-                <UNITS>mm</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'host dry mass')">
