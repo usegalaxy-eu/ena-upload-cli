@@ -906,7 +906,7 @@ def mandatorytest(row, column, index):
                 <VALUE>${row['sample size sorting method']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="mandatorytest(row, 'organism count', index)">
+            <py:if test="attributetest(row, 'organism count')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>organism count</TAG>
                 <VALUE>${row['organism count']}</VALUE>
@@ -963,7 +963,7 @@ def mandatorytest(row, column, index):
                 <UNITS>%</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="mandatorytest(row, 'air temperature', index)">
+            <py:if test="attributetest(row, 'air temperature')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>air temperature</TAG>
                 <VALUE>${row['air temperature']}</VALUE>
@@ -1030,7 +1030,7 @@ def mandatorytest(row, column, index):
                 <UNITS>year</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="mandatorytest(row, 'carbon dioxide', index)">
+            <py:if test="attributetest(row, 'carbon dioxide')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>carbon dioxide</TAG>
                 <VALUE>${row['carbon dioxide']}</VALUE>
