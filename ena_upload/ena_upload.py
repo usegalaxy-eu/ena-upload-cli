@@ -23,6 +23,7 @@ import tempfile
 from ena_upload._version import __version__
 from ena_upload.check_remote import remote_check
 from ena_upload.json_parsing.ena_submission import EnaSubmission
+from ena_upload.ena_client import EnaClient
 
 
 SCHEMA_TYPES = ['study', 'experiment', 'run', 'sample']
@@ -282,6 +283,18 @@ def construct_xml(schema, stream, xsd):
     return xml_file
 
 
+def construct_json(payload, output_file=None):
+    """
+    Costruisce e valida il payload JSON per la sottomissione.
+    """
+    json_string = json.dumps(payload, indent=4)
+    if output_file:
+        with open(output_file, 'w') as fw:
+            fw.write(json_string)
+        print(f'wrote {output_file}')
+    return json_string
+
+
 def actors(template_path, checklist):
     ''':return: the filenames of schema definitions and templates
     '''
@@ -336,7 +349,142 @@ def run_construct(template_path, schema_targets,  center, checklist, tool):
     return schema_xmls
 
 
-def construct_submission(template_path, action, submission_input, center, checklist, tool):
+def run_construct_json(schema_targets, center, tool):
+    """
+    Costruisce il payload JSON per le schema in schema_targets conforme a ENA Webin V2.
+    """
+    payload = {}
+    
+    # Mappatura dei campi core per ogni schema (da colonna df a chiave JSON ENA)
+    core_mappings = {
+        'study': {
+            'alias': 'alias',
+            'title': 'title',
+            'study_type': 'type',
+            'study_abstract': 'abstract',
+            'pubmed_id': 'pubmedId'
+        },
+        'sample': {
+            'alias': 'alias',
+            'title': 'title',
+            'taxon_id': 'taxonId',
+            'scientific_name': 'scientificName',
+            'common_name': 'commonName',
+            'sample_description': 'description'
+        },
+        'experiment': {
+            'alias': 'alias',
+            'title': 'title',
+            'study_alias': 'studyAlias',
+            'sample_alias': 'sampleAlias',
+            'platform': 'platform',
+            'instrument_model': 'instrumentModel',
+            'library_name': 'libraryName',
+            'library_strategy': 'libraryStrategy',
+            'library_source': 'librarySource',
+            'library_selection': 'librarySelection',
+            'library_layout': 'libraryLayout',
+            'insert_size': 'nominalInsertSize'
+        }
+    }
+
+    for schema, targets in schema_targets.items():
+        if schema == 'run':
+            run_list = []
+            for alias, group in targets.groupby('alias'):
+                run_entry = {
+                    "alias": alias,
+                    "experimentAlias": group['experiment_alias'].iloc[0],
+                    "centerName": center
+                }
+                files = []
+                for _, row in group.iterrows():
+                    # Cerchiamo il checksum in diverse varianti possibili
+                    checksum = (row.get('file_checksum') or 
+                                row.get('file checksum') or 
+                                row.get('checksum') or 
+                                "")
+                    
+                    file_entry = {
+                        "fileName": row['file_name'],
+                        "fileType": row['file_type'],
+                        "checksumMethod": "MD5",
+                        "checksum": checksum
+                    }
+                    if 'read_type' in row and pd.notna(row['read_type']):
+                        file_entry['readType'] = row['read_type']
+                    files.append(file_entry)
+                run_entry["dataFiles"] = files
+                run_list.append(run_entry)
+            payload["runs"] = run_list
+        else:
+            schema_list = []
+            mappings = core_mappings.get(schema, {})
+            
+            for _, row in targets.iterrows():
+                entry = {"centerName": center}
+                attributes = []
+                
+                # Identifichiamo le colonne degli attributi extra
+                # (formato schema_attribute[tag])
+                pattern = re.compile(rf"{schema}_attribute\[(.*)\]")
+                
+                for col in targets.columns:
+                    val = row[col]
+                    if pd.isna(val) or str(val).strip() == "":
+                        continue
+                        
+                    if col in mappings:
+                        entry[mappings[col]] = val
+                    elif col == 'alias': # alias è universale
+                        entry['alias'] = val
+                    else:
+                        # Gestione attributi
+                        tag = col
+                        match = re.match(pattern, col)
+                        if match:
+                            tag = match.group(1)
+                        
+                        # Evitiamo di duplicare campi core negli attributi
+                        if col not in mappings and col != 'status':
+                            attributes.append({"tag": tag, "value": str(val)})
+                
+                if attributes:
+                    entry["attributes"] = attributes
+                
+                schema_list.append(entry)
+            
+            # ENA V2 usa plurali per le chiavi radice
+            root_key = f"{schema}s" if not schema.endswith('s') else schema
+            if schema == 'study': root_key = 'studies'
+            if schema == 'sample': root_key = 'samples'
+            if schema == 'experiment': root_key = 'experiments'
+            
+            payload[root_key] = schema_list
+            
+    return payload
+
+
+def construct_json(payload, filename):
+    """
+    Salva il payload JSON su file.
+    """
+    with open(filename, 'w') as f:
+        json.dump(payload, f, indent=4)
+    return filename
+
+
+def get_and_validate_checklist(ena_client, checklist_id):
+    """
+    Recupera il checklist in formato JSON e lo restituisce.
+    In futuro può essere usato per validazione locale.
+    """
+    if not checklist_id:
+        return None
+    checklist_data = ena_client.get_checklist(checklist_id)
+    if checklist_data:
+        print(f"Checklist {checklist_id} retrieved successfully")
+    return checklist_data
     '''construct XML for submission
 
     :param action: action for submission -
@@ -1026,15 +1174,50 @@ def main():
     # ? need to add a place holder for setting up
     base_path = os.path.abspath(os.path.dirname(__file__))
     template_path = os.path.join(base_path, 'templates')
-    if action in ['ADD', 'MODIFY']:
-        # when ADD/MODIFY,
-        # requires source XMLs for 'run', 'experiment', 'sample', 'experiment'
-        # schema_xmls record XMLs for all these schema and following 'submission'
-        schema_xmls = run_construct(
-            template_path, schema_targets, center, checklist, tool)
+    
+    # Inizializziamo il client ENA
+    ena_client = EnaClient(webin_id, password, dev=dev)
+    
+    # Recupero checklist se specificato
+    if checklist:
+        get_and_validate_checklist(ena_client, checklist)
 
-        submission_xml = construct_submission(template_path, action,
-                                              schema_xmls, center, checklist, tool)
+    # Decidiamo se usare il nuovo flusso JSON (default per ADD/MODIFY in questa versione)
+    use_json = True 
+
+    schema_update = {}
+
+    if action in ['ADD', 'MODIFY']:
+        if use_json:
+            print("Constructing JSON payload for submission")
+            json_payload = run_construct_json(schema_targets, center, tool)
+            
+            if draft:
+                construct_json(json_payload, "submission.json")
+                print("Draft mode: JSON payload saved to submission.json")
+                return # Exit early for draft
+            else:
+                print(f"Submitting JSON to ENA server (Dev: {dev})")
+                response = ena_client.submit_json(json_payload)
+                if response:
+                    print("Submission successful")
+                    with open('receipt.json', 'w') as f:
+                        json.dump(response, f, indent=4)
+                    print("Receipt saved to receipt.json")
+                    # TODO: Implementare process_receipt_json completa
+                    # Per ora terminiamo qui con successo
+                    print("\nNota: La migrazione JSON è in fase iniziale. L'aggiornamento automatico delle tabelle con gli accession number richiede l'implementazione del parser per la ricevuta JSON.")
+                    return 
+                else:
+                    sys.exit("Submission failed")
+        else:
+            # Vecchio flusso XML
+            schema_xmls = run_construct(
+                template_path, schema_targets, center, checklist, tool)
+
+            submission_xml = construct_submission(template_path, action,
+                                                  schema_xmls, center, checklist, tool)
+            schema_xmls['submission'] = submission_xml
 
     elif action in ['CANCEL', 'RELEASE']:
         # when CANCEL/RELEASE, only accessions needed
@@ -1043,14 +1226,13 @@ def main():
 
         submission_xml = construct_submission(template_path, action,
                                               schema_targets, center, checklist, tool)
+        schema_xmls['submission'] = submission_xml
 
     else:
         print(f"The action {action} is not supported.")
-    schema_xmls['submission'] = submission_xml
+        sys.exit(1)
 
-    if draft:
-        print("No submission will be performed, remove `--draft' argument to perform submission.")
-    else:
+    if not use_json:
         if dev:
             url = 'https://wwwdev.ebi.ac.uk/ena/submit/drop-box/submit/'
         else:
@@ -1067,16 +1249,16 @@ def main():
             print("There was an ERROR during submission:")
             sys.exit(receipt)
 
-    if action in ['ADD', 'MODIFY'] and not draft:
-        schema_dataframe = update_table(schema_dataframe,
-                                            schema_targets,
-                                            schema_update)
-    else:
-        schema_dataframe = update_table_simple(schema_dataframe,
-                                               schema_targets,
-                                               action)
-    # save updates in new tables
-    save_update(schema_tables, schema_dataframe)
+        if action in ['ADD', 'MODIFY'] and not draft:
+            schema_dataframe = update_table(schema_dataframe,
+                                                schema_targets,
+                                                schema_update)
+        else:
+            schema_dataframe = update_table_simple(schema_dataframe,
+                                                   schema_targets,
+                                                   action)
+        # save updates in new tables
+        save_update(schema_tables, schema_dataframe)
 
 
 if __name__ == "__main__":
