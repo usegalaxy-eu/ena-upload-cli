@@ -1104,6 +1104,7 @@
     <xs:simpleType name="typeUltimaModel">
         <xs:restriction base="xs:string">
             <xs:enumeration value="UG 100"/>
+            <xs:enumeration value="UG 200"/>
             <xs:enumeration value="unspecified"/>
         </xs:restriction>
     </xs:simpleType>
