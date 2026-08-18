@@ -212,35 +212,53 @@ def parse_read_types(value):
     return [read_type.strip().lower() for read_type in str(value).split(',')]
 
 
-def validate_run_table(run_df):
+def clean_value(value):
+    return str(value).strip() if is_filled(value) else ''
+
+
+def file_label(row, index):
+    if 'file_name' in row.index and is_filled(row['file_name']):
+        return row['file_name']
+
+    return index
+
+
+def validate_read_type_values(run_df):
     errors = []
+    if 'read_type' not in run_df.columns:
+        return errors
 
-    if 'file_type' in run_df.columns:
-        file_type_column = 'file_type'
-    elif 'file_format' in run_df.columns:
-        file_type_column = 'file_format'
-    else:
-        file_type_column = None
+    for index, row in run_df.iterrows():
+        alias = row['alias'] if 'alias' in run_df.columns else index
+        read_types = parse_read_types(row['read_type'])
 
-    if 'read_type' in run_df.columns:
-        for index, row in run_df.iterrows():
-            read_types = parse_read_types(row['read_type'])
-            alias = row['alias'] if 'alias' in run_df.columns else index
-            if '' in read_types:
-                errors.append(
-                    f'In run, alias: "{alias}". Read type contains an empty '
-                    f'value at row "{index}".'
-                )
-
-            invalid_read_types = sorted(
-                set(read_types) - READ_TYPE_VALUES - {''}
+        if '' in read_types:
+            errors.append(
+                f'In run, alias: "{alias}". Read type contains an empty '
+                f'value at row "{index}".'
             )
-            if invalid_read_types:
-                errors.append(
-                    f'In run, alias: "{alias}". Invalid read_type value(s) '
-                    f'"{", ".join(invalid_read_types)}". Allowed values are: '
-                    f'{", ".join(sorted(READ_TYPE_VALUES))}.'
-                )
+
+        invalid_read_types = sorted(set(read_types) - READ_TYPE_VALUES - {''})
+        if invalid_read_types:
+            errors.append(
+                f'In run, alias: "{alias}". Invalid read_type value(s) '
+                f'"{", ".join(invalid_read_types)}". Allowed values are: '
+                f'{", ".join(sorted(READ_TYPE_VALUES))}.'
+            )
+
+    return errors
+
+
+def validate_run_table(run_df):
+    errors = validate_read_type_values(run_df)
+
+    file_type_column = next(
+        (
+            column for column in ['file_type', 'file_format']
+            if column in run_df.columns
+        ),
+        None
+    )
 
     if 'alias' not in run_df.columns:
         if errors:
@@ -249,107 +267,66 @@ def validate_run_table(run_df):
 
     for alias, group in run_df.groupby('alias', dropna=False):
         if 'experiment_alias' in group.columns:
-            experiment_aliases = {
-                str(experiment_alias).strip()
+            experiment_aliases = sorted({
+                clean_value(experiment_alias)
                 for experiment_alias in group['experiment_alias']
                 if is_filled(experiment_alias)
-            }
+            })
             if len(experiment_aliases) > 1:
                 errors.append(
                     f'In run, alias: "{alias}". A run can reference only one '
                     f'experiment_alias, but found: '
-                    f'{", ".join(sorted(experiment_aliases))}. Use a unique '
+                    f'{", ".join(experiment_aliases)}. Use a unique '
                     f'run alias for each experiment.'
                 )
 
         if file_type_column is None:
             continue
 
-        file_types = group[file_type_column].apply(
-            lambda file_type: str(file_type).strip().lower()
-            if is_filled(file_type) else ''
-        )
-        fastq_group = group[file_types == 'fastq']
-
-        if fastq_group.empty:
+        fastq_group = group[
+            group[file_type_column].apply(clean_value).str.lower() == 'fastq'
+        ]
+        if len(fastq_group) <= 2:
             continue
 
-        read_types_by_index = {}
+        read_types_by_file = {}
         for index, row in fastq_group.iterrows():
-            if 'read_type' in run_df.columns:
-                read_types = parse_read_types(row['read_type'])
-            else:
-                read_types = []
-            read_types_by_index[index] = read_types
+            read_types = (
+                parse_read_types(row['read_type'])
+                if 'read_type' in run_df.columns else []
+            )
+            read_types_by_file[file_label(row, index)] = read_types
 
-            if 'single' in read_types and 'paired' in read_types:
-                errors.append(
-                    f'In run, alias: "{alias}". File "{row.file_name}" cannot '
-                    f'use read_type values "single" and "paired" together.'
-                )
-
-        rows_with_read_type = {
-            index for index, read_types in read_types_by_index.items()
-            if read_types
-        }
-        if not rows_with_read_type:
-            if len(fastq_group) > 2:
-                errors.append(
-                    f'In run, alias: "{alias}". {len(fastq_group)} FASTQ '
-                    f'files were provided without read_type values. ENA '
-                    f'requires read_type values for multi-fastq runs. Split '
-                    f'ordinary paired-end data into one run alias per R1/R2 '
-                    f'pair, or use barcode read types for true multi-fastq '
-                    f'submissions.'
-                )
+        missing_files = [
+            filename for filename, read_types in read_types_by_file.items()
+            if not read_types
+        ]
+        if missing_files:
+            errors.append(
+                f'In run, alias: "{alias}". {len(fastq_group)} FASTQ files '
+                f'were provided, so ENA requires read_type values. Missing '
+                f'read_type for: {", ".join(map(str, missing_files))}.'
+            )
             continue
 
-        if len(rows_with_read_type) != len(fastq_group):
-            missing_files = [
-                row.file_name
-                for index, row in fastq_group.iterrows()
-                if index not in rows_with_read_type
-            ]
-            errors.append(
-                f'In run, alias: "{alias}". read_type is set for only some '
-                f'FASTQ files. Missing read_type for: '
-                f'{", ".join(missing_files)}.'
-            )
-
-        paired_files = [
-            index for index, read_types in read_types_by_index.items()
-            if 'paired' in read_types
-        ]
-        single_files = [
-            index for index, read_types in read_types_by_index.items()
-            if 'single' in read_types
-        ]
-        multi_fastq_read_types = {
+        all_read_types = {
             read_type
-            for read_types in read_types_by_index.values()
+            for read_types in read_types_by_file.values()
             for read_type in read_types
-        } & MULTI_FASTQ_READ_TYPES
+        }
+        paired_file_count = sum(
+            'paired' in read_types
+            for read_types in read_types_by_file.values()
+        )
 
-        if paired_files and len(paired_files) != 2:
+        if paired_file_count not in [0, 2]:
             errors.append(
-                f'In run, alias: "{alias}". {len(paired_files)} FASTQ files '
+                f'In run, alias: "{alias}". {paired_file_count} FASTQ files '
                 f'are marked with read_type "paired". ENA expects exactly '
                 f'two paired FASTQ files in one run.'
             )
 
-        if single_files and len(fastq_group) != 1:
-            errors.append(
-                f'In run, alias: "{alias}". read_type "single" can only be '
-                f'used with one FASTQ file in a run.'
-            )
-
-        if single_files and paired_files:
-            errors.append(
-                f'In run, alias: "{alias}". read_type values "single" and '
-                f'"paired" cannot be mixed in one run.'
-            )
-
-        if len(fastq_group) > 2 and not multi_fastq_read_types:
+        if not all_read_types & MULTI_FASTQ_READ_TYPES:
             errors.append(
                 f'In run, alias: "{alias}". {len(fastq_group)} FASTQ files '
                 f'were provided with only simple read_type values. ENA '
