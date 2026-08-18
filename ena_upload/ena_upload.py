@@ -30,6 +30,19 @@ SCHEMA_TYPES = ['study', 'experiment', 'run', 'sample']
 STATUS_CHANGES = {'ADD': 'ADDED', 'MODIFY': 'MODIFIED',
               'CANCEL': 'CANCELLED', 'RELEASE': 'RELEASED'}
 
+READ_TYPE_VALUES = {
+    'single',
+    'paired',
+    'cell_barcode',
+    'umi_barcode',
+    'feature_barcode',
+    'sample_barcode',
+    'spatial_barcode',
+}
+
+MULTI_FASTQ_READ_TYPES = READ_TYPE_VALUES - {'single', 'paired'}
+
+
 class MyFTP_TLS(ftplib.FTP_TLS):
     """Explicit FTPS, with shared TLS session"""
 
@@ -188,6 +201,168 @@ def check_file_checksum(df):
     return s.all()
 
 
+def is_filled(value):
+    return pd.notna(value) and not str(value).isspace()
+
+
+def parse_read_types(value):
+    if not is_filled(value):
+        return []
+
+    return [read_type.strip().lower() for read_type in str(value).split(',')]
+
+
+def validate_run_table(run_df):
+    errors = []
+
+    if 'file_type' in run_df.columns:
+        file_type_column = 'file_type'
+    elif 'file_format' in run_df.columns:
+        file_type_column = 'file_format'
+    else:
+        file_type_column = None
+
+    if 'read_type' in run_df.columns:
+        for index, row in run_df.iterrows():
+            read_types = parse_read_types(row['read_type'])
+            alias = row['alias'] if 'alias' in run_df.columns else index
+            if '' in read_types:
+                errors.append(
+                    f'In run, alias: "{alias}". Read type contains an empty '
+                    f'value at row "{index}".'
+                )
+
+            invalid_read_types = sorted(
+                set(read_types) - READ_TYPE_VALUES - {''}
+            )
+            if invalid_read_types:
+                errors.append(
+                    f'In run, alias: "{alias}". Invalid read_type value(s) '
+                    f'"{", ".join(invalid_read_types)}". Allowed values are: '
+                    f'{", ".join(sorted(READ_TYPE_VALUES))}.'
+                )
+
+    if 'alias' not in run_df.columns:
+        if errors:
+            raise ValueError('\n'.join(errors))
+        return
+
+    for alias, group in run_df.groupby('alias', dropna=False):
+        if 'experiment_alias' in group.columns:
+            experiment_aliases = {
+                str(experiment_alias).strip()
+                for experiment_alias in group['experiment_alias']
+                if is_filled(experiment_alias)
+            }
+            if len(experiment_aliases) > 1:
+                errors.append(
+                    f'In run, alias: "{alias}". A run can reference only one '
+                    f'experiment_alias, but found: '
+                    f'{", ".join(sorted(experiment_aliases))}. Use a unique '
+                    f'run alias for each experiment.'
+                )
+
+        if file_type_column is None:
+            continue
+
+        file_types = group[file_type_column].apply(
+            lambda file_type: str(file_type).strip().lower()
+            if is_filled(file_type) else ''
+        )
+        fastq_group = group[file_types == 'fastq']
+
+        if fastq_group.empty:
+            continue
+
+        read_types_by_index = {}
+        for index, row in fastq_group.iterrows():
+            if 'read_type' in run_df.columns:
+                read_types = parse_read_types(row['read_type'])
+            else:
+                read_types = []
+            read_types_by_index[index] = read_types
+
+            if 'single' in read_types and 'paired' in read_types:
+                errors.append(
+                    f'In run, alias: "{alias}". File "{row.file_name}" cannot '
+                    f'use read_type values "single" and "paired" together.'
+                )
+
+        rows_with_read_type = {
+            index for index, read_types in read_types_by_index.items()
+            if read_types
+        }
+        if not rows_with_read_type:
+            if len(fastq_group) > 2:
+                errors.append(
+                    f'In run, alias: "{alias}". {len(fastq_group)} FASTQ '
+                    f'files were provided without read_type values. ENA '
+                    f'requires read_type values for multi-fastq runs. Split '
+                    f'ordinary paired-end data into one run alias per R1/R2 '
+                    f'pair, or use barcode read types for true multi-fastq '
+                    f'submissions.'
+                )
+            continue
+
+        if len(rows_with_read_type) != len(fastq_group):
+            missing_files = [
+                row.file_name
+                for index, row in fastq_group.iterrows()
+                if index not in rows_with_read_type
+            ]
+            errors.append(
+                f'In run, alias: "{alias}". read_type is set for only some '
+                f'FASTQ files. Missing read_type for: '
+                f'{", ".join(missing_files)}.'
+            )
+
+        paired_files = [
+            index for index, read_types in read_types_by_index.items()
+            if 'paired' in read_types
+        ]
+        single_files = [
+            index for index, read_types in read_types_by_index.items()
+            if 'single' in read_types
+        ]
+        multi_fastq_read_types = {
+            read_type
+            for read_types in read_types_by_index.values()
+            for read_type in read_types
+        } & MULTI_FASTQ_READ_TYPES
+
+        if paired_files and len(paired_files) != 2:
+            errors.append(
+                f'In run, alias: "{alias}". {len(paired_files)} FASTQ files '
+                f'are marked with read_type "paired". ENA expects exactly '
+                f'two paired FASTQ files in one run.'
+            )
+
+        if single_files and len(fastq_group) != 1:
+            errors.append(
+                f'In run, alias: "{alias}". read_type "single" can only be '
+                f'used with one FASTQ file in a run.'
+            )
+
+        if single_files and paired_files:
+            errors.append(
+                f'In run, alias: "{alias}". read_type values "single" and '
+                f'"paired" cannot be mixed in one run.'
+            )
+
+        if len(fastq_group) > 2 and not multi_fastq_read_types:
+            errors.append(
+                f'In run, alias: "{alias}". {len(fastq_group)} FASTQ files '
+                f'were provided with only simple read_type values. ENA '
+                f'multi-fastq runs need at least one barcode read_type '
+                f'({", ".join(sorted(MULTI_FASTQ_READ_TYPES))}). For multiple '
+                f'paired-end samples or libraries, use separate sample, '
+                f'experiment and run aliases for each pair.'
+            )
+
+    if errors:
+        raise ValueError('\n'.join(errors))
+
+
 def validate_xml(xsd, xml):
     '''
     validate xml against xsd scheme
@@ -225,6 +400,8 @@ def generate_stream(schema, targets, Template, center, tool):
             extra_attributes[column] = match.group(1)
 
     if schema == 'run':
+        validate_run_table(targets)
+
         # These attributes are required for rendering
         # the run xml templates
         # Adding backwards compatibility for file_format
@@ -965,6 +1142,11 @@ def main():
         if 'run' in schema_targets:
             # a dictionary of filename:file_path
             df = schema_targets['run']
+            try:
+                validate_run_table(df)
+            except ValueError as error:
+                sys.exit(f"Oops:\n{error}")
+
             file_paths = {}
             if args.data:
                 for path in args.data:

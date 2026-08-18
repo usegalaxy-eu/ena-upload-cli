@@ -134,8 +134,12 @@ Please check out the [template](https://github.com/ELIXIR-Belgium/ENA-metadata-t
 
 #### Read info run attributes
 
-Using `read_type`	and `read_label` as header in the columns of ENA run objects will allow you to set information about reads. Values are listed in a comma separated way, without spaces. `read_type` has a controlled vocabulary, which can be found in the [ENA Documentation](https://ena-docs.readthedocs.io/en/latest/submit/reads/webin-cli.html#json-manifest-file-format). An example tsv file using these attributes can be found in [example_tables/ENA_template_runs_read_info.tsv](/example_tables/ENA_template_runs_read_info.tsv). The same syntax is also applicable for xlsx input files.
+Using `read_type`	and `read_label` as header in the columns of ENA run objects will allow you to set information about reads. Values are listed in a comma separated way, without spaces. `read_type` has a controlled vocabulary, which can be found in the [ENA Documentation](https://ena-docs.readthedocs.io/en/latest/submit/reads/webin-cli.html#json-manifest-file-format). Example tsv files using these attributes can be found in [example_tables/ENA_template_runs_read_info.tsv](/example_tables/ENA_template_runs_read_info.tsv) and [example_tables/ENA_template_runs_multi_fastq.tsv](/example_tables/ENA_template_runs_multi_fastq.tsv). The same syntax is also applicable for xlsx input files.
 This feature is currently limited to FastQ files.
+
+For ordinary paired-end data, use one run alias per R1/R2 pair. Do not place multiple paired samples or libraries under one run alias with every file marked as `paired`; ENA accepts `paired` as one pair of FASTQ files in a run. Multiple paired-end samples should therefore have separate sample, experiment and run aliases.
+
+Run aliases with more than two FastQ files are treated as multi-fastq submissions. In that case, every FastQ file in the run must define valid `read_type` values, and at least one file must use a barcode read type such as `cell_barcode`, `umi_barcode`, `feature_barcode`, `sample_barcode` or `spatial_barcode`. This supports true multi-fastq submissions such as single-cell data where a file can use multiple comma-separated values, for example `paired,umi_barcode`.
 
 #### Encrypted files
 
