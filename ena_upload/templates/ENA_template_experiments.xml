@@ -49,7 +49,8 @@ def mandatorytest(row, column, index):
                 </py:if>
                 <py:if test="mandatorytest(row, 'library_layout', index)">
                 <LIBRARY_LAYOUT py:choose="">
-                    <PAIRED py:when="row.library_layout.lower().strip() == 'paired'" NOMINAL_LENGTH="${int(row.insert_size)}" />
+                    <PAIRED py:when="row.library_layout.lower().strip() == 'paired' and attributetest(row, 'insert_size')" NOMINAL_LENGTH="${int(row.insert_size)}" />
+                    <PAIRED py:when="row.library_layout.lower().strip() == 'paired'" />
                     <SINGLE py:when="row.library_layout.lower().strip() == 'single'" />
                 </LIBRARY_LAYOUT>
                 </py:if>
