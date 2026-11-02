@@ -942,14 +942,14 @@ def mandatorytest(row, column, index):
                 <VALUE>${row['host scientific name']}</VALUE>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="mandatorytest(row, 'relative air humidity', index)">
+            <py:if test="attributetest(row, 'relative air humidity')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>relative air humidity</TAG>
                 <VALUE>${row['relative air humidity']}</VALUE>
                 <UNITS>%</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
-            <py:if test="mandatorytest(row, 'absolute air humidity', index)">
+            <py:if test="attributetest(row, 'absolute air humidity')">
             <SAMPLE_ATTRIBUTE>
                 <TAG>absolute air humidity</TAG>
                 <VALUE>${row['absolute air humidity']}</VALUE>
