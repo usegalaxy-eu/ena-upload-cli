@@ -177,7 +177,6 @@ def mandatorytest(row, column, index):
             <SAMPLE_ATTRIBUTE>
                 <TAG>reassembly post binning</TAG>
                 <VALUE>${row['reassembly post binning']}</VALUE>
-                <UNITS>Yes</UNITS>
             </SAMPLE_ATTRIBUTE>
             </py:if>
             <py:if test="attributetest(row, 'MAG coverage software')">
