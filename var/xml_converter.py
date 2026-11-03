@@ -26,12 +26,27 @@ def fetch_object(url):
         raise RuntimeError("Non-200 status code")
     return r
 
-def fetching_checklists():
-    # Gathering all checklist ID's
-    session = requests.Session()
-    session.trust_env = False
-    response = fetch_object('https://www.ebi.ac.uk/ena/browser/api/summary/ERC000001-ERC999999')
-    return response.json()['summaries']
+def fetching_checklists(start=11, max_missing=10):
+    # Gathering all checklist ID's by looping over sequential accessions
+    # (ERC000011 is the first checklist). Some numbers are skipped (e.g. ERC000042),
+    # so only stop after max_missing consecutive accessions don't exist
+    checklists = []
+    number = start
+    missing = 0
+    while missing < max_missing:
+        accession = f"ERC{number:06d}"
+        try:
+            summaries = fetch_object(f'https://www.ebi.ac.uk/ena/browser/api/summary/{accession}').json()['summaries']
+        except RuntimeError:
+            summaries = []
+        if summaries:
+            checklists.extend(summaries)
+            missing = 0
+        else:
+            print(f"  {accession} not found")
+            missing += 1
+        number += 1
+    return checklists
 
 def load_existing_units(template_path):
     """
